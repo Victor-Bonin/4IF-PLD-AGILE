@@ -1,28 +1,26 @@
+/**
+ * This file has been created by vbonin, on 11 oct. 2017
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+
+_____   _   _____   __   _   _     _   _____   __   _   _   _   _____  
+|  _  \ | | | ____| |  \ | | | |   / / | ____| |  \ | | | | | | | ____| 
+| |_| | | | | |__   |   \| | | |  / /  | |__   |   \| | | | | | | |__   
+|  _  { | | |  __|  | |\   | | | / /   |  __|  | |\   | | | | | |  __|  
+| |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
+|_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
+
+
+
+ */
 package controleur;
 
+public class EtatDefaut implements Etat{
 
-import vue.Fenetre;
-import modele.Plan;
-import modele.Point;
-
-public abstract class EtatDefaut implements Etat{	
-	// Definition des comportements par defaut des methodes
-	public void ajouterCercle(Controleur controleur, Fenetre fenetre){}
-	public void ajouterRectangle(Controleur controleur, Fenetre fenetre){}
-	public void supprimer(Controleur controleur, Fenetre fenetre){}
-	public void deplacer(Controleur controleur, Fenetre fenetre){}
-	public void diminuerEchelle(Fenetre fenetre) {}
-	public void augmenterEchelle(Fenetre fenetre) {}
-	public void undo(ListeDeCdes listeDeCdes){}
-	public void redo(ListeDeCdes listeDeCdes) {}
-	public void clicGauche(Controleur controleur, Fenetre fenetre, Plan plan, ListeDeCdes listeDeCdes, Point p) {}
-	public void sourisBougee(Plan plan, Point p){}
-	public void carSaisi(Plan plan, ListeDeCdes listeDeCdes, int codeCar) {}
-	public void clicDroit(Controleur controleur, Fenetre fenetre, ListeDeCdes listeDeCdes) {
-		fenetre.autoriseBoutons(true);
-		controleur.setEtatCourant(controleur.etatInit);
-		fenetre.afficheMessage("");
-	}
-	public void sauver(Plan plan, Fenetre fenetre){};
-	public void ouvrir(Plan plan, ListeDeCdes listeDeCdes, Fenetre fenetre){}
 }

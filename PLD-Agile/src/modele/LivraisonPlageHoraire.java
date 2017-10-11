@@ -19,8 +19,9 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 
 
  */
-package controleur;
+package modele;
 
-public class EtatInit implements Etat{
+public class LivraisonPlageHoraire extends Livraison {
+	private PlageHoraire plage;
 
 }

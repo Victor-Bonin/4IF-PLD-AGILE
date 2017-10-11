@@ -21,6 +21,6 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-public class EtatInit implements Etat{
+public class EtatPlanOuvert implements Etat {
 
 }

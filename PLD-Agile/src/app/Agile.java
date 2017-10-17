@@ -6,6 +6,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import modele.DemandeLivraison;
 import modele.Plan;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
@@ -21,8 +22,10 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
+		DemandeLivraison demandeLivraison = new DemandeLivraison();
 		try {
 			DeserialiseurXML.charger(plan);
+			DeserialiseurXML.charger(demandeLivraison);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {

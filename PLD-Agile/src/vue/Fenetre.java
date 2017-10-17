@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import modele.Plan;
+
 public class Fenetre extends JFrame{
 	private static final long serialVersionUID = 4042713508717400450L;
 
@@ -16,9 +18,10 @@ public class Fenetre extends JFrame{
 
 	private JPanel footer;
 	private JButton exportButton;
+	private Plan plan;
 	
 	
-	public Fenetre(){
+	public Fenetre(Plan plan){
 		super("PlanCo");
 		
 		initFenetre();
@@ -28,6 +31,7 @@ public class Fenetre extends JFrame{
 		initFooter();
 		
 		setVisible(true);
+		this.plan = plan;
 	}
 	
 	private void initFenetre(){
@@ -40,7 +44,7 @@ public class Fenetre extends JFrame{
 	}
 	
 	private void initContent(){
-		contentContainer = new VueCentrale(new VuePlan());
+		contentContainer = new VueCentrale(new VuePlan(plan));
 		getContentPane().add(contentContainer, BorderLayout.CENTER);
 	}
 

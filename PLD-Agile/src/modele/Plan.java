@@ -37,10 +37,10 @@ public class Plan {
 		}
 	}
 	
-	public void calculTournee(DemandeLivraison d){
+	public void calculTournee(){
 		List<Intersection> interList = new ArrayList<Intersection>(intersections.values());
-		List<Livraison> livraisons = d.getLivraisons();
-		Entrepot entrepot = d.getEntrepot();
+		List<Livraison> livraisons = demandeLivraison.getLivraisons();
+		Entrepot entrepot = demandeLivraison.getEntrepot();
 		int nbSommets = interList.size();
 		int nbLivraisons = livraisons.size();
 		TSP1 tsp = new TSP1();
@@ -58,12 +58,13 @@ public class Plan {
 			graph[interDebut][interFin] = t.getLongueur();
 		}
 		
-					System.out.println("Graph :");
+					System.out.println("GRAPH :");
 					for(int i=0; i<graph.length; i++){
 						for(int j=0; j<graph[0].length; j++){
-							System.out.print(graph[i][j]+" ");
+							if(graph[i][j]!=null){
+								System.out.println("Troncon de l'intersection "+interList.get(i).getId()+" a l'intersection "+interList.get(j).getId()+" mesure "+graph[i][j]);
+							}
 						}
-						System.out.println();
 					}
 					System.out.println();
 		
@@ -73,7 +74,7 @@ public class Plan {
 		// On lance Dijkstra depuis tous les points de livraison
 		DjkSolution result;
 		for(int i=0; i<nbLivraisons; i++){
-			result = dijkstra.PCC(graph, interList.indexOf(livraisons.get(i)));
+			result = dijkstra.PCC(graph, interList.indexOf(livraisons.get(i))); // TODO DEBUG
 			// result est un tableau contenant pour chaque intersection de graph le plus court chemin du point de livraison i a l'intersection
 			for(int j=0; j<nbLivraisons; j++){
 				cout[i+1][j+1]=result.dist[interList.indexOf(livraisons.get(j))]; // L'index d'un point de livraison dans la liste interList correspond aussi a son index dans la matrice graph, donc result
@@ -81,6 +82,7 @@ public class Plan {
 			}
 		}
 		// On lance aussi Dijkstra depuis l'entrepot
+		System.out.println("Index de l'entrepot dans interList : "+interList.indexOf(entrepot));
 		result = dijkstra.PCC(graph, interList.indexOf(entrepot));
 		for(int i=0; i<nbLivraisons; i++){
 			cout[0][i+1]=result.dist[interList.indexOf(livraisons.get(i))];

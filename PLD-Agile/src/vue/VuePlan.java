@@ -45,7 +45,7 @@ public class VuePlan extends JPanel{
 		this.plan = plan;
 		this.coordoneeX = 27562;
 		this.coordoneeY = 15366;
-		this.zoom = 80;
+		setOpaque(false);
 	}
 	
 	public void paintComponent(Graphics g){
@@ -109,5 +109,19 @@ public class VuePlan extends JPanel{
 	    	e.printStackTrace();
 	    }                
 	  }
+	
+	public void zoom(){
+		System.out.println(zoom);
+		this.zoom-=20;
+		System.out.println(zoom);
+		repaint();
+		System.out.println(zoom);
+	}
+	
+	public void dezoom(){
+		System.out.println("zoooooom");
+		this.zoom+=20;
+		repaint();
+	}
 
 }

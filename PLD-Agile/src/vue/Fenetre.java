@@ -22,8 +22,10 @@ public class Fenetre extends JFrame{
 	
 	private VueCentrale contentContainer;
 	private JPanel jpanelCentral; //the first central JPanel
+	private VuePlan vuePlan;
 
 	private EcouteurDeBouton ecouteurBoutons;
+	private EcouteurDeSouris ecouteurSouris;
 	
 	private JPanel footer;
 	private greenButton importPlanButton;
@@ -52,6 +54,7 @@ public class Fenetre extends JFrame{
 	
 	private void initListeners(){
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
+		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
 	}
 	
 	private void initButtons(){
@@ -66,6 +69,8 @@ public class Fenetre extends JFrame{
 		importDemandeLivraisonButton = new greenButton(Textes.BUTTON_IMPORT_DEMANDE_LIVRAISON);
 		importDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		importDemandeLivraisonButton.setActionCommand("import-demande-livraison");
+		
+		
 
 	}
 	
@@ -129,7 +134,8 @@ public class Fenetre extends JFrame{
 
 	public void goToPlanOpened(){
 		if(plan!=null){
-			setContent(new VuePlan(plan));
+			setContent(vuePlan = new VuePlan(plan));
+			vuePlan.addMouseWheelListener(ecouteurSouris);
 			setFooter(VUE_PLAN);
 			setVisible(true);
 			repaint();
@@ -142,5 +148,14 @@ public class Fenetre extends JFrame{
 			repaint();
 		}
 	}
+	
+	public void zoom(){
+		this.vuePlan.zoom();
+	}
+	
+	public void dezoom(){
+		this.vuePlan.dezoom();
+	}
+	
 
 }

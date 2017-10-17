@@ -40,7 +40,7 @@ public class Fenetre extends JFrame{
 	}
 	
 	private void initContent(){
-		contentContainer = new VueCentrale();
+		contentContainer = new VueCentrale(new VuePlan());
 		getContentPane().add(contentContainer, BorderLayout.CENTER);
 	}
 

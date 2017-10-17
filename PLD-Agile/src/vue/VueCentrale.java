@@ -11,11 +11,11 @@ public class VueCentrale extends JPanel{
 	private JPanel panneauGauche;
 	private JPanel panneauCentre;
 	
-	public VueCentrale(){
+	public VueCentrale(JPanel vuePlan){
 		setLayout(new BorderLayout());
 		
 		panneauGauche = new JPanel();
-		panneauCentre = new JPanel();
+		panneauCentre = vuePlan;
 		
 		panneauGauche.setBackground(Color.GRAY);
 		panneauCentre.setBackground(Color.BLACK);

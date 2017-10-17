@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -23,12 +24,18 @@ public class VueHeader extends JPanel{
 		notificationPanel.setBackground(CharteGraphique.BG_COLOR);
 		
 		notificationLabel = new JLabel();
+		notificationLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		notificationLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
-		notificationLabel.setBorder(new MatteBorder(1,0,1,0, CharteGraphique.SEPARATOR_COLOR));
+		notificationLabel.setBorder(new CompoundBorder(
+				new MatteBorder(1,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+				new EmptyBorder(10, 10, 10, 10)
+				));
 		
 		notificationPanel.add(notificationLabel);
 		
-		JLabel titre = new JLabel("PlanCo");
+		JLabel titre = new JLabel(Textes.TITRE_APPLI);
+		titre.setForeground(CharteGraphique.TITLE_COLOR);
+		titre.setFont(CharteGraphique.TITLE_FONT);
 		
 		add(titre, BorderLayout.NORTH);
 		add(notificationPanel, BorderLayout.CENTER);

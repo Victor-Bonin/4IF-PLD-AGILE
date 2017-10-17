@@ -12,6 +12,10 @@ import xml.ExceptionXML;
 
 import vue.Fenetre;
 
+import controleur.Controleur;
+import xml.DeserialiseurXML;
+import xml.ExceptionXML;
+
 public class Agile {
 	private static final int echelleInitiale = 10;
 	private static final int hauteurPlan = 40;
@@ -21,11 +25,19 @@ public class Agile {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/* Plan plan = new Plan(largeurPlan, hauteurPlan);
-		new Controleur(plan, echelleInitiale); **/
-		System.out.println("Si ma Tante en avait 2, on l'appellerait mon Oncle");
-		
-		Fenetre test = new Fenetre();
+		Plan plan = new Plan();
+		Controleur ctrl = new Controleur(plan);
+		/*try {
+			DeserialiseurXML.charger(plan);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ExceptionXML e) {
+			e.printStackTrace();
+		}*/
 	}
 
 }

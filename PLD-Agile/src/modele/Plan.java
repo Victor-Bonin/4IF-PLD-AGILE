@@ -31,4 +31,12 @@ public class Plan
 		}
 		
 	}
+	
+	public List<Intersection> getIntersections(){
+		return intersections;
+	}
+	
+	public List<Troncon> getTroncons(){
+		return troncons;
+	}
 }

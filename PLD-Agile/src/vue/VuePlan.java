@@ -3,6 +3,8 @@ package vue;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import modele.Plan;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,6 +18,7 @@ public class VuePlan extends JPanel{
 	private static final long serialVersionUID = 7580988360699236386L;
 	private int hauteurBalise = 40;
 	private int largeurBalise = 40;
+	private Plan plan;
 	// TODO : Supprimer
 	private int x1 = 20;
 	private int y1 = 20;
@@ -25,13 +28,16 @@ public class VuePlan extends JPanel{
 	private int y3 = 200;
 	
 	
-	public VuePlan(){
-		setBackground(new Color(168,168,168)); 
-		
+	public VuePlan(Plan plan){
+		this.setBackground(new Color(168,168,168)); 
+		this.plan = plan;
 	}
 	
 	public void paintComponent(Graphics g){
 		try {
+			/*for(int i=0; i<plan.getTroncons().size(); i++) {
+				
+			}*/
 			Image img = ImageIO.read(new File("ressources/map-marker2.png"));
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.WHITE);

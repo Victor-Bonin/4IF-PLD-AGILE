@@ -38,34 +38,35 @@ public class Controleur {
 	protected final EtatCalcule etatCalcule = new EtatCalcule();
 
 	/**
-	 * Crée le controleur de l'app
+	 * Crï¿½e le controleur de l'app
 	 * @param plan le plan
 	 */
 	public Controleur(Plan plan) {
 		this.plan = plan;
 		etatCourant = etatInit;
 		listeCommande = new ListeCommande();
-		fenetre = new Fenetre();
+		fenetre = new Fenetre(this, plan);
 	}
 
 	/**
-	 * Change l'état courant du controleur
-	 * @param etat le nouvel état courant
+	 * Change l'ï¿½tat courant du controleur
+	 * @param etat le nouvel ï¿½tat courant
 	 */
 	protected void setEtatCourant(Etat etat) {
 		etatCourant = etat;
 	}
 
 	/**
-	 * Méthode appelée après un clic sur le bouton "Importer un plan"
+	 * Methode appelee apres un clic sur le bouton "Importer un plan"
 	 * ou "Changer de plan"
 	 */
 	public void ouvrirPlan() {
-		etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
+		//etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
+		fenetre.goToPlanOpened();
 	}
 
 	/**
-	 * Méthode appelée après un clic sur le bouton "Importer une demande de livraison"
+	 * Mï¿½thode appelï¿½e aprï¿½s un clic sur le bouton "Importer une demande de livraison"
 	 * ou "Importer une nouvelle demande de livraison"
 	 */
 	public void ouvrirLivraison() {
@@ -74,56 +75,56 @@ public class Controleur {
 
 
 	/**
-	 * Méthode appelée après un clic sur le bouton "Optimisier l'ordre des livraisons"
+	 * Mï¿½thode appelï¿½e aprï¿½s un clic sur le bouton "Optimisier l'ordre des livraisons"
 	 */
 	public void calculerListeOpt() {
 		etatCourant.calculerListeOpt(this, plan, fenetre);
 	}
 
 	/**
-	 * Méthode appelée après crée avoir un point de livraison via la carte ou le bouton "+"
+	 * Mï¿½thode appelï¿½e aprï¿½s crï¿½e avoir un point de livraison via la carte ou le bouton "+"
 	 */
 	public void ajouterLivraison() {
 		etatCourant.ajouterLivraison();
 	}
 
 	/**
-	 * Méthode appelée après avoir permuter un point de livraison avec un autre
+	 * Mï¿½thode appelï¿½e aprï¿½s avoir permuter un point de livraison avec un autre
 	 */
 	public void permuterLivraison() {
 		etatCourant.permuterLivraison();
 	}
 
 	/**
-	 * Méthode appelée après avoir supprimer un point de livraison
+	 * Mï¿½thode appelï¿½e aprï¿½s avoir supprimer un point de livraison
 	 */
 	public void supprimerLivraison() {
 		etatCourant.supprimerLivraison();
 	}
 
 	/**
-	 * Méthode appelée après avoir JE SAIS PO...
+	 * Mï¿½thode appelï¿½e aprï¿½s avoir JE SAIS PO...
 	 */
 	public void calculerItineraire() {
 		etatCourant.calculerItineraire();
 	}
 
 	/**
-	 * Méthode appelée après un clic sur le bouton "Exporter feuille de route"
+	 * Mï¿½thode appelï¿½e aprï¿½s un clic sur le bouton "Exporter feuille de route"
 	 */
 	public void exporterFeuilleDeRoute() {
 		etatCourant.exporterFeuilleDeRoute();
 	}
 
 	/**
-	 * Méthode appelée après un clic sur le bouton "Undo" ou après pressé Ctrl+Z
+	 * Mï¿½thode appelï¿½e aprï¿½s un clic sur le bouton "Undo" ou aprï¿½s pressï¿½ Ctrl+Z
 	 */
 	public void undo() {
 		etatCourant.undo(listeCommande);
 	}
 
 	/**
-	 * Méthode appelée après un clic sur le bouton "Redo" ou après pressé Ctrl+Y
+	 * Mï¿½thode appelï¿½e aprï¿½s un clic sur le bouton "Redo" ou aprï¿½s pressï¿½ Ctrl+Y
 	 */
 	public void redo() {
 		etatCourant.redo(listeCommande);

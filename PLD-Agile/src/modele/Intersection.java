@@ -11,8 +11,15 @@ public class Intersection {
 		id = identifiant;
 	}
 	
-	public long getid()
-	{
+	public long getid() {
 		return id;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
 	}
 }

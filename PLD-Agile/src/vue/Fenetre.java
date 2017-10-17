@@ -12,6 +12,9 @@ import modele.Plan;
 
 public class Fenetre extends JFrame{
 	private static final long serialVersionUID = 4042713508717400450L;
+	private static final int VUE_DEFAUT = 0;
+	private static final int VUE_PLAN = 1;
+	private static final int VUE_CHARGEE = 2;
 
 	private Controleur ctrl;
 	
@@ -23,8 +26,9 @@ public class Fenetre extends JFrame{
 	private EcouteurDeBouton ecouteurBoutons;
 	
 	private JPanel footer;
-	private JButton importPlanButton;
-	private JButton exportButton;
+	private greenButton importPlanButton;
+	private greenButton importDemandeLivraisonButton;
+	private greenButton exportButton;
 	private Plan plan;
 	
 	
@@ -55,13 +59,17 @@ public class Fenetre extends JFrame{
 	}
 	
 	private void initButtons(){
-		exportButton = new JButton(Textes.BUTTON_EXPORT_ROUTE);
+		exportButton = new greenButton(Textes.BUTTON_EXPORT_ROUTE);
 		exportButton.addActionListener(ecouteurBoutons);
 		exportButton.setActionCommand("export-feuille");
 		
-		importPlanButton = new JButton(Textes.BUTTON_IMPORT_PLAN);
+		importPlanButton = new greenButton(Textes.BUTTON_IMPORT_PLAN);
 		importPlanButton.addActionListener(ecouteurBoutons);
 		importPlanButton.setActionCommand("import-plan");
+		
+		importDemandeLivraisonButton = new greenButton(Textes.BUTTON_IMPORT_DEMANDE_LIVRAISON);
+		importDemandeLivraisonButton.addActionListener(ecouteurBoutons);
+		importDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 
 	}
 	
@@ -104,8 +112,21 @@ public class Fenetre extends JFrame{
 		getContentPane().add(contentContainer, BorderLayout.CENTER);
 	}
 	
-	private void setFooter(){
-		footer.add(exportButton);
+	private void setFooter(int vueInt){
+		switch(vueInt){
+		case VUE_DEFAUT:
+			footer.remove(importDemandeLivraisonButton);
+			footer.remove(exportButton);
+			break;
+		case VUE_PLAN:
+			footer.add(importDemandeLivraisonButton);
+			footer.remove(exportButton);
+			break;
+		case VUE_CHARGEE:
+			footer.remove(importDemandeLivraisonButton);
+			footer.add(exportButton);
+			break;
+		}
 		
 		getContentPane().add(footer, BorderLayout.SOUTH);
 	}
@@ -113,7 +134,13 @@ public class Fenetre extends JFrame{
 	private void goToPlanOpened(){
 		if(plan!=null){
 			setContent(new VuePlan(plan));
-			setFooter();
+			setFooter(VUE_PLAN);
+			repaint();
+		}
+	}
+	private void goToChargee(){
+		if(plan!=null){
+			setFooter(VUE_CHARGEE);
 			repaint();
 		}
 	}

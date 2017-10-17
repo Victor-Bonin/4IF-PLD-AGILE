@@ -14,6 +14,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Cette classe correspond à la vue du plan en particulier
+ * 
+ * @author 4104
+ *
+ */
 public class VuePlan extends JPanel{
 	private static final long serialVersionUID = 7580988360699236386L;
 	private int hauteurBalise = 40;

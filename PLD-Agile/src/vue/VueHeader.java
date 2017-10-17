@@ -8,6 +8,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+/**
+ * Cette classe correspond à la vue affichée en haut avec le titre et le 
+ * texte de notification
+ * 
+ * @author 4104
+ *
+ */
 public class VueHeader extends JPanel{
 	private static final long serialVersionUID = 6074161301613552065L;
 

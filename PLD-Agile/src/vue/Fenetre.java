@@ -135,12 +135,16 @@ public class Fenetre extends JFrame{
 			repaint();
 		}
 	}
-	private void goToChargee(){
+	public void goToChargee(){
 		if(plan!=null){
 			setFooter(VUE_CHARGEE);
 			setVisible(true);
 			repaint();
 		}
+	}
+	
+	public void changeNotification(String texte) {
+		header.changeNotification(texte);
 	}
 
 }

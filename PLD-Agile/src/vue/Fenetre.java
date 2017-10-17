@@ -46,7 +46,7 @@ public class Fenetre extends JFrame{
 		
 		setVisible(true);
 		
-		//goToPlanOpened();
+		goToPlanOpened();
 
 	}
 	
@@ -115,6 +115,7 @@ public class Fenetre extends JFrame{
 			System.out.println("wa");
 			setContent(new VuePlan(plan));
 			setFooter();
+			setVisible(true);
 			repaint();
 		}
 	}

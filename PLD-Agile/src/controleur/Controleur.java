@@ -38,7 +38,7 @@ public class Controleur {
 	protected final EtatCalcule etatCalcule = new EtatCalcule();
 
 	/**
-	 * Cr�e le controleur de l'app
+	 * Cree le controleur de l'app
 	 * @param plan le plan
 	 */
 	public Controleur(Plan plan) {
@@ -49,7 +49,7 @@ public class Controleur {
 	}
 
 	/**
-	 * Change l'�tat courant du controleur
+	 * Change l'etat courant du controleur
 	 * @param etat le nouvel �tat courant
 	 */
 	protected void setEtatCourant(Etat etat) {
@@ -61,12 +61,12 @@ public class Controleur {
 	 * ou "Changer de plan"
 	 */
 	public void ouvrirPlan() {
-		//etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
+		etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
 		fenetre.goToPlanOpened();
 	}
 
 	/**
-	 * M�thode appel�e apr�s un clic sur le bouton "Importer une demande de livraison"
+	 * Methode appelee apres un clic sur le bouton "Importer une demande de livraison"
 	 * ou "Importer une nouvelle demande de livraison"
 	 */
 	public void ouvrirLivraison() {
@@ -75,56 +75,56 @@ public class Controleur {
 
 
 	/**
-	 * M�thode appel�e apr�s un clic sur le bouton "Optimisier l'ordre des livraisons"
+	 * Methode appelee apres un clic sur le bouton "Optimisier l'ordre des livraisons"
 	 */
 	public void calculerListeOpt() {
 		etatCourant.calculerListeOpt(this, plan, fenetre);
 	}
 
 	/**
-	 * M�thode appel�e apr�s cr�e avoir un point de livraison via la carte ou le bouton "+"
+	 * Methode appelee apres cree avoir un point de livraison via la carte ou le bouton "+"
 	 */
 	public void ajouterLivraison() {
 		etatCourant.ajouterLivraison();
 	}
 
 	/**
-	 * M�thode appel�e apr�s avoir permuter un point de livraison avec un autre
+	 * Methode appelee apres avoir permuter un point de livraison avec un autre
 	 */
 	public void permuterLivraison() {
 		etatCourant.permuterLivraison();
 	}
 
 	/**
-	 * M�thode appel�e apr�s avoir supprimer un point de livraison
+	 * Methode appelee apres avoir supprimer un point de livraison
 	 */
 	public void supprimerLivraison() {
 		etatCourant.supprimerLivraison();
 	}
 
 	/**
-	 * M�thode appel�e apr�s avoir JE SAIS PO...
+	 * Methode appelee apres un clic sur le bouton "Calculer Itineraire"
 	 */
 	public void calculerItineraire() {
 		etatCourant.calculerItineraire();
 	}
 
 	/**
-	 * M�thode appel�e apr�s un clic sur le bouton "Exporter feuille de route"
+	 * Methode appelee apres un clic sur le bouton "Exporter feuille de route"
 	 */
 	public void exporterFeuilleDeRoute() {
 		etatCourant.exporterFeuilleDeRoute();
 	}
 
 	/**
-	 * M�thode appel�e apr�s un clic sur le bouton "Undo" ou apr�s press� Ctrl+Z
+	 * Methode appelee apres un clic sur le bouton "Undo" ou apres presse Ctrl+Z
 	 */
 	public void undo() {
 		etatCourant.undo(listeCommande);
 	}
 
 	/**
-	 * M�thode appel�e apr�s un clic sur le bouton "Redo" ou apr�s press� Ctrl+Y
+	 * Methode appelee apres un clic sur le bouton "Redo" ou apres presse Ctrl+Y
 	 */
 	public void redo() {
 		etatCourant.redo(listeCommande);

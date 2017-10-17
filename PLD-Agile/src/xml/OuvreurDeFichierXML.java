@@ -38,7 +38,7 @@ public class OuvreurDeFichierXML extends FileFilter {// Singleton
  	}
  	
  	/**
- 	 * Accepte les fichier xml uniquement
+ 	 * Accepte les fichiers xml uniquement
  	 * @param f 
  	 */
  	@Override

@@ -2,6 +2,8 @@ package xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,7 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import modele.DemandeLivraison;
 import modele.Plan;
 
 
@@ -37,13 +38,13 @@ public class DeserialiseurXML {
         		throw new ExceptionXML("Document non conforme");
 	}
 	
-	public static void charger(DemandeLivraison demandeLivraison)throws ParserConfigurationException, SAXException, IOException, ExceptionXML{
+	public static void chargerDemandeLivraison(Plan plan)throws Exception{
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document = docBuilder.parse(xml);
         Element racine = document.getDocumentElement();
-        if (racine.getNodeName().equals("reseau")) {
-           construireAPartirDeDOMXML(racine, demandeLivraison);
+        if (racine.getNodeName().equals("demandeDeLivraisons")) {
+        		construireDemandeLivraisonAPartirDeDOMXML(racine, plan);
         }
         else
         		throw new ExceptionXML("Document non conforme");
@@ -66,22 +67,24 @@ public class DeserialiseurXML {
 				throw new ExceptionXML(e.getMessage());
 			}
        	}
-       	System.out.println("Fin");
     }
     
-    private static void construireAPartirDeDOMXML(Element noeudDOMRacine, DemandeLivraison demandeLivraison) throws ExceptionXML, NumberFormatException
+    private static void construireDemandeLivraisonAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws Exception
     {
-    NodeList listeAdresse = noeudDOMRacine.getElementsByTagName("livraison");
-    NodeList listeAdresse = noeudDOMRacine.getElementsByTagName("livraison");
-    Element xmlEntrepot = (Element) listeAdresse.item(0);
-       	for (int i = 1; i < listeAdresse.getLength(); i++) {
+    		NodeList listeEntrepot = noeudDOMRacine.getElementsByTagName("entrepot");
+    		Element entrepot = (Element) listeEntrepot.item(0);
+    		String dateAsString = entrepot.getAttribute("heureDepart");
+    		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    		Date date = dateFormat.parse(dateAsString);
+    		long entrepotId = Long.parseLong(entrepot.getAttribute("adresse"));
+    		plan.setEntrepot(entrepotId, date);
+    		
+    		NodeList listeAdresse = noeudDOMRacine.getElementsByTagName("livraison");
+       	for (int i = 0; i < listeAdresse.getLength(); i++) {
        		Element xmlAdresse = (Element) listeAdresse.item(i);
-          	try {
-          		demandeLivraison.ajoute(Long.parseLong(xmlAdresse.getAttribute("id")), Integer.parseInt(xmlAdresse.getAttribute("duree")));
-			} catch (Exception e) {
-				throw new ExceptionXML(e.getMessage());
-			}
+          	Long id = Long.parseLong(xmlAdresse.getAttribute("adresse"));
+          	int duree = Integer.parseInt(xmlAdresse.getAttribute("duree"));
+          	plan.ajouterPointLivraison(id,  duree);
        	}
-       	System.out.println("Fin");
     }
 }

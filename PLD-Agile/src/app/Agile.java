@@ -1,6 +1,7 @@
 package app;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -22,10 +23,13 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
-		DemandeLivraison demandeLivraison = new DemandeLivraison();
 		try {
 			DeserialiseurXML.charger(plan);
-			DeserialiseurXML.charger(demandeLivraison);
+			try {
+				DeserialiseurXML.chargerDemandeLivraison(plan);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {

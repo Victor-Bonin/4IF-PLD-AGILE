@@ -15,7 +15,7 @@ public class OuvreurDeFichierXML extends FileFilter {// Singleton
 
  	public File ouvre(boolean lecture) throws ExceptionXML{
  		int returnVal;
- 		JFileChooser jFileChooserXML = new JFileChooser();
+ 		JFileChooser jFileChooserXML = new JFileChooser(System.getProperty("user.dir"));
         jFileChooserXML.setFileFilter(this);
         jFileChooserXML.setFileSelectionMode(JFileChooser.FILES_ONLY);
         if (lecture)

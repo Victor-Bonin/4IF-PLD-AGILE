@@ -1,12 +1,18 @@
 package modele;
 
 public class Troncon {
-	private int longueur;
+	private float longueur;
 	private String nomRue;
 	private Intersection interDebut;
 	private Intersection interFin;
 	
-	public int getLongueur(){
+	public Troncon(Intersection debut, Intersection fin, String rue, float l) {
+		longueur = l;
+		nomRue = rue;
+		interDebut = debut;
+		interFin = fin;
+	}
+	public float getLongueur(){
 		return this.longueur;
 	}
 	
@@ -18,5 +24,4 @@ public class Troncon {
 		return this.interFin;
 	}
 	
-
 }

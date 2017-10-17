@@ -48,9 +48,6 @@ public class Fenetre extends JFrame{
 		initFooter();
 		
 		setVisible(true);
-		
-		goToPlanOpened();
-
 	}
 	
 	private void initListeners(){
@@ -74,7 +71,7 @@ public class Fenetre extends JFrame{
 	
 	private void initFenetre(){
 		setSize(800,600);
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -132,10 +129,9 @@ public class Fenetre extends JFrame{
 
 	public void goToPlanOpened(){
 		if(plan!=null){
-			System.out.println("wa");
 			setContent(new VuePlan(plan));
-			setVisible(true);
 			setFooter(VUE_PLAN);
+			setVisible(true);
 			repaint();
 		}
 	}

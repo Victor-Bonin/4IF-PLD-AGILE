@@ -21,9 +21,9 @@ public class Fenetre extends JFrame{
 	private Plan plan;
 	
 	
-	public Fenetre(Plan plan){
+	public Fenetre(Plan planTest){
 		super(Textes.NOM_APPLI);
-		
+		this.plan = planTest;
 		initFenetre();
 		
 		initHeader();
@@ -31,7 +31,6 @@ public class Fenetre extends JFrame{
 		initFooter();
 		
 		setVisible(true);
-		this.plan = plan;
 	}
 	
 	private void initFenetre(){

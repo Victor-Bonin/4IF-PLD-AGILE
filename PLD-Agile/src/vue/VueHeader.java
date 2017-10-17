@@ -1,11 +1,11 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 public class VueHeader extends JPanel{
 	private static final long serialVersionUID = 6074161301613552065L;
@@ -13,15 +13,25 @@ public class VueHeader extends JPanel{
 	private JLabel notificationLabel;
 	
 	public VueHeader(){
-		setBorder(new EmptyBorder(10, 10, 10, 10));
+		setBorder(new EmptyBorder(10, 20, 10, 20));
 		setLayout(new BorderLayout());
-		setBackground(Color.WHITE);
+		setBackground(CharteGraphique.BG_COLOR);
+		
+		JPanel notificationPanel = new JPanel();
+		notificationPanel.setLayout(new BorderLayout());
+		notificationPanel.setBorder(new EmptyBorder(10, 20, 10, 0));
+		notificationPanel.setBackground(CharteGraphique.BG_COLOR);
 		
 		notificationLabel = new JLabel();
+		notificationLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
+		notificationLabel.setBorder(new MatteBorder(1,0,1,0, CharteGraphique.SEPARATOR_COLOR));
+		
+		notificationPanel.add(notificationLabel);
+		
 		JLabel titre = new JLabel("PlanCo");
 		
 		add(titre, BorderLayout.NORTH);
-		add(notificationLabel, BorderLayout.CENTER);
+		add(notificationPanel, BorderLayout.CENTER);
 	}
 
 	public void changeNotification(String texte){

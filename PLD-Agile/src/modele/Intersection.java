@@ -11,6 +11,12 @@ public class Intersection {
 		id = identifiant;
 	}
 	
+	public Intersection(Intersection inter) {
+		x = inter.x;
+		y = inter.y;
+		id = inter.id;
+	}
+	
 	public long getid()
 	{
 		return id;

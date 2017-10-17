@@ -22,9 +22,10 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 package modele;
 
 public class LivraisonPlageHoraire extends Livraison {
+
 	private PlageHoraire plage;
-	
-	public LivraisonPlageHoraire(int coordX, int coordY, int id) {
-		super(coordX, coordY, id);
+
+	public LivraisonPlageHoraire(Intersection inter, int dureeArret) {
+		super(inter, dureeArret);
 	}
 }

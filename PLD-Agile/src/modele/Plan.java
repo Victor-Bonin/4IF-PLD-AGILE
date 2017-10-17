@@ -55,4 +55,12 @@ public class Plan
 			throw new Exception("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
- }
+	
+	public HashMap<Long, Intersection> getIntersections(){
+		return intersections;
+	}
+	
+	public List<Troncon> getTroncons(){
+		return troncons;
+	}
+}

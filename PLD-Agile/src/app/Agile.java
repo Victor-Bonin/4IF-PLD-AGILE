@@ -9,6 +9,8 @@ import org.xml.sax.SAXException;
 
 import modele.DemandeLivraison;
 import modele.Plan;
+import vue.Fenetre;
+import controleur.Controleur;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
@@ -23,7 +25,8 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
-		try {
+		Controleur ctrl = new Controleur();
+		/*try {
 			DeserialiseurXML.charger(plan);
 			try {
 				DeserialiseurXML.chargerDemandeLivraison(plan);
@@ -38,7 +41,8 @@ public class Agile {
 			e.printStackTrace();
 		} catch (ExceptionXML e) {
 			e.printStackTrace();
-		}
+		}*/
+		Fenetre test = new Fenetre(ctrl, plan);
 	}
 
 }

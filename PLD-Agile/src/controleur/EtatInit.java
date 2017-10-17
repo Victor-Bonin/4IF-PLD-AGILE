@@ -25,43 +25,18 @@ import modele.Plan;
 import vue.Fenetre;
 import xml.DeserialiseurXML;
 
-public class EtatInit implements Etat{
+public class EtatInit extends EtatDefaut{
 
 	@Override
-	public void ouvrirPlan(Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
+			ListeCommande listeCommande) {
 		try {
 			DeserialiseurXML.charger(plan);
+			controleur.setEtatCourant(controleur.etatPlanOuvert);
+			listeCommande.reset();
 		}
 		catch(Exception e) {
-			
+			//TODO : afficher notif "va te faire sa marche po, yapodplan"
 		}
 	}
-
-	@Override
-	public void ouvrirLivraison() {}
-
-	@Override
-	public void ajouterLivraison() {}
-
-	@Override
-	public void permuterLivraison() {}
-
-	@Override
-	public void supprimerLivraison() {}
-
-	@Override
-	public void calculerListeOpt() {}
-
-	@Override
-	public void calculerItineraire() {}
-
-	@Override
-	public void exporterFeuilleDeRoute() {}
-
-	@Override
-	public void undo(ListeCommande listeCommande) {}
-
-	@Override
-	public void redo(ListeCommande listeCommande) {}
-
 }

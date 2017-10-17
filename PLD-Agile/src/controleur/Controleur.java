@@ -29,10 +29,10 @@ public class Controleur {
 	private ListeCommande listeCommande;
 	private Etat etatCourant;
 	private Fenetre fenetre;
-	
+
 	//Instances associees a chaque etat possible du controleur
 	protected final EtatInit etatInit = new EtatInit();
-	protected final EtatDefaut etatDefaut = new EtatDefaut();
+	protected final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
 	protected final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
 	protected final EtatModifie etatModifie = new EtatModifie();
 	protected final EtatCalcule etatCalcule = new EtatCalcule();
@@ -47,7 +47,7 @@ public class Controleur {
 		listeCommande = new ListeCommande();
 		fenetre = new Fenetre();
 	}
-	
+
 	/**
 	 * Change l'état courant du controleur
 	 * @param etat le nouvel état courant
@@ -55,72 +55,73 @@ public class Controleur {
 	protected void setEtatCourant(Etat etat) {
 		etatCourant = etat;
 	}
-	
+
 	/**
 	 * Méthode appelée après un clic sur le bouton "Importer un plan"
 	 * ou "Changer de plan"
 	 */
 	public void ouvrirPlan() {
-		etatCourant.ouvrirPlan(plan, fenetre, listeCommande);
+		etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
 	}
-	
+
 	/**
 	 * Méthode appelée après un clic sur le bouton "Importer une demande de livraison"
 	 * ou "Importer une nouvelle demande de livraison"
 	 */
 	public void ouvrirLivraison() {
-		etatCourant.ouvrirLivraison();
+		etatCourant.ouvrirLivraison(this, plan, fenetre, listeCommande);
 	}
-	
+
+
+	/**
+	 * Méthode appelée après un clic sur le bouton "Optimisier l'ordre des livraisons"
+	 */
+	public void calculerListeOpt() {
+		etatCourant.calculerListeOpt(this, plan, fenetre);
+	}
+
 	/**
 	 * Méthode appelée après crée avoir un point de livraison via la carte ou le bouton "+"
 	 */
 	public void ajouterLivraison() {
 		etatCourant.ajouterLivraison();
 	}
-	
+
 	/**
 	 * Méthode appelée après avoir permuter un point de livraison avec un autre
 	 */
 	public void permuterLivraison() {
 		etatCourant.permuterLivraison();
 	}
-	
+
 	/**
 	 * Méthode appelée après avoir supprimer un point de livraison
 	 */
 	public void supprimerLivraison() {
 		etatCourant.supprimerLivraison();
 	}
-	
-	/**
-	 * Méthode appelée après un clic sur le bouton "Optimisier l'ordre des livraisons"
-	 */
-	public void calculerListeOpt() {
-		etatCourant.calculerListeOpt();
-	}
-	
+
 	/**
 	 * Méthode appelée après avoir JE SAIS PO...
 	 */
 	public void calculerItineraire() {
 		etatCourant.calculerItineraire();
 	}
-	
+
 	/**
 	 * Méthode appelée après un clic sur le bouton "Exporter feuille de route"
 	 */
 	public void exporterFeuilleDeRoute() {
 		etatCourant.exporterFeuilleDeRoute();
 	}
-	
+
 	/**
 	 * Méthode appelée après un clic sur le bouton "Undo" ou après pressé Ctrl+Z
 	 */
 	public void undo() {
 		etatCourant.undo(listeCommande);
 	}
-	
+
 	/**
 	 * Méthode appelée après un clic sur le bouton "Redo" ou après pressé Ctrl+Y
 	 */

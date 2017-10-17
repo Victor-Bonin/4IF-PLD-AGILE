@@ -21,22 +21,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-import modele.Plan;
-import vue.Fenetre;
-
-public class EtatCalcule implements Etat{
-
-	@Override
-	public void ouvrirPlan(Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ouvrirLivraison() {
-		// TODO Auto-generated method stub
-		
-	}
+public class EtatCalcule extends EtatDemandeOuverte{
 
 	@Override
 	public void ajouterLivraison() {
@@ -55,15 +40,6 @@ public class EtatCalcule implements Etat{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void calculerListeOpt() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void calculerItineraire() {}
 
 	@Override
 	public void exporterFeuilleDeRoute() {

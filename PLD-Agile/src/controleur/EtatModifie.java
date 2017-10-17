@@ -21,69 +21,11 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-import modele.Plan;
-import vue.Fenetre;
-
-public class EtatModifie implements Etat{
-
-	@Override
-	public void ouvrirPlan(Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ouvrirLivraison() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ajouterLivraison() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void permuterLivraison() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void supprimerLivraison() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void calculerListeOpt() {
-		// TODO Auto-generated method stub
-		
-	}
+public class EtatModifie extends EtatCalcule{
 
 	@Override
 	public void calculerItineraire() {
 		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void exporterFeuilleDeRoute() {
-		// TODO Auto-generated method stub
-		
 	}
-
-	@Override
-	public void undo(ListeCommande listeCommande) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void redo(ListeCommande listeCommande) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

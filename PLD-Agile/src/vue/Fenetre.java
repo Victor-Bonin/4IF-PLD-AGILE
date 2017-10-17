@@ -32,7 +32,6 @@ public class Fenetre extends JFrame{
 	private Plan plan;
 	
 	
-	
 	public Fenetre(Controleur ctrl, Plan plan){
 		super(Textes.NOM_APPLI);
 		this.ctrl = ctrl;

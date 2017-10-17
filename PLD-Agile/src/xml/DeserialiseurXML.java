@@ -2,6 +2,8 @@ package xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,7 +19,7 @@ import modele.Plan;
 
 public class DeserialiseurXML {
 	/**
-	 * Ouvre un fichier xml et cree plan a partir du contenu du fichier
+	 * Ouvre un fichier xml et cree plan et demandeLivraison a partir du contenu du fichier
 	 * @param plan
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
@@ -35,6 +37,19 @@ public class DeserialiseurXML {
         else
         		throw new ExceptionXML("Document non conforme");
 	}
+	
+	public static void chargerDemandeLivraison(Plan plan)throws Exception{
+		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
+        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+        Document document = docBuilder.parse(xml);
+        Element racine = document.getDocumentElement();
+        if (racine.getNodeName().equals("demandeDeLivraisons")) {
+        		construireDemandeLivraisonAPartirDeDOMXML(racine, plan);
+        }
+        else
+        		throw new ExceptionXML("Document non conforme");
+	}
+
 
     private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionXML, NumberFormatException
     {
@@ -52,6 +67,24 @@ public class DeserialiseurXML {
 				throw new ExceptionXML(e.getMessage());
 			}
        	}
-       	System.out.println("Fin");
+    }
+    
+    private static void construireDemandeLivraisonAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws Exception
+    {
+    		NodeList listeEntrepot = noeudDOMRacine.getElementsByTagName("entrepot");
+    		Element entrepot = (Element) listeEntrepot.item(0);
+    		String dateAsString = entrepot.getAttribute("heureDepart");
+    		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    		Date date = dateFormat.parse(dateAsString);
+    		long entrepotId = Long.parseLong(entrepot.getAttribute("adresse"));
+    		plan.setEntrepot(entrepotId, date);
+    		
+    		NodeList listeAdresse = noeudDOMRacine.getElementsByTagName("livraison");
+       	for (int i = 0; i < listeAdresse.getLength(); i++) {
+       		Element xmlAdresse = (Element) listeAdresse.item(i);
+          	Long id = Long.parseLong(xmlAdresse.getAttribute("adresse"));
+          	int duree = Integer.parseInt(xmlAdresse.getAttribute("duree"));
+          	plan.ajouterPointLivraison(id,  duree);
+       	}
     }
 }

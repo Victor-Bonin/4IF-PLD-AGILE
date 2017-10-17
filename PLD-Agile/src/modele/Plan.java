@@ -1,29 +1,32 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
 import modele.algo.Dijkstra;
 import modele.algo.DjkSolution;
 import modele.algo.TSP1;
 
 public class Plan {
-	private List<Intersection> intersections;
+	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
-	
+	private DemandeLivraison demandeLivraison;
+
 	public Plan() {
-		intersections = new ArrayList<Intersection>();
+		intersections = new HashMap<Long, Intersection>();
 		troncons = new ArrayList<Troncon>();
+		demandeLivraison = new DemandeLivraison();
 	}
-	
+
 	public void ajoute(int x, int y, long id) {
 		Intersection intersection = new Intersection(x, y, id);
-		intersections.add(intersection);
+		intersections.put(id,  intersection);
 	}
-	
+
 	public void ajoute(long depart, long arrivee, float longueur, String nomRue) throws Exception {
-		Intersection debut = intersections.stream().filter(x->x.getId() == depart).findFirst().orElse(null);
-		Intersection fin = intersections.stream().filter(x->x.getId() == arrivee).findFirst().orElse(null);
+		Intersection debut = intersections.getOrDefault(depart, null);
+		Intersection fin = intersections.getOrDefault(arrivee, null);
 		if(debut != null && fin != null)
 		{
 			Troncon troncon = new Troncon(debut, fin, nomRue, longueur);
@@ -35,9 +38,10 @@ public class Plan {
 	}
 	
 	public void calculTournee(DemandeLivraison d){
+		List<Intersection> interList = new ArrayList<Intersection>(intersections.values());
 		List<Livraison> livraisons = d.getLivraisons();
 		Entrepot entrepot = d.getEntrepot();
-		int nbSommets = intersections.size();
+		int nbSommets = interList.size();
 		int nbLivraisons = livraisons.size();
 		TSP1 tsp = new TSP1();
 		Dijkstra dijkstra = new Dijkstra();
@@ -49,8 +53,8 @@ public class Plan {
 		Troncon t;
 		for(int i=0; i<troncons.size(); i++){
 			t = troncons.get(i);
-			interDebut = intersections.indexOf(t.getDebut());
-			interFin = intersections.indexOf(t.getFin());
+			interDebut = interList.indexOf(t.getDebut());
+			interFin = interList.indexOf(t.getFin());
 			graph[interDebut][interFin] = t.getLongueur();
 		}
 		
@@ -69,17 +73,17 @@ public class Plan {
 		// On lance Dijkstra depuis tous les points de livraison
 		DjkSolution result;
 		for(int i=0; i<nbLivraisons; i++){
-			result = dijkstra.PCC(graph, intersections.indexOf(livraisons.get(i)));
+			result = dijkstra.PCC(graph, interList.indexOf(livraisons.get(i)));
 			// result est un tableau contenant pour chaque intersection de graph le plus court chemin du point de livraison i a l'intersection
 			for(int j=0; j<nbLivraisons; j++){
-				cout[i+1][j+1]=result.dist[intersections.indexOf(livraisons.get(j))]; // L'index d'un point de livraison dans la liste intersections correspond aussi a son index dans la matrice graph, donc result
-				cout[i+1][0]=result.dist[intersections.indexOf(entrepot)];
+				cout[i+1][j+1]=result.dist[interList.indexOf(livraisons.get(j))]; // L'index d'un point de livraison dans la liste interList correspond aussi a son index dans la matrice graph, donc result
+				cout[i+1][0]=result.dist[interList.indexOf(entrepot)];
 			}
 		}
 		// On lance aussi Dijkstra depuis l'entrepot
-		result = dijkstra.PCC(graph, intersections.indexOf(entrepot));
+		result = dijkstra.PCC(graph, interList.indexOf(entrepot));
 		for(int i=0; i<nbLivraisons; i++){
-			cout[0][i+1]=result.dist[intersections.indexOf(livraisons.get(i))];
+			cout[0][i+1]=result.dist[interList.indexOf(livraisons.get(i))];
 		}
 		
 					System.out.println("Cout :");
@@ -134,6 +138,34 @@ public class Plan {
 		for(int i=0;i<7;i++){
 			System.out.print(tsp.getMeilleureSolution(i)+" ");
 		}
+	}
+
+	public void setEntrepot(Long idIntersection, Date heureDepart) throws Exception{
+		Intersection intersection = intersections.getOrDefault(idIntersection, null);
+		if(intersection != null) {
+			Entrepot entrepot = new Entrepot(intersection, heureDepart);
+			demandeLivraison.setEntrepot(entrepot);
+		} else {
+			throw new Exception("L'entrepôt ne correspond à aucune adresse connue");
+		}
+	}
+	
+	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws Exception {
+		Intersection intersection = intersections.getOrDefault(idIntersection, null);
+		if(intersection != null) {
+			Livraison livraison = new Livraison(intersection, dureeLivraison);
+			demandeLivraison.ajoutePointLivraison(livraison);
+		} else {
+			throw new Exception("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
+		}
+	}
+	
+	public HashMap<Long, Intersection> getIntersections(){
+		return intersections;
+	}
+	
+	public List<Troncon> getTroncons(){
+		return troncons;
 	}
 	
 }

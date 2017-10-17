@@ -21,6 +21,42 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-public class EtatCalcule implements Etat{
+public class EtatCalcule extends EtatDemandeOuverte{
+
+	@Override
+	public void ajouterLivraison() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void permuterLivraison() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void supprimerLivraison() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exporterFeuilleDeRoute() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void undo(ListeCommande listeCommande) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void redo(ListeCommande listeCommande) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

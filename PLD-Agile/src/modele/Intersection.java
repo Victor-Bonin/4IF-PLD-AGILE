@@ -18,4 +18,19 @@ public class Intersection {
 	public boolean equals(Intersection obj) {
 		return (this.id == obj.getId());
 	}
+	
+	public Intersection(Intersection inter) {
+		x = inter.x;
+		y = inter.y;
+		id = inter.id;
+	}
+	
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
 }

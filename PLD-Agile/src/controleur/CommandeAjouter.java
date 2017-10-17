@@ -21,6 +21,18 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-public class CommandeAjouter extends Commande {
+public class CommandeAjouter implements Commande {
+
+	@Override
+	public void doCde() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void undoCde() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

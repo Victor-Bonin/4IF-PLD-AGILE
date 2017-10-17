@@ -12,8 +12,13 @@ import modele.Plan;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
+import vue.Fenetre;
+
+import controleur.Controleur;
+import xml.DeserialiseurXML;
+import xml.ExceptionXML;
+
 public class Agile {
-	
 	private static final int echelleInitiale = 10;
 	private static final int hauteurPlan = 40;
 	private static final int largeurPlan = 40;
@@ -23,7 +28,8 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
-		try {
+		Controleur ctrl = new Controleur(plan);
+		/*try {
 			DeserialiseurXML.charger(plan);
 			try {
 				DeserialiseurXML.chargerDemandeLivraison(plan);
@@ -38,7 +44,7 @@ public class Agile {
 			e.printStackTrace();
 		} catch (ExceptionXML e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }

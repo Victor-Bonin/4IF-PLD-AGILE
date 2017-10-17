@@ -21,6 +21,11 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-public class EtatModifie implements Etat{
+public class EtatModifie extends EtatCalcule{
 
+	@Override
+	public void calculerItineraire() {
+		// TODO Auto-generated method stub
+
+	}
 }

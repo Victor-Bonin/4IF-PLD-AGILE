@@ -21,6 +21,22 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-public class EtatInit implements Etat{
+import modele.Plan;
+import vue.Fenetre;
+import xml.DeserialiseurXML;
 
+public class EtatInit extends EtatDefaut{
+
+	@Override
+	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
+			ListeCommande listeCommande) {
+		try {
+			DeserialiseurXML.charger(plan);
+			controleur.setEtatCourant(controleur.etatPlanOuvert);
+			listeCommande.reset();
+		}
+		catch(Exception e) {
+			//TODO : afficher notif "va te faire sa marche po, yapodplan"
+		}
+	}
 }

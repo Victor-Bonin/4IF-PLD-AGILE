@@ -21,6 +21,21 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Plan;
+import vue.Fenetre;
+
 public interface Etat {
 
+	void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
+			ListeCommande listeCommande);
+	void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
+			ListeCommande listeCommande);
+	void ajouterLivraison();
+	void permuterLivraison();
+	void supprimerLivraison();
+	void calculerListeOpt(Controleur controleur, Plan plan, Fenetre fenetre);
+	void calculerItineraire();
+	void exporterFeuilleDeRoute();
+	void undo(ListeCommande listeCommande);
+	void redo(ListeCommande listeCommande);
 }

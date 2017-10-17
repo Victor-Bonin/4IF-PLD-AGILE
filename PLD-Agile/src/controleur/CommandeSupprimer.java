@@ -21,6 +21,18 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-public class CommandeSupprimer extends Commande {
+public class CommandeSupprimer implements Commande {
+
+	@Override
+	public void doCde() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void undoCde() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

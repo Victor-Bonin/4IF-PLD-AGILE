@@ -25,6 +25,8 @@ public interface CharteGraphique {
 	//BUTTONS
 	public static final Color BUTTON_GREEN_BG = new  Color(203,232,186); 
 	public static final Color BUTTON_GREEN_BORDER = new  Color(146,211,110); 
+	public static final Color BUTTON_WHITE_BG = Color.WHITE; 
+	public static final Color BUTTON_WHITE_BORDER = new Color(220,220,220); 
 	
 	//ICONS
 	public static final String ICONE_LIVRAISON = "ressources/map-marker2.png";

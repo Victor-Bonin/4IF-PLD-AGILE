@@ -20,7 +20,9 @@ public class Fenetre extends JFrame{
 		setVisible(true);
 		
 		VuePlan plan = new VuePlan();
-		setContentPane(plan);       
+		
+		/* TODO : A supprimer */
+		setContentPane(plan);     
 	}
 
 }

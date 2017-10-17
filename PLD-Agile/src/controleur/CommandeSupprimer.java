@@ -16,8 +16,9 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 | |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
-
-
+Classe représentant la commande de suppression d'un point de livraison.
+Une commande peut être exécutée et annulée.
+@author 4104
  */
 package controleur;
 

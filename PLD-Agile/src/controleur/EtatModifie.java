@@ -17,7 +17,8 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
 
-
+Classe représentant l'état de l'app lorsqu'une Tournée a été modifié.
+@author 4104
  */
 package controleur;
 

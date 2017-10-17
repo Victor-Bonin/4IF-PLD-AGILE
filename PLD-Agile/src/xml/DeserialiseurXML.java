@@ -23,7 +23,7 @@ import modele.Plan;
  */
 public class DeserialiseurXML {
 	/**
-	 * Ouvre un fichier xml et rempli le plan a partir du contenu du fichier
+	 * Ouvre un fichier xml et remplit le plan a partir du contenu du fichier
 	 * @param plan Objet plan deja instancie
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
@@ -43,7 +43,7 @@ public class DeserialiseurXML {
 	}
 	
 	/**
-	 * Ouvre un fichier xml et rempli la demande de livraison du plan a partir du contenu du fichier
+	 * Ouvre un fichier xml et remplit la demande de livraison du plan a partir du contenu du fichier
 	 * @param plan Objet plan déjà instancié
 	 * @throws Exception
 	 */
@@ -60,7 +60,7 @@ public class DeserialiseurXML {
 	}
 
 	/**
-	 * Extrait les donnees du noeud racine à partir du fichier xml et rempli le plan avec ces donnees
+	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit le plan avec ces donnees
 	 * @param noeudDOMRacine Noeud racine du fichier xml
 	 * @param plan Objet plan déjà instancie
 	 * @throws ExceptionXML
@@ -84,7 +84,7 @@ public class DeserialiseurXML {
        	}
     }
     /**
-	 * Extrait les donnees du noeud racine à partir du fichier xml et rempli la demande de livraison du plan avec ces donnees
+	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit la demande de livraison du plan avec ces donnees
 	 * @param noeudDOMRacine Noeud racine du fichier xml
 	 * @param plan Objet plan déjà instancie
      * @throws Exception

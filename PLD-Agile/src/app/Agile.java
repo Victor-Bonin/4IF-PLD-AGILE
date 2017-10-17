@@ -1,11 +1,13 @@
 package app;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import modele.DemandeLivraison;
 import modele.Plan;
 import vue.Fenetre;
 import controleur.Controleur;
@@ -26,6 +28,11 @@ public class Agile {
 		Controleur ctrl = new Controleur();
 		/*try {
 			DeserialiseurXML.charger(plan);
+			try {
+				DeserialiseurXML.chargerDemandeLivraison(plan);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {

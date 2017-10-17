@@ -3,6 +3,7 @@ package vue;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import modele.Intersection;
 import modele.Plan;
 
 import java.awt.BasicStroke;
@@ -12,7 +13,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Cette classe correspond à la vue du plan en particulier
@@ -52,20 +55,21 @@ public class VuePlan extends JPanel{
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.WHITE);
 			g2d.setStroke(new BasicStroke(2));
-			float maxX = plan.getIntersections().get(0).getX();
-			float maxY = plan.getIntersections().get(0).getY();
-			float minX = plan.getIntersections().get(0).getX();
-			float minY = plan.getIntersections().get(0).getY();
-			for(int i=0; i<plan.getIntersections().size(); i++) {
-				if(plan.getIntersections().get(i).getX()>maxX) {
-					maxX = plan.getIntersections().get(i).getX();
-				} else if (plan.getIntersections().get(i).getX()<minX) {
-					minX = plan.getIntersections().get(i).getX();
+			float maxX = Float.MIN_VALUE;
+			float maxY = Float.MIN_VALUE;
+			float minX = Float.MAX_VALUE;
+			float minY = Float.MAX_VALUE;
+			
+			for (Intersection intersection : plan.getIntersections().values()) {
+				if(intersection.getX()>maxX) {
+					maxX = intersection.getX();
+				} else if (intersection.getX()<minX) {
+					minX = intersection.getX();
 				}
-				if(plan.getIntersections().get(i).getY()>maxY) {
-					maxY = plan.getIntersections().get(i).getY();
-				} else if (plan.getIntersections().get(i).getY()<minY){
-					minY = plan.getIntersections().get(i).getY();
+				if(intersection.getY()>maxY) {
+					maxY = intersection.getY();
+				} else if (intersection.getY()<minY){
+					minY = intersection.getY();
 				}
 			}
 			

@@ -21,6 +21,48 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Plan;
+import vue.Fenetre;
+
 public class EtatDefaut implements Etat{
+
+	@Override
+	public void ouvrirPlan(Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ouvrirLivraison() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ajouterLivraison() {}
+
+	@Override
+	public void permuterLivraison() {}
+
+	@Override
+	public void supprimerLivraison() {}
+
+	@Override
+	public void calculerListeOpt() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calculerItineraire() {}
+
+	@Override
+	public void exporterFeuilleDeRoute() {}
+
+	@Override
+	public void undo(ListeCommande listeCommande) {}
+
+	@Override
+	public void redo(ListeCommande listeCommande) {}
 
 }

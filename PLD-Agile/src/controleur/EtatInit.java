@@ -21,6 +21,47 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Plan;
+import vue.Fenetre;
+import xml.DeserialiseurXML;
+
 public class EtatInit implements Etat{
+
+	@Override
+	public void ouvrirPlan(Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		try {
+			DeserialiseurXML.charger(plan);
+		}
+		catch(Exception e) {
+			
+		}
+	}
+
+	@Override
+	public void ouvrirLivraison() {}
+
+	@Override
+	public void ajouterLivraison() {}
+
+	@Override
+	public void permuterLivraison() {}
+
+	@Override
+	public void supprimerLivraison() {}
+
+	@Override
+	public void calculerListeOpt() {}
+
+	@Override
+	public void calculerItineraire() {}
+
+	@Override
+	public void exporterFeuilleDeRoute() {}
+
+	@Override
+	public void undo(ListeCommande listeCommande) {}
+
+	@Override
+	public void redo(ListeCommande listeCommande) {}
 
 }

@@ -19,7 +19,7 @@ public class Fenetre extends JFrame{
 	
 	
 	public Fenetre(){
-		super("PlanCo");
+		super(Textes.NOM_APPLI);
 		
 		initFenetre();
 		
@@ -47,7 +47,7 @@ public class Fenetre extends JFrame{
 	private void initHeader(){
 		header = new VueHeader();
 		
-		header.changeNotification("Vous devez importer un plan avant de continuer");
+		header.changeNotification(Textes.NOTIF_MUST_IMPORT);
 		
 		getContentPane().add(header, BorderLayout.NORTH);
 	}
@@ -55,9 +55,9 @@ public class Fenetre extends JFrame{
 	private void initFooter(){
 		
 		footer = new JPanel();
-		footer.setBackground(Color.RED);
+		footer.setBackground(CharteGraphique.BG_COLOR);
 		
-		exportButton = new JButton("Exporter la feuille de route");
+		exportButton = new JButton(Textes.BUTTON_EXPORT_ROUTE);
 
 		footer.add(exportButton);
 		

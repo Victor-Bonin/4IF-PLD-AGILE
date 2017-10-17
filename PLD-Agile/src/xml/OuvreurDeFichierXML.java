@@ -4,6 +4,10 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.*;
 
+/**
+ * Classe gerant l'ouverture d'une popup de choix de fichier xml dans un explorateur de fichier
+ * @author 4104
+ */
 public class OuvreurDeFichierXML extends FileFilter {// Singleton
 	
 	private static OuvreurDeFichierXML instance = null;
@@ -13,6 +17,12 @@ public class OuvreurDeFichierXML extends FileFilter {// Singleton
 		return instance;
 	}
 
+	/**
+	 * Ouvre une popup afin de recuperer le chemin vers un fichier
+	 * @param lecture Ouvrir un fichier ou sauvegarder un fichier
+	 * @return
+	 * @throws ExceptionXML
+	 */
  	public File ouvre(boolean lecture) throws ExceptionXML{
  		int returnVal;
  		JFileChooser jFileChooserXML = new JFileChooser(System.getProperty("user.dir"));
@@ -27,6 +37,10 @@ public class OuvreurDeFichierXML extends FileFilter {// Singleton
         return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
  	}
  	
+ 	/**
+ 	 * Accepte les fichiers xml uniquement
+ 	 * @param f 
+ 	 */
  	@Override
     public boolean accept(File f) {
 	    	if (f == null) return false;
@@ -36,11 +50,20 @@ public class OuvreurDeFichierXML extends FileFilter {// Singleton
 	    	return extension.contentEquals("xml");
     }
 
+ 	/**
+ 	 * Retourne la description du fichier XML
+ 	 * @return description du fichier XML
+ 	 */
 	@Override
 	public String getDescription() {
 		return "Fichier XML";
 	}
 
+	/**
+	 * Retourne l'extension du fichier
+	 * @param f fichier
+	 * @return L'extension du fichier passe en parametre
+	 */
     private String getExtension(File f) {
 	    String filename = f.getName();
 	    int i = filename.lastIndexOf('.');

@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,7 +29,9 @@ public class VueHeader extends JPanel{
 		
 		notificationPanel.add(notificationLabel);
 		
-		JLabel titre = new JLabel("PlanCo");
+		JLabel titre = new JLabel(Textes.TITRE_APPLI);
+		titre.setForeground(CharteGraphique.TITLE_COLOR);
+		titre.setFont(new Font("Arial", Font.ITALIC, 30));
 		
 		add(titre, BorderLayout.NORTH);
 		add(notificationPanel, BorderLayout.CENTER);

@@ -21,7 +21,6 @@ public class Agile {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
 		Plan plan = new Plan();
 		try {
 			DeserialiseurXML.charger(plan);
@@ -34,9 +33,7 @@ public class Agile {
 		} catch (ExceptionXML e) {
 			e.printStackTrace();
 		}
-		
 		Fenetre test = new Fenetre(plan);
-
 	}
 
 }

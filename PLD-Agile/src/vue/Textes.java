@@ -17,4 +17,5 @@ public interface Textes {
 	public static final String BUTTON_EXPORT_ROUTE = "Exporter la feuille de route";
 	public static final String BUTTON_IMPORT_DEMANDE_LIVRAISON = "Importer une demande de livraison";
 	public static final String BUTTON_IMPORT_PLAN = "Importer un plan";
+	public static final String IMPORT_PLAN_FAILED = "Echec lors de l'import du plan. Veuillez réessayer :)";
 }

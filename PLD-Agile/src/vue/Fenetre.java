@@ -140,7 +140,7 @@ public class Fenetre extends JFrame{
 			repaint();
 		}
 	}
-	private void goToChargee(){
+	public void goToChargee(){
 		if(plan!=null){
 			setFooter(VUE_CHARGEE);
 			setVisible(true);
@@ -156,5 +156,8 @@ public class Fenetre extends JFrame{
 		this.vuePlan.dezoom();
 	}
 	
+	public void changeNotification(String texte) {
+		header.changeNotification(texte);
+	}
 
 }

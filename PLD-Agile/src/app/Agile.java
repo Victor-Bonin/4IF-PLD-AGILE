@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import modele.Plan;
 import vue.Fenetre;
+import controleur.Controleur;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
@@ -22,7 +23,8 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
-		try {
+		Controleur ctrl = new Controleur();
+		/*try {
 			DeserialiseurXML.charger(plan);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -32,8 +34,8 @@ public class Agile {
 			e.printStackTrace();
 		} catch (ExceptionXML e) {
 			e.printStackTrace();
-		}
-		Fenetre test = new Fenetre(plan);
+		}*/
+		Fenetre test = new Fenetre(ctrl, plan);
 	}
 
 }

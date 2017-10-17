@@ -22,5 +22,12 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 package controleur;
 
 public class Controleur {
-
+	
+	//TODO implémenter les méthodes et virer ce texte
+	public void importerPlan(){
+		System.out.println("Importe le plan là...");
+	}
+	public void exportFeuille(){
+		System.out.println("Exporte la feuille là...");
+	}
 }

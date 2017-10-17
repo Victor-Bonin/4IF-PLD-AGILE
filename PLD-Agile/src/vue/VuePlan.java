@@ -41,6 +41,7 @@ public class VuePlan extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		try {
+
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.WHITE);

@@ -23,20 +23,12 @@ package controleur;
 
 import modele.Plan;
 import vue.Fenetre;
-import xml.DeserialiseurXML;
 
-public class EtatPlanOuvert extends EtatInit {
+public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
-	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
-			ListeCommande listeCommande) {
-		try {
-			DeserialiseurXML.charger(plan);
-			controleur.setEtatCourant(controleur.etatDemandeOuverte);
-			listeCommande.reset();
-		}
-		catch(Exception e) {
-			//TODO : afficher notif "va te faire sa marche po, yapodedemandedelivraison"
-		}
+	public void calculerListeOpt(Controleur controleur, Plan plan, Fenetre fenetre) {
+		//TODO : magie TSP bidule truc chouette
+		controleur.setEtatCourant(controleur.etatCalcule);
 	}
 }

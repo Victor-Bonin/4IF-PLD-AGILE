@@ -48,9 +48,6 @@ public class Fenetre extends JFrame{
 		initFooter();
 		
 		setVisible(true);
-		
-		//goToPlanOpened();
-
 	}
 	
 	private void initListeners(){
@@ -74,7 +71,7 @@ public class Fenetre extends JFrame{
 	
 	private void initFenetre(){
 		setSize(800,600);
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -130,16 +127,18 @@ public class Fenetre extends JFrame{
 		getContentPane().add(footer, BorderLayout.SOUTH);
 	}
 
-	private void goToPlanOpened(){
+	public void goToPlanOpened(){
 		if(plan!=null){
 			setContent(new VuePlan(plan));
 			setFooter(VUE_PLAN);
+			setVisible(true);
 			repaint();
 		}
 	}
 	private void goToChargee(){
 		if(plan!=null){
 			setFooter(VUE_CHARGEE);
+			setVisible(true);
 			repaint();
 		}
 	}

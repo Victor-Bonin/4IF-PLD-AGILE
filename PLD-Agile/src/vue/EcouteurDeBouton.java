@@ -14,10 +14,10 @@ public class EcouteurDeBouton implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 		switch(event.getActionCommand()){
 			case "import-plan":
-				ctrl.importerPlan();
+				ctrl.ouvrirPlan();
 				break;
 			case "export-feuille":
-				ctrl.exportFeuille();
+				ctrl.exporterFeuilleDeRoute();
 				break;
 		}
 		

@@ -13,8 +13,11 @@ public class EcouteurDeBouton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		switch(event.getActionCommand()){
-			case "blabla":
-				//ctrl.action1();
+			case "import-plan":
+				ctrl.importerPlan();
+				break;
+			case "export-feuille":
+				ctrl.exportFeuille();
 				break;
 		}
 		

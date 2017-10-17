@@ -15,15 +15,23 @@ public interface CharteGraphique {
 	public static final Color BG_COLOR = Color.WHITE;
 	public static final Color SEPARATOR_COLOR = new Color(220,220,220);
 
+	//TEXTS
 	public static final Color TITLE_COLOR = Color.RED;
 	public static final Font TITLE_FONT = new Font("Arial", Font.PLAIN, 30);
 	
 	public static final Color TEXT_SECONDARY_COLOR = new  Color(150,150,150);
 	public static final Font TEXT_SECONDARY_FONT = new Font("Arial", Font.PLAIN, 14);
 
+	//BUTTONS
 	public static final Color BUTTON_GREEN_BG = new  Color(203,232,186); 
 	public static final Color BUTTON_GREEN_BORDER = new  Color(146,211,110); 
 	
+	//ICONS
 	public static final String ICONE_LIVRAISON = "ressources/map-marker2.png";
+	
+	//GRAPH
+	public static final Color GRAPH_TRONCON = Color.WHITE;
+	public static final Color GRAPH_BG =  new Color(200,200,200);
+	
 
 }

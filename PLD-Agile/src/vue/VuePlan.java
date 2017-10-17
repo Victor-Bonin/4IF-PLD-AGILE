@@ -41,19 +41,22 @@ public class VuePlan extends JPanel{
 	
 	
 	public VuePlan(Plan plan){
-		this.setBackground(new Color(168,168,168)); 
+		setBackground(CharteGraphique.GRAPH_BG); 
 		this.plan = plan;
 		this.coordoneeX = 27562;
 		this.coordoneeY = 15366;
 		this.zoom = 80;
 	}
 	
+	
+	//TODO antialiasing !!!! je souffre des yeux là 
 	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 		try {
 
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(CharteGraphique.GRAPH_TRONCON);
 			g2d.setStroke(new BasicStroke(2));
 			float maxX = Float.MIN_VALUE;
 			float maxY = Float.MIN_VALUE;

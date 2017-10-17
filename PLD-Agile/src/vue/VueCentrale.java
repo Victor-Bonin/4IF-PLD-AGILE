@@ -20,12 +20,10 @@ public class VueCentrale extends JPanel{
 	
 	public VueCentrale(JPanel vuePlan){
 		setLayout(new BorderLayout());
-		
-		panneauGauche = new JPanel();
+
+		panneauGauche = new VueTournee();
+		//panneauGauche = vueTournee; // l'avoir en parametre
 		panneauCentre = vuePlan;
-		
-		panneauGauche.setBackground(Color.GRAY);
-		panneauCentre.setBackground(Color.BLACK);
 
 		add(panneauGauche, BorderLayout.WEST);
 		add(panneauCentre, BorderLayout.CENTER);

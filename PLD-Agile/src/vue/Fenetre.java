@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -70,8 +69,8 @@ public class Fenetre extends JFrame{
 	}
 	
 	private void initFenetre(){
-		setSize(800,600);
-		setResizable(true);
+		setSize(1000,800);
+		//setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		

@@ -22,8 +22,8 @@ public class Plan {
 	}
 	
 	public void ajoute(long depart, long arrivee, float longueur, String nomRue) throws Exception {
-		Intersection debut = intersections.stream().filter(x->x.getid() == depart).findFirst().orElse(null);
-		Intersection fin = intersections.stream().filter(x->x.getid() == arrivee).findFirst().orElse(null);
+		Intersection debut = intersections.stream().filter(x->x.getId() == depart).findFirst().orElse(null);
+		Intersection fin = intersections.stream().filter(x->x.getId() == arrivee).findFirst().orElse(null);
 		if(debut != null && fin != null)
 		{
 			Troncon troncon = new Troncon(debut, fin, nomRue, longueur);

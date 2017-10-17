@@ -18,6 +18,9 @@ public class Fenetre extends JFrame{
 		setLocationRelativeTo(null);
 		
 		setVisible(true);
+		
+		VuePlan plan = new VuePlan();
+		setContentPane(plan);       
 	}
 
 }

@@ -63,4 +63,10 @@ public class Plan
 	public List<Troncon> getTroncons(){
 		return troncons;
 	}
+	
+	public void reset() {
+		intersections.clear();
+		troncons.clear();
+		demandeLivraison = null;
+	}
 }

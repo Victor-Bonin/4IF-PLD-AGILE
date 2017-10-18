@@ -31,6 +31,7 @@ public class VuePlan extends JPanel{
 	private float coordoneeX;
 	private float coordoneeY;
 	private float zoom;
+	private boolean firstCall = true;
 	// TODO : Supprimer
 	private int x1 = 20;
 	private int y1 = 20;
@@ -38,6 +39,10 @@ public class VuePlan extends JPanel{
 	private int y2 = 200;
 	private int x3 = 20;
 	private int y3 = 200;
+	private float maxX = Float.MIN_VALUE;
+	private float maxY = Float.MIN_VALUE;
+	private float minX = Float.MAX_VALUE;
+	private float minY = Float.MAX_VALUE;
 	
 	
 	public VuePlan(Plan plan){
@@ -46,6 +51,20 @@ public class VuePlan extends JPanel{
 		this.coordoneeX = 27562;
 		this.coordoneeY = 15366;
 		setOpaque(false);
+		for (Intersection intersection : plan.getIntersections().values()) {
+			if(intersection.getX()>maxX) {
+				maxX = intersection.getX();
+			} else if (intersection.getX()<minX) {
+				minX = intersection.getX();
+			}
+			if(intersection.getY()>maxY) {
+				maxY = intersection.getY();
+			} else if (intersection.getY()<minY){
+				minY = intersection.getY();
+			}
+		}
+		
+
 	}
 	
 	public void paintComponent(Graphics g){
@@ -55,35 +74,23 @@ public class VuePlan extends JPanel{
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.WHITE);
 			g2d.setStroke(new BasicStroke(2));
-			float maxX = Float.MIN_VALUE;
-			float maxY = Float.MIN_VALUE;
-			float minX = Float.MAX_VALUE;
-			float minY = Float.MAX_VALUE;
+			//g2d.setStroke(new BasicStroke((100-zoom)/10));
 			
-			for (Intersection intersection : plan.getIntersections().values()) {
-				if(intersection.getX()>maxX) {
-					maxX = intersection.getX();
-				} else if (intersection.getX()<minX) {
-					minX = intersection.getX();
+			if (firstCall){
+				float centreX = (minX+maxX)/2;
+				float centreY = (minY+maxY)/2;
+				float rapportX = (maxX-minX)/this.getWidth();	
+				System.out.println(this.getWidth());
+				float rapportY = (maxY-minY)/this.getHeight();
+				
+				if(rapportX>rapportY) {
+					zoom = rapportX;
+				} else {
+					zoom = rapportY;
 				}
-				if(intersection.getY()>maxY) {
-					maxY = intersection.getY();
-				} else if (intersection.getY()<minY){
-					minY = intersection.getY();
-				}
-			}
-			
-
-			
-			float centreX = (minX+maxX)/2;
-			float centreY = (minY+maxY)/2;
-			float rapportX = (maxX-minX)/this.getWidth();			
-			float rapportY = (maxY-minY)/this.getHeight();
-			
-			if(rapportX>rapportY) {
-				zoom = rapportX;
-			} else {
-				zoom = rapportY;
+				System.out.println(zoom);
+				
+				firstCall = false;
 			}
 			
 
@@ -111,16 +118,16 @@ public class VuePlan extends JPanel{
 	  }
 	
 	public void zoom(){
-		System.out.println(zoom);
-		this.zoom-=20;
-		System.out.println(zoom);
+		this.zoom-=5;
+		if(zoom<=0) {
+			zoom = 1;
+		}
 		repaint();
 		System.out.println(zoom);
 	}
 	
 	public void dezoom(){
-		System.out.println("zoooooom");
-		this.zoom+=20;
+		this.zoom+=5;
 		repaint();
 	}
 

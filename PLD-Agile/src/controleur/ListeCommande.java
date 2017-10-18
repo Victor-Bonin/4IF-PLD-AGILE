@@ -16,14 +16,14 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 | |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
-
-
+Classe représentant la liste des commandes que l'on peut annuler / refaire.
+@author 4104
  */
 package controleur;
 
 import java.util.LinkedList;
 
-public class ListeCommande {
+public class ListeCommande{
 	private LinkedList<Commande> liste;
 	private int indiceCrt;
 	

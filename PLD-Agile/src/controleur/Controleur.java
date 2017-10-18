@@ -17,7 +17,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
 
-
+@author 4104
  */
 package controleur;
 
@@ -62,7 +62,6 @@ public class Controleur {
 	 */
 	public void ouvrirPlan() {
 		etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
-		fenetre.goToPlanOpened();
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class Controleur {
 
 
 	/**
-	 * Methode appelee apres un clic sur le bouton "Optimisier l'ordre des livraisons"
+	 * Methode appelee apres un clic sur le bouton "Optimiser l'ordre des livraisons"
 	 */
 	public void calculerListeOpt() {
 		etatCourant.calculerListeOpt(this, plan, fenetre);

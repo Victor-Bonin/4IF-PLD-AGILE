@@ -16,14 +16,21 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 | |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
-
-
+Classe représentant l'état de l'app après l'ouverture d'un plan.
+@author 4104
  */
 package controleur;
+
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import modele.Plan;
 import vue.Fenetre;
 import xml.DeserialiseurXML;
+import xml.ExceptionXML;
 
 public class EtatPlanOuvert extends EtatInit {
 
@@ -35,8 +42,9 @@ public class EtatPlanOuvert extends EtatInit {
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
 			listeCommande.reset();
 		}
-		catch(Exception e) {
-			//TODO : afficher notif "va te faire sa marche po, yapodedemandedelivraison"
+		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
+			if(ex.getMessage() != "")
+				fenetre.changeNotification(ex.getMessage());
 		}
 	}
 }

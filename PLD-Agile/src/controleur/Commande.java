@@ -16,8 +16,8 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 | |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
-
-
+Interface Commande pour le design pattern Commande.  
+@author 4104
  */
 package controleur;
 

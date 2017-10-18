@@ -9,4 +9,8 @@ public class Entrepot extends Intersection{
 		super(inter);
 		heureDepart = hDepart;
 	}
+	
+	public boolean equals(Intersection obj) {
+		return (this.getId() == obj.getId());
+	}
 }

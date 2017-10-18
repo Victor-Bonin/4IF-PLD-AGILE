@@ -31,7 +31,6 @@ public class DeserialiseurXML {
 	 * @throws ExceptionXML
 	 */
 	public static void charger(Plan plan) throws ParserConfigurationException, SAXException, IOException, ExceptionXML{
-		plan.reset();
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document = docBuilder.parse(xml);
@@ -69,7 +68,8 @@ public class DeserialiseurXML {
 	 */
     private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionXML, NumberFormatException
     {
-    		NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
+    	plan.reset();	
+    	NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
        	for (int i = 0; i < listeNoeuds.getLength(); i++) {
        		Element xmlNoeud = (Element) listeNoeuds.item(i);
        		plan.ajoute(Integer.parseInt(xmlNoeud.getAttribute("x")), Integer.parseInt(xmlNoeud.getAttribute("y")), Long.parseLong(xmlNoeud.getAttribute("id")));

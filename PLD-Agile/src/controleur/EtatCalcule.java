@@ -16,8 +16,8 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 | |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
 |_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
 
-
-
+Classe représentant l'état de l'app lorsque la tournée a été calculé.
+@author 4104
  */
 package controleur;
 

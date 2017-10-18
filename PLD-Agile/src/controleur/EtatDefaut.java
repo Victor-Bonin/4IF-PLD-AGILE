@@ -1,3 +1,6 @@
+/**
+ * @author 4104
+ */
 package controleur;
 
 import modele.Plan;

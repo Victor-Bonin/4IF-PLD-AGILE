@@ -31,7 +31,7 @@ public class DeserialiseurXML {
 	 * @throws ExceptionXML
 	 */
 	public static void charger(Plan plan) throws ParserConfigurationException, SAXException, IOException, ExceptionXML{
-		//plan = new Plan();
+		plan.reset();
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document = docBuilder.parse(xml);

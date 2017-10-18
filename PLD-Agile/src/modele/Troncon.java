@@ -12,16 +12,16 @@ public class Troncon {
 		interDebut = debut;
 		interFin = fin;
 	}
-	
-	public Intersection getDepart() {
-		return interDebut;
+	public float getLongueur(){
+		return this.longueur;
 	}
 	
-	public Intersection getArrivee() {
-		return interFin;
+	public Intersection getDebut(){
+		return this.interDebut;
 	}
 	
-	public float getLongueur() {
-		return longueur;
+	public Intersection getFin(){
+		return this.interFin;
 	}
+	
 }

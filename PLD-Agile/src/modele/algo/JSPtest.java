@@ -9,7 +9,7 @@ public class JSPtest {
 	public static void test1(){
 		TSP1 tsp = new TSP1();
 		
-		int[][] cout = {{0,1,2,1,4}, //distances du node 0 vers les nodes i
+		float[][] cout = {{0,1,2,1,4}, //distances du node 0 vers les nodes i
 						{3,0,3,4,3},
 						{2,4,0,5,6},
 						{1,4,5,0,2},
@@ -30,12 +30,12 @@ public class JSPtest {
 	
 	public static void test2(int nbSommets){
 		TSP1 tsp = new TSP1();
-		int[][] cout = new int[nbSommets][nbSommets];
+		float[][] cout = new float[nbSommets][nbSommets];
 		int[] duree = new int[nbSommets];
 		for(int i=0;i<nbSommets;i++){
 			duree[i] = (int)(Math.random()*5);
 			for(int j=0;j<nbSommets;j++){
-				cout[i][j] = (int)(Math.random()*5);
+				cout[i][j] = (float)(Math.random()*5);
 			}
 		}
 		
@@ -54,50 +54,50 @@ public class JSPtest {
 	
 	public static void test3(){
 		Dijkstra dijkstra = new Dijkstra();
-		Integer[][] graph = {{null,3,null,1,null,9,null},
-							{null,null,2,null,8,null,null},
+		Float[][] graph = {{null,(float) 3,null,(float) 1,null,(float) 9,null},
+							{null,null,(float) 2,null,(float) 8,null,null},
 							{null,null,null,null,null,null,null},
-							{null,null,null,null,null,null,3},
-							{null,4,null,null,null,null,5},
-							{null,null,null,null,1,null,null},
+							{null,null,null,null,null,null,(float) 3},
+							{null,(float) 4,null,null,null,null,(float) 5},
+							{null,null,null,null,(float) 1,null,null},
 							{null,null,null,null,null,null,null}
 							};
 		int source = 0;
-		Integer[][] result = dijkstra.PCC(graph, source);
+		DjkSolution result = dijkstra.PCC(graph, source);
 		System.out.println("   dist  prev");
 		for(int i =0; i<7;i++){
-			System.out.println(i+" : "+result[0][i]+"     "+result[1][i]);
+			System.out.println(i+" : "+result.dist[i]+"     "+result.prev[i]);
 		}
 	}
 	
 	public static void test4(){
 		TSP1 tsp = new TSP1();
 		Dijkstra dijkstra = new Dijkstra();
-		Integer[][] graph = {{null,3,null,1,null,9,null},
-							{null,null,2,null,8,null,null},
-							{null,null,null,null,3,null,null},
-							{null,null,2,null,null,null,3},
-							{null,4,null,null,null,null,5},
-							{null,null,null,null,1,null,null},
-							{1,null,null,3,null,null,null}
+		Float[][] graph = {{null,(float) 3,null,(float) 1,null,(float) 9,null},
+							{null,null,(float) 2,null,(float) 8,null,null},
+							{null,null,null,null,(float) 3,null,null},
+							{null,null,(float) 2,null,null,null,(float) 3},
+							{null,(float) 4,null,null,null,null,(float) 5},
+							{null,null,null,null,(float) 1,null,null},
+							{(float) 1,null,null,(float) 3,null,null,null}
 							};
 		int[] duree = {2,1,2,3,1,4,3};
-		int[][] cout = new int[7][7];
+		float[][] cout = new float[7][7];
 		
 		for(int i=0; i<7; i++){
-			Integer[][] result = dijkstra.PCC(graph, i);	
+			DjkSolution result = dijkstra.PCC(graph, i);	
 			
 			///////////////////////////
 			System.out.println("--"+i+"--");
 			System.out.println("   dist  prev");
 			for(int k =0; k<7;k++){
-				System.out.println(k+" : "+result[0][k]+"     "+result[1][k]);
+				System.out.println(k+" : "+result.dist[k]+"     "+result.prev[k]);
 			}
 			System.out.println();
 			///////////////////////////
 			
 			for(int j=0; j<7; j++){
-				cout[i][j]=result[0][j];
+				cout[i][j]=result.dist[j];
 			}
 		}
 		

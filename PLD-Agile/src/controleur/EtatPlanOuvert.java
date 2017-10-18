@@ -21,16 +21,9 @@ Classe représentant l'état de l'app après l'ouverture d'un plan.
  */
 package controleur;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import modele.Plan;
 import vue.Fenetre;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class EtatPlanOuvert extends EtatInit {
 
@@ -38,11 +31,11 @@ public class EtatPlanOuvert extends EtatInit {
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
-			DeserialiseurXML.charger(plan);
+			DeserialiseurXML.chargerDemandeLivraison(plan);
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
 			listeCommande.reset();
 		}
-		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
+		catch(Exception ex) {
 			if(ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
 		}

@@ -38,11 +38,11 @@ public class EtatPlanOuvert extends EtatInit {
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
-			DeserialiseurXML.charger(plan);
+			DeserialiseurXML.chargerDemandeLivraison(plan);
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
 			listeCommande.reset();
 		}
-		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
+		catch(Exception ex) {
 			if(ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
 		}

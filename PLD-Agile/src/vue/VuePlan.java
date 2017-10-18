@@ -88,6 +88,8 @@ public class VuePlan extends JPanel{
 		
 	}
 	//TODO antialiasing !!!! je souffre des yeux là 
+	//TODO augmenter la taille des routes avec le zoom
+	//TODO écouteur de souris dans VuePlan et pas Fenetre
 	public void paintComponent(Graphics g){
 
 		if (firstCall){

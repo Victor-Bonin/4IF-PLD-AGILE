@@ -19,6 +19,9 @@ public class EcouteurDeBouton implements ActionListener{
 			case "export-feuille":
 				ctrl.exporterFeuilleDeRoute();
 				break;
+			case "import-demande-livraison":
+				ctrl.ouvrirLivraison();
+				break;
 		}
 		
 	}

@@ -6,17 +6,17 @@ import java.util.List;
 public class Dijkstra {
 	
 	//Renvoie un tableau {dist,previousNode} avec dist les tableaux des distances minimales de source à i et previousNode le tableau des Nodes precedants i dans le chemin le plus court
-	public Integer[][] PCC(Integer[][] graph,int source){
+	public DjkSolution PCC(Float[][] graph,int source){
 		int nbNode = graph.length;
-		Integer[] dist = new Integer[nbNode];
+		Float[] dist = new Float[nbNode];
 		Integer[] previousNode = new Integer[nbNode];
 		List<Integer> unexplored = new ArrayList<Integer>();
 		
 		for(int i=0; i<nbNode; i++){
-			dist[i]=Integer.MAX_VALUE;
+			dist[i]=Float.MAX_VALUE;
 			unexplored.add(i);
 		}
-		dist[source]=0;
+		dist[source]=(float)0;
 		
 		Integer current;
 		while(!unexplored.isEmpty()){
@@ -37,7 +37,9 @@ public class Dijkstra {
 				}
 			}			
 		}
-		Integer[][] result = {dist,previousNode};
+		DjkSolution result = new DjkSolution();
+		result.dist = dist;
+		result.prev = previousNode;
 		return result;
 	}
 }

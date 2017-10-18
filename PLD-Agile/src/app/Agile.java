@@ -22,29 +22,13 @@ public class Agile {
 	private static final int echelleInitiale = 10;
 	private static final int hauteurPlan = 40;
 	private static final int largeurPlan = 40;
-
+ 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
 		Controleur ctrl = new Controleur(plan);
-		/*try {
-			DeserialiseurXML.charger(plan);
-			try {
-				DeserialiseurXML.chargerDemandeLivraison(plan);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ExceptionXML e) {
-			e.printStackTrace();
-		}*/
 	}
 
 }

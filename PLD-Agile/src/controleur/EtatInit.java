@@ -43,6 +43,7 @@ public class EtatInit extends EtatDefaut{
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
 			fenetre.goToPlanOpened();
+			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
 		}
 		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
 			if (ex.getMessage() != "")

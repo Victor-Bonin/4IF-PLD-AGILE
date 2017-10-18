@@ -96,6 +96,8 @@ public class VuePlan extends JPanel{
 		
 	}
 	//TODO antialiasing !!!! je souffre des yeux là 
+	//TODO augmenter la taille des routes avec le zoom
+	//TODO écouteur de souris dans VuePlan et pas Fenetre
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
@@ -130,8 +132,8 @@ public class VuePlan extends JPanel{
 
 			for(int i=0; i<plan.getTroncons().size(); i++) {
 				//System.out.println(plan.getTroncons().get(i).getDepart().getX()+"  "+plan.getTroncons().get(i).getDepart().getY());
-				g2d.drawLine((int)((plan.getTroncons().get(i).getDepart().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((plan.getTroncons().get(i).getDepart().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom))
-						, (int)((plan.getTroncons().get(i).getArrivee().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((plan.getTroncons().get(i).getArrivee().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)));
+				g2d.drawLine((int)((plan.getTroncons().get(i).getDebut().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((plan.getTroncons().get(i).getDebut().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom))
+						, (int)((plan.getTroncons().get(i).getFin().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((plan.getTroncons().get(i).getFin().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)));
 				
 			}
 			

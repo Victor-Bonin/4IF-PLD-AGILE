@@ -3,6 +3,9 @@ package vue;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 /**
  * Cette classe correspond à la vue principale affichant le menu latéral de la tournée
@@ -25,5 +28,11 @@ public class VueCentrale extends JPanel{
 
 		add(panneauGauche, BorderLayout.WEST);
 		add(panneauCentre, BorderLayout.CENTER);
+		
+		//Design 
+		setBackground(CharteGraphique.BG_COLOR);
+		setBorder(new CompoundBorder(
+				new EmptyBorder(0, 50, 0, 50),
+				new MatteBorder(1,1,1,1, CharteGraphique.SEPARATOR_DARK_COLOR)));
 	}
 }

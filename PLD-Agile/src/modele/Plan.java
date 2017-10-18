@@ -173,7 +173,7 @@ public class Plan {
 	public void reset() {
 		intersections.clear();
 		troncons.clear();
-		demandeLivraison = null;
+		demandeLivraison = new DemandeLivraison();
 	}
 
 	public DemandeLivraison getDemandeLivraison(){

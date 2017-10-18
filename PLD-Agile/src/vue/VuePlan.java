@@ -31,11 +31,12 @@ public class VuePlan extends JPanel{
 	private Plan plan;
 	//private float coordoneeX;
 	//private float coordoneeY;
-	private float zoom = -1;
-	float maxX = Float.MIN_VALUE;
-	float maxY = Float.MIN_VALUE;
-	float minX = Float.MAX_VALUE;
-	float minY = Float.MAX_VALUE;
+	private float zoom;
+	private boolean firstCall = true;
+	private float maxX = Float.MIN_VALUE;
+	private float maxY = Float.MIN_VALUE;
+	private float minX = Float.MAX_VALUE;
+	private float minY = Float.MAX_VALUE;
 
 	private PersoButton changerPlanButton;
 	private PersoButton changerDemandeLivraisonButton;
@@ -55,10 +56,7 @@ public class VuePlan extends JPanel{
 		setBackground(CharteGraphique.GRAPH_BG); 
 		this.ctrl = ctrl;
 		this.plan = plan;
-		initMinMax();
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		//this.coordoneeX = 27562;
-		//this.coordoneeY = 15366;
 		setOpaque(false);
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
@@ -92,8 +90,12 @@ public class VuePlan extends JPanel{
 	//TODO antialiasing !!!! je souffre des yeux là 
 	public void paintComponent(Graphics g){
 
-		if(zoom==-1){
-			float rapportX = (maxX-minX)/this.getWidth();			
+		if (firstCall){
+			initMinMax();
+			
+			float centreX = (minX+maxX)/2;
+			float centreY = (minY+maxY)/2;
+			float rapportX = (maxX-minX)/this.getWidth();	
 			float rapportY = (maxY-minY)/this.getHeight();
 			
 			if(rapportX>rapportY) {
@@ -101,15 +103,18 @@ public class VuePlan extends JPanel{
 			} else {
 				zoom = rapportY;
 			}
+			
+			firstCall = false;
 		}
 		
-		super.paintComponent(g);
+		//super.paintComponent(g);
 		try {
 
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON);
 			g2d.setStroke(new BasicStroke(2));
+			//g2d.setStroke(new BasicStroke((100-zoom)/10));
 
 
 			for(int i=0; i<plan.getTroncons().size(); i++) {
@@ -136,12 +141,15 @@ public class VuePlan extends JPanel{
 	  }
 	
 	public void zoom(){
-		this.zoom-=20;
+		this.zoom-=5;
+		if(zoom<=0) {
+			zoom = 1;
+		}
 		repaint();
 	}
 	
 	public void dezoom(){
-		this.zoom+=20;
+		this.zoom+=5;
 		repaint();
 	}
 

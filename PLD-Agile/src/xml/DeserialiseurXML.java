@@ -16,17 +16,22 @@ import org.xml.sax.SAXException;
 
 import modele.Plan;
 
-
+/**
+ * Classe permattant de faire le lien entre les fichiers XML et les objets Java. Elle extrait du XML les informations permettant d'instancier l'objet Plan.
+ * @author 4104
+ *
+ */
 public class DeserialiseurXML {
 	/**
-	 * Ouvre un fichier xml et cree plan et demandeLivraison a partir du contenu du fichier
-	 * @param plan
+	 * Ouvre un fichier xml et remplit le plan a partir du contenu du fichier
+	 * @param plan Objet plan deja instancie
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 * @throws IOException
 	 * @throws ExceptionXML
 	 */
 	public static void charger(Plan plan) throws ParserConfigurationException, SAXException, IOException, ExceptionXML{
+		//plan = new Plan();
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document = docBuilder.parse(xml);
@@ -38,6 +43,11 @@ public class DeserialiseurXML {
         		throw new ExceptionXML("Document non conforme");
 	}
 	
+	/**
+	 * Ouvre un fichier xml et remplit la demande de livraison du plan a partir du contenu du fichier
+	 * @param plan Objet plan déjà instancié
+	 * @throws Exception
+	 */
 	public static void chargerDemandeLivraison(Plan plan)throws Exception{
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
@@ -50,7 +60,13 @@ public class DeserialiseurXML {
         		throw new ExceptionXML("Document non conforme");
 	}
 
-
+	/**
+	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit le plan avec ces donnees
+	 * @param noeudDOMRacine Noeud racine du fichier xml
+	 * @param plan Objet plan déjà instancie
+	 * @throws ExceptionXML
+	 * @throws NumberFormatException
+	 */
     private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionXML, NumberFormatException
     {
     		NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
@@ -68,7 +84,12 @@ public class DeserialiseurXML {
 			}
        	}
     }
-    
+    /**
+	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit la demande de livraison du plan avec ces donnees
+	 * @param noeudDOMRacine Noeud racine du fichier xml
+	 * @param plan Objet plan déjà instancie
+     * @throws Exception
+     */
     private static void construireDemandeLivraisonAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws Exception
     {
     		NodeList listeEntrepot = noeudDOMRacine.getElementsByTagName("entrepot");

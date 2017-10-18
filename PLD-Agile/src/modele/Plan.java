@@ -63,4 +63,8 @@ public class Plan
 	public List<Troncon> getTroncons(){
 		return troncons;
 	}
+	
+	public DemandeLivraison getDemandeLivraison(){
+		return demandeLivraison;
+	}
 }

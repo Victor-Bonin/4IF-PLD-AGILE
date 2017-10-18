@@ -1,21 +1,19 @@
 package vue;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controleur.Controleur;
 import modele.Intersection;
 import modele.Plan;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Cette classe correspond à la vue du plan en particulier
@@ -24,33 +22,57 @@ import java.util.Map;
  *
  */
 public class VuePlan extends JPanel{
-	private static final long serialVersionUID = 7580988360699236386L;
-	private int hauteurBalise = 40;
-	private int largeurBalise = 40;
+	//private static final long serialVersionUID = 7580988360699236386L;
+
+	private Controleur ctrl;
+	
+	//private int hauteurBalise = 40;
+	//private int largeurBalise = 40;
 	private Plan plan;
-	private float coordoneeX;
-	private float coordoneeY;
+	//private float coordoneeX;
+	//private float coordoneeY;
 	private float zoom;
 	private boolean firstCall = true;
-	// TODO : Supprimer
-	private int x1 = 20;
-	private int y1 = 20;
-	private int x2 = 200;
-	private int y2 = 200;
-	private int x3 = 20;
-	private int y3 = 200;
 	private float maxX = Float.MIN_VALUE;
 	private float maxY = Float.MIN_VALUE;
 	private float minX = Float.MAX_VALUE;
 	private float minY = Float.MAX_VALUE;
+
+	private PersoButton changerPlanButton;
+	private PersoButton changerDemandeLivraisonButton;
+	
+	EcouteurDeBouton ecouteurBoutons;
+	
+	// TODO : Supprimer
+	//private int x1 = 20;
+	//private int y1 = 20;
+	//private int x2 = 200;
+	//private int y2 = 200;
+	//private int x3 = 20;
+	//private int y3 = 200;
 	
 	
-	public VuePlan(Plan plan){
-		this.setBackground(new Color(168,168,168)); 
+	public VuePlan(Controleur ctrl, Plan plan){
+		setBackground(CharteGraphique.GRAPH_BG); 
+		this.ctrl = ctrl;
 		this.plan = plan;
-		this.coordoneeX = 27562;
-		this.coordoneeY = 15366;
+		ecouteurBoutons = new EcouteurDeBouton(ctrl);
 		setOpaque(false);
+
+		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
+		changerPlanButton.addActionListener(ecouteurBoutons);
+		changerPlanButton.setActionCommand("import-plan");
+		
+		changerDemandeLivraisonButton = new PersoButton(Textes.BUTTON_NOUVELLE_LIVRAISON,2);
+		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
+		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
+		
+		add(changerPlanButton);
+		add(changerDemandeLivraisonButton);
+		
+	}
+	
+	private void initMinMax(){
 		for (Intersection intersection : plan.getIntersections().values()) {
 			if(intersection.getX()>maxX) {
 				maxX = intersection.getX();
@@ -64,35 +86,36 @@ public class VuePlan extends JPanel{
 			}
 		}
 		
-
 	}
-	
+	//TODO antialiasing !!!! je souffre des yeux là 
 	public void paintComponent(Graphics g){
+
+		if (firstCall){
+			initMinMax();
+			
+			float centreX = (minX+maxX)/2;
+			float centreY = (minY+maxY)/2;
+			float rapportX = (maxX-minX)/this.getWidth();	
+			float rapportY = (maxY-minY)/this.getHeight();
+			
+			if(rapportX>rapportY) {
+				zoom = rapportX;
+			} else {
+				zoom = rapportY;
+			}
+			
+			firstCall = false;
+		}
+		
+		//super.paintComponent(g);
 		try {
 
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(CharteGraphique.GRAPH_TRONCON);
 			g2d.setStroke(new BasicStroke(2));
 			//g2d.setStroke(new BasicStroke((100-zoom)/10));
-			
-			if (firstCall){
-				float centreX = (minX+maxX)/2;
-				float centreY = (minY+maxY)/2;
-				float rapportX = (maxX-minX)/this.getWidth();	
-				System.out.println(this.getWidth());
-				float rapportY = (maxY-minY)/this.getHeight();
-				
-				if(rapportX>rapportY) {
-					zoom = rapportX;
-				} else {
-					zoom = rapportY;
-				}
-				System.out.println(zoom);
-				
-				firstCall = false;
-			}
-			
+
 
 			for(int i=0; i<plan.getTroncons().size(); i++) {
 				//System.out.println(plan.getTroncons().get(i).getDepart().getX()+"  "+plan.getTroncons().get(i).getDepart().getY());
@@ -123,12 +146,18 @@ public class VuePlan extends JPanel{
 			zoom = 1;
 		}
 		repaint();
-		System.out.println(zoom);
 	}
 	
 	public void dezoom(){
 		this.zoom+=5;
 		repaint();
+	}
+
+	public JButton getButtonPlan(){
+		return changerPlanButton;
+	}
+	public JButton getButtonDemandeLivraison(){
+		return changerDemandeLivraisonButton;
 	}
 
 }

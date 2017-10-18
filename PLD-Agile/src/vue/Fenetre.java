@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -23,14 +22,15 @@ public class Fenetre extends JFrame{
 	private VueCentrale contentContainer;
 	private JPanel jpanelCentral; //the first central JPanel
 	private VuePlan vuePlan;
+	private VueTournee vueTournee;
 
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSouris ecouteurSouris;
 	
 	private JPanel footer;
-	private greenButton importPlanButton;
-	private greenButton importDemandeLivraisonButton;
-	private greenButton exportButton;
+	private PersoButton importPlanButton;
+	private PersoButton importDemandeLivraisonButton;
+	private PersoButton exportButton;
 	private Plan plan;
 	
 	
@@ -58,15 +58,15 @@ public class Fenetre extends JFrame{
 	}
 	
 	private void initButtons(){
-		exportButton = new greenButton(Textes.BUTTON_EXPORT_ROUTE);
+		exportButton = new PersoButton(Textes.BUTTON_EXPORT_ROUTE,1);
 		exportButton.addActionListener(ecouteurBoutons);
 		exportButton.setActionCommand("export-feuille");
 		
-		importPlanButton = new greenButton(Textes.BUTTON_IMPORT_PLAN);
+		importPlanButton = new PersoButton(Textes.BUTTON_IMPORT_PLAN,1);
 		importPlanButton.addActionListener(ecouteurBoutons);
 		importPlanButton.setActionCommand("import-plan");
 		
-		importDemandeLivraisonButton = new greenButton(Textes.BUTTON_IMPORT_DEMANDE_LIVRAISON);
+		importDemandeLivraisonButton = new PersoButton(Textes.BUTTON_IMPORT_DEMANDE_LIVRAISON,1);
 		importDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		importDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
@@ -75,8 +75,8 @@ public class Fenetre extends JFrame{
 	}
 	
 	private void initFenetre(){
-		setSize(800,600);
-		setResizable(true);
+		setSize(1000,800);
+		//setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -107,8 +107,12 @@ public class Fenetre extends JFrame{
 	}
 	
 	
-	private void setContent(JPanel panel){
-		contentContainer = new VueCentrale(panel);
+	private void setContent(){
+		vuePlan = new VuePlan(ctrl, plan);
+		vuePlan.addMouseWheelListener(ecouteurSouris);
+		vueTournee = new VueTournee(ctrl, plan.getDemandeLivraison());
+		//vueTournee.addMouseWheelListener(ecouteurSouris);
+		contentContainer = new VueCentrale(vuePlan, vueTournee);
 		getContentPane().remove(jpanelCentral);
 		getContentPane().add(contentContainer, BorderLayout.CENTER);
 	}
@@ -134,14 +138,13 @@ public class Fenetre extends JFrame{
 
 	public void goToPlanOpened(){
 		if(plan!=null){
-			setContent(vuePlan = new VuePlan(plan));
-			vuePlan.addMouseWheelListener(ecouteurSouris);
+			setContent();
 			setFooter(VUE_PLAN);
 			setVisible(true);
 			repaint();
 		}
 	}
-	private void goToChargee(){
+	public void goToChargee(){
 		if(plan!=null){
 			setFooter(VUE_CHARGEE);
 			setVisible(true);
@@ -157,5 +160,8 @@ public class Fenetre extends JFrame{
 		this.vuePlan.dezoom();
 	}
 	
+	public void changeNotification(String texte) {
+		header.changeNotification(texte);
+	}
 
 }

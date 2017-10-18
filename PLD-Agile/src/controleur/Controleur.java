@@ -62,7 +62,6 @@ public class Controleur {
 	 */
 	public void ouvrirPlan() {
 		etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
-		fenetre.goToPlanOpened();
 	}
 
 	/**

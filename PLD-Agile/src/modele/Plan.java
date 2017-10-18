@@ -19,12 +19,12 @@ public class Plan {
 		demandeLivraison = new DemandeLivraison();
 	}
 
-	public void ajoute(int x, int y, long id) {
+	public void ajouterIntersection(int x, int y, long id) {
 		Intersection intersection = new Intersection(x, y, id);
 		intersections.put(id,  intersection);
 	}
 
-	public void ajoute(long depart, long arrivee, float longueur, String nomRue) throws Exception {
+	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws Exception {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
 		if(debut != null && fin != null)

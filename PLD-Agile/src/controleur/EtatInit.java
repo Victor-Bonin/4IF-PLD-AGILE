@@ -21,9 +21,17 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import modele.Plan;
 import vue.Fenetre;
+import vue.Textes;
 import xml.DeserialiseurXML;
+import xml.ExceptionXML;
 
 public class EtatInit extends EtatDefaut{
 
@@ -34,9 +42,11 @@ public class EtatInit extends EtatDefaut{
 			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
+			fenetre.goToPlanOpened();
 		}
-		catch(Exception e) {
-			//TODO : afficher notif "va te faire sa marche po, yapodplan"
+		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
+			if (ex.getMessage() != "")
+				fenetre.changeNotification(ex.getMessage());
 		}
 	}
 }

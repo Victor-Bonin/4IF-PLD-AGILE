@@ -23,7 +23,7 @@ package controleur;
 
 import java.util.LinkedList;
 
-public class ListeCommande {
+public class ListeCommande{
 	private LinkedList<Commande> liste;
 	private int indiceCrt;
 	

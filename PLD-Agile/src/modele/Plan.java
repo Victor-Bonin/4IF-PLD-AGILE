@@ -45,7 +45,7 @@ public class Plan
 			throw new Exception("L'entrepôt ne correspond à aucune adresse connue");
 		}
 	}
-	
+
 	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws Exception {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
@@ -55,12 +55,22 @@ public class Plan
 			throw new Exception("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
-	
+
 	public HashMap<Long, Intersection> getIntersections(){
 		return intersections;
 	}
-	
+
 	public List<Troncon> getTroncons(){
 		return troncons;
+	}
+
+	public void reset() {
+		intersections.clear();
+		troncons.clear();
+		demandeLivraison = null;
+	}
+
+	public DemandeLivraison getDemandeLivraison(){
+		return demandeLivraison;
 	}
 }

@@ -30,6 +30,7 @@ public interface CharteGraphique {
 	
 	//ICONS
 	public static final String ICONE_LIVRAISON = "ressources/map-marker2.png";
+	public static final String ICONE_HANGAR = "ressources/hangar-marker.png";
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;

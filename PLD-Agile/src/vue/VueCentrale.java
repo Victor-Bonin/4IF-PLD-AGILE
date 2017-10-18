@@ -1,7 +1,6 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.JPanel;
 
@@ -18,14 +17,11 @@ public class VueCentrale extends JPanel{
 	private JPanel panneauGauche;
 	private JPanel panneauCentre;
 	
-	public VueCentrale(JPanel vuePlan){
+	public VueCentrale(JPanel vuePlan, JPanel vueTournee){
 		setLayout(new BorderLayout());
-		
-		panneauGauche = new JPanel();
+
+		panneauGauche = vueTournee; // l'avoir en parametre
 		panneauCentre = vuePlan;
-		
-		panneauGauche.setBackground(Color.GRAY);
-		panneauCentre.setBackground(Color.BLACK);
 
 		add(panneauGauche, BorderLayout.WEST);
 		add(panneauCentre, BorderLayout.CENTER);

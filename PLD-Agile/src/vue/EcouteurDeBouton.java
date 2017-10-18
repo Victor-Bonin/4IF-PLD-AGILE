@@ -16,11 +16,11 @@ public class EcouteurDeBouton implements ActionListener{
 			case "import-plan":
 				ctrl.ouvrirPlan();
 				break;
-			case "export-feuille":
-				ctrl.exporterFeuilleDeRoute();
-				break;
 			case "import-demande-livraison":
 				ctrl.ouvrirLivraison();
+				break;
+			case "export-feuille":
+				ctrl.exporterFeuilleDeRoute();
 				break;
 		}
 		

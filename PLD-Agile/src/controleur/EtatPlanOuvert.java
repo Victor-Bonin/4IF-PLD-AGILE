@@ -21,16 +21,9 @@ Classe représentant l'état de l'app après l'ouverture d'un plan.
  */
 package controleur;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import modele.Plan;
 import vue.Fenetre;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class EtatPlanOuvert extends EtatInit {
 

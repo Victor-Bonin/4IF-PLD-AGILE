@@ -3,6 +3,9 @@ package vue;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import controleur.Controleur;
 import modele.Intersection;
@@ -42,8 +45,9 @@ public class VuePlan extends JPanel{
 
 	private PersoButton changerPlanButton;
 	private PersoButton changerDemandeLivraisonButton;
-	
-	EcouteurDeBouton ecouteurBoutons;
+
+	private EcouteurDeBouton ecouteurBoutons;
+	private EcouteurDeSouris ecouteurSouris;
 	
 	// TODO : Supprimer
 	//private int x1 = 20;
@@ -55,11 +59,13 @@ public class VuePlan extends JPanel{
 	
 	
 	public VuePlan(Controleur ctrl, Plan plan){
-		setBackground(CharteGraphique.GRAPH_BG); 
 		this.ctrl = ctrl;
 		this.plan = plan;
+		
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		setOpaque(false);
+		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
+
+		addMouseWheelListener(ecouteurSouris);
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
 		changerPlanButton.addActionListener(ecouteurBoutons);
@@ -71,7 +77,8 @@ public class VuePlan extends JPanel{
 		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
-		
+
+		setBackground(CharteGraphique.GRAPH_BG);
 	}
 	
 	private void initMinMax(){
@@ -88,13 +95,17 @@ public class VuePlan extends JPanel{
 			}
 		}
 		
+		
 	}
 	//TODO antialiasing !!!! je souffre des yeux là 
 	//TODO augmenter la taille des routes avec le zoom
 	//TODO écouteur de souris dans VuePlan et pas Fenetre
 	public void paintComponent(Graphics g){
-
+		
+		super.paintComponent(g);
+		
 		if (firstCall){
+
 			initMinMax();
 			
 			float centreX = (minX+maxX)/2;
@@ -111,12 +122,12 @@ public class VuePlan extends JPanel{
 			firstCall = false;
 		}
 		
-		//super.paintComponent(g);
 		try {
 
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Image hangarIcon = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Graphics2D g2d = (Graphics2D) g;
+			
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON);
 			g2d.setStroke(new BasicStroke(2));
 			//g2d.setStroke(new BasicStroke((100-zoom)/10));

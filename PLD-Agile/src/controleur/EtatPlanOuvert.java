@@ -41,11 +41,12 @@ public class EtatPlanOuvert extends EtatInit {
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 			try{
+				fenetre.changeNotification(Textes.NOTIF_LOADING);
 				DeserialiseurXML.chargerDemandeLivraison(plan);
 				controleur.setEtatCourant(controleur.etatDemandeOuverte);
 				fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
 				listeCommande.reset();
-				fenetre.goToChargee();
+				fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 			}
 			catch(SAXException | ExceptionXML | ExceptionPlanCo ex) {
 				if(ex.getMessage() != "") {
@@ -55,6 +56,5 @@ public class EtatPlanOuvert extends EtatInit {
 			catch(Exception ex) {
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED);
 			}
-		
 	}
 }

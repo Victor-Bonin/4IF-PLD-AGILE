@@ -11,9 +11,10 @@ import modele.Plan;
 
 public class Fenetre extends JFrame{
 	private static final long serialVersionUID = 4042713508717400450L;
-	private static final int VUE_DEFAUT = 0;
-	private static final int VUE_PLAN = 1;
-	private static final int VUE_CHARGEE = 2;
+	public static final int VUE_DEFAUT = 0;
+	public static final int VUE_PLAN = 1;
+	public static final int VUE_LIVRAISON_CHARGEE = 2;
+	public static final int VUE_TOURNEE_CALCULEE = 3;
 
 	private Controleur ctrl;
 	
@@ -130,37 +131,50 @@ public class Fenetre extends JFrame{
 		case VUE_DEFAUT:
 			footer.remove(importDemandeLivraisonButton);
 			footer.remove(exportButton);
+			footer.remove(calculTourneeButton);
 			break;
 		case VUE_PLAN:
-			footer.add(importDemandeLivraisonButton);
 			footer.remove(exportButton);
+			footer.remove(calculTourneeButton);
+			footer.add(importDemandeLivraisonButton);
 			break;
-		case VUE_CHARGEE:
+		case VUE_LIVRAISON_CHARGEE:
 			footer.remove(importDemandeLivraisonButton);
+			footer.remove(exportButton);
 			footer.add(calculTourneeButton);
+			break;
+		case VUE_TOURNEE_CALCULEE:
+			footer.remove(importDemandeLivraisonButton);
+			footer.remove(calculTourneeButton);
+			footer.add(exportButton);
 			break;
 		}
 		
 		getContentPane().add(footer, BorderLayout.SOUTH);
 	}
 
-	public void goToPlanOpened(){
+	public void goToVue(int vue){
+
 		if(plan!=null){
-			setContent();
-			setFooter(VUE_PLAN);
+			
+			switch(vue){
+			case VUE_DEFAUT:
+				break;
+			case VUE_PLAN:
+				setContent();
+				break;
+			case VUE_LIVRAISON_CHARGEE:
+				break;
+			case VUE_TOURNEE_CALCULEE:
+				break;
+			}
+
+			setFooter(vue);
 			setVisible(true);
 			repaint();
 		}
 	}
-
-	public void goToChargee(){
-		if(plan!=null){
-			setFooter(VUE_CHARGEE);
-			setVisible(true);
-			repaint();
-		}
-	}
-
+	
 	public void changeNotification(String texte) {
 		header.changeNotification(texte);
 	}

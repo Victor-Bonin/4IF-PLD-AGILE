@@ -11,7 +11,8 @@ public interface Textes {
 	
 	public static final String TITRE_APPLI = "PlanCo"; //Grand titre affiché
 	
-	
+
+	public static final String NOTIF_LOADING = "Chargement en cours...";
 	public static final String NOTIF_MUST_IMPORT = "Vous devez importer un plan avant de continuer";
 	public static final String NOTIF_MUST_IMPORT_DEMANDE = "Vous pouvez maintenant importer une demande de livraison";
 	public static final String NOTIF_MUST_CALCUL_TOURNEE = "Vous pouvez maintenant calculer votre tournée";

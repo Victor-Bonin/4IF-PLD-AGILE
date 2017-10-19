@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -100,7 +101,7 @@ public class Fenetre extends JFrame{
 	private void initHeader(){
 		header = new VueHeader();
 		
-		header.changeNotification(Textes.NOTIF_MUST_IMPORT);
+		header.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 		
 		getContentPane().add(header, BorderLayout.NORTH);
 	}
@@ -178,8 +179,8 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	public void changeNotification(String texte) {
-		header.changeNotification(texte);
+	public void changeNotification(String texte, Color color) {
+		header.changeNotification(texte, color);
 	}
 
 }

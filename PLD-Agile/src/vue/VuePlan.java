@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
 
@@ -129,6 +130,11 @@ public class VuePlan extends JPanel{
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Image hangarIcon = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Graphics2D g2d = (Graphics2D) g;
+			
+			//L'antialiasing permet de lisser les lignes !
+			g2d.setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING, 
+                    RenderingHints.VALUE_ANTIALIAS_ON);
 			
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON);
 			g2d.setStroke(new BasicStroke(2));

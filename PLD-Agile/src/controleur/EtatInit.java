@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 
 import modele.Plan;
 import vue.Fenetre;
+import vue.CharteGraphique;
 import vue.Textes;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
@@ -39,22 +40,22 @@ public class EtatInit extends EtatDefaut{
 	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
-			fenetre.changeNotification(Textes.NOTIF_LOADING);
+			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
 			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
 			fenetre.goToVue(Fenetre.VUE_PLAN);
-			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
+			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE, CharteGraphique.NOTIFICATION_COLOR);
 		}
 		catch (ExceptionXML ex){
 			if (ex.getMessage() != "")
-				fenetre.changeNotification(ex.getMessage());
+				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 		catch (SAXException ex) {
-			fenetre.changeNotification(ex.getMessage());	
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);	
 		}
 		catch (Exception ex) {
-			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
+			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}
 }

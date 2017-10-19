@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -49,8 +50,15 @@ public class VueTournee extends JPanel{
 		pan = new JPanel();
 		JScrollPane scrollPane = new JScrollPane(pan);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		add(scrollPane, BorderLayout.CENTER);
-		pan.setBackground(CharteGraphique.BG_COLOR);
+		add(scrollPane, BorderLayout.WEST);
+		/*
+		scrollPane.setVerticalScrollBarPolicy(
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setHorizontalScrollBarPolicy(
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                */
+		//pan.setBackground(CharteGraphique.TITLE_COLOR);
+		
 		
 	}
 	

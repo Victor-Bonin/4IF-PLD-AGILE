@@ -22,6 +22,7 @@ Classe représentant l'état de l'app après l'ouverture d'un plan.
 package controleur;
 
 import modele.Plan;
+import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 import xml.DeserialiseurXML;
@@ -32,16 +33,16 @@ public class EtatPlanOuvert extends EtatInit {
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
-			fenetre.changeNotification(Textes.NOTIF_LOADING);
+			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
 			DeserialiseurXML.chargerDemandeLivraison(plan);
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
-			fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
+			fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
 			listeCommande.reset();
 			fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 		}
 		catch(Exception ex) {
 			if(ex.getMessage() != "")
-				fenetre.changeNotification(ex.getMessage());
+				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}
 }

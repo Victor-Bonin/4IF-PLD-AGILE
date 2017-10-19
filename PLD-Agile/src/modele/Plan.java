@@ -20,6 +20,7 @@ public class Plan {
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
 	private DemandeLivraison demandeLivraison;
+	private Tournee tournee;
 
 	public Plan() {
 		intersections = new HashMap<Long, Intersection>();
@@ -64,10 +65,12 @@ public class Plan {
 	 */
 	public void calculTournee(){
 		List<Intersection> interList = new ArrayList<Intersection>(intersections.values());
-		List<Livraison> livraisons = demandeLivraison.getLivraisons();
+		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
+		livraisons.add(0,entrepot);
 		int nbSommets = interList.size();
 		int nbLivraisons = livraisons.size();
+		
 		TSP1 tsp = new TSP1();
 		Dijkstra dijkstra = new Dijkstra();
 		
@@ -93,26 +96,33 @@ public class Plan {
 //					}
 //					System.out.println();
 		
-		int[] duree = new int[nbLivraisons+1];
-		for(int i=0; i<nbLivraisons; i++){
-			duree[i+1]=livraisons.get(i).getDuree();
+		int[] duree = new int[nbLivraisons];
+		for(int i=1; i<nbLivraisons; i++){
+			duree[i]=((Livraison)livraisons.get(i)).getDuree();
 		}
 			
-		float[][] cout = new float[nbLivraisons+1][nbLivraisons+1];
+		float[][] cout = new float[nbLivraisons][nbLivraisons];
+		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
 		// On lance Dijkstra depuis tous les points de livraison pour remplir le tableau cout
 		DjkSolution result;
+		int iIndex;
+		int jIndex;
 		for(int i=0; i<nbLivraisons; i++){
-			result = dijkstra.PCC(graph, interList.indexOf(livraisons.get(i)));
+			iIndex = interList.indexOf(livraisons.get(i));
+			result = dijkstra.PCC(graph, iIndex);
 			// result est un tableau contenant pour chaque intersection de graph le plus court chemin du point de livraison i a l'intersection
 			for(int j=0; j<nbLivraisons; j++){
-				cout[i+1][j+1]=result.dist[interList.indexOf(livraisons.get(j))]; // L'index d'un point de livraison dans la liste interList correspond aussi a son index dans la matrice graph, donc result
-				cout[i+1][0]=result.dist[interList.indexOf(entrepot)];
+				if(i != j){
+					jIndex = interList.indexOf(livraisons.get(j));
+					cout[j][i]=result.dist[jIndex]; // L'index d'un point de livraison dans la liste interList correspond aussi a son index dans la matrice graph, donc result
+					// On ajoute le plus court chemin entre i et j dans le tableau de Chemins
+					pCourtsChemins[i][j] = new Chemin(livraisons.get(i), livraisons.get(j));
+					do{
+						pCourtsChemins[i][j].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( interList.get(result.prev[jIndex]) , interList.get(jIndex) ))));
+						jIndex = result.prev[jIndex];
+					}while(jIndex != iIndex); 
+				}
 			}
-		}
-		// On lance aussi Dijkstra depuis l'entrepot
-		result = dijkstra.PCC(graph, interList.indexOf(entrepot));
-		for(int i=0; i<nbLivraisons; i++){
-			cout[0][i+1]=result.dist[interList.indexOf(livraisons.get(i))];
 		}
 		
 //					System.out.println("Cout :");
@@ -124,17 +134,25 @@ public class Plan {
 //					}
 //					System.out.println();
 		
-		for(int i=0;i<duree.length;i++){
-			System.out.println(duree[i]);
-		}
-		int tpsLimite = 10000;
-		tsp.chercheSolution(tpsLimite, nbLivraisons+1, cout, duree);
+//					for(int i=0;i<duree.length;i++){
+//						System.out.println(duree[i]);
+//					}
 		
-		System.out.println("temps de la solution : "+tsp.getCoutMeilleureSolution());
-		System.out.print("Chemin de la solution : ");
-		for(int i=0;i<nbLivraisons+1;i++){
-			System.out.print(tsp.getMeilleureSolution(i)+" ");
+		int tpsLimite = 10000;
+		tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
+		
+//		System.out.println("temps de la solution : "+tsp.getCoutMeilleureSolution());
+//		System.out.print("Chemin de la solution : ");
+//		for(int i=0;i<nbLivraisons;i++){
+//			System.out.print(tsp.getMeilleureSolution(i)+" ");
+//		}
+		List<Intersection> livraisonsOrdonnees = new ArrayList<Intersection>();
+		for(int i=0; i<nbLivraisons; i++){
+			livraisonsOrdonnees.add(livraisons.get(tsp.getMeilleureSolution(i)));
 		}
+		
+		Itineraire itineraire = new Itineraire(livraisonsOrdonnees, pCourtsChemins);
+		tournee = new Tournee((Entrepot)livraisonsOrdonnees.remove(0),new ArrayList<Livraison>(livraisonsOrdonnees),itineraire);
 		
 	}
 

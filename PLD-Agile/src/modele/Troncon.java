@@ -16,6 +16,16 @@ public class Troncon {
 		interDebut = debut;
 		interFin = fin;
 	}
+	
+	public Troncon(Intersection debut, Intersection fin) {
+		interDebut = debut;
+		interFin = fin;
+	}
+	
+	public boolean equals(Object obj) {
+		return (this.interDebut == ((Troncon)obj).getDebut() && this.interFin == ((Troncon)obj).getFin());
+	}
+	
 	public float getLongueur(){
 		return this.longueur;
 	}

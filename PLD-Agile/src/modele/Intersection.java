@@ -41,4 +41,5 @@ public class Intersection {
 	public int getY() {
 		return y;
 	}
+
 }

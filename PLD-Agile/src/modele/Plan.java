@@ -195,9 +195,10 @@ public class Plan {
 		troncons.clear();
 		resetDemandeLivraison();
 	}
-	
+
 	public void resetDemandeLivraison() {
 		demandeLivraison = new DemandeLivraison();
+		tournee = null;
 	}
 
 	public DemandeLivraison getDemandeLivraison(){

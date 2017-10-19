@@ -187,4 +187,8 @@ public class Plan {
 	public DemandeLivraison getDemandeLivraison(){
 		return demandeLivraison;
 	}
+	
+	public Tournee getTournee(){
+		return tournee;
+	}
 }

@@ -80,13 +80,13 @@ public class DeserialiseurXML {
     	NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
        	for (int i = 0; i < listeNoeuds.getLength(); i++) {
        		Element xmlNoeud = (Element) listeNoeuds.item(i);
-       		plan.ajoute(Integer.parseInt(xmlNoeud.getAttribute("x")), Integer.parseInt(xmlNoeud.getAttribute("y")), Long.parseLong(xmlNoeud.getAttribute("id")));
+       		plan.ajouterIntersection(Integer.parseInt(xmlNoeud.getAttribute("x")), Integer.parseInt(xmlNoeud.getAttribute("y")), Long.parseLong(xmlNoeud.getAttribute("id")));
        	}
        	NodeList listeTroncons = noeudDOMRacine.getElementsByTagName("troncon");
        	for (int i = 0; i < listeTroncons.getLength(); i++) {
        		Element xmlTroncon = (Element) listeTroncons.item(i);
           	try {
-				plan.ajoute(Long.parseLong(xmlTroncon.getAttribute("origine")), Long.parseLong(xmlTroncon.getAttribute("destination")), Float.parseFloat(xmlTroncon.getAttribute("longueur")), xmlTroncon.getAttribute("nomRue"));
+				plan.ajouterTroncon(Long.parseLong(xmlTroncon.getAttribute("origine")), Long.parseLong(xmlTroncon.getAttribute("destination")), Float.parseFloat(xmlTroncon.getAttribute("longueur")), xmlTroncon.getAttribute("nomRue"));
 			} catch (Exception e) {
 				throw new ExceptionXML(e.getMessage());
 			}

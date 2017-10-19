@@ -1,6 +1,7 @@
 package app;
 
 import modele.Plan;
+
 import controleur.Controleur;
 
 public class Agile {

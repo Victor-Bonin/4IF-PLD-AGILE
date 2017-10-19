@@ -15,6 +15,10 @@ public class Livraison extends Intersection{
 		duree = dureeArret;
 	}
 	
+	public Date getHeurePassage() {
+		return this.heurePassage;
+	}
+	
 	public boolean equals(Object obj) {
 		return (this.getId() == ((Intersection)obj).getId());
 	}

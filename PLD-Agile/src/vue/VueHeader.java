@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,7 +49,8 @@ public class VueHeader extends JPanel{
 		add(notificationPanel, BorderLayout.CENTER);
 	}
 
-	public void changeNotification(String texte){
+	public void changeNotification(String texte, Color color){
+		notificationLabel.setForeground(color);
 		notificationLabel.setText(texte);
 	}
 }

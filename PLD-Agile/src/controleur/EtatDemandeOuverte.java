@@ -22,6 +22,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 package controleur;
 
 import modele.Plan;
+import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 
@@ -35,7 +36,7 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
+		fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
 	}
 	
 	@Override

@@ -19,6 +19,11 @@ public interface CharteGraphique {
 	//TEXTS
 	public static final Color TITLE_COLOR = Color.RED;
 	public static final Font TITLE_FONT = new Font("Arial", Font.PLAIN, 30);
+
+	public static final Color NOTIFICATION_COLOR = new  Color(150,150,150);
+	public static final Color NOTIFICATION_WARNING_COLOR = Color.ORANGE;
+	public static final Color NOTIFICATION_FORBIDDEN_COLOR = Color.RED;
+	public static final Color NOTIFICATION_OK_COLOR = Color.GREEN;
 	
 	public static final Color TEXT_SECONDARY_COLOR = new  Color(150,150,150);
 	public static final Font TEXT_SECONDARY_FONT = new Font("Arial", Font.PLAIN, 14);
@@ -27,6 +32,7 @@ public interface CharteGraphique {
 	public static final Color TEXT_ID_HANGAR_COLOR = Color.RED;
 	
 	public static final Font TEXT_BIG_FONT = new Font("Arial", Font.PLAIN, 17);
+	public static final Font TEXT_BIGGER_FONT = new Font("Arial", Font.PLAIN, 25);
 
 	//BUTTONS
 	public static final Color BUTTON_GREEN_BG = new  Color(203,232,186); 
@@ -40,7 +46,7 @@ public interface CharteGraphique {
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;
-	public static final Color GRAPH_BG =  new Color(220,220,220);
+	public static final Color GRAPH_BG =  new Color(210,210,210);
 	
 
 }

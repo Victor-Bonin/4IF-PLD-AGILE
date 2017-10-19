@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 
 import modele.Plan;
 import vue.Fenetre;
+import vue.CharteGraphique;
 import vue.Textes;
 import xml.AnnulationXML;
 import xml.DeserialiseurXML;
@@ -36,7 +37,7 @@ public class EtatInit extends EtatDefaut{
 	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
-			fenetre.changeNotification(Textes.NOTIF_LOADING);
+			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
 			DeserialiseurXML.charger(plan);
 			listeCommande.reset();
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
@@ -48,17 +49,17 @@ public class EtatInit extends EtatDefaut{
 		}
 		catch (ExceptionXML ex){
 			if (ex.getMessage() != "")
-				fenetre.changeNotification(ex.getMessage());
+				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			else
-				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 		catch (Exception ex) {
-			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
+			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}
 	
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT);
+		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 	}
 }

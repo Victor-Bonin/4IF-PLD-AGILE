@@ -1,5 +1,9 @@
 package modele;
 
+/**
+ * Objet représentant un point sur la carte (x, y et id)
+ * @author 4104
+ */
 public class Intersection {
 	private long id;
 	private int x;
@@ -11,20 +15,24 @@ public class Intersection {
 		id = identifiant;
 	}
 	
-	public long getId(){
-		return this.id;
-	}
-	
-	public boolean equals(Intersection obj) {
-		return (this.id == obj.getId());
-	}
-	
 	public Intersection(Intersection inter) {
 		x = inter.x;
 		y = inter.y;
 		id = inter.id;
 	}
+		
+	/**
+	 * Verifie si l'adresse de l'entrepot et de l'intersection sont les memes
+	 * @param obj Une intersection
+	 * @return true si les adresses sont identiques
+	 */
+	public boolean equals(Intersection obj) {
+		return (this.id == obj.getId());
+	}
 	
+	public long getId(){
+		return this.id;
+	}
 	
 	public int getX() {
 		return x;

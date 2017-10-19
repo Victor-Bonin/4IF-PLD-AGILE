@@ -39,10 +39,11 @@ public class EtatInit extends EtatDefaut{
 	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
+			fenetre.changeNotification(Textes.NOTIF_LOADING);
 			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
-			fenetre.goToVue(fenetre.VUE_PLAN);
+			fenetre.goToVue(Fenetre.VUE_PLAN);
 			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
 		}
 		catch (ExceptionXML ex){

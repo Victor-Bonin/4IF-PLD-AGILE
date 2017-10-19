@@ -131,14 +131,22 @@ public class Fenetre extends JFrame{
 		case VUE_DEFAUT:
 			footer.remove(importDemandeLivraisonButton);
 			footer.remove(exportButton);
+			footer.remove(calculTourneeButton);
 			break;
 		case VUE_PLAN:
-			footer.add(importDemandeLivraisonButton);
 			footer.remove(exportButton);
+			footer.remove(calculTourneeButton);
+			footer.add(importDemandeLivraisonButton);
 			break;
 		case VUE_LIVRAISON_CHARGEE:
 			footer.remove(importDemandeLivraisonButton);
+			footer.remove(exportButton);
 			footer.add(calculTourneeButton);
+			break;
+		case VUE_TOURNEE_CALCULEE:
+			footer.remove(importDemandeLivraisonButton);
+			footer.remove(calculTourneeButton);
+			footer.add(exportButton);
 			break;
 		}
 		

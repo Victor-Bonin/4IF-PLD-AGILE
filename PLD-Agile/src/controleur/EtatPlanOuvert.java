@@ -32,11 +32,12 @@ public class EtatPlanOuvert extends EtatInit {
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
+			fenetre.changeNotification(Textes.NOTIF_LOADING);
 			DeserialiseurXML.chargerDemandeLivraison(plan);
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
 			fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
 			listeCommande.reset();
-			fenetre.goToVue(fenetre.VUE_LIVRAISON_CHARGEE);
+			fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 		}
 		catch(Exception ex) {
 			if(ex.getMessage() != "")

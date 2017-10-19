@@ -1,6 +1,9 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
@@ -19,15 +22,40 @@ public class VueCentrale extends JPanel{
 
 	private JPanel panneauGauche;
 	private JPanel panneauCentre;
+	//private GridBagConstraints gbc;
 	
 	public VueCentrale(JPanel vuePlan, JPanel vueTournee){
-		setLayout(new BorderLayout());
-
+		//setLayout(new BorderLayout());
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		setBackground(CharteGraphique.BUTTON_GREEN_BG);
+		setOpaque(true);
 		panneauGauche = vueTournee; // l'avoir en parametre
 		panneauCentre = vuePlan;
+		/*
+		panneauGauche = new JPanel();
+		panneauCentre = new JPanel();
+		
+		panneauGauche.setBackground(Color.RED);
+		panneauCentre.setBackground(Color.BLUE);
+		*/
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		add(panneauGauche, gbc);
+		//gbc.weightx = 1;
+		gbc.weightx = 0.5;
+		gbc.gridx = 1;
+		add(panneauCentre, gbc);
 
-		add(panneauGauche, BorderLayout.WEST);
-		add(panneauCentre, BorderLayout.CENTER);
+		//add(panneauGauche, BorderLayout.WEST);
+		//add(panneauCentre, BorderLayout.CENTER);
 		
 		//Design 
 		setBackground(CharteGraphique.BG_COLOR);

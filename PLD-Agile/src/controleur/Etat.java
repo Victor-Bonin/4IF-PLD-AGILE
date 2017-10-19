@@ -38,4 +38,6 @@ public interface Etat {
 	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande);
 	void redo(ListeCommande listeCommande);
+	void afficherFenetre(Fenetre fenetre);
+	void afficherNotif(Fenetre fenetre);
 }

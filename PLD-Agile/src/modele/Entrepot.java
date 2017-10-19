@@ -32,7 +32,7 @@ public class Entrepot extends Intersection{
 	public boolean equals(Object obj) {
 		return (this.getId() == ((Intersection)obj).getId());
 	}
-
+	
 	public void setHeureArrivee(Calendar heureArrivee) {
 		this.heureArrivee = heureArrivee;
 	}

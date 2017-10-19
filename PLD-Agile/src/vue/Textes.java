@@ -24,4 +24,9 @@ public interface Textes {
 	public static final String BUTTON_NOUVEAU_PLAN = "Changer de plan";
 	public static final String BUTTON_NOUVELLE_LIVRAISON = "Importer nouvelle demande\r\n de livraison";
 	public static final String BUTTON_CALCUL_TOURNEE = "Calculer la tournée";
+	
+	public static final String TITRE_TOURNEE = "Tournée :";
+	public static final String TOURNEE_LIVRAISON = "Livraison ";
+	public static final String TOURNEE_ENTREPOT = "Entrepot ";
+	public static final String TOURNEE_DUREE = "Durée ";
 }

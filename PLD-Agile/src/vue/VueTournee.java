@@ -6,7 +6,9 @@ import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import controleur.Controleur;
 import modele.DemandeLivraison;
@@ -25,30 +27,42 @@ public class VueTournee extends JPanel{
 	
 	private DemandeLivraison demLivraison;
 	
+	private GridBagConstraints c;
+	private JLabel tourneeTitre;
+	
 	public VueTournee(Controleur ctrl, DemandeLivraison livr){
 		super();
 		this.ctrl = ctrl;
 		demLivraison = livr;
+		//JScrollPane scrollPane = new JScrollPane(this);
+		//this.add(scrollPane);
 		setOpaque(true);
 		setBackground(CharteGraphique.BG_COLOR);
 		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.NORTH;
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 	    c.gridy = 0;
-	    add(new ElementTournee(2, 648465, new Date(2017, 10, 19, 8, 1), 5, true),c);
-	    c.weighty = 1;
-	    c.gridy = 1;
-	    add(new ElementTournee(3, 648465, new Date(2017, 10, 19, 8, 1), 5, false),c);
-		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		//this.add(new ElementTournee(2, 648465, 45, 5));
-		//this.add(new ElementTournee(3, 648465, 45, 5));
+	    
+	    tourneeTitre = new JLabel(Textes.TITRE_TOURNEE);
+	    tourneeTitre.setFont(CharteGraphique.TEXT_BIGGER_FONT);
+	    add(tourneeTitre, c);
 	}
 	
-	private void initTournee() {
+	public void initTournee(DemandeLivraison dem) {
+		demLivraison = dem;
+	    c.gridy = 1;
+
+		add(new ElementTournee(demLivraison.getEntrepot()), c);
+		int i = 0;
 		for(Livraison livraison : demLivraison.getLivraisons()) {
-			this.add(new ElementTournee(2, 648465, new Date(2017, 10, 19, 8, 1), 5, false));
+			i++;
+		    c.gridy = i+1;
+			add(new ElementTournee(livraison, i), c);
 		}
+		c.gridy = i+1;
+		c.weighty = 1;
+		add(new JLabel(), c);
 	}
 
 }

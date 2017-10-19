@@ -164,6 +164,7 @@ public class Fenetre extends JFrame{
 				setContent();
 				break;
 			case VUE_LIVRAISON_CHARGEE:
+				vueTournee.initTournee(plan.getDemandeLivraison());
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				break;

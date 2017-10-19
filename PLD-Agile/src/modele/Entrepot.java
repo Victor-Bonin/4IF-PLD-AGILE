@@ -13,4 +13,8 @@ public class Entrepot extends Intersection{
 	public boolean equals(Intersection obj) {
 		return (this.getId() == obj.getId());
 	}
+	
+	public Date getHeureDepart() {
+		return heureDepart;
+	}
 }

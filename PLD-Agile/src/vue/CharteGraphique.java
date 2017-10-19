@@ -27,6 +27,7 @@ public interface CharteGraphique {
 	public static final Color TEXT_ID_HANGAR_COLOR = Color.RED;
 	
 	public static final Font TEXT_BIG_FONT = new Font("Arial", Font.PLAIN, 17);
+	public static final Font TEXT_BIGGER_FONT = new Font("Arial", Font.PLAIN, 25);
 
 	//BUTTONS
 	public static final Color BUTTON_GREEN_BG = new  Color(203,232,186); 

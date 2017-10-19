@@ -10,4 +10,12 @@ public class Livraison extends Intersection{
 		super(inter);
 		duree = dureeArret;
 	}
+	
+	public Date getHeurePassage() {
+		return this.heurePassage;
+	}
+	
+	public int getDuree() {
+		return duree;
+	}
 }

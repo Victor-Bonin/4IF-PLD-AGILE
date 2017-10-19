@@ -53,7 +53,7 @@ public class ElementTournee extends JPanel{
 		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
 		
 		dureeLivraisonLabel = new JLabel(Textes.TOURNEE_DUREE + (int)(livraison.getDuree()/60) + " min");
-		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -72,7 +72,7 @@ public class ElementTournee extends JPanel{
 	    	}
 	    	texte += date.getMinutes();
 	    	heureLabel = new JLabel(texte);
-			heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+			heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 	    }
 
 		try {
@@ -140,7 +140,7 @@ public class ElementTournee extends JPanel{
     	texte += entrepot.getHeureDepart().getTime().getMinutes();
     	
     	heureLabel = new JLabel(texte);
-		heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		heureLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
 		
     	if (entrepot.getHeureArrivee() != null) {
@@ -151,7 +151,7 @@ public class ElementTournee extends JPanel{
 	    	texte += entrepot.getHeureArrivee().getTime().getMinutes();
 	    	
 	    	dureeLivraisonLabel = new JLabel(texte);
-			dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+			dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 			dureeLivraisonLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
     	}
 

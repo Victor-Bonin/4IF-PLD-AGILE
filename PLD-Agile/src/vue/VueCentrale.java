@@ -44,13 +44,13 @@ public class VueCentrale extends JPanel{
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
-		gbc.weightx = 1;
+		//gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(panneauGauche, gbc);
-		//gbc.weightx = 1;
-		gbc.weightx = 0.5;
+		gbc.weightx = 1;
+		//gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		add(panneauCentre, gbc);
 

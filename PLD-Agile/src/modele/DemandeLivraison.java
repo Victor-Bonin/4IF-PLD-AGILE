@@ -31,4 +31,8 @@ public class DemandeLivraison {
 	public void setEntrepot(Entrepot entrpt){
 		entrepot = entrpt;
 	}
+	
+	public void setLivraisons(List<Livraison> livs){
+		this.livraisons = livs;
+	}
 }

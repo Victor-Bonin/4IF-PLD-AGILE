@@ -21,16 +21,13 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
 
 import modele.Plan;
 import vue.Fenetre;
 import vue.CharteGraphique;
 import vue.Textes;
+import xml.AnnulationXML;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
@@ -42,20 +39,27 @@ public class EtatInit extends EtatDefaut{
 		try {
 			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
 			DeserialiseurXML.charger(plan);
-			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
-			fenetre.goToVue(Fenetre.VUE_PLAN);
-			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE, CharteGraphique.NOTIFICATION_COLOR);
+			controleur.setEtatCourant(controleur.etatPlanOuvert);
+			controleur.afficherFenetre();
+			controleur.afficherNotif();
+		}
+		catch (AnnulationXML ex){
+			controleur.afficherNotif();
 		}
 		catch (ExceptionXML ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
-		}
-		catch (SAXException ex) {
-			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);	
+			else
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 		catch (Exception ex) {
 			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
+	}
+	
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 	}
 }

@@ -57,7 +57,7 @@ public class VueTournee extends JPanel{
 		scrollPane.setHorizontalScrollBarPolicy(
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 */
-		//pan.setBackground(CharteGraphique.TITLE_COLOR);
+		pan.setBackground(CharteGraphique.BG_COLOR);
 		
 		
 	}

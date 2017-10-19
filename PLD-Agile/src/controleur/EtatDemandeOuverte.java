@@ -22,13 +22,25 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
 package controleur;
 
 import modele.Plan;
+import vue.CharteGraphique;
 import vue.Fenetre;
+import vue.Textes;
 
 public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
-		//TODO : magie TSP bidule truc chouette
+		plan.calculTournee();
 		controleur.setEtatCourant(controleur.etatCalcule);
+	}
+	
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
+	}
+	
+	@Override
+	public void afficherFenetre(Fenetre fenetre) {
+		fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 	}
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public class Itineraire {
 	private List<Chemin> itineraire;
 	
-	public Itineraire(Chemin[][] pCourtsChemins, int[] meilleureSolution) {
+	public Itineraire(Chemin[][] pCourtsChemins, Integer[] meilleureSolution) {
 		
 		for (int i = 0; i < meilleureSolution.length-1; i++){
 			itineraire.add(pCourtsChemins[meilleureSolution[i]][meilleureSolution[i+1]]);

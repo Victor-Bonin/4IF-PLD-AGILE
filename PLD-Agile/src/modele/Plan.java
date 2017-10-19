@@ -88,16 +88,6 @@ public class Plan {
 			graph[interDebut][interFin] = t.getLongueur()/VITESSE;
 		}
 		
-//					System.out.println("GRAPH :");
-//					for(int i=0; i<graph.length; i++){
-//						for(int j=0; j<graph[0].length; j++){
-//							if(graph[i][j]!=null){
-//								System.out.println("Troncon de l'intersection "+interList.get(i).getId()+" a l'intersection "+interList.get(j).getId()+" mesure "+graph[i][j]);
-//							}
-//						}
-//					}
-//					System.out.println();
-		
 		int[] duree = new int[nbLivraisons];
 		for(int i=1; i<nbLivraisons; i++){
 			duree[i]=((Livraison)livraisons.get(i)).getDuree();
@@ -128,38 +118,16 @@ public class Plan {
 			}
 		}
 		
-//					System.out.println("Cout :");
-//					for(int i=0; i<cout.length; i++){
-//						for(int j=0; j<cout[0].length; j++){
-//							System.out.print(cout[i][j]+" ");
-//						}
-//						System.out.println();
-//					}
-//					System.out.println();
-		
-//					for(int i=0;i<duree.length;i++){
-//						System.out.println(duree[i]);
-//					}
-		
 		int tpsLimite = 10000;
-		tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
+		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
 		
-//		System.out.println("temps de la solution : "+tsp.getCoutMeilleureSolution());
-//		System.out.print("Chemin de la solution : ");
-//		for(int i=0;i<nbLivraisons;i++){
-//			System.out.print(tsp.getMeilleureSolution(i)+" ");
-//		}
-		List<Intersection> livraisonsOrdonnees = new ArrayList<Intersection>();
-		for(int i=0; i<nbLivraisons; i++){
-			livraisonsOrdonnees.add(livraisons.get(tsp.getMeilleureSolution(i)));
-		}
+		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
 		
-		// Itineraire itineraire = new Itineraire(livraisonsOrdonnees, pCourtsChemins, idLivraisons);
-		List<Livraison> livs = new ArrayList<Livraison>();
+		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons);
 		for (int i = 1; i < nbLivraisons; i++ ){
-			livs.add((Livraison)livraisonsOrdonnees.get(i));
+			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
 		}
-		// tournee = new Tournee(entrepot, livs, itineraire);
+		tournee = new Tournee(entrepot, livs, itineraire);
 		
 	}
 

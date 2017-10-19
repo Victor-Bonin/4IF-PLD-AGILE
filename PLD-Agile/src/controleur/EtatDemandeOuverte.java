@@ -27,7 +27,7 @@ import vue.Fenetre;
 public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
-	public void calculerListeOpt(Controleur controleur, Plan plan, Fenetre fenetre) {
+	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
 		//TODO : magie TSP bidule truc chouette
 		controleur.setEtatCourant(controleur.etatCalcule);
 	}

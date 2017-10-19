@@ -46,6 +46,7 @@ public interface CharteGraphique {
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;
+	public static final Color GRAPH_TRONCON_WAY = new Color(20,150,20);
 	public static final Color GRAPH_BG =  new Color(210,210,210);
 	
 

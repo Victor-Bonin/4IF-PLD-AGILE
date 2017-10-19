@@ -14,6 +14,7 @@ public interface CharteGraphique {
 	
 	public static final Color BG_COLOR = Color.WHITE;
 	public static final Color SEPARATOR_COLOR = new Color(220,220,220);
+	public static final Color SEPARATOR_DARK_COLOR = new Color(150,150,150);
 
 	//TEXTS
 	public static final Color TITLE_COLOR = Color.RED;
@@ -30,10 +31,11 @@ public interface CharteGraphique {
 	
 	//ICONS
 	public static final String ICONE_LIVRAISON = "ressources/map-marker2.png";
+	public static final String ICONE_HANGAR = "ressources/hangar-marker.png";
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;
-	public static final Color GRAPH_BG =  new Color(200,200,200);
+	public static final Color GRAPH_BG =  new Color(220,220,220);
 	
 
 }

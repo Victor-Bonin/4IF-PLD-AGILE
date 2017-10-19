@@ -1,5 +1,6 @@
 package vue;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -22,6 +23,10 @@ public class VueTournee extends JPanel{
 		this.ctrl = ctrl;
 		livraison = livr;
 		setBackground(CharteGraphique.TITLE_COLOR);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+	}
+	
+	private void initTournee() {
 	}
 
 }

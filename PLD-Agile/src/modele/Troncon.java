@@ -1,5 +1,9 @@
 package modele;
 
+/**
+ * Segment entre deux intersections compose d'un nom et d'une longueur
+ * @author 4104
+ */
 public class Troncon {
 	private float longueur;
 	private String nomRue;

@@ -6,21 +6,21 @@ import java.awt.event.MouseWheelListener;
 
 public class EcouteurDeSouris extends MouseAdapter implements MouseWheelListener{
 	private controleur.Controleur ctrl;
-	private Fenetre fenetre;
+	private VuePlan vue;
 	
-	public EcouteurDeSouris(controleur.Controleur c, Fenetre f){
+	public EcouteurDeSouris(controleur.Controleur c, VuePlan f){
 		ctrl = c;
-		fenetre = f;
+		vue = f;
 	}
 	
 	public void mouseWheelMoved(MouseWheelEvent e){
 		int cran = e.getWheelRotation();
         if (cran < 0) {
         	// Scroll haut
-        	this.fenetre.zoom();
+        	this.vue.zoom();
         } else if (cran > 0) {
         	// Scroll bas
-        	this.fenetre.dezoom();
+        	this.vue.dezoom();
         } 
 	}
 

@@ -3,12 +3,17 @@ package vue;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import controleur.Controleur;
 import modele.Intersection;
+import modele.Livraison;
 import modele.Plan;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -26,8 +31,8 @@ public class VuePlan extends JPanel{
 
 	private Controleur ctrl;
 	
-	//private int hauteurBalise = 40;
-	//private int largeurBalise = 40;
+	private int hauteurBalise = 40;
+	private int largeurBalise = 40;
 	private Plan plan;
 	//private float coordoneeX;
 	//private float coordoneeY;
@@ -40,8 +45,9 @@ public class VuePlan extends JPanel{
 
 	private PersoButton changerPlanButton;
 	private PersoButton changerDemandeLivraisonButton;
-	
-	EcouteurDeBouton ecouteurBoutons;
+
+	private EcouteurDeBouton ecouteurBoutons;
+	private EcouteurDeSouris ecouteurSouris;
 	
 	// TODO : Supprimer
 	//private int x1 = 20;
@@ -53,11 +59,13 @@ public class VuePlan extends JPanel{
 	
 	
 	public VuePlan(Controleur ctrl, Plan plan){
-		setBackground(CharteGraphique.GRAPH_BG); 
 		this.ctrl = ctrl;
 		this.plan = plan;
+		
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		setOpaque(false);
+		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
+
+		addMouseWheelListener(ecouteurSouris);
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
 		changerPlanButton.addActionListener(ecouteurBoutons);
@@ -69,7 +77,8 @@ public class VuePlan extends JPanel{
 		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
-		
+
+		setBackground(CharteGraphique.GRAPH_BG);
 	}
 	
 	private void initMinMax(){
@@ -86,11 +95,17 @@ public class VuePlan extends JPanel{
 			}
 		}
 		
+		
 	}
 	//TODO antialiasing !!!! je souffre des yeux là 
+	//TODO augmenter la taille des routes avec le zoom
+	//TODO écouteur de souris dans VuePlan et pas Fenetre
 	public void paintComponent(Graphics g){
-
+		
+		super.paintComponent(g);
+		
 		if (firstCall){
+
 			initMinMax();
 			
 			float centreX = (minX+maxX)/2;
@@ -107,11 +122,12 @@ public class VuePlan extends JPanel{
 			firstCall = false;
 		}
 		
-		//super.paintComponent(g);
 		try {
 
 			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			Image hangarIcon = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Graphics2D g2d = (Graphics2D) g;
+			
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON);
 			g2d.setStroke(new BasicStroke(2));
 			//g2d.setStroke(new BasicStroke((100-zoom)/10));
@@ -124,6 +140,12 @@ public class VuePlan extends JPanel{
 				
 			}
 			
+			for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
+				g2d.drawImage(img, (int)((livraison.getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((livraison.getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
+			}
+			if (plan.getDemandeLivraison().getEntrepot()!=null) {
+			 g2d.drawImage(hangarIcon, (int)((plan.getDemandeLivraison().getEntrepot().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((plan.getDemandeLivraison().getEntrepot().getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
+			}
 			// TODO : Livraison
 			/*
 			g2d.drawLine(x1+largeurBalise/2, y1+hauteurBalise/2, x2+largeurBalise/2, y2+hauteurBalise/2);
@@ -133,7 +155,7 @@ public class VuePlan extends JPanel{
 			g2d.drawImage(img, x2, y2, largeurBalise, hauteurBalise, this);
 			g2d.drawImage(img, x3, y3, largeurBalise, hauteurBalise, this);*/
 			
-			
+			//  (plan.getTroncons().get(i).getDebut().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)
 			
 	    } catch (IOException e) {
 	    	e.printStackTrace();

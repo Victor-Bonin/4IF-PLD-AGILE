@@ -25,7 +25,6 @@ public class Fenetre extends JFrame{
 	private VueTournee vueTournee;
 
 	private EcouteurDeBouton ecouteurBoutons;
-	private EcouteurDeSouris ecouteurSouris;
 	
 	private JPanel footer;
 	private PersoButton importPlanButton;
@@ -54,7 +53,6 @@ public class Fenetre extends JFrame{
 	
 	private void initListeners(){
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
 	}
 	
 	private void initButtons(){
@@ -69,9 +67,6 @@ public class Fenetre extends JFrame{
 		importDemandeLivraisonButton = new PersoButton(Textes.BUTTON_IMPORT_DEMANDE_LIVRAISON,1);
 		importDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		importDemandeLivraisonButton.setActionCommand("import-demande-livraison");
-		
-		
-
 	}
 	
 	private void initFenetre(){
@@ -108,12 +103,19 @@ public class Fenetre extends JFrame{
 	
 	
 	private void setContent(){
+		
+		
 		vuePlan = new VuePlan(ctrl, plan);
-		vuePlan.addMouseWheelListener(ecouteurSouris);
 		vueTournee = new VueTournee(ctrl, plan.getDemandeLivraison());
 		//vueTournee.addMouseWheelListener(ecouteurSouris);
-		contentContainer = new VueCentrale(vuePlan, vueTournee);
+		
+		if(contentContainer != null){
+			getContentPane().remove(contentContainer);
+		}
 		getContentPane().remove(jpanelCentral);
+		
+		contentContainer = new VueCentrale(vuePlan, vueTournee);
+		
 		getContentPane().add(contentContainer, BorderLayout.CENTER);
 	}
 	
@@ -150,14 +152,6 @@ public class Fenetre extends JFrame{
 			setVisible(true);
 			repaint();
 		}
-	}
-	
-	public void zoom(){
-		this.vuePlan.zoom();
-	}
-	
-	public void dezoom(){
-		this.vuePlan.dezoom();
 	}
 	
 	public void changeNotification(String texte) {

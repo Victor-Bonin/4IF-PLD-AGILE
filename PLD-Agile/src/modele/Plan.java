@@ -8,6 +8,10 @@ import modele.algo.Dijkstra;
 import modele.algo.DjkSolution;
 import modele.algo.TSP1;
 
+/**
+ * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
+ * @author 4104
+ */
 public class Plan {
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
@@ -19,11 +23,25 @@ public class Plan {
 		demandeLivraison = new DemandeLivraison();
 	}
 
+	/**
+	 * Ajoute une intersection au plan
+	 * @param x Position sur l'axe x de l'intersection
+	 * @param y Position sur l'axe y de l'intersection
+	 * @param id Adresse de l'intersection
+	 */
 	public void ajoute(int x, int y, long id) {
 		Intersection intersection = new Intersection(x, y, id);
 		intersections.put(id,  intersection);
 	}
 
+	/**
+	 * Ajoute un troncon au plan, si le plan possede deja les deux intersections du troncon, rejete l'ajout sinon
+	 * @param depart Adresse de l'intersection de depart
+	 * @param arrivee Adresse de l'intersection d'arrivee
+ 	 * @param longueur Longueur du troncon
+	 * @param nomRue Nom du troncon
+	 * @throws Exception
+	 */
 	public void ajoute(long depart, long arrivee, float longueur, String nomRue) throws Exception {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
@@ -37,6 +55,9 @@ public class Plan {
 		}
 	}
 	
+	/**
+	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
+	 */
 	public void calculTournee(){
 		List<Intersection> interList = new ArrayList<Intersection>(intersections.values());
 		List<Livraison> livraisons = demandeLivraison.getLivraisons();
@@ -142,6 +163,12 @@ public class Plan {
 		}
 	}
 
+	/**
+	 * Ajoute un entrepot a la demande de livraison du plan si l'entrepot correspond a une adresse du plan
+	 * @param idIntersection adresse de l'entrepot
+	 * @param heureDepart heure de depart de la tournee
+	 * @throws Exception L'entrepot ne correspond a aucune intersection du plan
+	 */
 	public void setEntrepot(Long idIntersection, Date heureDepart) throws Exception{
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
@@ -152,6 +179,12 @@ public class Plan {
 		}
 	}
 
+	/**
+	 * Ajoute un point de livraison à la demande de livraison si elle correspond a une intersection du plan
+	 * @param idIntersection Adresse de la livraison
+	 * @param dureeLivraison Duree de la livraison
+	 * @throws Exception La livraison ne correspond a aucune intersection du plan
+	 */
 	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws Exception {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
@@ -170,6 +203,9 @@ public class Plan {
 		return troncons;
 	}
 
+	/**
+	 * Reinitialise le plan
+	 */
 	public void reset() {
 		intersections.clear();
 		troncons.clear();

@@ -2,6 +2,10 @@ package modele;
 
 import java.util.Date;
 
+/**
+ * Une etape d’une tournee composee d’une adresse (intersection) et d’une plage horaire
+ * @author 4104
+ */
 public class Livraison extends Intersection{
 	private int duree;
 	private Date heurePassage;

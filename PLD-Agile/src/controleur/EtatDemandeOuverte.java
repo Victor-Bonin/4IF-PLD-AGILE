@@ -29,7 +29,7 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
-		//TODO : magie TSP bidule truc chouette
+		plan.calculTournee();
 		controleur.setEtatCourant(controleur.etatCalcule);
 	}
 	

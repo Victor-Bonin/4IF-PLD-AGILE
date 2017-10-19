@@ -76,8 +76,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres un clic sur le bouton "Optimiser l'ordre des livraisons"
 	 */
-	public void calculerListeOpt() {
-		etatCourant.calculerListeOpt(this, plan, fenetre);
+	public void calculerTournee() {
+		etatCourant.calculerTournee(this, plan, fenetre);
 	}
 
 	/**

@@ -34,7 +34,7 @@ public class EtatPlanOuvert extends EtatInit {
 		try {
 			DeserialiseurXML.chargerDemandeLivraison(plan);
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
-			fenetre.changeNotification(Textes.NOTIF_MUST_CALCULATE_TOURNEE);
+			fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
 			listeCommande.reset();
 			fenetre.goToChargee();
 		}

@@ -29,6 +29,7 @@ public class Fenetre extends JFrame{
 	private JPanel footer;
 	private PersoButton importPlanButton;
 	private PersoButton importDemandeLivraisonButton;
+	private PersoButton calculTourneeButton;
 	private PersoButton exportButton;
 	private Plan plan;
 	
@@ -67,6 +68,11 @@ public class Fenetre extends JFrame{
 		importDemandeLivraisonButton = new PersoButton(Textes.BUTTON_IMPORT_DEMANDE_LIVRAISON,1);
 		importDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		importDemandeLivraisonButton.setActionCommand("import-demande-livraison");
+		
+		calculTourneeButton = new PersoButton(Textes.BUTTON_CALCUL_TOURNEE, 1);
+		calculTourneeButton.addActionListener(ecouteurBoutons);
+		calculTourneeButton.setActionCommand("calcul-tournee");
+		
 	}
 	
 	private void initFenetre(){
@@ -131,7 +137,7 @@ public class Fenetre extends JFrame{
 			break;
 		case VUE_CHARGEE:
 			footer.remove(importDemandeLivraisonButton);
-			footer.add(exportButton);
+			footer.add(calculTourneeButton);
 			break;
 		}
 		

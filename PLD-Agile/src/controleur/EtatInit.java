@@ -45,9 +45,15 @@ public class EtatInit extends EtatDefaut{
 			fenetre.goToPlanOpened();
 			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
 		}
-		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
+		catch (ExceptionXML ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
+		}
+		catch (SAXException ex) {
+			fenetre.changeNotification(ex.getMessage());	
+		}
+		catch (Exception ex) {
+			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
 		}
 	}
 }

@@ -21,6 +21,10 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package modele;
 
+/**
+ * Une etape d’une tournee composee d’une adresse (intersection) et d'une plage horaire
+ * @author 4104
+ */
 public class LivraisonPlageHoraire extends Livraison {
 
 	private PlageHoraire plage;

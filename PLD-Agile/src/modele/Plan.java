@@ -154,8 +154,12 @@ public class Plan {
 			livraisonsOrdonnees.add(livraisons.get(tsp.getMeilleureSolution(i)));
 		}
 		
-		Itineraire itineraire = new Itineraire(livraisonsOrdonnees, pCourtsChemins, idLivraisons);
-		tournee = new Tournee((Entrepot)livraisonsOrdonnees.remove(0),new ArrayList<Livraison>(livraisonsOrdonnees),itineraire);
+		// Itineraire itineraire = new Itineraire(livraisonsOrdonnees, pCourtsChemins, idLivraisons);
+		List<Livraison> livs = new ArrayList<Livraison>();
+		for (int i = 1; i < nbLivraisons; i++ ){
+			livs.add((Livraison)livraisonsOrdonnees.get(i));
+		}
+		// tournee = new Tournee(entrepot, livs, itineraire);
 		
 	}
 

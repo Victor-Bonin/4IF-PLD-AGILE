@@ -9,14 +9,11 @@ import java.util.List;
 public class Itineraire {
 	private List<Chemin> itineraire;
 	
-	public Itineraire(List<Intersection> meilleureSolution, Chemin[][] pCourtsChemins) {
-		Chemin[][] plusCourtsChemins = pCourtsChemins;
-		List<Intersection> ordreDePassage = meilleureSolution;
-		// TODO : test les extremites
-		for (int i = 0; i < ordreDePassage.size(); i++){
-			Intersection depart = ordreDePassage.get(i);
-			Intersection arrivee = ordreDePassage.get(i+1);
-			itineraire.add(plusCourtsChemins[depart.getId()][arrivee.getId()]);
+	public Itineraire(Chemin[][] pCourtsChemins, int[] meilleureSolution) {
+		
+		for (int i = 0; i < meilleureSolution.length-1; i++){
+			itineraire.add(pCourtsChemins[meilleureSolution[i]][meilleureSolution[i+1]]);
 		}
+		itineraire.add(pCourtsChemins[meilleureSolution[meilleureSolution.length]][meilleureSolution[0]]);
 	}
 }

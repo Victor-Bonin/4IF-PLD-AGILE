@@ -51,16 +51,19 @@ public class VueTournee extends JPanel{
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		add(scrollPane, BorderLayout.CENTER);
 		pan.setBackground(CharteGraphique.BG_COLOR);
-		pan.setLayout(new GridBagLayout());
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.NORTHWEST;
-		c.gridx = 0;
-	    c.gridy = 0;
+		
 	}
 	
 	public void initTournee(DemandeLivraison dem) {
 		demLivraison = dem;
-		//c.gridy = 1;
+		
+		pan.removeAll();
+		pan.setLayout(new GridBagLayout());
+		c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.gridx = 0;
+	    c.gridy = 0;
 
 		pan.add(new ElementTournee(demLivraison.getEntrepot()), c);
 		int i = 0;

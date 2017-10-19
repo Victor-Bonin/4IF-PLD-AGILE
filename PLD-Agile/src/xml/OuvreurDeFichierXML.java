@@ -34,7 +34,7 @@ public class OuvreurDeFichierXML extends FileFilter {// Singleton
          	returnVal = jFileChooserXML.showSaveDialog(null);
         if (returnVal != JFileChooser.APPROVE_OPTION)
         	if (returnVal == JFileChooser.CANCEL_OPTION)
-        		throw new ExceptionXML("");
+        		throw new AnnulationXML("Annulation");
         	else
         		throw new ExceptionXML("Probleme a l'ouverture du fichier");
         return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());

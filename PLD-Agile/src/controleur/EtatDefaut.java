@@ -30,5 +30,9 @@ public abstract class EtatDefaut implements Etat{
 	public void undo(ListeCommande listeCommande) {}
 	@Override
 	public void redo(ListeCommande listeCommande) {}
+	@Override
+	public void afficherFenetre(Fenetre fenetre) {}
+	@Override
+	public void afficherNotif(Fenetre fenetre) {}
 
 }

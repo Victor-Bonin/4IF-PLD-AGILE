@@ -23,6 +23,7 @@ package controleur;
 
 import modele.Plan;
 import vue.Fenetre;
+import vue.Textes;
 
 public class EtatDemandeOuverte extends EtatPlanOuvert{
 
@@ -30,5 +31,15 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
 		//TODO : magie TSP bidule truc chouette
 		controleur.setEtatCourant(controleur.etatCalcule);
+	}
+	
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
+	}
+	
+	@Override
+	public void afficherFenetre(Fenetre fenetre) {
+		fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 	}
 }

@@ -21,17 +21,13 @@ Classe représentant l'état de l'app après l'ouverture d'un plan.
  */
 package controleur;
 
-import java.io.IOException;
-import java.text.ParseException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
 
 import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.Fenetre;
 import vue.Textes;
+import xml.AnnulationXML;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
@@ -43,18 +39,33 @@ public class EtatPlanOuvert extends EtatInit {
 			try{
 				fenetre.changeNotification(Textes.NOTIF_LOADING);
 				DeserialiseurXML.chargerDemandeLivraison(plan);
-				controleur.setEtatCourant(controleur.etatDemandeOuverte);
-				fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
 				listeCommande.reset();
-				fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
+				controleur.setEtatCourant(controleur.etatDemandeOuverte);
+				controleur.afficherFenetre();
+				controleur.afficherNotif();
+			}
+			catch (AnnulationXML ex) {
+				controleur.afficherNotif();
 			}
 			catch(SAXException | ExceptionXML | ExceptionPlanCo ex) {
-				if(ex.getMessage() != "") {
+				if(ex.getMessage() != "")
 					fenetre.changeNotification(ex.getMessage());
-				}
+				else
+					controleur.afficherNotif();
 			}
 			catch(Exception ex) {
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED);
 			}
 	}
+	
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
+	}
+	
+	@Override
+	public void afficherFenetre(Fenetre fenetre) {
+		fenetre.goToVue(Fenetre.VUE_PLAN);
+	}
+	
 }

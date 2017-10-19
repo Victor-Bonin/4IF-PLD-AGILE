@@ -33,7 +33,7 @@ public interface Etat {
 	void ajouterLivraison();
 	void permuterLivraison();
 	void supprimerLivraison();
-	void calculerListeOpt(Controleur controleur, Plan plan, Fenetre fenetre);
+	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
 	void calculerItineraire();
 	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande);

@@ -21,7 +21,7 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void supprimerLivraison() {}
 	@Override
-	public void calculerListeOpt(Controleur controleur, Plan plan, Fenetre fenetre) {}
+	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override
 	public void calculerItineraire() {}
 	@Override

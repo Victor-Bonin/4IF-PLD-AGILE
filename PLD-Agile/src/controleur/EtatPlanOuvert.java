@@ -23,6 +23,7 @@ package controleur;
 
 import modele.Plan;
 import vue.Fenetre;
+import vue.Textes;
 import xml.DeserialiseurXML;
 
 public class EtatPlanOuvert extends EtatInit {
@@ -31,9 +32,12 @@ public class EtatPlanOuvert extends EtatInit {
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
+			fenetre.changeNotification(Textes.NOTIF_LOADING);
 			DeserialiseurXML.chargerDemandeLivraison(plan);
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
+			fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
 			listeCommande.reset();
+			fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 		}
 		catch(Exception ex) {
 			if(ex.getMessage() != "")

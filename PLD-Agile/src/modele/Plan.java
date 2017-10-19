@@ -185,6 +185,10 @@ public class Plan {
 	public void reset() {
 		intersections.clear();
 		troncons.clear();
+		resetDemandeLivraison();
+	}
+	
+	public void resetDemandeLivraison() {
 		demandeLivraison = new DemandeLivraison();
 	}
 

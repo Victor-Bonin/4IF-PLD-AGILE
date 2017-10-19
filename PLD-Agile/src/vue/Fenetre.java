@@ -146,6 +146,7 @@ public class Fenetre extends JFrame{
 			repaint();
 		}
 	}
+
 	public void goToChargee(){
 		if(plan!=null){
 			setFooter(VUE_CHARGEE);
@@ -153,7 +154,7 @@ public class Fenetre extends JFrame{
 			repaint();
 		}
 	}
-	
+
 	public void changeNotification(String texte) {
 		header.changeNotification(texte);
 	}

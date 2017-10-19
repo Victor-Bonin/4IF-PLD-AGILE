@@ -1,6 +1,6 @@
 package modele;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Entrepot
@@ -8,11 +8,20 @@ import java.util.Date;
  *
  */
 public class Entrepot extends Intersection{
-	private Date heureDepart;
+	private Calendar heureDepart;
+	private Calendar heureArrivee;
 	
-	public Entrepot(Intersection inter, Date hDepart) {
+	public Entrepot(Intersection inter, Calendar hDepart) {
 		super(inter);
 		heureDepart = hDepart;
+	}
+	
+	public Calendar getHeureDepart(){
+		return this.heureDepart;
+	}
+	
+	public Calendar getHeureArrivee(){
+		return this.heureArrivee;
 	}
 	
 	/**
@@ -22,5 +31,9 @@ public class Entrepot extends Intersection{
 	*/
 	public boolean equals(Object obj) {
 		return (this.getId() == ((Intersection)obj).getId());
+	}
+
+	public void setHeureArrivee(Calendar heureArrivee) {
+		this.heureArrivee = heureArrivee;
 	}
 }

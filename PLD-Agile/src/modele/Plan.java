@@ -2,6 +2,7 @@ package modele;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -122,11 +123,24 @@ public class Plan {
 		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
 		
 		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
-		
+
 		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons);
 		for (int i = 1; i < nbLivraisons; i++ ){
 			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
 		}
+		
+		livs.get(0).setHeurePassage(entrepot.getHeureDepart());
+		livs.get(0).getHeurePassage().add(Calendar.SECOND, (int)cout[0][meilleureSolution[1]]);
+		System.out.println("Heure de passage au point de livraison : "+livs.get(0).getHeurePassage());
+		for(int i = 1; i<nbLivraisons-2; i++){
+			livs.get(i).setHeurePassage(livs.get(i-1).getHeurePassage());
+			livs.get(i).getHeurePassage().add(Calendar.SECOND, (int)cout[meilleureSolution[i-1]][meilleureSolution[i]]);
+			System.out.println("Heure de passage au point de livraison : "+livs.get(i).getHeurePassage());
+		}		
+		entrepot.setHeureArrivee(livs.get(nbLivraisons-2).getHeurePassage());
+		entrepot.getHeureArrivee().add(Calendar.SECOND, (int)cout[meilleureSolution[nbLivraisons-1]][0]);
+		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee());
+		
 		tournee = new Tournee(entrepot, livs, itineraire);
 		
 	}
@@ -137,7 +151,7 @@ public class Plan {
 	 * @param heureDepart heure de depart de la tournee
 	 * @throws Exception L'entrepot ne correspond a aucune intersection du plan
 	 */
-	public void setEntrepot(Long idIntersection, Date heureDepart) throws ExceptionPlanCo{
+	public void setEntrepot(Long idIntersection, Calendar heureDepart) throws ExceptionPlanCo{
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
 			Entrepot entrepot = new Entrepot(intersection, heureDepart);

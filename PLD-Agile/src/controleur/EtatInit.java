@@ -42,7 +42,7 @@ public class EtatInit extends EtatDefaut{
 			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
-			fenetre.goToPlanOpened();
+			fenetre.goToVue(fenetre.VUE_PLAN);
 			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
 		}
 		catch (ExceptionXML ex){

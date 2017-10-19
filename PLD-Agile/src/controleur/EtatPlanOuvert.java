@@ -36,7 +36,7 @@ public class EtatPlanOuvert extends EtatInit {
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
 			fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE);
 			listeCommande.reset();
-			fenetre.goToLivraisonChargee();
+			fenetre.goToVue(fenetre.VUE_LIVRAISON_CHARGEE);
 		}
 		catch(Exception ex) {
 			if(ex.getMessage() != "")

@@ -146,7 +146,7 @@ public class Fenetre extends JFrame{
 			repaint();
 		}
 	}
-	public void goToChargee(){
+	public void goToLivraisonChargee(){
 		if(plan!=null){
 			setFooter(VUE_CHARGEE);
 			setVisible(true);

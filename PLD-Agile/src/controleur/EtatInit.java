@@ -27,6 +27,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.Fenetre;
 import vue.Textes;
@@ -39,15 +40,19 @@ public class EtatInit extends EtatDefaut{
 	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
+			fenetre.changeNotification(Textes.NOTIF_LOADING);
 			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
-			fenetre.goToPlanOpened();
+			fenetre.goToVue(Fenetre.VUE_PLAN);
 			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
 		}
-		catch(ParserConfigurationException | SAXException | IOException | ExceptionXML ex) {
+		catch (SAXException | ExceptionXML ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
+		}
+		catch (Exception ex) {
+			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
 		}
 	}
 }

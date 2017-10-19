@@ -34,7 +34,7 @@ public class Plan {
 	 * @param y Position sur l'axe y de l'intersection
 	 * @param id Adresse de l'intersection
 	 */
-	public void ajoute(int x, int y, long id) {
+	public void ajouterIntersection(int x, int y, long id) {
 		Intersection intersection = new Intersection(x, y, id);
 		intersections.put(id,  intersection);
 	}
@@ -47,7 +47,7 @@ public class Plan {
 	 * @param nomRue Nom du troncon
 	 * @throws Exception
 	 */
-	public void ajoute(long depart, long arrivee, float longueur, String nomRue) throws Exception {
+	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws ExceptionPlanCo {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
 		if(debut != null && fin != null)
@@ -56,7 +56,7 @@ public class Plan {
 			troncons.add(troncon);
 		}
 		else {
-			throw new Exception("Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.");
+			throw new ExceptionPlanCo("Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.");
 		}
 	}
 	
@@ -70,6 +70,8 @@ public class Plan {
 		livraisons.add(0,entrepot);
 		int nbSommets = interList.size();
 		int nbLivraisons = livraisons.size();
+		
+		long[] idLivraisons = new long[nbLivraisons];
 		
 		TSP1 tsp = new TSP1();
 		Dijkstra dijkstra = new Dijkstra();
@@ -108,6 +110,7 @@ public class Plan {
 		int iIndex;
 		int jIndex;
 		for(int i=0; i<nbLivraisons; i++){
+			idLivraisons[0]=livraisons.get(i).getId();
 			iIndex = interList.indexOf(livraisons.get(i));
 			result = dijkstra.PCC(graph, iIndex);
 			// result est un tableau contenant pour chaque intersection de graph le plus court chemin du point de livraison i a l'intersection
@@ -151,7 +154,7 @@ public class Plan {
 			livraisonsOrdonnees.add(livraisons.get(tsp.getMeilleureSolution(i)));
 		}
 		
-		Itineraire itineraire = new Itineraire(livraisonsOrdonnees, pCourtsChemins);
+		Itineraire itineraire = new Itineraire(livraisonsOrdonnees, pCourtsChemins, idLivraisons);
 		tournee = new Tournee((Entrepot)livraisonsOrdonnees.remove(0),new ArrayList<Livraison>(livraisonsOrdonnees),itineraire);
 		
 	}
@@ -162,13 +165,13 @@ public class Plan {
 	 * @param heureDepart heure de depart de la tournee
 	 * @throws Exception L'entrepot ne correspond a aucune intersection du plan
 	 */
-	public void setEntrepot(Long idIntersection, Date heureDepart) throws Exception{
+	public void setEntrepot(Long idIntersection, Date heureDepart) throws ExceptionPlanCo{
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
 			Entrepot entrepot = new Entrepot(intersection, heureDepart);
 			demandeLivraison.setEntrepot(entrepot);
 		} else {
-			throw new Exception("L'entrepôt ne correspond à aucune adresse connue");
+			throw new ExceptionPlanCo("L'entrepôt ne correspond à aucune adresse connue");
 		}
 	}
 
@@ -178,13 +181,13 @@ public class Plan {
 	 * @param dureeLivraison Duree de la livraison
 	 * @throws Exception La livraison ne correspond a aucune intersection du plan
 	 */
-	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws Exception {
+	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws ExceptionPlanCo {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
 			Livraison livraison = new Livraison(intersection, dureeLivraison);
 			demandeLivraison.ajoutePointLivraison(livraison);
 		} else {
-			throw new Exception("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
+			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
 
@@ -202,6 +205,10 @@ public class Plan {
 	public void reset() {
 		intersections.clear();
 		troncons.clear();
+		resetDemandeLivraison();
+	}
+	
+	public void resetDemandeLivraison() {
 		demandeLivraison = new DemandeLivraison();
 	}
 

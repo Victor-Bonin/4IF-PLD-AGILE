@@ -33,13 +33,17 @@ public class Intersection {
 	public long getId(){
 		return this.id;
 	}
-	
+
+	// Lol...
+	//TODO wtf ?
 	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
 		return y;
+	}
+
+	// Lol...
+	//TODO wtf ?
+	public int getY() {
+		return 10000000 - x;
 	}
 
 }

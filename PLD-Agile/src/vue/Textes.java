@@ -17,6 +17,7 @@ public interface Textes {
 	public static final String NOTIF_MUST_IMPORT_DEMANDE = "Vous pouvez maintenant importer une demande de livraison";
 	public static final String NOTIF_MUST_CALCUL_TOURNEE = "Vous pouvez maintenant calculer votre tournée";
 	public static final String NOTIF_IMPORT_PLAN_FAILED = "Echec lors de l'import du plan. Veuillez réessayer :)";
+	public static final String NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED = "Echec lors de l'import de la demande de livraison. Veuillez réessayer";
 
 	public static final String BUTTON_EXPORT_ROUTE = "Exporter la feuille de route";
 	public static final String BUTTON_IMPORT_DEMANDE_LIVRAISON = "Importer une demande de livraison";

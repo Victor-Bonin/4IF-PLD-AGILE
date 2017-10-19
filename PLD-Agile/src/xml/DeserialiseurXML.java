@@ -2,6 +2,7 @@ package xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import modele.ExceptionPlanCo;
 import modele.Plan;
 
 /**
@@ -45,9 +47,15 @@ public class DeserialiseurXML {
 	/**
 	 * Ouvre un fichier xml et remplit la demande de livraison du plan a partir du contenu du fichier
 	 * @param plan Objet plan déjà instancié
+	 * @throws ExceptionXML 
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
+	 * @throws ParseException 
+	 * @throws ExceptionPlanCo 
 	 * @throws Exception
 	 */
-	public static void chargerDemandeLivraison(Plan plan)throws Exception{
+	public static void chargerDemandeLivraison(Plan plan) throws ExceptionXML, ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
         Document document = docBuilder.parse(xml);
@@ -88,9 +96,11 @@ public class DeserialiseurXML {
 	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit la demande de livraison du plan avec ces donnees
 	 * @param noeudDOMRacine Noeud racine du fichier xml
 	 * @param plan Objet plan déjà instancie
+     * @throws ExceptionPlanCo 
+     * @throws ParseException 
      * @throws Exception
      */
-    private static void construireDemandeLivraisonAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws Exception
+    private static void construireDemandeLivraisonAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionPlanCo, ParseException
     {
     	plan.resetDemandeLivraison();
     	NodeList listeEntrepot = noeudDOMRacine.getElementsByTagName("entrepot");

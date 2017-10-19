@@ -27,6 +27,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.Fenetre;
 import vue.Textes;
@@ -46,12 +47,9 @@ public class EtatInit extends EtatDefaut{
 			fenetre.goToVue(Fenetre.VUE_PLAN);
 			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
 		}
-		catch (ExceptionXML ex){
+		catch (SAXException | ExceptionXML ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
-		}
-		catch (SAXException ex) {
-			fenetre.changeNotification(ex.getMessage());	
 		}
 		catch (Exception ex) {
 			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);

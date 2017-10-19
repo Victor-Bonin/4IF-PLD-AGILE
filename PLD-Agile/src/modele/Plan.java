@@ -38,7 +38,6 @@ public class Plan {
 		intersections.put(id,  intersection);
 	}
 
-
 	/**
 	 * Ajoute un troncon au plan, si le plan possede deja les deux intersections du troncon, rejete l'ajout sinon
 	 * @param depart Adresse de l'intersection de depart
@@ -47,7 +46,7 @@ public class Plan {
 	 * @param nomRue Nom du troncon
 	 * @throws Exception
 	 */
-	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws Exception {
+	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws ExceptionPlanCo {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
 		if(debut != null && fin != null)
@@ -56,7 +55,7 @@ public class Plan {
 			troncons.add(troncon);
 		}
 		else {
-			throw new Exception("Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.");
+			throw new ExceptionPlanCo("Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.");
 		}
 	}
 	
@@ -145,13 +144,13 @@ public class Plan {
 	 * @param heureDepart heure de depart de la tournee
 	 * @throws Exception L'entrepot ne correspond a aucune intersection du plan
 	 */
-	public void setEntrepot(Long idIntersection, Date heureDepart) throws Exception{
+	public void setEntrepot(Long idIntersection, Date heureDepart) throws ExceptionPlanCo{
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
 			Entrepot entrepot = new Entrepot(intersection, heureDepart);
 			demandeLivraison.setEntrepot(entrepot);
 		} else {
-			throw new Exception("L'entrepôt ne correspond à aucune adresse connue");
+			throw new ExceptionPlanCo("L'entrepôt ne correspond à aucune adresse connue");
 		}
 	}
 
@@ -161,13 +160,13 @@ public class Plan {
 	 * @param dureeLivraison Duree de la livraison
 	 * @throws Exception La livraison ne correspond a aucune intersection du plan
 	 */
-	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws Exception {
+	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws ExceptionPlanCo {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
 			Livraison livraison = new Livraison(intersection, dureeLivraison);
 			demandeLivraison.ajoutePointLivraison(livraison);
 		} else {
-			throw new Exception("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
+			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
 

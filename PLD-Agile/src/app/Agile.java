@@ -28,7 +28,29 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
-		Controleur ctrl = new Controleur(plan);
+		//Controleur ctrl = new Controleur(plan);
+		try {
+			DeserialiseurXML.charger(plan);
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExceptionXML e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			DeserialiseurXML.chargerDemandeLivraison(plan);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		plan.calculTournee();
 	}
 
 }

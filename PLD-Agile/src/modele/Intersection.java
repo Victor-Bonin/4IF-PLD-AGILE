@@ -15,8 +15,8 @@ public class Intersection {
 		return this.id;
 	}
 	
-	public boolean equals(Intersection obj) {
-		return (this.id == obj.getId());
+	public boolean equals(Object obj) {
+		return (this.id == ((Intersection)obj).getId());
 	}
 	
 	public Intersection(Intersection inter) {

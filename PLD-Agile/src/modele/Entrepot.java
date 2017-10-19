@@ -16,11 +16,11 @@ public class Entrepot extends Intersection{
 	}
 	
 	/**
-	 * Verifie si l'objet Entrepot possède la meme adresse que l'intersection
-	 * @param obj Une intersection
-	 * @return true si les adresses sont les memes.
-	 */
-	public boolean equals(Intersection obj) {
-		return (this.getId() == obj.getId());
+	* Verifie si l'objet Entrepot possède la meme adresse que l'intersection
+	* @param obj Une intersection
+	* @return true si les adresses sont les memes.
+	*/
+	public boolean equals(Object obj) {
+		return (this.getId() == ((Intersection)obj).getId());
 	}
 }

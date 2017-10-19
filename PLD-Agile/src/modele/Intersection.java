@@ -26,8 +26,8 @@ public class Intersection {
 	 * @param obj Une intersection
 	 * @return true si les adresses sont identiques
 	 */
-	public boolean equals(Intersection obj) {
-		return (this.id == obj.getId());
+	public boolean equals(Object obj) {
+		return (this.id == ((Intersection)obj).getId());
 	}
 	
 	public long getId(){

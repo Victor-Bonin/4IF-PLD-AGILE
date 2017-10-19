@@ -14,4 +14,12 @@ public class Livraison extends Intersection{
 		super(inter);
 		duree = dureeArret;
 	}
+	
+	public boolean equals(Object obj) {
+		return (this.getId() == ((Intersection)obj).getId());
+	}
+	
+	public int getDuree(){
+		return this.duree;
+	}
 }

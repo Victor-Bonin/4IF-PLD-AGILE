@@ -33,10 +33,11 @@ public class Plan {
 	 * @param y Position sur l'axe y de l'intersection
 	 * @param id Adresse de l'intersection
 	 */
-	public void ajoute(int x, int y, long id) {
+	public void ajouterIntersection(int x, int y, long id) {
 		Intersection intersection = new Intersection(x, y, id);
 		intersections.put(id,  intersection);
 	}
+
 
 	/**
 	 * Ajoute un troncon au plan, si le plan possede deja les deux intersections du troncon, rejete l'ajout sinon
@@ -46,7 +47,7 @@ public class Plan {
 	 * @param nomRue Nom du troncon
 	 * @throws Exception
 	 */
-	public void ajoute(long depart, long arrivee, float longueur, String nomRue) throws Exception {
+	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws Exception {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
 		if(debut != null && fin != null)

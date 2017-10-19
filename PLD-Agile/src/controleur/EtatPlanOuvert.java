@@ -47,11 +47,11 @@ public class EtatPlanOuvert extends EtatInit {
 			catch (AnnulationXML ex) {
 				controleur.afficherNotif();
 			}
-			catch(SAXException | ExceptionXML | ExceptionPlanCo ex) {
+			catch(ExceptionXML | ExceptionPlanCo ex) {
 				if(ex.getMessage() != "")
 					fenetre.changeNotification(ex.getMessage());
 				else
-					controleur.afficherNotif();
+					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED);
 			}
 			catch(Exception ex) {
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED);

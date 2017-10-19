@@ -46,11 +46,11 @@ public class EtatInit extends EtatDefaut{
 		catch (AnnulationXML ex){
 			controleur.afficherNotif();
 		}
-		catch (SAXException | ExceptionXML ex){
+		catch (ExceptionXML ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
 			else
-				controleur.afficherNotif();
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
 		}
 		catch (Exception ex) {
 			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);

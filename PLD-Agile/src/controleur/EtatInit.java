@@ -21,16 +21,12 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
 
-import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.Fenetre;
 import vue.Textes;
+import xml.AnnulationXML;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
@@ -42,17 +38,27 @@ public class EtatInit extends EtatDefaut{
 		try {
 			fenetre.changeNotification(Textes.NOTIF_LOADING);
 			DeserialiseurXML.charger(plan);
-			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			listeCommande.reset();
-			fenetre.goToVue(Fenetre.VUE_PLAN);
-			fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE);
+			controleur.setEtatCourant(controleur.etatPlanOuvert);
+			controleur.afficherFenetre();
+			controleur.afficherNotif();
 		}
-		catch (SAXException | ExceptionXML ex){
+		catch (AnnulationXML ex){
+			controleur.afficherNotif();
+		}
+		catch (ExceptionXML ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage());
+			else
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
 		}
 		catch (Exception ex) {
 			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED);
 		}
+	}
+	
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT);
 	}
 }

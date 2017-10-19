@@ -128,4 +128,12 @@ public class Controleur {
 	public void redo() {
 		etatCourant.redo(listeCommande);
 	}
+	
+	public void afficherFenetre() {
+		etatCourant.afficherFenetre(fenetre);
+	}
+	
+	public void afficherNotif() {
+		etatCourant.afficherNotif(fenetre);
+	}
 }

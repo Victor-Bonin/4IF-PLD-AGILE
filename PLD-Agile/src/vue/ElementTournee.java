@@ -127,11 +127,11 @@ public class ElementTournee extends JPanel{
 		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		idLabel.setForeground(CharteGraphique.TEXT_ID_HANGAR_COLOR);
 		
-		String texte = entrepot.getHeureDepart().getHours() + "h";
-    	if(entrepot.getHeureDepart().getMinutes()<10) {
+		String texte = entrepot.getHeureDepart().getTime().getHours() + "h";
+    	if(entrepot.getHeureDepart().getTime().getMinutes()<10) {
     		texte += "0";
     	}
-    	texte += entrepot.getHeureDepart().getMinutes();
+    	texte += entrepot.getHeureDepart().getTime().getMinutes();
     	heureLabel = new JLabel(texte);
 		heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		heureLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);

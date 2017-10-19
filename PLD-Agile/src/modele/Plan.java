@@ -131,12 +131,12 @@ public class Plan {
 		
 		livs.get(0).setHeurePassage(entrepot.getHeureDepart());
 		livs.get(0).getHeurePassage().add(Calendar.SECOND, (int)cout[0][meilleureSolution[1]]);
-		System.out.println("Heure de passage au point de livraison : "+livs.get(0).getHeurePassage());
-		for(int i = 1; i<nbLivraisons-2; i++){
+		System.out.println("Heure de passage au point de livraison 0 : "+livs.get(0).getHeurePassage());
+		for(int i = 1; i<nbLivraisons-1; i++){
 			livs.get(i).setHeurePassage(livs.get(i-1).getHeurePassage());
 			livs.get(i).getHeurePassage().add(Calendar.SECOND, (int)cout[meilleureSolution[i-1]][meilleureSolution[i]]);
-			System.out.println("Heure de passage au point de livraison : "+livs.get(i).getHeurePassage());
-		}		
+			System.out.println("Heure de passage au point de livraison "+i+" : "+livs.get(i).getHeurePassage());
+		}
 		entrepot.setHeureArrivee(livs.get(nbLivraisons-2).getHeurePassage());
 		entrepot.getHeureArrivee().add(Calendar.SECOND, (int)cout[meilleureSolution[nbLivraisons-1]][0]);
 		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee());

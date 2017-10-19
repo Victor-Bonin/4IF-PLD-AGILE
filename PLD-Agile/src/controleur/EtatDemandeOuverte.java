@@ -32,6 +32,7 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
 		plan.calculTournee();
 		controleur.setEtatCourant(controleur.etatCalcule);
+		controleur.afficherFenetre();
 	}
 	
 	@Override

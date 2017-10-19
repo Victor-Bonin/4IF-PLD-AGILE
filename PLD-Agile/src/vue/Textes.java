@@ -29,4 +29,5 @@ public interface Textes {
 	public static final String TOURNEE_LIVRAISON = "Livraison ";
 	public static final String TOURNEE_ENTREPOT = "Entrepot ";
 	public static final String TOURNEE_DUREE = "Durée ";
+	public static final String TOURNEE_INTERSECTION = "Intersection de : ";
 }

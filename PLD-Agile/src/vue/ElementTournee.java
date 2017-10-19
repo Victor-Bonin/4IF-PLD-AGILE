@@ -116,9 +116,8 @@ public class ElementTournee extends JPanel{
 						)
 				));
 		
-		System.out.println(entrepot.getId());
-		System.out.println(entrepot.getHeureDepart().getHours());
-		System.out.println(entrepot.getHeureDepart().getMinutes());
+		//TODO : Afficher le nom des rues qui y passent avec 
+		//setToolTipText(Textes.TOURNEE_INTERSECTION + "\n" + entrepot.getId());
 		
 		nomLabel = new JLabel(Textes.TOURNEE_ENTREPOT + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);

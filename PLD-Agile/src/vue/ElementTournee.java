@@ -64,15 +64,16 @@ public class ElementTournee extends JPanel{
 	    c.gridheight = 3;
 	    c.insets = new Insets(0,0,0,10);
 	    
-	    /*
-    	String texte = "Heure de passage estimée : " + date.getHours() + "h";
-    	if(date.getMinutes()<10) {
-    		texte += "0";
-    	}
-    	texte += date.getMinutes();
-    	heureLabel = new JLabel(texte);
-		heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		*/
+	    if (livraison.getHeurePassage() != null) {
+		    date = livraison.getHeurePassage().getTime();
+	    	String texte = "Heure de passage estimée : " + date.getHours() + "h";
+	    	if(date.getMinutes()<10) {
+	    		texte += "0";
+	    	}
+	    	texte += date.getMinutes();
+	    	heureLabel = new JLabel(texte);
+			heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+	    }
 
 		try {
 			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
@@ -98,7 +99,12 @@ public class ElementTournee extends JPanel{
 		c.gridx = 1;
 		add(dureeLivraisonLabel, c);
 		
-		
+		if(livraison.getHeurePassage() != null) {
+			c.gridwidth = 2;
+			c.gridy = 2;
+			c.gridx = 1;
+			add(heureLabel, c);
+		}
 	}
 	
 	
@@ -132,10 +138,24 @@ public class ElementTournee extends JPanel{
     		texte += "0";
     	}
     	texte += entrepot.getHeureDepart().getTime().getMinutes();
+    	
     	heureLabel = new JLabel(texte);
 		heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		heureLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
 		
+    	if (entrepot.getHeureArrivee() != null) {
+	    	texte = entrepot.getHeureArrivee().getTime().getHours() + "h";
+	    	if(entrepot.getHeureArrivee().getTime().getMinutes()<10) {
+	    		texte += "0";
+	    	}
+	    	texte += entrepot.getHeureArrivee().getTime().getMinutes();
+	    	
+	    	dureeLivraisonLabel = new JLabel(texte);
+			dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+			dureeLivraisonLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
+    	}
+
+    	
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -169,6 +189,13 @@ public class ElementTournee extends JPanel{
 		c.gridy = 1;
 		c.gridx = 1;
 		add(heureLabel, c);
+		
+		if(entrepot.getHeureArrivee() != null) {
+			c.gridwidth = 2;
+			c.gridy = 2;
+			c.gridx = 1;
+			add(dureeLivraisonLabel, c);
+		}
 	}
 	
 	

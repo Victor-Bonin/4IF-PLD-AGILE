@@ -33,6 +33,7 @@ public interface CharteGraphique {
 
 	public static final Font TEXT_SMALL_FONT = new Font("Arial", Font.PLAIN, 10);
 	public static final Font TEXT_BIG_FONT = new Font("Arial", Font.PLAIN, 17);
+	public static final Font TEXT_BIG_FAT_FONT = new Font("Arial", Font.BOLD, 17);
 	public static final Font TEXT_BIGGER_FONT = new Font("Arial", Font.PLAIN, 25);
 
 	//BUTTONS
@@ -49,6 +50,7 @@ public interface CharteGraphique {
 	public static final Color GRAPH_TRONCON = Color.WHITE;
 	public static final Color GRAPH_TRONCON_WAY = new Color(20,150,20);
 	public static final Color GRAPH_BG =  new Color(210,210,210);
+	public static final Color GRAPH_TEXT_COLOR =  Color.BLACK;
 	
 
 }

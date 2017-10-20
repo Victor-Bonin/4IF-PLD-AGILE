@@ -64,19 +64,19 @@ public class Plan {
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
-	public void calculTournee(){
+	public void calculTournee() throws Exception {
 		List<Intersection> interList = new ArrayList<Intersection>(intersections.values());
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
 		int nbSommets = interList.size();
 		int nbLivraisons = livraisons.size();
-		
+
 		long[] idLivraisons = new long[nbLivraisons];
-		
+
 		TSP1 tsp = new TSP1();
 		Dijkstra dijkstra = new Dijkstra();
-		
+
 		// Remplissage du graphe des intersections avec tous les troncons
 		Float[][] graph = new Float[nbSommets][nbSommets];
 		int interDebut;
@@ -88,12 +88,12 @@ public class Plan {
 			interFin = interList.indexOf(t.getFin());
 			graph[interDebut][interFin] = t.getLongueur()/VITESSE;
 		}
-		
+
 		int[] duree = new int[nbLivraisons];
 		for(int i=1; i<nbLivraisons; i++){
 			duree[i]=((Livraison)livraisons.get(i)).getDuree();
 		}
-			
+
 		float[][] cout = new float[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
 		// On lance Dijkstra depuis tous les points de livraison pour remplir le tableau cout
@@ -118,33 +118,33 @@ public class Plan {
 				}
 			}
 		}
-		
+
 		int tpsLimite = 10000;
 		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
-		
+
 		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
 
 		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons);
 		for (int i = 1; i < nbLivraisons; i++ ){
 			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
 		}
-		
+
 		livs.get(0).setHeurePassage((Calendar)entrepot.getHeureDepart().clone());
 		livs.get(0).getHeurePassage().add(Calendar.SECOND, 
-				(int)cout[0][meilleureSolution[1]] + livs.get(0).getDuree());
+				(int)cout[0][meilleureSolution[1]]);
 		System.out.println("Heure de passage au point de livraison 0 : "+livs.get(0).getHeurePassage().getTime());
 		for(int i = 1; i<nbLivraisons-1; i++){
 			livs.get(i).setHeurePassage((Calendar)livs.get(i-1).getHeurePassage().clone());
 			livs.get(i).getHeurePassage().add(Calendar.SECOND, 
-					(int)cout[meilleureSolution[i-1]][meilleureSolution[i]] + livs.get(i).getDuree());
+					(int)cout[meilleureSolution[i-1]][meilleureSolution[i]] + livs.get(i-1).getDuree());
 			System.out.println("Heure de passage au point de livraison "+i+" : "+livs.get(i).getHeurePassage().getTime());
 		}
 		entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
-		entrepot.getHeureArrivee().add(Calendar.SECOND, (int)cout[meilleureSolution[nbLivraisons-1]][0]);
+		entrepot.getHeureArrivee().add(Calendar.SECOND, 
+				(int)cout[meilleureSolution[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree());
 		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
 
 		tournee = new Tournee(entrepot, livs, itineraire);
-		
 	}
 
 	/**

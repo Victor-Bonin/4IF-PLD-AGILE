@@ -21,42 +21,56 @@ Classe représentant l'état de l'app lorsque la tournée a été calculé.
  */
 package controleur;
 
-public class EtatCalcule extends EtatDemandeOuverte{
+import vue.CharteGraphique;
+import vue.Fenetre;
+import vue.Textes;
+
+public class EtatCalcule extends EtatDemandeOuverte {
 
 	@Override
 	public void ajouterLivraison() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void permuterLivraison() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void supprimerLivraison() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void exporterFeuilleDeRoute() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void undo(ListeCommande listeCommande) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void redo(ListeCommande listeCommande) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_TOURNEE_CALCULE, CharteGraphique.NOTIFICATION_COLOR);
+	}
+
+	@Override
+	public void afficherFenetre(Fenetre fenetre) {
+		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -106,10 +107,11 @@ public class DeserialiseurXML {
     	NodeList listeEntrepot = noeudDOMRacine.getElementsByTagName("entrepot");
     	Element entrepot = (Element) listeEntrepot.item(0);
     	String dateAsString = entrepot.getAttribute("heureDepart");
+    	Calendar cal = Calendar.getInstance();
     	SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-    	Date date = dateFormat.parse(dateAsString);
+    	cal.setTime(dateFormat.parse(dateAsString));
     	long entrepotId = Long.parseLong(entrepot.getAttribute("adresse"));
-    	plan.setEntrepot(entrepotId, date);
+    	plan.setEntrepot(entrepotId, cal);
 
     	NodeList listeAdresse = noeudDOMRacine.getElementsByTagName("livraison");
     	for (int i = 0; i < listeAdresse.getLength(); i++) {

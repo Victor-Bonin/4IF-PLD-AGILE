@@ -131,16 +131,17 @@ public class Plan {
 
 		livs.get(0).setHeurePassage((Calendar)entrepot.getHeureDepart().clone());
 		livs.get(0).getHeurePassage().add(Calendar.SECOND, 
-				(int)cout[0][meilleureSolution[1]] + livs.get(0).getDuree());
+				(int)cout[0][meilleureSolution[1]]);
 		System.out.println("Heure de passage au point de livraison 0 : "+livs.get(0).getHeurePassage().getTime());
 		for(int i = 1; i<nbLivraisons-1; i++){
 			livs.get(i).setHeurePassage((Calendar)livs.get(i-1).getHeurePassage().clone());
 			livs.get(i).getHeurePassage().add(Calendar.SECOND, 
-					(int)cout[meilleureSolution[i-1]][meilleureSolution[i]] + livs.get(i).getDuree());
+					(int)cout[meilleureSolution[i-1]][meilleureSolution[i]] + livs.get(i-1).getDuree());
 			System.out.println("Heure de passage au point de livraison "+i+" : "+livs.get(i).getHeurePassage().getTime());
 		}
 		entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
-		entrepot.getHeureArrivee().add(Calendar.SECOND, (int)cout[meilleureSolution[nbLivraisons-1]][0]);
+		entrepot.getHeureArrivee().add(Calendar.SECOND, 
+				(int)cout[meilleureSolution[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree());
 		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
 
 		tournee = new Tournee(entrepot, livs, itineraire);

@@ -19,6 +19,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -35,6 +36,9 @@ public class VuePlan extends JPanel{
 	
 	private int hauteurBalise = 40;
 	private int largeurBalise = 40;
+	private BufferedImage imgLivraison;
+	private BufferedImage imgEntrepot;
+	
 	private Plan plan;
 	//private float coordoneeX;
 	//private float coordoneeY;
@@ -63,6 +67,13 @@ public class VuePlan extends JPanel{
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
 		this.plan = plan;
+		
+		try {
+			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			imgEntrepot = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }  
 		
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
 		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
@@ -99,7 +110,6 @@ public class VuePlan extends JPanel{
 		
 		
 	}
-	//TODO antialiasing !!!! je souffre des yeux là 
 	//TODO augmenter la taille des routes avec le zoom
 	//TODO écouteur de souris dans VuePlan et pas Fenetre
 	//TODO charger l'image en dehors du paintComponent
@@ -126,10 +136,6 @@ public class VuePlan extends JPanel{
 			firstCall = false;
 		}
 		
-		try {
-
-			Image img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
-			Image hangarIcon = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Graphics2D g2d = (Graphics2D) g;
 			
 			//L'antialiasing permet de lisser les lignes !
@@ -149,15 +155,7 @@ public class VuePlan extends JPanel{
 				
 			}
 			
-			//Dessiner les icones de points de livraisons
-			for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
-				g2d.drawImage(img, (int)((livraison.getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((livraison.getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
-			}
-			//Dessiner l'icone de l'entrepot
-			if (plan.getDemandeLivraison().getEntrepot()!=null) {
-			 g2d.drawImage(hangarIcon, (int)((plan.getDemandeLivraison().getEntrepot().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((plan.getDemandeLivraison().getEntrepot().getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
-			}
-			
+			//Dessiner les tronçons de la tournée
 			if(plan.getTournee()!=null){
 				g2d.setColor(CharteGraphique.GRAPH_TRONCON_WAY);
 				for(int i=0; i<plan.getTournee().getItineraire().size(); i++) {
@@ -166,6 +164,35 @@ public class VuePlan extends JPanel{
 						g2d.drawLine((int)((troncon.getDebut().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((troncon.getDebut().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom))
 								, (int)((troncon.getFin().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((troncon.getFin().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)));
 					}
+				}
+			}
+			
+			//Dessiner les icones de points de livraisons
+			for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
+				g2d.drawImage(imgLivraison, (int)((livraison.getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((livraison.getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
+			}
+			//Dessiner l'icone de l'entrepot
+			if (plan.getDemandeLivraison().getEntrepot()!=null) {
+			 g2d.drawImage(imgEntrepot, (int)((plan.getDemandeLivraison().getEntrepot().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((plan.getDemandeLivraison().getEntrepot().getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
+			}
+			
+			// Ecrireles numéros de la tournée
+			g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);
+			g2d.setFont(CharteGraphique.TEXT_BIG_FAT_FONT);
+			if(plan.getTournee()!=null){
+				for(int i=0; i<plan.getTournee().getLivraisons().size(); i++) {
+					Livraison livraison = plan.getTournee().getLivraisons().get(i);
+					g2d.drawString(Integer.toString(i+1), (int)((livraison.getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-8), (int)((livraison.getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)+20));
+				}
+			}
+			
+			// Ecrireles numéros de la demande de livraison
+			g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);
+			g2d.setFont(CharteGraphique.TEXT_BIG_FAT_FONT);
+			if(plan.getTournee()==null){
+				for(int i=0; i<plan.getDemandeLivraison().getLivraisons().size(); i++) {
+					Livraison livraison = plan.getDemandeLivraison().getLivraisons().get(i);
+					g2d.drawString(Integer.toString(i+1), (int)((livraison.getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-8), (int)((livraison.getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)+20));
 				}
 			}
 			
@@ -179,10 +206,7 @@ public class VuePlan extends JPanel{
 			g2d.drawImage(img, x3, y3, largeurBalise, hauteurBalise, this);*/
 			
 			//  (plan.getTroncons().get(i).getDebut().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)
-			
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }                
+			              
 	  }
 	
 	public void zoom(){

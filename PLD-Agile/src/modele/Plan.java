@@ -129,6 +129,7 @@ public class Plan {
 			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
 		}
 		
+		
 		livs.get(0).setHeurePassage(entrepot.getHeureDepart());
 		livs.get(0).getHeurePassage().add(Calendar.SECOND, (int)cout[0][meilleureSolution[1]]);
 		System.out.println("Heure de passage au point de livraison : "+livs.get(0).getHeurePassage());

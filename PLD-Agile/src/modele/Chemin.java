@@ -23,4 +23,8 @@ public class Chemin {
 	public void addTroncon (int index, Troncon troncon){
 		this.troncons.add(index, troncon);;
 	}
+	
+	public List<Troncon> getTroncons(){
+		return troncons;
+	}
 }

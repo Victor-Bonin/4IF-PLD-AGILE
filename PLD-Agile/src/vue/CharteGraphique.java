@@ -30,7 +30,8 @@ public interface CharteGraphique {
 	
 	public static final Color TEXT_HANGAR_COLOR = Color.RED;
 	public static final Color TEXT_ID_HANGAR_COLOR = Color.RED;
-	
+
+	public static final Font TEXT_SMALL_FONT = new Font("Arial", Font.PLAIN, 10);
 	public static final Font TEXT_BIG_FONT = new Font("Arial", Font.PLAIN, 17);
 	public static final Font TEXT_BIGGER_FONT = new Font("Arial", Font.PLAIN, 25);
 
@@ -46,6 +47,7 @@ public interface CharteGraphique {
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;
+	public static final Color GRAPH_TRONCON_WAY = new Color(20,150,20);
 	public static final Color GRAPH_BG =  new Color(210,210,210);
 	
 

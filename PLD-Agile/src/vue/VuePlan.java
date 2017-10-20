@@ -11,6 +11,7 @@ import controleur.Controleur;
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
+import modele.Troncon;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -140,7 +141,7 @@ public class VuePlan extends JPanel{
 			g2d.setStroke(new BasicStroke(2));
 			//g2d.setStroke(new BasicStroke((100-zoom)/10));
 
-
+			//Dessiner chacune des rues
 			for(int i=0; i<plan.getTroncons().size(); i++) {
 				//System.out.println(plan.getTroncons().get(i).getDepart().getX()+"  "+plan.getTroncons().get(i).getDepart().getY());
 				g2d.drawLine((int)((plan.getTroncons().get(i).getDebut().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((plan.getTroncons().get(i).getDebut().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom))
@@ -148,12 +149,26 @@ public class VuePlan extends JPanel{
 				
 			}
 			
+			//Dessiner les icones de points de livraisons
 			for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 				g2d.drawImage(img, (int)((livraison.getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((livraison.getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
 			}
+			//Dessiner l'icone de l'entrepot
 			if (plan.getDemandeLivraison().getEntrepot()!=null) {
 			 g2d.drawImage(hangarIcon, (int)((plan.getDemandeLivraison().getEntrepot().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)-largeurBalise/2), (int)((plan.getDemandeLivraison().getEntrepot().getY()-hauteurBalise-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)-hauteurBalise), largeurBalise, hauteurBalise, this);
 			}
+			
+			if(plan.getTournee()!=null){
+				g2d.setColor(CharteGraphique.GRAPH_TRONCON_WAY);
+				for(int i=0; i<plan.getTournee().getItineraire().size(); i++) {
+					for(int j=0; j<plan.getTournee().getItineraire().get(i).getTroncons().size();j++){
+						Troncon troncon = plan.getTournee().getItineraire().get(i).getTroncons().get(j);
+						g2d.drawLine((int)((troncon.getDebut().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((troncon.getDebut().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom))
+								, (int)((troncon.getFin().getX()-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom)), (int)((troncon.getFin().getY()-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom)));
+					}
+				}
+			}
+			
 			// TODO : Livraison
 			/*
 			g2d.drawLine(x1+largeurBalise/2, y1+hauteurBalise/2, x2+largeurBalise/2, y2+hauteurBalise/2);

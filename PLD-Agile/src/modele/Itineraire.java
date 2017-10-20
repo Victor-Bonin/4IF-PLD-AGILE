@@ -17,4 +17,8 @@ public class Itineraire {
 		}
 		itineraire.add(pCourtsChemins[meilleureSolution[meilleureSolution.length-1]][meilleureSolution[0]]);
 	}
+	
+	public List<Chemin> getChemins(){
+		return itineraire;
+	}
 }

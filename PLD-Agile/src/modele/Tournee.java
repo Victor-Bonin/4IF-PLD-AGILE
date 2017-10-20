@@ -15,4 +15,8 @@ public class Tournee extends DemandeLivraison{
 		super.setEntrepot(entrepot);
 		super.setLivraisons(meilleureSolution);
 	}
+	
+	public List<Chemin> getItineraire(){
+		return itineraire.getChemins();
+	}
 }

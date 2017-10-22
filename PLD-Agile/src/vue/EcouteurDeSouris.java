@@ -4,6 +4,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+
+/**
+ * Cette classe contient les appels au controleur depuis la souris
+ * 
+ * @author 4104
+ *
+ */
 public class EcouteurDeSouris extends MouseAdapter implements MouseWheelListener{
 	private controleur.Controleur ctrl;
 	private VuePlan vue;

@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,18 +20,19 @@ import javax.swing.border.MatteBorder;
 import modele.Entrepot;
 import modele.Livraison;
 
+/**
+ * Extension de JPanel affichant une tournee et ses informations primaires
+ * 
+ * @author 4104
+ *
+ */
 public class ElementTournee extends JPanel{
 	private static final long serialVersionUID = 6534684555513953601L;
-	private int numero;
-	private long id;
 	private Calendar date;
-	private int duree;
 	private JLabel nomLabel;
 	private JLabel idLabel;
 	private JLabel heureLabel;
 	private JLabel dureeLivraisonLabel;
-	
-	// TODO : Utiliser des Calendar
 	
 	public ElementTournee(Livraison livraison, int numero) {
 		super();
@@ -110,7 +110,6 @@ public class ElementTournee extends JPanel{
 		}
 	}
 	
-	
 	public ElementTournee(Entrepot entrepot) {
 		super();
 		
@@ -140,7 +139,7 @@ public class ElementTournee extends JPanel{
     	if(entrepot.getHeureDepart().get(Calendar.MINUTE)<10) {
     		texte += "0";
     	}
-    	texte += entrepot.getHeureDepart().getTime().getMinutes();
+    	texte += entrepot.getHeureDepart().get(Calendar.MINUTE) ;
     	
     	heureLabel = new JLabel(texte);
 		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);

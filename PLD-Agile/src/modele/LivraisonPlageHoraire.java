@@ -21,6 +21,8 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package modele;
 
+import java.util.Calendar;
+
 /**
  * Une etape d’une tournee composee d’une adresse (intersection) et d'une plage horaire
  * @author 4104
@@ -31,5 +33,13 @@ public class LivraisonPlageHoraire extends Livraison {
 
 	public LivraisonPlageHoraire(Intersection inter, int dureeArret) {
 		super(inter, dureeArret);
+	}
+	
+	public Calendar getDebut() {
+		return plage.getDebut();
+	}
+	
+	public Calendar getFin() {
+		return plage.getFin();
 	}
 }

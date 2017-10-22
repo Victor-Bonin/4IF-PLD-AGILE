@@ -18,7 +18,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import modele.Entrepot;
+import modele.Intersection;
 import modele.Livraison;
+import modele.LivraisonPlageHoraire;
 
 /**
  * Extension de JPanel affichant une tournee et ses informations primaires
@@ -47,6 +49,11 @@ public class ElementTournee extends JPanel{
 						new EmptyBorder(10, 10, 10, 10)
 						)
 				));
+		
+		
+		String description = composeToolTipString(livraison);
+		setToolTipText("<html>" + description + "</html>");
+		
 		
 		nomLabel = new JLabel(Textes.TOURNEE_LIVRAISON + numero + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
@@ -124,8 +131,9 @@ public class ElementTournee extends JPanel{
 						)
 				));
 		
-		//TODO : Afficher le nom des rues qui y passent avec 
-		//setToolTipText(Textes.TOURNEE_INTERSECTION + "\n" + entrepot.getId());
+		String description = composeToolTipString(entrepot);
+		
+		setToolTipText("<html>" + description + "</html>");
 		
 		nomLabel = new JLabel(Textes.TOURNEE_ENTREPOT + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
@@ -204,4 +212,44 @@ public class ElementTournee extends JPanel{
 		}
 	}	
 	
+	private String composeToolTipString(Intersection intersec) {
+		//TODO : Afficher le nom des rues qui y passent avec
+		String s = "";
+		if(intersec instanceof Entrepot) {
+			s= Textes.TOURNEE_ENTREPOT ;
+		}else if(intersec instanceof Livraison) {
+			s= Textes.TOURNEE_LIVRAISON ;
+		}
+		s += intersec.getId() + "<br>"
+				+ Textes.TOURNEE_INTERSECTION;
+		/*
+		 * Faudra avoir un truc comme ça
+		 * 
+		 * 
+		 * liste = entrepot.getRues();
+		 * 
+		 * ou
+		 * 
+		 * liste = plan.getRues(entrepot);
+		 * 
+		 * for(i:liste)
+		 * 		description += "<br> - " + i;
+		 */
+
+		if(intersec instanceof LivraisonPlageHoraire) {
+			s+= "<br> " + Textes.TOURNEE_PLAGE;
+			LivraisonPlageHoraire livraison = (LivraisonPlageHoraire)intersec;
+			if(livraison.getDebut()!= null)
+				s+=  livraison.getDebut().get(Calendar.HOUR_OF_DAY);
+			else
+				s+= ".";
+			s+= " - ";
+			if(livraison.getFin()!= null)
+				s+= livraison.getFin().get(Calendar.HOUR_OF_DAY);
+			else
+				s+= ".";
+			
+		}
+		return s;
+	}
 }

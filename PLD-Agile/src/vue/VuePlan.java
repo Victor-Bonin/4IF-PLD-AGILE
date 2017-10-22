@@ -35,8 +35,8 @@ public class VuePlan extends JPanel{
 	private BufferedImage imgEntrepot;
 	
 	private Plan plan;
-	private float coordonneeX;
-	private float coordonneeY;
+	private float coordonneeX = 0;
+	private float coordonneeY = 0;
 	private float zoom;
 	private boolean firstCall = true;
 	private float maxX = Float.MIN_VALUE;
@@ -106,8 +106,6 @@ public class VuePlan extends JPanel{
 
 			initMinMax();
 			
-			/*float centreX = (minX+maxX)/2;
-			float centreY = (minY+maxY)/2;*/
 			float rapportX = (maxX-minX)/this.getWidth();	
 			float rapportY = (maxY-minY)/this.getHeight();
 			
@@ -116,9 +114,6 @@ public class VuePlan extends JPanel{
 			} else {
 				zoom = rapportY;
 			}
-
-			coordonneeX = getWidth()/2*(1 + (minX+maxX)/(minX-maxX));
-			coordonneeY = this.getHeight()/2;
 			
 			firstCall = false;
 		}
@@ -131,8 +126,9 @@ public class VuePlan extends JPanel{
                 RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		g2d.setColor(CharteGraphique.GRAPH_TRONCON);
-		g2d.setStroke(new BasicStroke(2));
-		//g2d.setStroke(new BasicStroke((100-zoom)/10));
+		
+		
+		g2d.setStroke(new BasicStroke(200/zoom, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
 		//Dessiner chacune des rues
 		for(int i=0; i<plan.getTroncons().size(); i++) {
@@ -157,6 +153,8 @@ public class VuePlan extends JPanel{
 				}
 			}
 		}
+	
+		g2d.setStroke(new BasicStroke(1));
 		
 		//Dessiner les icones de points de livraisons
 		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
@@ -176,7 +174,7 @@ public class VuePlan extends JPanel{
 				 this);
 		}
 		
-		// Ecrireles numéros de la tournée
+		// Ecrire les numéros de la tournée
 		g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);
 		g2d.setFont(CharteGraphique.TEXT_BIG_FAT_FONT);
 		if(plan.getTournee()!=null){

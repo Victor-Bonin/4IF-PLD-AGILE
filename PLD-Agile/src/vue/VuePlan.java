@@ -66,6 +66,8 @@ public class VuePlan extends JPanel{
 		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
 
 		addMouseWheelListener(ecouteurSouris);
+		addMouseListener(ecouteurSouris);
+		addMouseMotionListener(ecouteurSouris);
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
 		changerPlanButton.addActionListener(ecouteurBoutons);
@@ -97,7 +99,6 @@ public class VuePlan extends JPanel{
 		
 		
 	}
-	//TODO augmenter la taille des routes avec le zoom
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
@@ -201,17 +202,22 @@ public class VuePlan extends JPanel{
 	  }
 
 	private int positionX(int x) {
-		return (int) ((x-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom));
+		return (int) ((x-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom) + coordonneeX);
 	}
 	private int positionY(int y) {
-		return (int)((y-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom));
+		return (int)((y-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom) + coordonneeY);
 	}
-	
+
 	public void zoom(){
 		this.zoom-=5;
 		if(zoom<=0) {
 			zoom = 1;
 		}
+		repaint();
+	}
+	public void move(int x, int y){
+		this.coordonneeX += x;
+		this.coordonneeY += y;
 		repaint();
 	}
 	

@@ -1,7 +1,5 @@
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -9,9 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 import controleur.Controleur;
 import modele.DemandeLivraison;
@@ -76,6 +72,10 @@ public class VueTournee extends JPanel{
 		
 	}
 	
+	/**
+	 * Actualise le panneau des tournées selon la DemandeLivraison donnee en parametre (peut être une tournee)
+	 * @param dem DemandeLivraison qui doit être représentée
+	 */
 	public void initTournee(DemandeLivraison dem) {
 		demLivraison = dem;
 		

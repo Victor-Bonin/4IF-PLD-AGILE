@@ -48,6 +48,40 @@ public class demandeLivraisonTest {
 	}
 
 	@Test
+	public void ajoutePointLivraisonOrdreTest() {
+		try {
+			Livraison l = new Livraison(new Intersection(1, 1, 100L), 0);
+			demandeLivraison.ajoutePointLivraison(l);
+			Livraison l2 = new Livraison(new Intersection(2, 2, 200L), 0);
+			demandeLivraison.ajoutePointLivraison(l2);
+		}
+		catch (ExceptionPlanCo e) {
+			fail ("Setup");
+		}
+		
+		try {	
+			assertEquals(2, demandeLivraison.getLivraisons().size());	
+			Livraison l3 = new Livraison(new Intersection(3, 3, 300L), 0);
+			demandeLivraison.ajoutePointLivraison(l3, 1);
+			assertEquals(l3, demandeLivraison.getLivraisons().get(1));
+			assertEquals(3, demandeLivraison.getLivraisons().size());
+		}
+		catch (ExceptionPlanCo e) {
+			fail ("Erreur ajoutePointLivraisonOrdoneTest ExceptionPlanCo cas normal");
+		}
+		
+		try {	
+			Livraison l4 = new Livraison(new Intersection(4, 4, 400L), 0);
+			demandeLivraison.ajoutePointLivraison(l4, 10);
+			fail ("En dehors des limites");
+		}
+		catch (ExceptionPlanCo e) {
+			assertEquals(3, demandeLivraison.getLivraisons().size());
+			assertEquals("Dev ONLY : PdL out of bounds ajt 0xce", e.getMessage());
+		}
+	}
+	
+	@Test
 	public void supprimerPointLivraisonTest() {
 		Livraison l = new Livraison(new Intersection(1, 1, 100L), 0);
 		try {

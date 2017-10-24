@@ -185,6 +185,13 @@ public class Plan {
 		demandeLivraison.ajoutePointLivraison(livraison);
 	}
 	
+	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
+		if (livraison.getDuree() < 0) 
+			throw new ExceptionPlanCo("La livraison possède une durée négative");
+		demandeLivraison.ajoutePointLivraison(livraison, index);
+		
+	}
+	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		demandeLivraison.supprimerPointLivraison(livraison);	
 	}

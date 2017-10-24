@@ -18,13 +18,13 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {}
 	@Override
-	public void permuterLivraison() {}
+	public void deplacerLivraison() {}
 	@Override
 	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {}
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override
-	public void calculerItineraire() {}
+	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override
 	public void exporterFeuilleDeRoute() {}
 	@Override

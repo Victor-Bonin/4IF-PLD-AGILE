@@ -92,7 +92,7 @@ public class Controleur {
 	 * Methode appelee apres avoir permuter un point de livraison avec un autre
 	 */
 	public void permuterLivraison() {
-		etatCourant.permuterLivraison();
+		etatCourant.deplacerLivraison();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class Controleur {
 	 * Methode appelee apres un clic sur le bouton "Calculer Itineraire"
 	 */
 	public void calculerItineraire() {
-		etatCourant.calculerItineraire();
+		etatCourant.calculerItineraire(this, plan, fenetre);
 	}
 
 	/**

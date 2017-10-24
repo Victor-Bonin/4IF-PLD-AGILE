@@ -33,6 +33,7 @@ public class EtatModifie extends EtatCalcule{
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {
 		try {
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE, CharteGraphique.NOTIFICATION_COLOR);
+			// TODO : changer ça en calcul itinéraire
 			plan.calculTournee();
 			controleur.afficherFenetre();
 			controleur.afficherNotif();

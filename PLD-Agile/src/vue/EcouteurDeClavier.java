@@ -22,7 +22,13 @@ public class EcouteurDeClavier implements KeyListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-			
+		int keycode = e.getKeyCode();
+		if(e.isControlDown() && keycode == KeyEvent.VK_Z) {
+			ctrl.undo();
+		}
+		if(e.isControlDown() && keycode == KeyEvent.VK_Y) {
+			ctrl.redo();
+		}
 	}
 
 	@Override

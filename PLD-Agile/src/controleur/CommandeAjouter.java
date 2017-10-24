@@ -21,18 +21,32 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Livraison;
+import modele.Plan;
+
 public class CommandeAjouter implements Commande {
 
+	private Plan plan;
+	private Livraison livraison;
+	
+	/**
+	 * Cree la commande qui ajoute la livraison l au plan p
+	 * @param p Plan	
+	 * @param l Livraison
+	 */
+	public CommandeAjouter(Plan p, Livraison l) {
+		plan = p;
+		livraison = l;
+	}
+	
 	@Override
 	public void doCde() {
-		// TODO Auto-generated method stub
-		
+		//Faire appel à plan.ajouterLivraison(Livraison);
 	}
 
 	@Override
 	public void undoCde() {
-		// TODO Auto-generated method stub
-		
+		//Faire appel à plan.supprimerLivraison(Livraison);
 	}
 
 }

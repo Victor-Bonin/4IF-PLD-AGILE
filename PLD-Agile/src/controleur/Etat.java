@@ -31,7 +31,7 @@ public interface Etat {
 	void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande);
 	void ajouterLivraison();
-	void permuterLivraison();
+	void deplacerLivraison();
 	void supprimerLivraison();
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
 	void calculerItineraire();
@@ -40,4 +40,5 @@ public interface Etat {
 	void redo(ListeCommande listeCommande);
 	void afficherFenetre(Fenetre fenetre);
 	void afficherNotif(Fenetre fenetre);
+	void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre);
 }

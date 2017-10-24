@@ -22,11 +22,29 @@ Classe représentant l'état de l'app lorsqu'une Tournée a été modifié.
  */
 package controleur;
 
+import modele.Plan;
+import vue.CharteGraphique;
+import vue.Fenetre;
+import vue.Textes;
+
 public class EtatModifie extends EtatCalcule{
 
 	@Override
-	public void calculerItineraire() {
-		// TODO Auto-generated method stub
-
+	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {
+		try {
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE, CharteGraphique.NOTIFICATION_COLOR);
+			plan.calculTournee();
+			controleur.afficherFenetre();
+			controleur.afficherNotif();
+		}
+		catch (Exception ex) {
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+		}
 	}
+	
+	@Override
+	public void afficherNotif(Fenetre fenetre) {
+		fenetre.changeNotification(Textes.NOTIF_ITINERAIRE_CALCULE, CharteGraphique.NOTIFICATION_COLOR);
+	}
+	
 }

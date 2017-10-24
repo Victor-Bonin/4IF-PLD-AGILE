@@ -91,7 +91,7 @@ public class Controleur {
 	 * Methode appelee apres avoir permuter un point de livraison avec un autre
 	 */
 	public void permuterLivraison() {
-		etatCourant.permuterLivraison();
+		etatCourant.deplacerLivraison();
 	}
 
 	/**

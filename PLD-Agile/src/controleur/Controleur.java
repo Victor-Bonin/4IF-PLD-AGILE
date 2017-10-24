@@ -105,7 +105,7 @@ public class Controleur {
 	 * Methode appelee apres un clic sur le bouton "Calculer Itineraire"
 	 */
 	public void calculerItineraire() {
-		etatCourant.calculerItineraire();
+		etatCourant.calculerItineraire(this, plan, fenetre);
 	}
 
 	/**

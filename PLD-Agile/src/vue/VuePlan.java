@@ -64,6 +64,8 @@ public class VuePlan extends JPanel{
 		this.ctrl = ctrl;
 		this.plan = plan;
 		
+		this.setLayout(null);
+		
 		try {
 			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			imgEntrepot = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
@@ -84,10 +86,12 @@ public class VuePlan extends JPanel{
 		addMouseMotionListener(ecouteurSouris);
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
+		changerPlanButton.setBounds(0, 0, (int)changerPlanButton.getPreferredSize().getWidth(), (int)changerPlanButton.getPreferredSize().getHeight());
 		changerPlanButton.addActionListener(ecouteurBoutons);
 		changerPlanButton.setActionCommand("import-plan");
 		
-		changerDemandeLivraisonButton = new PersoButton(Textes.BUTTON_NOUVELLE_LIVRAISON,2);
+		changerDemandeLivraisonButton = new PersoButton("<html>" + Textes.BUTTON_NOUVELLE_LIVRAISON + "</html>",2);
+		changerDemandeLivraisonButton.setBounds(0, (int)changerPlanButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
@@ -95,7 +99,6 @@ public class VuePlan extends JPanel{
 		add(changerDemandeLivraisonButton);
 
 		setBackground(CharteGraphique.GRAPH_BG);
-		this.setLayout(null);
 	}
 	
 	private void initMinMax(){
@@ -180,23 +183,6 @@ public class VuePlan extends JPanel{
 	
 		g2d.setStroke(new BasicStroke(1));
 		
-		//Dessiner les icones de points de livraisons
-		/*for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
-			g2d.drawImage(imgLivraison, 
-					positionX(livraison.getX())-largeurBalise/2, 
-					positionY(livraison.getY())-hauteurBalise, 
-					largeurBalise, 
-					hauteurBalise, this);
-		}
-		//Dessiner l'icone de l'entrepot
-		if (plan.getDemandeLivraison().getEntrepot()!=null) {
-		 g2d.drawImage(imgEntrepot, 
-				 positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, 
-				 positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, 
-				 largeurBalise, 
-				 hauteurBalise, 
-				 this);
-		}*/
 		
 		// Ecrire les numéros de la tournée
 		g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);

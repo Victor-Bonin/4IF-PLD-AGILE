@@ -180,6 +180,7 @@ public class Fenetre extends JFrame{
 				break;
 			case VUE_LIVRAISON_CHARGEE:
 				vueTournee.initTournee(plan.getDemandeLivraison());
+				vuePlan.afficherIcones();
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				vueTournee.initTournee(plan.getTournee());

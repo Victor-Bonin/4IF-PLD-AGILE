@@ -34,7 +34,6 @@ public interface Etat {
 	void deplacerLivraison();
 	void supprimerLivraison();
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
-	void calculerItineraire();
 	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande);
 	void redo(ListeCommande listeCommande);

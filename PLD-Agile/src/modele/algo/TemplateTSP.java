@@ -1,7 +1,10 @@
 package modele.algo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
+
+import modele.PlageHoraire;
 
 public abstract class TemplateTSP implements TSP {
 	
@@ -13,7 +16,7 @@ public abstract class TemplateTSP implements TSP {
 		return tempsLimiteAtteint;
 	}
 	
-	public Integer[] chercheSolution(int tpsLimite, int nbSommets, float[][] cout, int[] duree){
+	public Integer[] chercheSolution(int tpsLimite, int nbSommets, float[][] cout, int[] duree, PlageHoraire[] horaires){
 		tempsLimiteAtteint = false;
 		coutMeilleureSolution = Float.MAX_VALUE;
 		meilleureSolution = new Integer[nbSommets];
@@ -21,7 +24,7 @@ public abstract class TemplateTSP implements TSP {
 		for (int i=1; i<nbSommets; i++) nonVus.add(i);
 		ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
 		vus.add(0); // le premier sommet visite est 0
-		branchAndBound(0, nonVus, vus, 0, cout, duree, System.currentTimeMillis(), tpsLimite);
+		branchAndBound(0, nonVus, vus, 0, horaires[0].getDebut() , cout, duree, System.currentTimeMillis(), tpsLimite);
 		return meilleureSolution;
 	}
 	
@@ -67,7 +70,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @param tpsDebut : moment ou la resolution a commence
 	 * @param tpsLimite : limite de temps pour la resolution
 	 */	
-	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, float[][] cout, int[] duree, long tpsDebut, int tpsLimite){
+	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, Calendar actualTime, float[][] cout, int[] duree, long tpsDebut, int tpsLimite){
 		 if (System.currentTimeMillis() - tpsDebut > tpsLimite){
 			 tempsLimiteAtteint = true;
 			 return;
@@ -84,7 +87,7 @@ public abstract class TemplateTSP implements TSP {
 	        	Integer prochainSommet = it.next();
 	        	vus.add(prochainSommet);
 	        	nonVus.remove(prochainSommet);
-	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite);
+	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[prochainSommet], TEMPS ACTUEL , cout, duree, tpsDebut, tpsLimite); //TODO
 	        	vus.remove(prochainSommet);
 	        	nonVus.add(prochainSommet);
 	        }	    

@@ -35,6 +35,10 @@ public class LivraisonPlageHoraire extends Livraison {
 		super(inter, dureeArret);
 	}
 	
+	public PlageHoraire getPlage(){
+		return this.plage;
+	}
+	
 	public Calendar getDebut() {
 		return plage.getDebut();
 	}

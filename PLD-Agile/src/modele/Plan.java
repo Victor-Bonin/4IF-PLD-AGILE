@@ -113,7 +113,16 @@ public class Plan {
 		}
 		
 		int tpsLimite = 10000;
-		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
+		
+		PlageHoraire[] horaires = new PlageHoraire[nbLivraisons];
+		horaires[0] = entrepot.getHoraires();
+		for(int i=1; i<nbLivraisons; i++){
+			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
+				horaires[i] = ((LivraisonPlageHoraire)livraisons.get(i)).getPlage();
+			}
+		}
+		
+		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree, horaires);
 
 		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
 
@@ -121,7 +130,7 @@ public class Plan {
 		for (int i = 1; i < nbLivraisons; i++ ){
 			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
 		}
-
+		
 		livs.get(0).setHeurePassage((Calendar)entrepot.getHeureDepart().clone());
 		livs.get(0).getHeurePassage().add(Calendar.SECOND, 
 				(int)cout[0][meilleureSolution[1]] + livs.get(0).getDuree());

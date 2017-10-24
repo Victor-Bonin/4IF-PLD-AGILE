@@ -8,20 +8,19 @@ import java.util.Calendar;
  *
  */
 public class Entrepot extends Intersection{
-	private Calendar heureDepart;
-	private Calendar heureArrivee;
+	private PlageHoraire horairesDepArr;
 	
 	public Entrepot(Intersection inter, Calendar hDepart) {
 		super(inter);
-		heureDepart = hDepart;
+		horairesDepArr = new PlageHoraire(hDepart, null);
 	}
 	
 	public Calendar getHeureDepart(){
-		return this.heureDepart;
+		return this.horairesDepArr.getDebut();
 	}
 	
 	public Calendar getHeureArrivee(){
-		return this.heureArrivee;
+		return this.horairesDepArr.getFin();
 	}
 	
 	/**
@@ -34,6 +33,10 @@ public class Entrepot extends Intersection{
 	}
 	
 	public void setHeureArrivee(Calendar heureArrivee) {
-		this.heureArrivee = heureArrivee;
+		this.horairesDepArr.setFin(heureArrivee);
+	}
+
+	public PlageHoraire getHoraires() {
+		return horairesDepArr;
 	}
 }

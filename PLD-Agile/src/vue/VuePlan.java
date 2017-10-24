@@ -99,6 +99,8 @@ public class VuePlan extends JPanel{
 		add(changerDemandeLivraisonButton);
 
 		setBackground(CharteGraphique.GRAPH_BG);
+		
+		iconesLivraison = new ArrayList<JLabel>();
 	}
 	
 	private void initMinMax(){
@@ -276,8 +278,14 @@ public class VuePlan extends JPanel{
 	}
 	
 	public void afficherIcones(){
-		iconesLivraison = new ArrayList<JLabel>();
+		
+		//Supprimer les anciennes icones
+		for (int i = 0; i<iconesLivraison.size(); i++) {
+			this.remove(iconesLivraison.get(i));
+		}
+
 		//Dessiner les icones de points de livraisons
+		iconesLivraison = new ArrayList<JLabel>();
 		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			JLabel liv = new JLabel(imageIconL);
 			this.add(liv);

@@ -30,7 +30,12 @@ public class CommandeSupprimer implements Commande {
 	private Plan plan;
 	private Livraison livraison;
 	
-	private CommandeSupprimer(Plan p, Livraison l) {
+	/**
+	 * Cree la commande qui supprime la livraison l du plan p
+	 * @param p
+	 * @param l
+	 */
+	public CommandeSupprimer(Plan p, Livraison l) {
 		plan = p;
 		livraison = l;
 	}

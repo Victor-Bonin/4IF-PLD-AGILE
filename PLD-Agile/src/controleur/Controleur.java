@@ -21,6 +21,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Livraison;
 import modele.Plan;
 import vue.Fenetre;
 
@@ -50,7 +51,7 @@ public class Controleur {
 
 	/**
 	 * Change l'etat courant du controleur
-	 * @param etat le nouvel �tat courant
+	 * @param etat le nouvel etat courant
 	 */
 	protected void setEtatCourant(Etat etat) {
 		etatCourant = etat;
@@ -83,8 +84,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres cree avoir un point de livraison via la carte ou le bouton "+"
 	 */
-	public void ajouterLivraison() {
-		etatCourant.ajouterLivraison();
+	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
+		etatCourant.ajouterLivraison(p, l, listeCmd);
 	}
 
 	/**
@@ -97,8 +98,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres avoir supprimer un point de livraison
 	 */
-	public void supprimerLivraison() {
-		etatCourant.supprimerLivraison();
+	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
+		etatCourant.supprimerLivraison(p, l, listeCmd);
 	}
 
 	/**

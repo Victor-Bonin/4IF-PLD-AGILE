@@ -178,6 +178,16 @@ public class Plan {
 			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
+	
+	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
+		if (livraison.getDuree() < 0) 
+			throw new ExceptionPlanCo("La livraison possède une durée négative");
+		demandeLivraison.ajoutePointLivraison(livraison);
+	}
+	
+	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
+		demandeLivraison.supprimerPointLivraison(livraison);	
+	}
 
 	public HashMap<Long, Intersection> getIntersections(){
 		return intersections;

@@ -1,7 +1,9 @@
 package vue;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -81,6 +83,8 @@ public class VuePlan extends JPanel{
 		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
+		
+		
 
 		setBackground(CharteGraphique.GRAPH_BG);
 	}
@@ -213,6 +217,7 @@ public class VuePlan extends JPanel{
 	private int positionX(int x) {
 		return (int) ((x-minX)/zoom + this.getWidth()/ 2 -(maxX-minX)/(2*zoom) + coordonneeX);
 	}
+	
 	private int positionY(int y) {
 		return (int)((y-minY)/zoom + this.getHeight()/2 - (maxY-minY)/(2*zoom) + coordonneeY);
 	}

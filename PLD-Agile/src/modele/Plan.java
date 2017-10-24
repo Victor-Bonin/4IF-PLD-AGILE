@@ -3,8 +3,12 @@ package modele;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 import modele.algo.DjkSolution;
 import modele.algo.TSP1;
@@ -15,6 +19,7 @@ import modele.algo.TSP1;
  */
 public class Plan {
 	private final int VITESSE = 15 *(10000/3600); // 15km/h en dm/s
+	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
 	private DemandeLivraison demandeLivraison;
@@ -62,6 +67,12 @@ public class Plan {
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
 	public void calculTournee() throws Exception {
+		
+	//A supprimer, permets de mesurer les temps pour du debug
+	long debutDelay;
+	long finDelay;
+		
+		
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
@@ -70,7 +81,8 @@ public class Plan {
 		TSP1 tsp = new TSP1();
 		
 		// Remplissage de la liste des intersections avec tous les troncons
-		
+
+	debutDelay = System.currentTimeMillis();
 		HashMap<Long, List<Troncon>> adjMap = new HashMap<Long, List<Troncon>>();
 		Troncon t;
 		long idDebut;
@@ -83,15 +95,23 @@ public class Plan {
 			adjMap.get(t.getDebut().getId()).add(t);
 		}
 
+	finDelay = System.currentTimeMillis();
+	System.out.println("Temps d'init de l'algo : " + (finDelay - debutDelay) + "ms");
+
+	debutDelay = System.currentTimeMillis();
 		float[][] cout = new float[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
 		// On lance Dijkstra depuis tous les points de livraison pour remplir le tableau cout
 		DjkSolution result;
 		long srcId;
 		long trgId;
+		long[] targetsForDijkstra = new long[livraisons.size()];
+		for(int i=0;i<targetsForDijkstra.length;i++) {
+			targetsForDijkstra[i] = livraisons.get(i).getId();
+		}
 		for(int source=0; source<nbLivraisons; source++){
 			srcId = livraisons.get(source).getId();
-			result = dijkstra(adjMap, srcId);
+			result = dijkstra(adjMap, srcId, targetsForDijkstra);
 
 			for(int target=0; target<nbLivraisons; target++){
 				trgId = livraisons.get(target).getId();
@@ -107,12 +127,12 @@ public class Plan {
 			}
 		}
 		
+	finDelay = System.currentTimeMillis();
+	System.out.println("Temps de Dijkstra: " + (finDelay - debutDelay) + "ms");
 		int[] duree = new int[nbLivraisons];
 		for(int i=1; i<nbLivraisons; i++){
 			duree[i] = ((Livraison)livraisons.get(i)).getDuree();
 		}
-		
-		int tpsLimite = 10000;
 		
 		PlageHoraire[] horaires = new PlageHoraire[nbLivraisons];
 		horaires[0] = entrepot.getHoraires();
@@ -122,8 +142,13 @@ public class Plan {
 			}
 		}
 		
-		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree, horaires);
-
+		//TSP
+		
+	debutDelay = System.currentTimeMillis();
+		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horaires);
+	finDelay = System.currentTimeMillis();
+	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
+		
 		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
 
 		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons);
@@ -147,42 +172,81 @@ public class Plan {
 
 		tournee = new Tournee(entrepot, livs, itineraire);
 	}
-
+	
 	//Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
-	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source){
+	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source, long[] targets){
+
+		Long current = source;
+		
+		//Distances
 		HashMap<Long, Float> dist = new HashMap<Long, Float>();
+		dist.put(current, (float)0);
+		//Queue to near unexplored
+		//Set<Long> queue = new HashSet<Long>();
+		List<Long> queue = new ArrayList<Long>();
+		queue.add(current);
+		//Previous node for each explored node
 		HashMap<Long, Long> previousNode = new HashMap<Long, Long>();
-		List<Long> unexplored = new ArrayList<Long>();
+		//List of explored nodes (their distance in "dist" array are the final distances)
+		Set<Long> explored = new HashSet<Long>();
 		
-		for(Entry<Long, Intersection> i : intersections.entrySet()) {
-			dist.put(i.getKey(), Float.MAX_VALUE);
-			unexplored.add(i.getKey());
-		}
-		dist.put(source, (float)0);
-		
-		Long current;
-		while(!unexplored.isEmpty()){
-			current = null;
-			//On choisit le node inexplore ayant la plus petite dist
-			for(int i = 0; i<unexplored.size(); i++){
-				if(current==null || dist.get(unexplored.get(i))<dist.get(current)){
-			    	current = unexplored.get(i);
+		boolean continueLoop = true;
+		while(!queue.isEmpty() && continueLoop) {
+			Iterator<Long> it = queue.iterator();
+
+			Long candidat = null;
+			
+			if(it.hasNext())
+				candidat = it.next();
+			current = candidat;
+			
+			while(it.hasNext()) {
+				candidat = it.next();
+				if(dist.get(candidat)<dist.get(current)){
+			    	current = candidat;
 			    }
 			}
-			unexplored.remove(current);
+			
+			explored.add(current);
+			queue.remove(current);
 			
 			// Pour tous les adjacents du Node current
 			if(adjMap.containsKey(current)){
-				for(int i=0;i<adjMap.get(current).size();i++){
-					Troncon t = adjMap.get(current).get(i);
+				//for(int i=0;i<adjMap.get(current).size();i++){
+				for(Troncon t : adjMap.get(current)){
+					//Troncon t = adjMap.get(current).get(i);
 					Long arrivee = t.getFin().getId();
 					// Si le Node d'arrivee du troncon est inexplore et que sa dist est superieure a celle qui passe par current
-					if(unexplored.contains(arrivee) && dist.get(arrivee)>dist.get(current)+(t.getLongueur()/VITESSE) ){
-						dist.put(arrivee, dist.get(current)+(t.getLongueur()/VITESSE));
-						previousNode.put(arrivee, current);
+					if(!explored.contains(arrivee)){
+						if(queue.contains(arrivee)) {
+							if(dist.get(arrivee)>dist.get(current)+(t.getLongueur()/VITESSE)) {
+								dist.put(arrivee, dist.get(current)+(t.getLongueur()/VITESSE));
+								previousNode.put(arrivee, current);
+							}
+						}else {
+							queue.add(arrivee);
+							dist.put(arrivee, dist.get(current)+(t.getLongueur()/VITESSE));
+							previousNode.put(arrivee, current);
+						}
 					}
 				}	
 			}
+			
+			/*
+			 * On ne va pas utiliser l'arret anticipé, dans notre cas 
+			 * vérifier la condition demande plus de calcul que finir les itérations.
+			 * En général on traite tout de même 10 000 noeuds au moins sur 12 000, 
+			 * (Condition donc testée 10 000 fois au lieu de laisser tourner 2000 fois)
+			 */
+			/*
+			//Can we end shortly ?
+			continueLoop = false;
+			for(int i=0;i<targets.length;i++) {
+				if(!explored.contains(targets[i])) {
+					continueLoop = true;
+				}
+			}
+			*/
 		}
 		DjkSolution result = new DjkSolution();
 		result.dist = dist;

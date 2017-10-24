@@ -24,7 +24,7 @@ public abstract class TemplateTSP implements TSP {
 		for (int i=1; i<nbSommets; i++) nonVus.add(i);
 		ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
 		vus.add(0); // le premier sommet visite est 0
-		branchAndBound(0, nonVus, vus, 0, horaires[0].getDebut() , cout, duree, System.currentTimeMillis(), tpsLimite);
+		branchAndBound(0, nonVus, vus, 0, (Calendar)horaires[0].getDebut().clone() , cout, duree, horaires, System.currentTimeMillis(), tpsLimite);
 		return meilleureSolution;
 	}
 	
@@ -47,7 +47,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @return une borne inferieure du cout des permutations commencant par sommetCourant, 
 	 * contenant chaque sommet de nonVus exactement une fois et terminant par le sommet 0
 	 */
-	protected abstract int bound(Integer sommetCourant, ArrayList<Integer> nonVus, float[][] cout, int[] duree);
+	protected abstract int bound(Integer sommetCourant, ArrayList<Integer> nonVus, float[][] cout, int[] duree, PlageHoraire[] horaires);
 	
 	/**
 	 * Methode devant etre redefinie par les sous-classes de TemplateTSP
@@ -57,7 +57,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
 	 * @return un iterateur permettant d'iterer sur tous les sommets de nonVus
 	 */
-	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, float[][] cout, int[] duree);
+	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, float[][] cout, int[] duree, PlageHoraire[] horaires);
 	
 	/**
 	 * Methode definissant le patron (template) d'une resolution par separation et evaluation (branch and bound) du TSP
@@ -70,7 +70,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @param tpsDebut : moment ou la resolution a commence
 	 * @param tpsLimite : limite de temps pour la resolution
 	 */	
-	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, Calendar actualTime, float[][] cout, int[] duree, long tpsDebut, int tpsLimite){
+	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, Calendar heureDebut, float[][] cout, int[] duree, PlageHoraire[] horaires, long tpsDebut, int tpsLimite){
 		 if (System.currentTimeMillis() - tpsDebut > tpsLimite){
 			 tempsLimiteAtteint = true;
 			 return;
@@ -81,13 +81,18 @@ public abstract class TemplateTSP implements TSP {
 	    		vus.toArray(meilleureSolution);
 	    		coutMeilleureSolution = f;
 	    	}
-	    } else if (f + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution){
-	        Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree);
+	    } else if (f + bound(sommetCrt, nonVus, cout, duree, horaires) < coutMeilleureSolution){
+	        Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree, horaires);
 	        while (it.hasNext()){
 	        	Integer prochainSommet = it.next();
 	        	vus.add(prochainSommet);
 	        	nonVus.remove(prochainSommet);
-	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[prochainSommet], TEMPS ACTUEL , cout, duree, tpsDebut, tpsLimite); //TODO
+	        	float wait = 0;
+	        	if(horaires[sommetCrt]!=null) {
+		        	wait = (horaires[sommetCrt].getDebut().getTimeInMillis() - heureDebut.getTimeInMillis()) / 1000 - f;
+		        	wait=(wait<0)?0:wait;
+	        	}
+	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[prochainSommet] + wait, heureDebut , cout, duree, horaires, tpsDebut, tpsLimite); 
 	        	vus.remove(prochainSommet);
 	        	nonVus.add(prochainSommet);
 	        }	    

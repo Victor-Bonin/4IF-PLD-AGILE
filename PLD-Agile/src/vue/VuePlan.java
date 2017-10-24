@@ -36,6 +36,7 @@ public class VuePlan extends JPanel{
 	private int hauteurBalise = 40;
 	private int largeurBalise = 40;
 	private BufferedImage imgLivraison;
+	private BufferedImage imgLivraisonSurvol;
 	private BufferedImage imgEntrepot;
 	
 	private Plan plan;
@@ -58,7 +59,8 @@ public class VuePlan extends JPanel{
 	
 	private ArrayList<JLabel> iconesLivraison;
 	private JLabel iconeEntrepot; 
-	ImageIcon imageIconL;
+	private ImageIcon imageIconL;
+	private ImageIcon imageIconLS;
 	
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
@@ -68,9 +70,12 @@ public class VuePlan extends JPanel{
 		
 		try {
 			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			imgLivraisonSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
 			imgEntrepot = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Image scaledImageL = imgLivraison.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
 			imageIconL = new ImageIcon(scaledImageL);
+			Image scaledImageLS = imgLivraison.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			imageIconLS = new ImageIcon(scaledImageLS);
 			Image scaledImageE = imgEntrepot.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon imageIconE = new ImageIcon(scaledImageE);
 			iconeEntrepot = new JLabel(imageIconE);
@@ -310,6 +315,14 @@ public class VuePlan extends JPanel{
 		if (plan.getDemandeLivraison().getEntrepot()!=null) {
 			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
 		}
+	}
+	
+	public void survol(int index){
+		iconesLivraison.get(index).setIcon(imageIconLS);
+	}
+	
+	public void antiSurvol(int index){
+		iconesLivraison.get(index).setIcon(imageIconL);
 	}
 
 }

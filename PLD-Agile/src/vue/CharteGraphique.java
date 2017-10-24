@@ -46,6 +46,7 @@ public interface CharteGraphique {
 	public static final String ICONE_LIVRAISON = "ressources/map-marker2.png";
 	public static final String ICONE_LIVRAISON_SURVOL = "ressources/map-marker3.png";
 	public static final String ICONE_HANGAR = "ressources/entrepot-marker.png";
+	public static final String ICONE_HANGAR_SURVOL = "ressources/entrepot-marker2.png";
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;

@@ -33,6 +33,7 @@ public class Fenetre extends JFrame{
 	private VueTournee vueTournee;
 
 	private EcouteurDeBouton ecouteurBoutons;
+	private EcouteurDeSourisDeSynchronisation ecouteurSynchro;
 	
 	private JPanel footer;
 	private PersoButton importPlanButton;
@@ -181,6 +182,12 @@ public class Fenetre extends JFrame{
 			case VUE_LIVRAISON_CHARGEE:
 				vueTournee.initTournee(plan.getDemandeLivraison());
 				vuePlan.afficherIcones();
+				for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
+					ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
+					vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
+				}
+				ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
+				vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				vueTournee.initTournee(plan.getTournee());

@@ -38,6 +38,7 @@ public class VuePlan extends JPanel{
 	private BufferedImage imgLivraison;
 	private BufferedImage imgLivraisonSurvol;
 	private BufferedImage imgEntrepot;
+	private BufferedImage imgEntrepotSurvol;
 	
 	private Plan plan;
 	private float coordonneeX = 0;
@@ -61,6 +62,8 @@ public class VuePlan extends JPanel{
 	private JLabel iconeEntrepot; 
 	private ImageIcon imageIconL;
 	private ImageIcon imageIconLS;
+	private ImageIcon imageIconE;
+	private ImageIcon imageIconES;
 	
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
@@ -72,12 +75,15 @@ public class VuePlan extends JPanel{
 			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			imgLivraisonSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
 			imgEntrepot = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
+			imgEntrepotSurvol = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR_SURVOL));
 			Image scaledImageL = imgLivraison.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
 			imageIconL = new ImageIcon(scaledImageL);
-			Image scaledImageLS = imgLivraison.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			Image scaledImageLS = imgLivraisonSurvol.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
 			imageIconLS = new ImageIcon(scaledImageLS);
 			Image scaledImageE = imgEntrepot.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIconE = new ImageIcon(scaledImageE);
+			imageIconE = new ImageIcon(scaledImageE);
+			Image scaledImageES = imgEntrepotSurvol.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			imageIconES = new ImageIcon(scaledImageES);
 			iconeEntrepot = new JLabel(imageIconE);
 		} catch (IOException e) {
 	    	e.printStackTrace();
@@ -318,11 +324,27 @@ public class VuePlan extends JPanel{
 	}
 	
 	public void survol(int index){
-		iconesLivraison.get(index).setIcon(imageIconLS);
+		if (index == -1){
+			iconeEntrepot.setIcon(imageIconES);
+		}else{
+			iconesLivraison.get(index).setIcon(imageIconLS);
+		}
 	}
 	
 	public void antiSurvol(int index){
-		iconesLivraison.get(index).setIcon(imageIconL);
+		if (index == -1){
+			iconeEntrepot.setIcon(imageIconE);
+		}else{
+			iconesLivraison.get(index).setIcon(imageIconL);
+		}
+	}
+	
+	public ArrayList<JLabel> getIconesLivraison(){
+		return iconesLivraison;
+	}
+	
+	public JLabel getIconeEntrepot(){
+		return iconeEntrepot;
 	}
 
 }

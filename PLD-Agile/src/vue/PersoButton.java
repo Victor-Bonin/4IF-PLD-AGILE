@@ -2,6 +2,12 @@ package vue;
 
 import javax.swing.JButton;
 
+/**
+ * Extension de JButton pour afficher un bouton personnalisé
+ * 
+ * @author 4104
+ *
+ */
 public class PersoButton extends JButton{
 	private static final long serialVersionUID = 6534684555513953601L;
 	

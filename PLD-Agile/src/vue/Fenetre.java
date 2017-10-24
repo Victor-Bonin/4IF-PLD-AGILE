@@ -2,8 +2,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
@@ -12,6 +10,12 @@ import javax.swing.JPanel;
 import controleur.Controleur;
 import modele.Plan;
 
+/**
+ * Extension de JFrame permettant d'afficher et d'interagir avec les éléments de PlanCo
+ * 
+ * @author 4104
+ *
+ */
 public class Fenetre extends JFrame{
 	private static final long serialVersionUID = 4042713508717400450L;
 	public static final int VUE_DEFAUT = 0;
@@ -55,6 +59,7 @@ public class Fenetre extends JFrame{
 		
 		setVisible(true);
 	}
+	
 	
 	private void initListeners(){
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
@@ -100,7 +105,6 @@ public class Fenetre extends JFrame{
 
 	private void initHeader(){
 		header = new VueHeader();
-		
 		header.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 		
 		getContentPane().add(header, BorderLayout.NORTH);
@@ -156,6 +160,14 @@ public class Fenetre extends JFrame{
 		getContentPane().add(footer, BorderLayout.SOUTH);
 	}
 
+	/**
+	 * Permet de faire basculer la fenêtre vers une vue ou une autre
+	 * @param vue int correspondant a la vue a charger
+	 * @see #VUE_DEFAUT
+	 * @see #VUE_LIVRAISON_CHARGEE
+	 * @see #VUE_PLAN
+	 * @see #VUE_TOURNEE_CALCULEE
+	 */
 	public void goToVue(int vue){
 
 		if(plan!=null){
@@ -180,6 +192,11 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
+	/**
+	 * Afficher une notification dans la fenêtre
+	 * @param texte texte a afficher
+	 * @param color couleur de ce texte
+	 */
 	public void changeNotification(String texte, Color color) {
 		header.changeNotification(texte, color);
 	}

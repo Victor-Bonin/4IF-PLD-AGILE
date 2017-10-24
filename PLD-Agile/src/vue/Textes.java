@@ -34,4 +34,5 @@ public interface Textes {
 	public static final String TOURNEE_ENTREPOT = "Entrepot ";
 	public static final String TOURNEE_DUREE = "Durée ";
 	public static final String TOURNEE_INTERSECTION = "Intersection de : ";
+	public static final String TOURNEE_PLAGE = "Plage horaire : ";
 }

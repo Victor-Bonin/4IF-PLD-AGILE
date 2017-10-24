@@ -61,7 +61,7 @@ public class Plan {
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
-	public void calculTournee(){
+	public void calculTournee() throws Exception {
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
@@ -82,7 +82,7 @@ public class Plan {
 			}
 			adjMap.get(t.getDebut().getId()).add(t);
 		}
-			
+
 		float[][] cout = new float[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
 		// On lance Dijkstra depuis tous les points de livraison pour remplir le tableau cout
@@ -114,7 +114,7 @@ public class Plan {
 		
 		int tpsLimite = 10000;
 		Integer[] meilleureSolution = tsp.chercheSolution(tpsLimite, nbLivraisons, cout, duree);
-		
+
 		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
 
 		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons);
@@ -137,7 +137,6 @@ public class Plan {
 //		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
 
 		tournee = new Tournee(entrepot, livs, itineraire);
-		
 	}
 
 	//Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court

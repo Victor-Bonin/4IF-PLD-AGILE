@@ -34,7 +34,7 @@ public class EtatCalcule extends EtatDemandeOuverte {
 	}
 
 	@Override
-	public void permuterLivraison() {
+	public void deplacerLivraison() {
 		// TODO Auto-generated method stub
 
 	}

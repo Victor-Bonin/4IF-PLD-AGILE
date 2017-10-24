@@ -30,10 +30,17 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
-		plan.calculTournee();
-		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
-		controleur.setEtatCourant(controleur.etatCalcule);
-		controleur.afficherFenetre();
+		try {
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
+			plan.calculTournee();
+			fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
+			controleur.setEtatCourant(controleur.etatCalcule);
+			controleur.afficherFenetre();
+			controleur.afficherNotif();
+		}
+		catch (Exception ex) {
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+		}
 	}
 	
 	@Override

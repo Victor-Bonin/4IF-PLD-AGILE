@@ -3,9 +3,19 @@ package vue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Cette classe contient les appels au controleur depuis les boutons
+ * 
+ * @author 4104
+ *
+ */
 public class EcouteurDeBouton implements ActionListener{
 	private controleur.Controleur ctrl;
 	
+	/**
+	 * Constructeur d'une instance d'un écouteur
+	 * @param c le controleur sur lequel on appelera les actions
+	 */
 	public EcouteurDeBouton(controleur.Controleur c){
 		ctrl = c;
 	}

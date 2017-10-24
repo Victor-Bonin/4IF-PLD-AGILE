@@ -43,6 +43,8 @@ public class VuePlan extends JPanel{
 	private float maxY = Float.MIN_VALUE;
 	private float minX = Float.MAX_VALUE;
 	private float minY = Float.MAX_VALUE;
+	private double posSourisX;
+	private double posSourisY;
 
 	private PersoButton changerPlanButton;
 	private PersoButton changerDemandeLivraisonButton;
@@ -96,12 +98,19 @@ public class VuePlan extends JPanel{
 				minY = intersection.getY();
 			}
 		}
-		
-		
 	}
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
+		
+		/*
+		posSourisX = this.getMousePosition().getX();
+		double sourisPlanX = (posSourisX - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX;
+		posSourisY = this.getMousePosition().getY();
+		double sourisPlanY = (posSourisY - coordonneeY - this.getHeight()/ 2 + (maxY-minY)/(2*zoom))*zoom + minY;
+		System.out.println(sourisPlanX);
+		System.out.println(sourisPlanY);
+		*/
 		
 		if (firstCall){
 
@@ -202,17 +211,34 @@ public class VuePlan extends JPanel{
 	  }
 
 	private int positionX(int x) {
-		return (int) ((x-minX)/zoom+this.getWidth()/2-(maxX-minX)/(2*zoom) + coordonneeX);
+		return (int) ((x-minX)/zoom + this.getWidth()/ 2 -(maxX-minX)/(2*zoom) + coordonneeX);
 	}
 	private int positionY(int y) {
-		return (int)((y-minY)/zoom+this.getHeight()/2-(maxY-minY)/(2*zoom) + coordonneeY);
+		return (int)((y-minY)/zoom + this.getHeight()/2 - (maxY-minY)/(2*zoom) + coordonneeY);
 	}
 
 	public void zoom(){
+		
+		// On calcule les coordonnées de la souris sur le plan
+		// TODO : fonction
+		posSourisX = this.getMousePosition().getX();
+		double sourisPlanX = (posSourisX - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX;
+		posSourisY = this.getMousePosition().getY();
+		double sourisPlanY = (posSourisY - coordonneeY - this.getHeight()/ 2 + (maxY-minY)/(2*zoom))*zoom + minY;
+		
+		double zoomPrec = this.zoom;
+		
 		this.zoom-=5;
 		if(zoom<=0) {
 			zoom = 1;
-		}
+		}		
+		
+		// On calcule la différence entre les coordonnées de la souris précédant le zoom et suivant le zoom pour pouvoir recentrer le point pointé précédemment par la souris sur la souris
+		double decZoomX = (sourisPlanX-minX)/zoom-(maxX-minX)/(2*zoom)-((sourisPlanX-minX)/zoomPrec-(maxX-minX)/(2*zoomPrec));
+		coordonneeX = (float)(coordonneeX - decZoomX);
+		double decZoomY = (sourisPlanY-minY)/zoom-(maxY-minY)/(2*zoom)-((sourisPlanY-minY)/zoomPrec-(maxY-minY)/(2*zoomPrec));
+		coordonneeY = (float)(coordonneeY - decZoomY);
+		
 		repaint();
 	}
 	public void move(int x, int y){
@@ -222,7 +248,20 @@ public class VuePlan extends JPanel{
 	}
 	
 	public void dezoom(){
+		
+		posSourisX = this.getMousePosition().getX();
+		double sourisPlanX = (posSourisX - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX;
+		posSourisY = this.getMousePosition().getY();
+		double sourisPlanY = (posSourisY - coordonneeY - this.getHeight()/ 2 + (maxY-minY)/(2*zoom))*zoom + minY;
+		double zoomPrec = this.zoom;
+		
 		this.zoom+=5;
+		
+		double decZoomX = (sourisPlanX-minX)/zoom-(maxX-minX)/(2*zoom)-((sourisPlanX-minX)/zoomPrec-(maxX-minX)/(2*zoomPrec));
+		coordonneeX = (float)(coordonneeX - decZoomX);
+		double decZoomY = (sourisPlanY-minY)/zoom-(maxY-minY)/(2*zoom)-((sourisPlanY-minY)/zoomPrec-(maxY-minY)/(2*zoomPrec));
+		coordonneeY = (float)(coordonneeY - decZoomY);
+		
 		repaint();
 	}
 

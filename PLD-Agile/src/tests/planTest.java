@@ -2,12 +2,21 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import modele.Intersection;
 import modele.Plan;
 import modele.Troncon;
+import xml.DeserialiseurXML;
+import xml.ExceptionXML;
 
 public class planTest {
 	Plan plan = new Plan();
@@ -17,13 +26,13 @@ public class planTest {
 
 	@Before
 	public void init() {		
-	plan.ajouterIntersection(56454, 2484, 4242);
-	plan.ajouterIntersection(3542, 5612, 4343);
-	inter1 = plan.getIntersections().get(4242L);
-	inter2 = plan.getIntersections().get(4343L);
-	tronconExpected = new Troncon(inter1, inter2, "Rue des bolchéviques", (float)6666);
+		plan.ajouterIntersection(56454, 2484, 4242);
+		plan.ajouterIntersection(3542, 5612, 4343);
+		inter1 = plan.getIntersections().get(4242L);
+		inter2 = plan.getIntersections().get(4343L);
+		tronconExpected = new Troncon(inter1, inter2, "Rue des bolchéviques", (float)6666);
 	}
-	
+
 
 	@Test
 	public void ajouterTronconTest() {
@@ -37,8 +46,40 @@ public class planTest {
 		assertEquals(tronconExpected.getDebut(),tronconAjoute.getDebut());
 		assertEquals(tronconExpected.getFin(),tronconAjoute.getFin());
 		assertTrue(tronconExpected.getLongueur() == tronconAjoute.getLongueur());
-  	}
+	}
 
+	@Test
+	public void listerTronconVoisinPetit() {
+		File xml = new File("assets/planLyonPetit.xml");
+		try {
+			DeserialiseurXML.chargerFichier(plan, xml);
+			assertEquals(217, plan.getIntersections().values().size());
+		}
+		catch (Exception e) {
+			fail("Erreur listerTronconVoisin parse XML");
+		}
+		List<Troncon> troncons = plan.listerTronconVoisin(1029591870L);
+		assertEquals(3, troncons.size());
+	}
+	
+	@Test
+	public void listerTronconVoisinGrand() {
+		File xml = new File("assets/planLyonGrand.xml");
+		try {
+			DeserialiseurXML.chargerFichier(plan, xml);
+			assertEquals(12165, plan.getIntersections().values().size());
+		}
+		catch (Exception e) {
+			fail("Erreur listerTronconVoisin parse XML");
+		}
+		// 3.6 s
+		List<Troncon> troncons = plan.listerTronconVoisin(998859048L);
+		assertEquals(5, troncons.size());
+		// 3.7s
+		troncons = plan.listerTronconVoisin(100218027L);
+		assertEquals(6, troncons.size());
+		// 3.8s
+	}
 
 
 }

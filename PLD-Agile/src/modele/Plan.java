@@ -195,6 +195,17 @@ public class Plan {
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		demandeLivraison.supprimerPointLivraison(livraison);	
 	}
+	
+	public List<Troncon> listerTronconVoisin(Long idIntersection){
+		Intersection intersection = intersections.get(idIntersection);
+		List<Troncon> tronconsVoisins = new ArrayList<Troncon>();
+		if(intersection == null)
+			return tronconsVoisins;
+		for (Troncon t : troncons)
+			if (t.getDebut().equals(intersection) || t.getFin().equals(intersection))
+				tronconsVoisins.add(t);
+		return tronconsVoisins;
+	}
 
 	public HashMap<Long, Intersection> getIntersections(){
 		return intersections;

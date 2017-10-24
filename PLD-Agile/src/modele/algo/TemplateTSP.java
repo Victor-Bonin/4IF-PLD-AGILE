@@ -11,6 +11,7 @@ public abstract class TemplateTSP implements TSP {
 	private Integer[] meilleureSolution;
 	private float coutMeilleureSolution = 0;
 	private Boolean tempsLimiteAtteint;
+	private int compteur = 0;
 	
 	public Boolean getTempsLimiteAtteint(){
 		return tempsLimiteAtteint;
@@ -25,6 +26,7 @@ public abstract class TemplateTSP implements TSP {
 		ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
 		vus.add(0); // le premier sommet visite est 0
 		branchAndBound(0, nonVus, vus, 0, (Calendar)horaires[0].getDebut().clone() , cout, duree, horaires, System.currentTimeMillis(), tpsLimite);
+		System.out.println("Tentatives : " + compteur);
 		return meilleureSolution;
 	}
 	
@@ -71,11 +73,12 @@ public abstract class TemplateTSP implements TSP {
 	 * @param tpsLimite : limite de temps pour la resolution
 	 */	
 	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, Calendar heureDebut, float[][] cout, int[] duree, PlageHoraire[] horaires, long tpsDebut, int tpsLimite){
+		 compteur++;
 		 if (System.currentTimeMillis() - tpsDebut > tpsLimite){
 			 tempsLimiteAtteint = true;
 			 return;
 		 }
-	    if (nonVus.size() == 0){ // tous les sommets ont ete visites
+	    if (nonVus.isEmpty()){ // tous les sommets ont ete visites
 	    	f += cout[sommetCrt][0];
 	    	if (f < coutMeilleureSolution){ // on a trouve une solution meilleure que meilleureSolution
 	    		vus.toArray(meilleureSolution);
@@ -92,7 +95,7 @@ public abstract class TemplateTSP implements TSP {
 		        	wait = (horaires[sommetCrt].getDebut().getTimeInMillis() - heureDebut.getTimeInMillis()) / 1000 - f;
 		        	wait=(wait<0)?0:wait;
 	        	}
-	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[prochainSommet] + wait, heureDebut , cout, duree, horaires, tpsDebut, tpsLimite); 
+	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[sommetCrt] + wait, heureDebut , cout, duree, horaires, tpsDebut, tpsLimite); 
 	        	vus.remove(prochainSommet);
 	        	nonVus.add(prochainSommet);
 	        }	    

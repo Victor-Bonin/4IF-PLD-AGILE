@@ -11,7 +11,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import modele.algo.DjkSolution;
+import modele.algo.TSP;
 import modele.algo.TSP1;
+import modele.algo.TSP2;
+import modele.algo.TSP3;
 
 /**
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
@@ -78,7 +81,7 @@ public class Plan {
 		livraisons.add(0,entrepot);
 		int nbLivraisons = livraisons.size();
 		
-		TSP1 tsp = new TSP1();
+		TSP tsp = new TSP3();
 		
 		// Remplissage de la liste des intersections avec tous les troncons
 
@@ -105,26 +108,35 @@ public class Plan {
 		DjkSolution result;
 		long srcId;
 		long trgId;
+		/*
 		long[] targetsForDijkstra = new long[livraisons.size()];
 		for(int i=0;i<targetsForDijkstra.length;i++) {
 			targetsForDijkstra[i] = livraisons.get(i).getId();
-		}
-		for(int source=0; source<nbLivraisons; source++){
-			srcId = livraisons.get(source).getId();
-			result = dijkstra(adjMap, srcId, targetsForDijkstra);
-
-			for(int target=0; target<nbLivraisons; target++){
-				trgId = livraisons.get(target).getId();
+		}*/
+		
+		Iterator<Intersection> it = livraisons.iterator();
+		int source = 0;
+		while(it.hasNext()) {
+			Intersection livrDepart = it.next();
+			srcId = livrDepart.getId();
+			result = dijkstra(adjMap, srcId/*, targetsForDijkstra*/);
+			Iterator<Intersection> it2 = livraisons.iterator();
+			int target = 0;
+			while(it2.hasNext()) {
+				Intersection livrArrivee = it2.next();
+				trgId = livrArrivee.getId();
 				if(srcId != trgId){
-					cout[target][source]=result.dist.get(trgId);
+					cout[source][target]=result.dist.get(trgId);
 					// On ajoute le plus court chemin entre source et target dans le tableau de plus courts chemins
-					pCourtsChemins[source][target] = new Chemin(livraisons.get(source), livraisons.get(target));
+					pCourtsChemins[source][target] = new Chemin(livrDepart, livrArrivee);
 					do{
 						pCourtsChemins[source][target].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
 						trgId = result.prev.get(trgId);
 					}while(trgId != srcId); 
 				}
+				target++;
 			}
+			source++;
 		}
 		
 	finDelay = System.currentTimeMillis();
@@ -174,7 +186,7 @@ public class Plan {
 	}
 	
 	//Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
-	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source, long[] targets){
+	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source/*, long[] targets*/){
 
 		Long current = source;
 		

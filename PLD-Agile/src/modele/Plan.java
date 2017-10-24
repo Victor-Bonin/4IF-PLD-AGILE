@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
+import controleur.RunnableTest;
 import modele.algo.Dijkstra;
 import modele.algo.DjkSolution;
 import modele.algo.TSP1;
@@ -61,10 +62,7 @@ public class Plan {
 		}
 	}
 	
-	/**
-	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
-	 */
-	public void calculTournee() throws Exception {
+	public void calculTournee() throws Exception {	
 		List<Intersection> interList = new ArrayList<Intersection>(intersections.values());
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();

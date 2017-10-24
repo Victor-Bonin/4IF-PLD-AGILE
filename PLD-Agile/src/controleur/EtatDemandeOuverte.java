@@ -32,11 +32,9 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
 		try {
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
-			plan.calculTournee();
-			fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
-			controleur.setEtatCourant(controleur.etatCalcule);
-			controleur.afficherFenetre();
-			controleur.afficherNotif();
+			RunnableTest runnable = new RunnableTest(plan, this, controleur, fenetre);
+			Thread t = new Thread(runnable);
+			t.start();
 		}
 		catch (Exception ex) {
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
@@ -52,4 +50,12 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	public void afficherFenetre(Fenetre fenetre) {
 		fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
 	}
+
+	public void finAlgo(Controleur controleur, Fenetre fenetre) {
+		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
+		controleur.setEtatCourant(controleur.etatCalcule);
+		controleur.afficherFenetre();
+		controleur.afficherNotif();		
+	}
 }
+

@@ -9,10 +9,10 @@ import java.util.Calendar;
 public class PlageHoraire {
 	private Calendar debutPlage;
 	private Calendar finPlage;
-	
-	public PlageHoraire( Calendar debutPlage, Calendar finPlage){
-		this.debutPlage=debutPlage;
-		this.finPlage=finPlage;
+
+	public PlageHoraire(Calendar debut, Calendar fin) {
+		debutPlage = debut;
+		finPlage = fin;
 	}
 	
 	public Calendar getDebut() {

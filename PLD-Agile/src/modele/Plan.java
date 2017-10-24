@@ -212,10 +212,15 @@ public class Plan {
 	 * @param dureeLivraison Duree de la livraison
 	 * @throws Exception La livraison ne correspond a aucune intersection du plan
 	 */
-	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison) throws ExceptionPlanCo {
+	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison, Calendar debutPlage, Calendar finPlage) throws ExceptionPlanCo {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
 		if(intersection != null) {
-			Livraison livraison = new Livraison(intersection, dureeLivraison);
+			Livraison livraison;
+			if(debutPlage == null || finPlage == null) {
+				livraison = new Livraison(intersection, dureeLivraison);
+			} else {
+				livraison = new LivraisonPlageHoraire(intersection, dureeLivraison, debutPlage, finPlage);
+			}
 			demandeLivraison.ajoutePointLivraison(livraison);
 		} else {
 			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");

@@ -31,8 +31,9 @@ public class LivraisonPlageHoraire extends Livraison {
 
 	private PlageHoraire plage;
 
-	public LivraisonPlageHoraire(Intersection inter, int dureeArret) {
+	public LivraisonPlageHoraire(Intersection inter, int dureeArret, Calendar debut, Calendar fin) {
 		super(inter, dureeArret);
+		plage = new PlageHoraire(debut, fin);
 	}
 	
 	public PlageHoraire getPlage(){

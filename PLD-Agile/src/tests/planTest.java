@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -56,7 +57,7 @@ public class planTest {
 			assertEquals(217, plan.getIntersections().values().size());
 		}
 		catch (Exception e) {
-			fail("Erreur listerTronconVoisin parse XML");
+			fail("Erreur listerTronconVoisinPetit parse XML");
 		}
 		List<Troncon> troncons = plan.listerTronconVoisin(1029591870L);
 		assertEquals(3, troncons.size());
@@ -70,7 +71,7 @@ public class planTest {
 			assertEquals(12165, plan.getIntersections().values().size());
 		}
 		catch (Exception e) {
-			fail("Erreur listerTronconVoisin parse XML");
+			fail("Erreur listerTronconVoisinGrand parse XML");
 		}
 		// 3.6 s
 		List<Troncon> troncons = plan.listerTronconVoisin(998859048L);
@@ -79,7 +80,25 @@ public class planTest {
 		troncons = plan.listerTronconVoisin(100218027L);
 		assertEquals(6, troncons.size());
 		// 3.8s
+		for(Intersection i : plan.getIntersections().values())
+			plan.listerTronconVoisin(i.getId());
+		// 8s
 	}
-
+	
+	@Test
+	public void obtenirVoisinParIntersectionTest() {
+		File xml = new File("assets/planLyonGrand.xml");
+		try {
+			DeserialiseurXML.chargerFichier(plan, xml);
+			assertEquals(12165, plan.getIntersections().values().size());
+		}
+		catch (Exception e) {
+			fail("Erreur obtenirVoisinParIntersectionTest parse XML");
+		}
+		HashMap<Long, List<Troncon>> croisement = 
+				plan.obtenirVoisinParIntersection();
+		assertEquals(5, croisement.get(998859048L).size());
+		assertEquals(6, croisement.get(100218027L).size());
+	}
 
 }

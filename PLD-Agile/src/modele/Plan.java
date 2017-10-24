@@ -196,6 +196,13 @@ public class Plan {
 		demandeLivraison.supprimerPointLivraison(livraison);	
 	}
 	
+	/**
+	 * Retourne la liste des troncons voisins d'une intersection
+	 * Il n'est pas conseillé d'utiliser cette méthode pour obtenir la liste des 
+	 * troncons voisins de n intersections.
+	 * @param idIntersection id de l'intersection dont il faut les voisins
+	 * @return la liste des voisins de l'intersection désiré
+	 */
 	public List<Troncon> listerTronconVoisin(Long idIntersection){
 		Intersection intersection = intersections.get(idIntersection);
 		List<Troncon> tronconsVoisins = new ArrayList<Troncon>();
@@ -205,6 +212,34 @@ public class Plan {
 			if (t.getDebut().equals(intersection) || t.getFin().equals(intersection))
 				tronconsVoisins.add(t);
 		return tronconsVoisins;
+	}
+	
+	/**
+	 * Créer un dico contenant pour chaque intersection 
+	 * la liste des troncons qui partent ou viennent vers elle
+	 * @return un dictionnaire
+	 */
+	public HashMap<Long, List<Troncon>> obtenirVoisinParIntersection(){
+		HashMap<Long, List<Troncon>> croisement = new HashMap<Long, List<Troncon>>();
+		Long idDebut, idFin;
+		for(Troncon t : troncons) {
+			idDebut = t.getDebut().getId();
+			idFin = t.getFin().getId();
+			if (croisement.containsKey(idDebut))
+				croisement.get(idDebut).add(t);
+			else {
+				croisement.put(idDebut, new ArrayList<Troncon>());
+				croisement.get(idDebut).add(t);
+			}
+			
+			if (croisement.containsKey(t.getFin().getId()))
+				croisement.get(idFin).add(t);
+			else {
+				croisement.put(idFin, new ArrayList<Troncon>());
+				croisement.get(idFin).add(t);
+			}
+		}
+		return croisement;
 	}
 
 	public HashMap<Long, Intersection> getIntersections(){

@@ -21,7 +21,6 @@ public class Plan {
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
 	private DemandeLivraison demandeLivraison;
-	private Tournee tournee;
 
 	public Plan() {
 		intersections = new HashMap<Long, Intersection>();
@@ -144,7 +143,7 @@ public class Plan {
 				(int)cout[meilleureSolution[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree());
 		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
 
-		tournee = new Tournee(entrepot, livs, itineraire);
+		demandeLivraison = new Tournee(entrepot, livs, itineraire);
 	}
 
 	/**
@@ -261,7 +260,6 @@ public class Plan {
 
 	public void resetDemandeLivraison() {
 		demandeLivraison = new DemandeLivraison();
-		tournee = null;
 	}
 
 	public DemandeLivraison getDemandeLivraison(){
@@ -269,6 +267,8 @@ public class Plan {
 	}
 	
 	public Tournee getTournee(){
-		return tournee;
+		if (demandeLivraison instanceof Tournee)
+			return (Tournee)demandeLivraison;
+		return null;
 	}
 }

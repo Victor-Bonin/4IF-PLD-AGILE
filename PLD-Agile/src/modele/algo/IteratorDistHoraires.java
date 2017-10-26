@@ -17,7 +17,7 @@ public class IteratorDistHoraires implements Iterator<Integer> {
 	 * @param nonVus
 	 * @param sommetCrt
 	 */
-	public IteratorDistHoraires(Collection<Integer> nonVus, int sommetCrt, Calendar heureDebut, float[][] cout, PlageHoraire[] horaires){
+	public IteratorDistHoraires(Collection<Integer> nonVus, int sommetCrt, Long heureDebut, float[][] cout, Long[][] horaires){
 		this.candidats = new Integer[nonVus.size()];
 		nbCandidats = 0;
 		for (Integer s : nonVus){

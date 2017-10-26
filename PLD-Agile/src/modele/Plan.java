@@ -146,6 +146,16 @@ public class Plan {
 			duree[i] = ((Livraison)livraisons.get(i)).getDuree();
 		}
 		
+		Long[][] horairesLong = new Long[nbLivraisons][2]; 
+		horairesLong[0][0] = getSecondsInDay(entrepot.getHeureDepart());
+		horairesLong[0][1] = getSecondsInDay(entrepot.getHeureArrivee());
+		for(int i=1; i<nbLivraisons; i++){
+			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
+				horairesLong[0][0] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
+				horairesLong[0][1] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
+			}
+		}
+		/*
 		PlageHoraire[] horaires = new PlageHoraire[nbLivraisons];
 		horaires[0] = entrepot.getHoraires();
 		for(int i=1; i<nbLivraisons; i++){
@@ -153,11 +163,13 @@ public class Plan {
 				horaires[i] = ((LivraisonPlageHoraire)livraisons.get(i)).getPlage();
 			}
 		}
+		*/
 		
 		//TSP
 		
 	debutDelay = System.currentTimeMillis();
-		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horaires);
+	Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesLong);
+	//Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horaires);
 	finDelay = System.currentTimeMillis();
 	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
 		
@@ -331,5 +343,18 @@ public class Plan {
 	
 	public Tournee getTournee(){
 		return tournee;
+	}
+	
+	/**
+	 * With an offset for the moment
+	 * @param cal
+	 * @return
+	 */
+	private Long getSecondsInDay(Calendar cal) {
+		//cal.set(Calendar.YEAR, 1900);
+		if(cal==null) {
+			return -1l;
+		}
+		return cal.getTimeInMillis()/1000;
 	}
 }

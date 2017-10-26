@@ -9,12 +9,12 @@ import modele.PlageHoraire;
 public class TSP2 extends TemplateTSP {
 
 	@Override
-	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Calendar heureDebut, float[][] cout, int[] duree, PlageHoraire[] horaires) {
+	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Long heureDebut, float[][] cout, int[] duree, Long[][] horaires) {
 		return new IteratorSeq(nonVus, sommetCrt);
 	}
 
 	@Override
-	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Calendar heureDebut, float[][] cout, int[] duree, PlageHoraire[] horaires) {
+	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Long heureDebut, float[][] cout, int[] duree, Long[][] horaires) {
 		float r = duree[sommetCourant];
 		
 		float minDebut = Float.MAX_VALUE;
@@ -24,15 +24,15 @@ public class TSP2 extends TemplateTSP {
 			return 0;
 		 */
 		for(Integer courant : nonVus) {
-				if(cout[sommetCourant][courant]<minDebut)
-					minDebut = cout[sommetCourant][courant];
-				minAutre = cout[courant][0];
-				for(Integer suivant : nonVus) {
-					if(courant!=suivant && cout[courant][suivant]<minAutre)
-						minAutre = cout[courant][suivant];
-				}
-				r+=minAutre;
-				r+=duree[courant];
+			if(cout[sommetCourant][courant]<minDebut)
+				minDebut = cout[sommetCourant][courant];
+			minAutre = cout[courant][0];
+			for(Integer suivant : nonVus) {
+				if(courant!=suivant && cout[courant][suivant]<minAutre)
+					minAutre = cout[courant][suivant];
+			}
+			r+=minAutre;
+			r+=duree[courant];
 		}
 		r+=minDebut;
 		

@@ -1,8 +1,10 @@
 package modele.algo;
 
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
+
+import modele.PlageHoraire;
 
 public class IteratorDistHoraires implements Iterator<Integer> {
 
@@ -15,13 +17,27 @@ public class IteratorDistHoraires implements Iterator<Integer> {
 	 * @param nonVus
 	 * @param sommetCrt
 	 */
-	public IteratorDistHoraires(Collection<Integer> nonVus, int sommetCrt){
+	public IteratorDistHoraires(Collection<Integer> nonVus, int sommetCrt, Calendar heureDebut, float[][] cout, PlageHoraire[] horaires){
 		this.candidats = new Integer[nonVus.size()];
 		nbCandidats = 0;
 		for (Integer s : nonVus){
 			candidats[nbCandidats++] = s;
 		}
-		Arrays.sort(candidats);
+		
+		for(int i=0;i<candidats.length;i++) {
+			float max = cout[sommetCrt][candidats[i]];
+			int maxIndex = i;
+			for(int j=i+1;j<candidats.length;j++) {
+				if(cout[sommetCrt][candidats[j]]>max) {
+					maxIndex = j;
+					max = cout[sommetCrt][candidats[j]];
+				}
+			}
+			Integer temp = candidats[i];
+
+			candidats[i] = candidats[maxIndex];
+			candidats[maxIndex] = temp;
+		}
 	}
 	
 	@Override

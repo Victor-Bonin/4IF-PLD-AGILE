@@ -49,7 +49,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @return une borne inferieure du cout des permutations commencant par sommetCourant, 
 	 * contenant chaque sommet de nonVus exactement une fois et terminant par le sommet 0
 	 */
-	protected abstract int bound(Integer sommetCourant, ArrayList<Integer> nonVus, float[][] cout, int[] duree, PlageHoraire[] horaires);
+	protected abstract float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Calendar heureDebut, float[][] cout, int[] duree, PlageHoraire[] horaires);
 	
 	/**
 	 * Methode devant etre redefinie par les sous-classes de TemplateTSP
@@ -59,7 +59,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
 	 * @return un iterateur permettant d'iterer sur tous les sommets de nonVus
 	 */
-	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, float[][] cout, int[] duree, PlageHoraire[] horaires);
+	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Calendar heureDebut, float[][] cout, int[] duree, PlageHoraire[] horaires);
 	
 	/**
 	 * Methode definissant le patron (template) d'une resolution par separation et evaluation (branch and bound) du TSP
@@ -78,14 +78,15 @@ public abstract class TemplateTSP implements TSP {
 			 tempsLimiteAtteint = true;
 			 return;
 		 }
+		 float bound = bound(sommetCrt, nonVus, heureDebut, cout, duree, horaires);
 	    if (nonVus.isEmpty()){ // tous les sommets ont ete visites
 	    	f += cout[sommetCrt][0];
 	    	if (f < coutMeilleureSolution){ // on a trouve une solution meilleure que meilleureSolution
 	    		vus.toArray(meilleureSolution);
 	    		coutMeilleureSolution = f;
 	    	}
-	    } else if (f + bound(sommetCrt, nonVus, cout, duree, horaires) < coutMeilleureSolution){
-	        Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree, horaires);
+	    } else if (f + bound < coutMeilleureSolution && bound != Integer.MAX_VALUE){
+	        Iterator<Integer> it = iterator(sommetCrt, nonVus, heureDebut, cout, duree, horaires);
 	        while (it.hasNext()){
 	        	Integer prochainSommet = it.next();
 	        	vus.add(prochainSommet);

@@ -3,9 +3,11 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import controleur.Controleur;
 import modele.Plan;
@@ -22,6 +24,7 @@ public class Fenetre extends JFrame{
 	public static final int VUE_PLAN = 1;
 	public static final int VUE_LIVRAISON_CHARGEE = 2;
 	public static final int VUE_TOURNEE_CALCULEE = 3;
+	public static final int VUE_TOURNEE_AJOUT = 4;
 
 	private Controleur ctrl;
 	
@@ -34,6 +37,7 @@ public class Fenetre extends JFrame{
 
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSourisDeSynchronisation ecouteurSynchro;
+	private EcouteurDeClavier ecouteurClavier;
 	
 	private JPanel footer;
 	private PersoButton importPlanButton;
@@ -64,6 +68,8 @@ public class Fenetre extends JFrame{
 	
 	private void initListeners(){
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
+		ecouteurClavier = new EcouteurDeClavier(ctrl);
+		addKeyListener(ecouteurClavier);
 	}
 	
 	private void initButtons(){
@@ -82,7 +88,6 @@ public class Fenetre extends JFrame{
 		calculTourneeButton = new PersoButton(Textes.BUTTON_CALCUL_TOURNEE, 1);
 		calculTourneeButton.addActionListener(ecouteurBoutons);
 		calculTourneeButton.setActionCommand("calcul-tournee");
-		
 	}
 	
 	private void initFenetre(){
@@ -90,8 +95,9 @@ public class Fenetre extends JFrame{
 		//setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
 		setLayout(new BorderLayout());
+		setFocusable(true);
+		requestFocus();
 	}
 	
 	private void initContent(){
@@ -151,6 +157,7 @@ public class Fenetre extends JFrame{
 			footer.remove(exportButton);
 			footer.add(calculTourneeButton);
 			break;
+		case VUE_TOURNEE_AJOUT:
 		case VUE_TOURNEE_CALCULEE:
 			footer.remove(importDemandeLivraisonButton);
 			footer.remove(calculTourneeButton);
@@ -188,6 +195,9 @@ public class Fenetre extends JFrame{
 				vueTournee.initTournee(plan.getTournee());
 				vuePlan.afficherIcones(plan.getTournee());
 				ajouterEcouteursSynchro ();
+				break;
+			case VUE_TOURNEE_AJOUT:
+				vueTournee.creerLivraison();
 				break;
 			}
 

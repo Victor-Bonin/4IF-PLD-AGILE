@@ -38,4 +38,7 @@ public class Troncon {
 		return this.interFin;
 	}
 	
+	public String GetNomRue() {
+		return nomRue;
+	}
 }

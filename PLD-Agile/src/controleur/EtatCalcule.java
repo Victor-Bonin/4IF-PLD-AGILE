@@ -21,6 +21,8 @@ Classe représentant l'état de l'app lorsque la tournée a été calculé.
  */
 package controleur;
 
+import modele.Livraison;
+import modele.Plan;
 import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
@@ -28,39 +30,37 @@ import vue.Textes;
 public class EtatCalcule extends EtatDemandeOuverte {
 
 	@Override
-	public void ajouterLivraison() {
-		// TODO Auto-generated method stub
-
+	public void creerLivraison(Fenetre fenetre) {
+		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);
 	}
 
 	@Override
-	public void permuterLivraison() {
-		// TODO Auto-generated method stub
-
+	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
+		listeCmd.ajoute(new CommandeAjouter(p, l));
 	}
 
 	@Override
-	public void supprimerLivraison() {
+	public void deplacerLivraison() {
 		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
+		listeCmd.ajoute(new CommandeSupprimer(p, l));
+	}
+	
+	@Override
+	public void undo(ListeCommande listeCommande) {
+		listeCommande.undo();
+	}
+	@Override
+	public void redo(ListeCommande listeCommande) {
+		listeCommande.redo();
 	}
 
 	@Override
 	public void exporterFeuilleDeRoute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void undo(ListeCommande listeCommande) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void redo(ListeCommande listeCommande) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

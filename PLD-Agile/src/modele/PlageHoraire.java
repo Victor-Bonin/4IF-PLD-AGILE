@@ -9,6 +9,11 @@ import java.util.Calendar;
 public class PlageHoraire {
 	private Calendar debutPlage;
 	private Calendar finPlage;
+
+	public PlageHoraire(Calendar debut, Calendar fin) {
+		debutPlage = debut;
+		finPlage = fin;
+	}
 	
 	public Calendar getDebut() {
 		return debutPlage;
@@ -16,6 +21,14 @@ public class PlageHoraire {
 	
 	public Calendar getFin() {
 		return finPlage;
+	}
+	
+	public void setDebut(Calendar debutPlage) {
+		this.debutPlage=debutPlage;
+	}
+	
+	public void setFin(Calendar finPlage) {
+		this.finPlage=finPlage;
 	}
 	
 }

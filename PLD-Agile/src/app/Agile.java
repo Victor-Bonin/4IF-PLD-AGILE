@@ -10,7 +10,7 @@ public class Agile {
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();
-		Controleur ctrl = new Controleur(plan);
+		new Controleur(plan);
 	}
 
 }

@@ -27,4 +27,12 @@ public class Chemin {
 	public List<Troncon> getTroncons(){
 		return troncons;
 	}
+	
+	public Intersection getDepart() {
+		return depart;
+	}
+	
+	public Intersection getArrivee() {
+		return arrivee;
+	}
 }

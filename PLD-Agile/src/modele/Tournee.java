@@ -19,4 +19,8 @@ public class Tournee extends DemandeLivraison{
 	public List<Chemin> getItineraire(){
 		return itineraire.getChemins();
 	}
+	
+	public FeuilleDeRoute GetFeuilleDeRoute() {
+		return feuilleDeRoute;
+	}
 }

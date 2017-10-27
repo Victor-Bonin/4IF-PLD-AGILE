@@ -3,21 +3,20 @@ package controleur;
 import modele.Plan;
 import vue.Fenetre;
 
-public class RunnableTest implements Runnable {
+public class AlgorithmRunnable implements Runnable {
 
 	private Plan plan;
 	private EtatDemandeOuverte etat;
 	private Fenetre fenetre;
 	private Controleur controleur;
 
-	public RunnableTest(Plan plan, EtatDemandeOuverte et, Controleur ctrl, Fenetre fen){
+	public AlgorithmRunnable(Plan plan, EtatDemandeOuverte et, Controleur ctrl, Fenetre fen){
 		this.plan = plan;
 		etat = et;
 		fenetre= fen;
 		controleur = ctrl;
 	}
-	
-	
+		
 	public void run(){
 		try {
 			plan.calculTournee();

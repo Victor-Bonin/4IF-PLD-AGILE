@@ -58,5 +58,10 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 		controleur.afficherFenetre();
 		controleur.afficherNotif();		
 	}
+	
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		calculerTournee(controleur, plan, fenetre);		
+	}
 }
 

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,8 +14,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import modele.Chemin;
+import modele.Entrepot;
 import modele.Intersection;
+import modele.Itineraire;
+import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import modele.Troncon;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
@@ -24,6 +30,7 @@ public class planTest {
 	Intersection inter1;
 	Intersection inter2;
 	Troncon tronconExpected;
+	Tournee tourneeExpected;
 
 	@Before
 	public void init() {		
@@ -35,6 +42,48 @@ public class planTest {
 	}
 
 
+	@Test
+	public void calculerTourneeTest(){
+		File planTest = new File("assets/planTest.xml");
+		File dlTest = new File("assets/DLTest.xml");
+		try{
+			DeserialiseurXML.chargerFichier(plan, planTest);
+			DeserialiseurXML.chargerDemandeLivraisonFichier(plan, dlTest);
+			plan.calculTournee();
+		} catch (Exception e) {
+			fail("Error " + e);
+			e.printStackTrace();
+		}
+		Tournee tournee = plan.getTournee();
+		
+		Entrepot entrepotTest = plan.getDemandeLivraison().getEntrepot();
+		Intersection interTest1 = plan.getIntersections().get(1L);
+		Intersection interTest2 = plan.getIntersections().get(2L);
+		Intersection interTest3 = plan.getIntersections().get(3L);
+		Intersection interTest4 = plan.getIntersections().get(4L);
+		Intersection interTest5 = plan.getIntersections().get(5L);
+		
+		List<Livraison> solutionExpected = new ArrayList<Livraison>();
+		solutionExpected.add((Livraison)(Intersection)entrepotTest);
+		solutionExpected.add((Livraison)interTest3);
+		solutionExpected.add((Livraison)interTest5);
+		
+		List<Chemin> cheminExpected = new ArrayList<Chemin>();
+		cheminExpected.add(new Chemin(interTest1,interTest2));
+		cheminExpected.add(new Chemin(interTest2,interTest3));
+		cheminExpected.add(new Chemin(interTest3,interTest5));
+		cheminExpected.add(new Chemin(interTest5,interTest4));
+		cheminExpected.add(new Chemin(interTest4,interTest3));
+		cheminExpected.add(new Chemin(interTest3,interTest1));
+		Itineraire itineraireExpected = new Itineraire(cheminExpected);
+		
+		tourneeExpected = new Tournee(plan.getDemandeLivraison().getEntrepot() , solutionExpected, itineraireExpected);
+		
+		
+		assertEquals(tournee, tourneeExpected);
+	}
+	
+	
 	@Test
 	public void ajouterTronconTest() {
 		try {
@@ -63,7 +112,7 @@ public class planTest {
 		assertEquals(3, troncons.size());
 	}
 	
-	@Test
+	//@Test
 	public void listerTronconVoisinGrand() {
 		File xml = new File("assets/planLyonGrand.xml");
 		try {

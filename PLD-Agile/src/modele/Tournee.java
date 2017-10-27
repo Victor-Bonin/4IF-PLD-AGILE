@@ -19,4 +19,8 @@ public class Tournee extends DemandeLivraison{
 	public List<Chemin> getItineraire(){
 		return itineraire.getChemins();
 	}
+	
+	public boolean equals(Object obj) {
+		return this.getItineraire().equals(((Tournee)obj).getItineraire());
+	}
 }

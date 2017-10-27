@@ -18,6 +18,7 @@ import javax.swing.border.MatteBorder;
 import controleur.Controleur;
 import modele.DemandeLivraison;
 import modele.Livraison;
+import modele.Plan;
 
 /**
  * Cette classe correspond à la vue des tournées
@@ -31,6 +32,7 @@ public class VueTournee extends JPanel{
 	private Controleur ctrl;
 	
 	private DemandeLivraison demLivraison;
+	private Plan plan;
 	
 	private GridBagConstraints c;
 	private JLabel tourneeTitre;
@@ -41,10 +43,10 @@ public class VueTournee extends JPanel{
 	
 	EcouteurDeBouton ecouteurBoutons;
 	
-	public VueTournee(Controleur ctrl, DemandeLivraison livr){
+	public VueTournee(Controleur ctrl, Plan p){
 		super();
 		this.ctrl = ctrl;
-		demLivraison = livr;
+		plan = p;
 		
 		elementsTournee = new ArrayList<ElementTournee>();
 		
@@ -121,13 +123,12 @@ public class VueTournee extends JPanel{
 		c.gridx = 0;
 	    c.gridy = 0;
 
-	    System.out.println("chargement entrepot");
-	    ElementTournee entrepot = new ElementTournee(demLivraison.getEntrepot());
+	    ElementTournee entrepot = new ElementTournee(plan.getDemandeLivraison().getEntrepot());
 		pan.add(entrepot, c);
 		int i = 0;
 		elementsTournee.add(entrepot);
 		
-		for(Livraison livraison : demLivraison.getLivraisons()) {
+		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
 		    c.gridy = i+1;
 		    ElementTournee liv = new ElementTournee(livraison, i+1, i);

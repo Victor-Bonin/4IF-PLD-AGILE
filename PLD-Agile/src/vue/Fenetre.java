@@ -127,7 +127,7 @@ public class Fenetre extends JFrame{
 		
 		
 		vuePlan = new VuePlan(ctrl, plan);
-		vueTournee = new VueTournee(ctrl, plan.getDemandeLivraison());
+		vueTournee = new VueTournee(ctrl, plan);
 		//vueTournee.addMouseWheelListener(ecouteurSouris);
 		
 		if(contentContainer != null){

@@ -124,9 +124,7 @@ public class Fenetre extends JFrame{
 	}
 	
 	
-	private void setContent(){
-		
-		
+	public void setContent(){
 		vuePlan = new VuePlan(ctrl, plan);
 		vueTournee = new VueTournee(ctrl, plan.getDemandeLivraison());
 		//vueTournee.addMouseWheelListener(ecouteurSouris);
@@ -245,4 +243,31 @@ public class Fenetre extends JFrame{
 		}
 	}
 
+	public PersoButton getImportPlanButton() {
+		return importPlanButton;
+	}
+	
+	public PersoButton getImportDemandeLivraisonButton() {
+		return importDemandeLivraisonButton;
+	}
+	
+	public PersoButton getExportButton() {
+		return exportButton;
+	}
+	
+	public PersoButton getCalculTourneeButton() {
+		return calculTourneeButton;
+	}
+
+	public VueTournee getVueTournee() {
+		return vueTournee;
+	}
+	
+	public VuePlan getVuePlan() {
+		return vuePlan;
+	}
+	
+	public Plan getPlan() {
+		return plan;
+	}
 }

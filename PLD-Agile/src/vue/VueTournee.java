@@ -60,7 +60,7 @@ public class VueTournee extends JPanel{
 				));
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
 		ajouterLivraison.addActionListener(ecouteurBoutons);
-		ajouterLivraison.setActionCommand("new-delivery");
+		ajouterLivraison.setActionCommand("nouvelle-livraison");
 		ajouterLivraison.setFocusPainted(false);
 		
 		c = new GridBagConstraints();

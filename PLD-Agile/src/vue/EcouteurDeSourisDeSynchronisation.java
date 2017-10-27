@@ -16,23 +16,25 @@ import javax.swing.SwingUtilities;
 public class EcouteurDeSourisDeSynchronisation extends MouseAdapter {
 	int place;
 	VuePlan vuePlan;
-	//VueTournee vueTournee;
+	VueTournee vueTournee;
 	
 	public EcouteurDeSourisDeSynchronisation(int p, VuePlan vp, VueTournee vt){
 		place = p;
 		vuePlan = vp;
-		//vueTournee = vt;
+		vueTournee = vt;
 	}
 	
 	@Override
 	public void mouseEntered(MouseEvent e){
 		vuePlan.survol(place);
+		vueTournee.survol(place);
 		
 	}
 	
 	@Override
 	public void mouseExited(MouseEvent e){
 		vuePlan.antiSurvol(place);
+		vueTournee.antiSurvol(place);
 		
 	}
 	

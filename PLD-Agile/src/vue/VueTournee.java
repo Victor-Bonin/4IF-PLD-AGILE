@@ -3,6 +3,7 @@ package vue;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -36,6 +37,8 @@ public class VueTournee extends JPanel{
 	private JPanel pan;
 	private JButton ajouterLivraison;
 	
+	private ArrayList<ElementTournee> elementsTournee;
+	
 	EcouteurDeBouton ecouteurBoutons;
 	
 	public VueTournee(Controleur ctrl, DemandeLivraison livr){
@@ -43,8 +46,11 @@ public class VueTournee extends JPanel{
 		this.ctrl = ctrl;
 		demLivraison = livr;
 		
+		elementsTournee = new ArrayList<ElementTournee>();
+		
 		setBackground(CharteGraphique.BG_COLOR);
 		setLayout(new GridBagLayout());
+		
 
 		// Bouton d'ajout de livraison
 		ajouterLivraison = new JButton("+");
@@ -104,6 +110,8 @@ public class VueTournee extends JPanel{
 	public void initTournee(DemandeLivraison dem) {
 		demLivraison = dem;
 		
+		elementsTournee.clear();
+		
 		pan.removeAll();
 		pan.setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
@@ -113,13 +121,18 @@ public class VueTournee extends JPanel{
 		c.gridx = 0;
 	    c.gridy = 0;
 
-		pan.add(new ElementTournee(demLivraison.getEntrepot()), c);
+	    System.out.println("chargement entrepot");
+	    ElementTournee entrepot = new ElementTournee(demLivraison.getEntrepot());
+		pan.add(entrepot, c);
 		int i = 0;
+		elementsTournee.add(entrepot);
 		
 		for(Livraison livraison : demLivraison.getLivraisons()) {
 			
 		    c.gridy = i+1;
-		    pan.add(new ElementTournee(livraison, i+1, i), c);
+		    ElementTournee liv = new ElementTournee(livraison, i+1, i);
+		    pan.add(liv, c);
+		    elementsTournee.add(liv);
 		    i++;
 		}
 		
@@ -139,5 +152,16 @@ public class VueTournee extends JPanel{
 		c.weighty = 1;
 		pan.add(new JLabel(), c);
 	}
+	
+	public ArrayList<ElementTournee> getElementsTournee(){
+		return elementsTournee;
+	}
 
+	public void survol(int index){
+		elementsTournee.get(index+1).survolElement();
+	}
+	
+	public void antiSurvol(int index){
+		elementsTournee.get(index+1).antiSurvolElement();
+	}
 }

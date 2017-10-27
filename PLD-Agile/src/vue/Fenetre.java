@@ -188,16 +188,13 @@ public class Fenetre extends JFrame{
 				break;
 			case VUE_LIVRAISON_CHARGEE:
 				vueTournee.initTournee(plan.getDemandeLivraison());
-				vuePlan.afficherIcones();
-				for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
-					ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
-					vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
-				}
-				ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
-				vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
+				vuePlan.afficherIcones(plan.getDemandeLivraison());
+				ajouterEcouteursSynchro ();
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				vueTournee.initTournee(plan.getTournee());
+				vuePlan.afficherIcones(plan.getTournee());
+				ajouterEcouteursSynchro ();
 				break;
 			case VUE_TOURNEE_AJOUT:
 				vueTournee.creerLivraison();
@@ -217,6 +214,19 @@ public class Fenetre extends JFrame{
 	 */
 	public void changeNotification(String texte, Color color) {
 		header.changeNotification(texte, color);
+	}
+	
+	public void ajouterEcouteursSynchro (){
+		for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
+			ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
+			vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
+		}
+		ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
+		vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
+		for (int i = 0; i<vueTournee.getElementsTournee().size(); i++) {
+			ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i-1, vuePlan, vueTournee);
+			vueTournee.getElementsTournee().get(i).addMouseListener(ecouteurSynchro);
+		}
 	}
 
 }

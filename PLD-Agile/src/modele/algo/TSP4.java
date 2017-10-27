@@ -9,12 +9,12 @@ import modele.PlageHoraire;
 public class TSP4 extends TSP2 {
 
 	@Override
-	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Long heureDebut, float[][] cout, int[] duree, Long[][] horaires) {
+	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
 		return new IteratorDistHoraires(nonVus, sommetCrt, heureDebut, cout, horaires);
 	}
 	
 	@Override
-	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, Long heureDebut, float[][] cout, int[] duree, Long[][] horaires) {
+	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
 		float r = duree[sommetCourant];
 
 		float minDebut = Float.MAX_VALUE;

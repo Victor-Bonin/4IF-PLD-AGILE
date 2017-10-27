@@ -9,7 +9,7 @@ import modele.PlageHoraire;
 public class TSP3 extends TSP2 {
 
 	@Override
-	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, Long heureDebut, float[][] cout, int[] duree, Long[][] horaires) {
+	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
 		return new IteratorDistSimple(nonVus, sommetCrt, cout);
 	}
 }

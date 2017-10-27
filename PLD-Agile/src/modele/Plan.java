@@ -146,13 +146,16 @@ public class Plan {
 			duree[i] = ((Livraison)livraisons.get(i)).getDuree();
 		}
 		
-		Long[][] horairesLong = new Long[nbLivraisons][2]; 
+		int[][] horairesLong = new int[nbLivraisons][2]; 
 		horairesLong[0][0] = getSecondsInDay(entrepot.getHeureDepart());
 		horairesLong[0][1] = getSecondsInDay(entrepot.getHeureArrivee());
 		for(int i=1; i<nbLivraisons; i++){
 			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
 				horairesLong[0][0] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
 				horairesLong[0][1] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
+			}else{
+				horairesLong[0][0] = -1;
+				horairesLong[0][1] = -1;
 			}
 		}
 		/*
@@ -350,11 +353,12 @@ public class Plan {
 	 * @param cal
 	 * @return
 	 */
-	private Long getSecondsInDay(Calendar cal) {
+	private int getSecondsInDay(Calendar cal) {
+		//TODO changer date
 		//cal.set(Calendar.YEAR, 1900);
 		if(cal==null) {
-			return -1l;
+			return -1;
 		}
-		return cal.getTimeInMillis()/1000;
+		return (int)(cal.getTimeInMillis()/1000);
 	}
 }

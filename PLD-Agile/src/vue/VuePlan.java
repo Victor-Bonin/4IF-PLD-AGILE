@@ -1,7 +1,9 @@
 package vue;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -13,10 +15,12 @@ import modele.Troncon;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Cette classe correspond à la vue du plan en particulier
@@ -32,7 +36,9 @@ public class VuePlan extends JPanel{
 	private int hauteurBalise = 40;
 	private int largeurBalise = 40;
 	private BufferedImage imgLivraison;
+	private BufferedImage imgLivraisonSurvol;
 	private BufferedImage imgEntrepot;
+	private BufferedImage imgEntrepotSurvol;
 	
 	private Plan plan;
 	private float coordonneeX = 0;
@@ -52,14 +58,33 @@ public class VuePlan extends JPanel{
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSouris ecouteurSouris;
 	
+	private ArrayList<JLabel> iconesLivraison;
+	private JLabel iconeEntrepot; 
+	private ImageIcon imageIconL;
+	private ImageIcon imageIconLS;
+	private ImageIcon imageIconE;
+	private ImageIcon imageIconES;
 	
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
 		this.plan = plan;
 		
+		this.setLayout(null);
+		
 		try {
 			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			imgLivraisonSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
 			imgEntrepot = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
+			imgEntrepotSurvol = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR_SURVOL));
+			Image scaledImageL = imgLivraison.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			imageIconL = new ImageIcon(scaledImageL);
+			Image scaledImageLS = imgLivraisonSurvol.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			imageIconLS = new ImageIcon(scaledImageLS);
+			Image scaledImageE = imgEntrepot.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			imageIconE = new ImageIcon(scaledImageE);
+			Image scaledImageES = imgEntrepotSurvol.getScaledInstance(largeurBalise, hauteurBalise, java.awt.Image.SCALE_SMOOTH);
+			imageIconES = new ImageIcon(scaledImageES);
+			iconeEntrepot = new JLabel(imageIconE);
 		} catch (IOException e) {
 	    	e.printStackTrace();
 	    }  
@@ -72,17 +97,23 @@ public class VuePlan extends JPanel{
 		addMouseMotionListener(ecouteurSouris);
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
+		changerPlanButton.setBounds(0, 0, (int)changerPlanButton.getPreferredSize().getWidth(), (int)changerPlanButton.getPreferredSize().getHeight());
 		changerPlanButton.addActionListener(ecouteurBoutons);
 		changerPlanButton.setActionCommand("import-plan");
 		
-		changerDemandeLivraisonButton = new PersoButton(Textes.BUTTON_NOUVELLE_LIVRAISON,2);
+		changerDemandeLivraisonButton = new PersoButton("<html>" + Textes.BUTTON_NOUVELLE_LIVRAISON + "</html>",2);
+		changerDemandeLivraisonButton.setBounds(0, (int)changerPlanButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
+		
+		
 
 		setBackground(CharteGraphique.GRAPH_BG);
+		
+		iconesLivraison = new ArrayList<JLabel>();
 	}
 	
 	private void initMinMax(){
@@ -102,6 +133,7 @@ public class VuePlan extends JPanel{
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
+		
 		
 		/*
 		posSourisX = this.getMousePosition().getX();
@@ -166,23 +198,6 @@ public class VuePlan extends JPanel{
 	
 		g2d.setStroke(new BasicStroke(1));
 		
-		//Dessiner les icones de points de livraisons
-		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
-			g2d.drawImage(imgLivraison, 
-					positionX(livraison.getX())-largeurBalise/2, 
-					positionY(livraison.getY())-hauteurBalise, 
-					largeurBalise, 
-					hauteurBalise, this);
-		}
-		//Dessiner l'icone de l'entrepot
-		if (plan.getDemandeLivraison().getEntrepot()!=null) {
-		 g2d.drawImage(imgEntrepot, 
-				 positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, 
-				 positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, 
-				 largeurBalise, 
-				 hauteurBalise, 
-				 this);
-		}
 		
 		// Ecrire les numéros de la tournée
 		g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);
@@ -213,6 +228,7 @@ public class VuePlan extends JPanel{
 	private int positionX(int x) {
 		return (int) ((x-minX)/zoom + this.getWidth()/ 2 -(maxX-minX)/(2*zoom) + coordonneeX);
 	}
+	
 	private int positionY(int y) {
 		return (int)((y-minY)/zoom + this.getHeight()/2 - (maxY-minY)/(2*zoom) + coordonneeY);
 	}
@@ -239,11 +255,13 @@ public class VuePlan extends JPanel{
 		double decZoomY = (sourisPlanY-minY)/zoom-(maxY-minY)/(2*zoom)-((sourisPlanY-minY)/zoomPrec-(maxY-minY)/(2*zoomPrec));
 		coordonneeY = (float)(coordonneeY - decZoomY);
 		
+		actualiserIcones();
 		repaint();
 	}
 	public void move(int x, int y){
 		this.coordonneeX += x;
 		this.coordonneeY += y;
+		actualiserIcones();
 		repaint();
 	}
 	
@@ -262,6 +280,7 @@ public class VuePlan extends JPanel{
 		double decZoomY = (sourisPlanY-minY)/zoom-(maxY-minY)/(2*zoom)-((sourisPlanY-minY)/zoomPrec-(maxY-minY)/(2*zoomPrec));
 		coordonneeY = (float)(coordonneeY - decZoomY);
 		
+		actualiserIcones();
 		repaint();
 	}
 
@@ -270,6 +289,65 @@ public class VuePlan extends JPanel{
 	}
 	public JButton getButtonDemandeLivraison(){
 		return changerDemandeLivraisonButton;
+	}
+	
+	public void afficherIcones(){
+		
+		//Supprimer les anciennes icones
+		for (int i = 0; i<iconesLivraison.size(); i++) {
+			this.remove(iconesLivraison.get(i));
+		}
+
+		//Dessiner les icones de points de livraisons
+		iconesLivraison = new ArrayList<JLabel>();
+		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
+			JLabel liv = new JLabel(imageIconL);
+			this.add(liv);
+			liv.setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+			iconesLivraison.add(liv);
+		}
+		//Dessiner l'icone de l'entrepot
+		if (plan.getDemandeLivraison().getEntrepot()!=null) {
+			this.add(iconeEntrepot);
+			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		}
+	}
+	
+	public void actualiserIcones(){
+		//Dessiner les icones de points de livraisons
+		int i = 0;
+		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
+			iconesLivraison.get(i).setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+			i++;
+		}
+		//Dessiner l'icone de l'entrepot
+		if (plan.getDemandeLivraison().getEntrepot()!=null) {
+			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		}
+	}
+	
+	public void survol(int index){
+		if (index == -1){
+			iconeEntrepot.setIcon(imageIconES);
+		}else{
+			iconesLivraison.get(index).setIcon(imageIconLS);
+		}
+	}
+	
+	public void antiSurvol(int index){
+		if (index == -1){
+			iconeEntrepot.setIcon(imageIconE);
+		}else{
+			iconesLivraison.get(index).setIcon(imageIconL);
+		}
+	}
+	
+	public ArrayList<JLabel> getIconesLivraison(){
+		return iconesLivraison;
+	}
+	
+	public JLabel getIconeEntrepot(){
+		return iconeEntrepot;
 	}
 
 }

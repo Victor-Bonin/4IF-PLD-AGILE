@@ -10,9 +10,6 @@ import java.util.Set;
 
 import modele.algo.DjkSolution;
 import modele.algo.TSP;
-import modele.algo.TSP1;
-import modele.algo.TSP2;
-import modele.algo.TSP3;
 import modele.algo.TSP4;
 
 /**

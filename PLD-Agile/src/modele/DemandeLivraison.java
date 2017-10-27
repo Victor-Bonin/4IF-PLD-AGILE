@@ -24,8 +24,35 @@ public class DemandeLivraison {
 		return this.livraisons;
 	}
 
-	public void ajoutePointLivraison(Livraison lvrsn) {
-		livraisons.add(lvrsn);
+	public void ajoutePointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
+		ajoutePointLivraison(lvrsn, livraisons.size());
+	}
+	
+	public void ajoutePointLivraison(Livraison lvrsn, int index) throws ExceptionPlanCo {
+		if(lvrsn == null)
+			throw new ExceptionPlanCo("Dev ONLY : PdL null ajt 0xce");
+		if(livraisons.contains(lvrsn))
+			throw new ExceptionPlanCo("Point de livraison déjà dans la demande de livraison");
+
+		try {
+			livraisons.add(index, lvrsn);
+		}
+		catch (IndexOutOfBoundsException e) {
+			throw new ExceptionPlanCo("Dev ONLY : PdL out of bounds ajt 0xce");
+		}
+		catch (Exception e) {
+			throw new ExceptionPlanCo("Erreur lors de l'ajout de la livraison");		
+		}
+		
+	}
+	
+	public void supprimerPointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
+		if(lvrsn == null)
+			throw new ExceptionPlanCo("Dev ONLY : PdL null sppr 0xce");
+		if(!livraisons.contains(lvrsn))
+			throw new ExceptionPlanCo("Point de livraison non présent dans la demande de livraison");
+		if (!livraisons.remove(lvrsn))
+			throw new ExceptionPlanCo("Erreur lors de la suppression de la livraison");
 	}
 
 	public void setEntrepot(Entrepot entrpt){

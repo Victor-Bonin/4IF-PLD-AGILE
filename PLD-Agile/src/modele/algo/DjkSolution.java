@@ -1,6 +1,8 @@
 package modele.algo;
 
+import java.util.HashMap;
+
 public class DjkSolution {
-	public Float[] dist;
-	public Integer[] prev;
+	public HashMap<Long, Float> dist;
+	public HashMap<Long, Long> prev;
 }

@@ -1,6 +1,16 @@
 package app;
 
+import modele.ExceptionPlanCo;
 import modele.Plan;
+import xml.DeserialiseurXML;
+import xml.ExceptionXML;
+
+import java.io.IOException;
+import java.text.ParseException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import controleur.Controleur;
 

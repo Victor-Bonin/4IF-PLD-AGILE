@@ -21,8 +21,6 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-import org.xml.sax.SAXException;
-
 import modele.Plan;
 import vue.Fenetre;
 import vue.CharteGraphique;

@@ -21,6 +21,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Livraison;
 import modele.Plan;
 import vue.Fenetre;
 
@@ -30,14 +31,14 @@ public interface Etat {
 			ListeCommande listeCommande);
 	void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande);
-	void ajouterLivraison();
-	void permuterLivraison();
-	void supprimerLivraison();
+	void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd);
+	void deplacerLivraison();
+	void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd);
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
-	void calculerItineraire();
 	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande);
 	void redo(ListeCommande listeCommande);
 	void afficherFenetre(Fenetre fenetre);
 	void afficherNotif(Fenetre fenetre);
+	void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre);
 }

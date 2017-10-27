@@ -24,6 +24,7 @@ public class Fenetre extends JFrame{
 	public static final int VUE_PLAN = 1;
 	public static final int VUE_LIVRAISON_CHARGEE = 2;
 	public static final int VUE_TOURNEE_CALCULEE = 3;
+	public static final int VUE_TOURNEE_AJOUT = 4;
 
 	private Controleur ctrl;
 	
@@ -156,6 +157,7 @@ public class Fenetre extends JFrame{
 			footer.remove(exportButton);
 			footer.add(calculTourneeButton);
 			break;
+		case VUE_TOURNEE_AJOUT:
 		case VUE_TOURNEE_CALCULEE:
 			footer.remove(importDemandeLivraisonButton);
 			footer.remove(calculTourneeButton);
@@ -196,6 +198,9 @@ public class Fenetre extends JFrame{
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				vueTournee.initTournee(plan.getTournee());
+				break;
+			case VUE_TOURNEE_AJOUT:
+				vueTournee.creerLivraison();
 				break;
 			}
 

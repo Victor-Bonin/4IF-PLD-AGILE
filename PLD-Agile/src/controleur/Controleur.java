@@ -137,5 +137,9 @@ public class Controleur {
 	public void afficherNotif() {
 		etatCourant.afficherNotif(fenetre);
 	}
+	
+	public void creerLivraison() {
+		etatCourant.creerLivraison(fenetre);
+	}
 
 }

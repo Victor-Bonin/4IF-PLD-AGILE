@@ -30,6 +30,11 @@ import vue.Textes;
 public class EtatCalcule extends EtatDemandeOuverte {
 
 	@Override
+	public void creerLivraison(Fenetre fenetre) {
+		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);
+	}
+
+	@Override
 	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
 		listeCmd.ajoute(new CommandeAjouter(p, l));
 	}

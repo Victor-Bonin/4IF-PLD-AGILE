@@ -24,6 +24,10 @@ package controleur;
 import modele.Livraison;
 import modele.Plan;
 
+/**
+ * Commande qui ajoute une livraison a la demande de livraison actuelle
+ * @author 4104
+ */
 public class CommandeAjouter implements Commande {
 
 	private Plan plan;

@@ -63,6 +63,7 @@ public class Fenetre extends JFrame{
 		initFooter();
 		
 		setVisible(true);
+		
 	}
 	
 	
@@ -129,6 +130,8 @@ public class Fenetre extends JFrame{
 		vuePlan = new VuePlan(ctrl, plan);
 		vueTournee = new VueTournee(ctrl, plan);
 		//vueTournee.addMouseWheelListener(ecouteurSouris);
+		
+		this.addComponentListener(new ResizeListener(vuePlan));
 		
 		if(contentContainer != null){
 			getContentPane().remove(contentContainer);

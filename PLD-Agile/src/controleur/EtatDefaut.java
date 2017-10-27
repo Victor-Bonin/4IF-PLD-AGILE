@@ -3,6 +3,7 @@
  */
 package controleur;
 
+import modele.Livraison;
 import modele.Plan;
 import vue.Fenetre;
 
@@ -15,11 +16,11 @@ public abstract class EtatDefaut implements Etat{
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {}
 	@Override
-	public void ajouterLivraison() {}
+	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {}
 	@Override
 	public void deplacerLivraison() {}
 	@Override
-	public void supprimerLivraison() {}
+	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {}
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override

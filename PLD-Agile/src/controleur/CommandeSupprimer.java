@@ -22,18 +22,32 @@ Une commande peut être exécutée et annulée.
  */
 package controleur;
 
+import modele.Livraison;
+import modele.Plan;
+
 public class CommandeSupprimer implements Commande {
 
+	private Plan plan;
+	private Livraison livraison;
+	
+	/**
+	 * Cree la commande qui supprime la livraison l du plan p
+	 * @param p
+	 * @param l
+	 */
+	public CommandeSupprimer(Plan p, Livraison l) {
+		plan = p;
+		livraison = l;
+	}
+	
 	@Override
 	public void doCde() {
-		// TODO Auto-generated method stub
-		
+		// Appeller plan.supprimerLivraison(Livraison)		
 	}
 
 	@Override
 	public void undoCde() {
-		// TODO Auto-generated method stub
-		
+		// Appeller plan.ajouterLivraison(Livraison)
 	}
 
 }

@@ -18,7 +18,6 @@ public class Plan {
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
 	private DemandeLivraison demandeLivraison;
-	private Tournee tournee;
 
 	public Plan() {
 		intersections = new HashMap<Long, Intersection>();
@@ -57,7 +56,8 @@ public class Plan {
 			throw new ExceptionPlanCo("Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.");
 		}
 	}
-	
+		
+		
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
@@ -136,7 +136,7 @@ public class Plan {
 		entrepot.getHeureArrivee().add(Calendar.SECOND, (int)cout[meilleureSolution[nbLivraisons-1]][0]);
 //		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
 
-		tournee = new Tournee(entrepot, livs, itineraire);
+		demandeLivraison = new Tournee(entrepot, livs, itineraire);
 	}
 
 	//Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
@@ -217,6 +217,69 @@ public class Plan {
 			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
+	
+	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
+		if (livraison.getDuree() < 0) 
+			throw new ExceptionPlanCo("La livraison possède une durée négative");
+		demandeLivraison.ajoutePointLivraison(livraison);
+	}
+	
+	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
+		if (livraison.getDuree() < 0) 
+			throw new ExceptionPlanCo("La livraison possède une durée négative");
+		demandeLivraison.ajoutePointLivraison(livraison, index);
+		
+	}
+	
+	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
+		demandeLivraison.supprimerPointLivraison(livraison);	
+	}
+	
+	/**
+	 * Retourne la liste des troncons voisins d'une intersection
+	 * Il n'est pas conseillé d'utiliser cette méthode pour obtenir la liste des 
+	 * troncons voisins de n intersections.
+	 * @param idIntersection id de l'intersection dont il faut les voisins
+	 * @return la liste des voisins de l'intersection désiré
+	 */
+	public List<Troncon> listerTronconVoisin(Long idIntersection){
+		Intersection intersection = intersections.get(idIntersection);
+		List<Troncon> tronconsVoisins = new ArrayList<Troncon>();
+		if(intersection == null)
+			return tronconsVoisins;
+		for (Troncon t : troncons)
+			if (t.getDebut().equals(intersection) || t.getFin().equals(intersection))
+				tronconsVoisins.add(t);
+		return tronconsVoisins;
+	}
+	
+	/**
+	 * Créer un dico contenant pour chaque intersection 
+	 * la liste des troncons qui partent ou viennent vers elle
+	 * @return un dictionnaire
+	 */
+	public HashMap<Long, List<Troncon>> obtenirVoisinParIntersection(){
+		HashMap<Long, List<Troncon>> croisement = new HashMap<Long, List<Troncon>>();
+		Long idDebut, idFin;
+		for(Troncon t : troncons) {
+			idDebut = t.getDebut().getId();
+			idFin = t.getFin().getId();
+			if (croisement.containsKey(idDebut))
+				croisement.get(idDebut).add(t);
+			else {
+				croisement.put(idDebut, new ArrayList<Troncon>());
+				croisement.get(idDebut).add(t);
+			}
+			
+			if (croisement.containsKey(t.getFin().getId()))
+				croisement.get(idFin).add(t);
+			else {
+				croisement.put(idFin, new ArrayList<Troncon>());
+				croisement.get(idFin).add(t);
+			}
+		}
+		return croisement;
+	}
 
 	public HashMap<Long, Intersection> getIntersections(){
 		return intersections;
@@ -237,7 +300,6 @@ public class Plan {
 
 	public void resetDemandeLivraison() {
 		demandeLivraison = new DemandeLivraison();
-		tournee = null;
 	}
 
 	public DemandeLivraison getDemandeLivraison(){
@@ -245,6 +307,8 @@ public class Plan {
 	}
 	
 	public Tournee getTournee(){
-		return tournee;
+		if (demandeLivraison instanceof Tournee)
+			return (Tournee)demandeLivraison;
+		return null;
 	}
 }

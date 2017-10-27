@@ -5,6 +5,7 @@ package xml;
  * @author 4104
  */
 public class ExceptionXML extends Exception {
+	private static final long serialVersionUID = 7981113938213427813L;
 
 	/**
 	 * Exception personnalisee pour la deserialisation de xml

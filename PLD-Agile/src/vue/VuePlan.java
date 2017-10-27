@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
+import modele.DemandeLivraison;
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
@@ -291,7 +292,7 @@ public class VuePlan extends JPanel{
 		return changerDemandeLivraisonButton;
 	}
 	
-	public void afficherIcones(){
+	public void afficherIcones(DemandeLivraison demande){
 		
 		//Supprimer les anciennes icones
 		for (int i = 0; i<iconesLivraison.size(); i++) {
@@ -300,16 +301,16 @@ public class VuePlan extends JPanel{
 
 		//Dessiner les icones de points de livraisons
 		iconesLivraison = new ArrayList<JLabel>();
-		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
+		for (Livraison livraison : demande.getLivraisons()) {
 			JLabel liv = new JLabel(imageIconL);
 			this.add(liv);
 			liv.setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
 			iconesLivraison.add(liv);
 		}
 		//Dessiner l'icone de l'entrepot
-		if (plan.getDemandeLivraison().getEntrepot()!=null) {
+		if (demande.getEntrepot()!=null) {
 			this.add(iconeEntrepot);
-			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
+			iconeEntrepot.setBounds(positionX(demande.getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
 		}
 	}
 	

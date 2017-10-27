@@ -173,11 +173,8 @@ public class Plan {
 		int heureDePassageInt = getSecondsInDay(heureDePassage);
 		livs.get(0).setHeurePassage((Calendar)heureDePassage.clone());
 		livs.get(0).getHeurePassage().add(Calendar.SECOND,Math.max(cout[0][meilleureSolution[1]],horairesInt[meilleureSolution[1]][0]-heureDePassageInt));
-
-		System.out.println("Heure de passage au point de livraison 0 : "+livs.get(0).getHeurePassage().getTime());
+		
 		for(int i = 1; i<nbLivraisons-1; i++){
-
-			System.out.println(horairesInt[meilleureSolution[i+1]][0] + " / " + horairesInt[meilleureSolution[i+1]][1]);
 			heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
 			heureDePassage.add(Calendar.SECOND, duree[meilleureSolution[i]]);
 			heureDePassageInt = getSecondsInDay(heureDePassage);
@@ -185,18 +182,18 @@ public class Plan {
 			livs.get(i).getHeurePassage().add(Calendar.SECOND, Math.max(
 					cout[meilleureSolution[i]][meilleureSolution[i+1]],
 					horairesInt[meilleureSolution[i+1]][0]-heureDePassageInt));
-			System.out.println("Heure de passage au point de livraison "+i+" : "+livs.get(i).getHeurePassage().getTime());
 		}
 		
 		entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
 		entrepot.getHeureArrivee().add(Calendar.SECOND, (cout[meilleureSolution[nbLivraisons-1]][0] + duree[meilleureSolution[nbLivraisons-1]]));
-		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
 
 		demandeLivraison = new Tournee(entrepot, livs, itineraire);
 		
 	}
 	
-	//Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
+	/**
+	 * Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
+	 */
 	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source/*, long[] targets*/){
 
 		Long current = source;

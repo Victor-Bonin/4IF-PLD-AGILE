@@ -23,11 +23,33 @@ public class EcouteurDeClavier implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keycode = e.getKeyCode();
-		if(e.isControlDown() && keycode == KeyEvent.VK_Z) {
-			ctrl.undo();
+		if(e.isControlDown())
+		{
+			switch(keycode)
+			{
+			case KeyEvent.VK_Y:
+				ctrl.redo();
+				break;
+			case KeyEvent.VK_Z:
+				ctrl.undo();
+				break;
+			case KeyEvent.VK_P:
+				ctrl.ouvrirPlan();
+				break;
+			case KeyEvent.VK_L:
+				ctrl.ouvrirLivraison();
+				break;
+			case KeyEvent.VK_T:
+				ctrl.calculerTournee();
+				break;
+			case KeyEvent.VK_N:
+				ctrl.creerLivraison();
+				break;
+			}
 		}
-		if(e.isControlDown() && keycode == KeyEvent.VK_Y) {
-			ctrl.redo();
+		if(keycode == KeyEvent.VK_ENTER)
+		{
+			ctrl.appuiEntree();
 		}
 	}
 

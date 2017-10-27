@@ -35,5 +35,8 @@ public abstract class EtatDefaut implements Etat{
 	public void afficherFenetre(Fenetre fenetre) {}
 	@Override
 	public void afficherNotif(Fenetre fenetre) {}
-
+	@Override
+	public void creerLivraison(Fenetre fenetre) {}
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {}
 }

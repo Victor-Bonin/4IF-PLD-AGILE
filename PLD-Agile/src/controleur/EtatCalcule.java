@@ -27,7 +27,12 @@ import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 
-public class EtatCalcule extends EtatDemandeOuverte {
+public class EtatCalcule extends EtatPlanOuvert {
+
+	@Override
+	public void creerLivraison(Fenetre fenetre) {
+		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);
+	}
 
 	@Override
 	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
@@ -66,6 +71,11 @@ public class EtatCalcule extends EtatDemandeOuverte {
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
 		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
+	}
+	
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+			
 	}
 
 }

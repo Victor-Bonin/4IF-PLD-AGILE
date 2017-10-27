@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -10,9 +11,14 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -36,8 +42,16 @@ public class ElementTournee extends JPanel{
 	private JLabel heureLabel;
 	private JLabel dureeLivraisonLabel;
 	
-	public ElementTournee(Livraison livraison, int numero) {
+	// TODO : mettre tous les JLabel en attribut
+	
+	private int place;
+	
+	private boolean isSelected = false;
+	
+	public ElementTournee(Livraison livraison, int nom, int p) {
 		super();
+		
+		place = p;
 		
 		setOpaque(true);
 		setBackground(CharteGraphique.BG_COLOR);
@@ -55,7 +69,7 @@ public class ElementTournee extends JPanel{
 		setToolTipText("<html>" + description + "</html>");
 		
 		
-		nomLabel = new JLabel(Textes.TOURNEE_LIVRAISON + numero + " - ");
+		nomLabel = new JLabel(Textes.TOURNEE_LIVRAISON + nom + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
 		
 		idLabel = new JLabel(" " + livraison.getId());
@@ -76,7 +90,7 @@ public class ElementTournee extends JPanel{
 	    
 	    if (livraison.getHeurePassage() != null) {
 		    date = livraison.getHeurePassage();
-	    	String texte = "Heure de passage estimée : " + date.get(Calendar.HOUR_OF_DAY) + "h";
+	    	String texte = Textes.TOURNEE_PASSAGE + date.get(Calendar.HOUR_OF_DAY) + "h";
 	    	if(date.get(Calendar.MINUTE)<10) {
 	    		texte += "0";
 	    	}
@@ -101,6 +115,7 @@ public class ElementTournee extends JPanel{
 		c.gridx = 1;
 		add(nomLabel,c);
 		
+		c.weightx = 1;
 		c.gridx = 2;
 		add(idLabel,c);
 		
@@ -196,6 +211,7 @@ public class ElementTournee extends JPanel{
 		c.gridx = 1;
 		add(nomLabel,c);
 		
+		c.weightx = 1;
 		c.gridx = 2;
 		add(idLabel,c);
 		
@@ -211,6 +227,131 @@ public class ElementTournee extends JPanel{
 			add(dureeLivraisonLabel, c);
 		}
 	}	
+	
+	public ElementTournee(int nom, int p) {
+		super();
+		
+		place = p;
+		
+		setOpaque(true);
+		setBackground(CharteGraphique.BG_COLOR);
+		
+		setBorder(new CompoundBorder(
+				new EmptyBorder(10, 10, 0, 10),
+				new CompoundBorder(
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new EmptyBorder(10, 10, 10, 10)
+						)
+				));
+		
+		
+		
+		nomLabel = new JLabel(Textes.TOURNEE_LIVRAISON + nom + " - ");
+		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
+		
+		idLabel = new JLabel("");
+		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
+		
+		dureeLivraisonLabel = new JLabel(Textes.TOURNEE_DUREE + "- min");
+		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+		
+		heureLabel = new JLabel(Textes.TOURNEE_PASSAGE + "-");
+		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+		
+		
+		// Création du JPanel de modification de la livraison
+		JPanel details = new JPanel();
+		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setLayout(new BorderLayout());
+		
+		JPanel choixIntersec = new JPanel();
+		choixIntersec.setLayout(new BorderLayout());
+		choixIntersec.setBackground(CharteGraphique.BG_COLOR);
+		JLabel texteChoixIntersec = new JLabel(Textes.TOURNEE_INTERSECTION);
+		JButton boutonChoixIntersec = new JButton();
+		texteChoixIntersec.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		boutonChoixIntersec.setFocusPainted(false);
+		boutonChoixIntersec.setBackground(CharteGraphique.BG_COLOR);
+		try {
+			BufferedImage bouton = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_BOUTON));
+			Image scaledBouton = bouton.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon boutonIcon = new ImageIcon(scaledBouton);
+			boutonChoixIntersec.setIcon(boutonIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		JPanel choixDuree = new JPanel();
+		choixDuree.setLayout(new BorderLayout());
+		choixDuree.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+		choixDuree.setBackground(CharteGraphique.BG_COLOR);
+		SpinnerModel modele =
+		        new SpinnerNumberModel(0, //initial value
+		                               0, //min
+		                               10000, //max
+		                               1);                //step
+		JSpinner dureeModification = new JSpinner(modele);
+		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE);
+		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		
+		choixIntersec.add(texteChoixIntersec, BorderLayout.WEST);
+		choixIntersec.add(boutonChoixIntersec, BorderLayout.EAST);
+		choixDuree.add(texteModifDuree, BorderLayout.WEST);
+		choixDuree.add(dureeModification, BorderLayout.EAST);
+		details.add(choixIntersec, BorderLayout.PAGE_START);
+		details.add(choixDuree, BorderLayout.PAGE_END);
+		
+		
+		// Ajout à l'ElementTournee
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.gridx = 0;
+	    c.gridy = 0;
+	    c.weighty = 1;
+	    c.gridheight = 3;
+	    c.insets = new Insets(0,0,0,10);
+	    
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon imageIcon = new ImageIcon(scaledImage);
+			JLabel imageLabel = new JLabel(imageIcon);
+			add(imageLabel,c);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		c.insets = new Insets(0,0,0,0);
+		c.gridheight = 1;
+		c.gridx = 1;
+		add(nomLabel,c);
+		
+		c.weightx = 1;
+		c.gridx = 2;
+		add(idLabel,c);
+		
+		c.gridwidth = 2;
+		c.gridy = 1;
+		c.gridx = 1;
+		add(dureeLivraisonLabel, c);
+		
+		c.gridwidth = 2;
+		c.gridy = 2;
+		c.gridx = 1;
+		add(heureLabel, c);
+		
+		c.insets = new Insets(10,0,0,0);
+		c.gridwidth = 3;
+		c.gridy = 3;
+		c.gridx = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(details, c);
+		
+	}
 	
 	private String composeToolTipString(Intersection intersec) {
 		//TODO : Afficher le nom des rues qui y passent avec
@@ -252,4 +393,6 @@ public class ElementTournee extends JPanel{
 		}
 		return s;
 	}
+	
+	
 }

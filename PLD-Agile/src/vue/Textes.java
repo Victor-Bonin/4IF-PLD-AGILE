@@ -30,7 +30,7 @@ public interface Textes {
 	public static final String BUTTON_IMPORT_DEMANDE_LIVRAISON = "Importer une demande de livraison";
 	public static final String BUTTON_IMPORT_PLAN = "Importer un plan";
 	public static final String BUTTON_NOUVEAU_PLAN = "Changer de plan";
-	public static final String BUTTON_NOUVELLE_LIVRAISON = "Importer nouvelle demande\r\n de livraison";
+	public static final String BUTTON_NOUVELLE_LIVRAISON = "<div style='text-align:center'>Importer nouvelle <br>demande de livraison</div>";
 	public static final String BUTTON_CALCUL_TOURNEE = "Calculer la tournée";
 	
 	public static final String TITRE_TOURNEE = "Tournée :";
@@ -39,4 +39,5 @@ public interface Textes {
 	public static final String TOURNEE_DUREE = "Durée ";
 	public static final String TOURNEE_INTERSECTION = "Intersection de : ";
 	public static final String TOURNEE_PLAGE = "Plage horaire : ";
+	public static final String TOURNEE_PASSAGE = "Passage estimé : ";
 }

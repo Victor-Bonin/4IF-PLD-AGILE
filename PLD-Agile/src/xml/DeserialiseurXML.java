@@ -33,18 +33,23 @@ public class DeserialiseurXML {
 	 * @throws IOException
 	 * @throws ExceptionXML
 	 */
-	public static void charger(Plan plan) throws ParserConfigurationException, SAXException, IOException, ExceptionXML{
+	public static void charger(Plan plan) throws ExceptionXML, ParserConfigurationException, SAXException, IOException {
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
-        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
-        Document document = docBuilder.parse(xml);
-        Element racine = document.getDocumentElement();
-        if (racine.getNodeName().equals("reseau")) {
-           construireAPartirDeDOMXML(racine, plan);
-        }
-        else
-        		throw new ExceptionXML("Document non conforme");
+		chargerFichier(plan, xml);
 	}
-	
+
+	public static void chargerFichier(Plan plan, File xml) throws ParserConfigurationException, SAXException, IOException, ExceptionXML {
+		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+		Document document = docBuilder.parse(xml);
+		Element racine = document.getDocumentElement();
+		if (racine.getNodeName().equals("reseau")) {
+			construireAPartirDeDOMXML(racine, plan);
+		}
+		else
+			throw new ExceptionXML("Document non conforme");
+
+	}
+
 	/**
 	 * Ouvre un fichier xml et remplit la demande de livraison du plan a partir du contenu du fichier
 	 * @param plan Objet plan déjà instancié
@@ -58,14 +63,19 @@ public class DeserialiseurXML {
 	 */
 	public static void chargerDemandeLivraison(Plan plan) throws ExceptionXML, ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
-        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
-        Document document = docBuilder.parse(xml);
-        Element racine = document.getDocumentElement();
-        if (racine.getNodeName().equals("demandeDeLivraisons")) {
-        		construireDemandeLivraisonAPartirDeDOMXML(racine, plan);
-        }
-        else
-        		throw new ExceptionXML("Document non conforme");
+		chargerDemandeLivraisonFichier(plan, xml);
+	}
+
+	public static void chargerDemandeLivraisonFichier(Plan plan, File xml) throws ExceptionXML, ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
+		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
+		Document document = docBuilder.parse(xml);
+		Element racine = document.getDocumentElement();
+		if (racine.getNodeName().equals("demandeDeLivraisons")) {
+			construireDemandeLivraisonAPartirDeDOMXML(racine, plan);
+		}
+		else
+			throw new ExceptionXML("Document non conforme");
+
 	}
 
 	/**
@@ -75,25 +85,25 @@ public class DeserialiseurXML {
 	 * @throws ExceptionXML
 	 * @throws NumberFormatException
 	 */
-    private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionXML, NumberFormatException
-    {
-    	plan.reset();	
-    	NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
-       	for (int i = 0; i < listeNoeuds.getLength(); i++) {
-       		Element xmlNoeud = (Element) listeNoeuds.item(i);
-       		plan.ajouterIntersection(Integer.parseInt(xmlNoeud.getAttribute("x")), Integer.parseInt(xmlNoeud.getAttribute("y")), Long.parseLong(xmlNoeud.getAttribute("id")));
-       	}
-       	NodeList listeTroncons = noeudDOMRacine.getElementsByTagName("troncon");
-       	for (int i = 0; i < listeTroncons.getLength(); i++) {
-       		Element xmlTroncon = (Element) listeTroncons.item(i);
-          	try {
+	private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionXML, NumberFormatException
+	{
+		plan.reset();	
+		NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
+		for (int i = 0; i < listeNoeuds.getLength(); i++) {
+			Element xmlNoeud = (Element) listeNoeuds.item(i);
+			plan.ajouterIntersection(Integer.parseInt(xmlNoeud.getAttribute("x")), Integer.parseInt(xmlNoeud.getAttribute("y")), Long.parseLong(xmlNoeud.getAttribute("id")));
+		}
+		NodeList listeTroncons = noeudDOMRacine.getElementsByTagName("troncon");
+		for (int i = 0; i < listeTroncons.getLength(); i++) {
+			Element xmlTroncon = (Element) listeTroncons.item(i);
+			try {
 				plan.ajouterTroncon(Long.parseLong(xmlTroncon.getAttribute("origine")), Long.parseLong(xmlTroncon.getAttribute("destination")), Float.parseFloat(xmlTroncon.getAttribute("longueur")), xmlTroncon.getAttribute("nomRue"));
 			} catch (Exception e) {
 				throw new ExceptionXML(e.getMessage());
 			}
-       	}
-    }
-    /**
+		}
+	}
+	/**
 	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit la demande de livraison du plan avec ces donnees
 	 * @param noeudDOMRacine Noeud racine du fichier xml
 	 * @param plan Objet plan déjà instancie
@@ -131,6 +141,5 @@ public class DeserialiseurXML {
 	    			plan.ajouterPointLivraison(id, duree, null, null);
 	    		}
 	    	}
-	    	System.out.println("Fin import");
     }
 }

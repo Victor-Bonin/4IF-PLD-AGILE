@@ -2,6 +2,7 @@ package vue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 /**
  * Cette classe contient les appels au controleur depuis les boutons
@@ -34,6 +35,9 @@ public class EcouteurDeBouton implements ActionListener{
 				break;
 			case "calcul-tournee":
 				ctrl.calculerTournee();
+				break;
+			case "new-delivery":
+				System.out.println("Clic");
 				break;
 		}
 		

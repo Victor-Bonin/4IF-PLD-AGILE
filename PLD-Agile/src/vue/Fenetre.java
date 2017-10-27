@@ -3,9 +3,11 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import controleur.Controleur;
 import modele.Plan;
@@ -33,6 +35,8 @@ public class Fenetre extends JFrame{
 	private VueTournee vueTournee;
 
 	private EcouteurDeBouton ecouteurBoutons;
+	private EcouteurDeSourisDeSynchronisation ecouteurSynchro;
+	private EcouteurDeClavier ecouteurClavier;
 	
 	private JPanel footer;
 	private PersoButton importPlanButton;
@@ -63,6 +67,8 @@ public class Fenetre extends JFrame{
 	
 	private void initListeners(){
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
+		ecouteurClavier = new EcouteurDeClavier(ctrl);
+		addKeyListener(ecouteurClavier);
 	}
 	
 	private void initButtons(){
@@ -81,7 +87,6 @@ public class Fenetre extends JFrame{
 		calculTourneeButton = new PersoButton(Textes.BUTTON_CALCUL_TOURNEE, 1);
 		calculTourneeButton.addActionListener(ecouteurBoutons);
 		calculTourneeButton.setActionCommand("calcul-tournee");
-		
 	}
 	
 	private void initFenetre(){
@@ -89,8 +94,9 @@ public class Fenetre extends JFrame{
 		//setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
 		setLayout(new BorderLayout());
+		setFocusable(true);
+		requestFocus();
 	}
 	
 	private void initContent(){
@@ -180,6 +186,13 @@ public class Fenetre extends JFrame{
 				break;
 			case VUE_LIVRAISON_CHARGEE:
 				vueTournee.initTournee(plan.getDemandeLivraison());
+				vuePlan.afficherIcones();
+				for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
+					ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
+					vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
+				}
+				ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
+				vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				vueTournee.initTournee(plan.getTournee());

@@ -41,6 +41,10 @@ public class ElementTournee extends JPanel{
 	private JLabel idLabel;
 	private JLabel heureLabel;
 	private JLabel dureeLivraisonLabel;
+	private JLabel imageLabel;
+	
+	private ImageIcon imageIconNormal;
+	private ImageIcon imageIconSurvol;
 	
 	// TODO : mettre tous les JLabel en attribut
 	
@@ -100,10 +104,13 @@ public class ElementTournee extends JPanel{
 	    }
 
 		try {
-			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
+			BufferedImage imgNorm = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			Image scaledImageNormal = imgNorm.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			imageIconNormal = new ImageIcon(scaledImageNormal);
+			BufferedImage imgSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
+			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			imageIconSurvol = new ImageIcon(scaledImageSurvol);
+			imageLabel = new JLabel(imageIconNormal);
 			add(imageLabel,c);
 			
 		} catch (IOException e) {
@@ -196,10 +203,13 @@ public class ElementTournee extends JPanel{
 
 
 		try {
-			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
+			BufferedImage imgNorm = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
+			Image scaledImageNormal = imgNorm.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			imageIconNormal = new ImageIcon(scaledImageNormal);
+			BufferedImage imgSurvol = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR_SURVOL));
+			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			imageIconSurvol = new ImageIcon(scaledImageSurvol);
+			imageLabel = new JLabel(imageIconNormal);
 			add(imageLabel,c);
 			
 		} catch (IOException e) {
@@ -394,5 +404,12 @@ public class ElementTournee extends JPanel{
 		return s;
 	}
 	
+	public void survolElement(){
+		imageLabel.setIcon(imageIconSurvol);
+	}
+	
+	public void antiSurvolElement(){
+		imageLabel.setIcon(imageIconNormal);
+	}
 	
 }

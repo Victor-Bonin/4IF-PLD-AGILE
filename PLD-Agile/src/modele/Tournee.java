@@ -23,4 +23,8 @@ public class Tournee extends DemandeLivraison{
 	public boolean equals(Object obj) {
 		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
+	
+	public FeuilleDeRoute GetFeuilleDeRoute() {
+		return feuilleDeRoute;
+	}
 }

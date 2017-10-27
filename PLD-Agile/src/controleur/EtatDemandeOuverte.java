@@ -32,7 +32,7 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
 		try {
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
-			RunnableTest runnable = new RunnableTest(plan, this, controleur, fenetre);
+			AlgorithmRunnable runnable = new AlgorithmRunnable(plan, this, controleur, fenetre);
 			Thread t = new Thread(runnable);
 			t.start();
 		}
@@ -57,6 +57,11 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 		controleur.setEtatCourant(controleur.etatCalcule);
 		controleur.afficherFenetre();
 		controleur.afficherNotif();		
+	}
+	
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		calculerTournee(controleur, plan, fenetre);		
 	}
 }
 

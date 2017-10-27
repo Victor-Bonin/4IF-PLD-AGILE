@@ -10,8 +10,6 @@ import java.util.Set;
 
 import modele.algo.DjkSolution;
 import modele.algo.TSP;
-import modele.algo.TSP1;
-import modele.algo.TSP2;
 import modele.algo.TSP3;
 
 /**
@@ -198,7 +196,9 @@ public class Plan {
 		demandeLivraison = new Tournee(entrepot, livs, itineraire);
 	}
 	
-	//Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
+	/**
+	 * Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
+	 */
 	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source/*, long[] targets*/){
 
 		Long current = source;

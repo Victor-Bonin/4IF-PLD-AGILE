@@ -41,4 +41,6 @@ public interface Etat {
 	void afficherFenetre(Fenetre fenetre);
 	void afficherNotif(Fenetre fenetre);
 	void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre);
+	void creerLivraison(Fenetre fenetre);
+	void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande);
 }

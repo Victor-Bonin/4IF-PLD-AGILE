@@ -27,7 +27,7 @@ import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 
-public class EtatCalcule extends EtatDemandeOuverte {
+public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void creerLivraison(Fenetre fenetre) {

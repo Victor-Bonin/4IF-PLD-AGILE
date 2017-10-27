@@ -6,15 +6,10 @@ import java.util.Iterator;
 
 import modele.PlageHoraire;
 
-public class TSP1 extends TemplateTSP {
+public class TSP3 extends TSP2 {
 
 	@Override
 	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
-		return new IteratorSeq(nonVus, sommetCrt);
-	}
-
-	@Override
-	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
-		return 0;
+		return new IteratorDistSimple(nonVus, sommetCrt, cout);
 	}
 }

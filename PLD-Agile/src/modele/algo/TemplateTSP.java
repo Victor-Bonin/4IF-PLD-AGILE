@@ -8,12 +8,13 @@ public abstract class TemplateTSP implements TSP {
 	private Integer[] meilleureSolution;
 	private float coutMeilleureSolution = 0;
 	private Boolean tempsLimiteAtteint;
+	private int compteur = 0;
 	
 	public Boolean getTempsLimiteAtteint(){
 		return tempsLimiteAtteint;
 	}
 	
-	public Integer[] chercheSolution(int tpsLimite, int nbSommets, float[][] cout, int[] duree){
+	public Integer[] chercheSolution(int tpsLimite, int nbSommets, float[][] cout, int[] duree, int[][] horaires){
 		tempsLimiteAtteint = false;
 		coutMeilleureSolution = Float.MAX_VALUE;
 		meilleureSolution = new Integer[nbSommets];
@@ -21,7 +22,8 @@ public abstract class TemplateTSP implements TSP {
 		for (int i=1; i<nbSommets; i++) nonVus.add(i);
 		ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
 		vus.add(0); // le premier sommet visite est 0
-		branchAndBound(0, nonVus, vus, 0, cout, duree, System.currentTimeMillis(), tpsLimite);
+		branchAndBound(0, nonVus, vus, 0, horaires[0][0] , cout, duree, horaires, System.currentTimeMillis(), tpsLimite);
+		System.out.println("Tentatives : " + compteur);
 		return meilleureSolution;
 	}
 	
@@ -44,9 +46,9 @@ public abstract class TemplateTSP implements TSP {
 	 * @return une borne inferieure du cout des permutations commencant par sommetCourant, 
 	 * contenant chaque sommet de nonVus exactement une fois et terminant par le sommet 0
 	 */
-	protected abstract int bound(Integer sommetCourant, ArrayList<Integer> nonVus, float[][] cout, int[] duree);
+	protected abstract float bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires);
 	
-	/**
+	/** 
 	 * Methode devant etre redefinie par les sous-classes de TemplateTSP
 	 * @param sommetCrt
 	 * @param nonVus : tableau des sommets restant a visiter
@@ -54,7 +56,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
 	 * @return un iterateur permettant d'iterer sur tous les sommets de nonVus
 	 */
-	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, float[][] cout, int[] duree);
+	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires);
 	
 	/**
 	 * Methode definissant le patron (template) d'une resolution par separation et evaluation (branch and bound) du TSP
@@ -67,24 +69,31 @@ public abstract class TemplateTSP implements TSP {
 	 * @param tpsDebut : moment ou la resolution a commence
 	 * @param tpsLimite : limite de temps pour la resolution
 	 */	
-	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, float[][] cout, int[] duree, long tpsDebut, int tpsLimite){
+	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, float f, int heureDebut, float[][] cout, int[] duree, int[][] horaires, long tpsDebut, int tpsLimite){
+		 compteur++;
 		 if (System.currentTimeMillis() - tpsDebut > tpsLimite){
 			 tempsLimiteAtteint = true;
 			 return;
 		 }
-	    if (nonVus.size() == 0){ // tous les sommets ont ete visites
+		 float bound = bound(sommetCrt, nonVus, heureDebut, cout, duree, horaires);
+	    if (nonVus.isEmpty()){ // tous les sommets ont ete visites
 	    	f += cout[sommetCrt][0];
 	    	if (f < coutMeilleureSolution){ // on a trouve une solution meilleure que meilleureSolution
 	    		vus.toArray(meilleureSolution);
 	    		coutMeilleureSolution = f;
 	    	}
-	    } else if (f + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution){
-	        Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree);
+	    } else if (f + bound < coutMeilleureSolution && bound != Integer.MAX_VALUE){
+	        Iterator<Integer> it = iterator(sommetCrt, nonVus, heureDebut, cout, duree, horaires);
 	        while (it.hasNext()){
 	        	Integer prochainSommet = it.next();
 	        	vus.add(prochainSommet);
 	        	nonVus.remove(prochainSommet);
-	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite);
+	        	float wait = 0;
+	        	if(horaires[sommetCrt][0]!=-1) {
+		        	wait = horaires[sommetCrt][0] - heureDebut - f;
+		        	wait=(wait<0)?0:wait;
+	        	}
+	        	branchAndBound(prochainSommet, nonVus, vus, f + cout[sommetCrt][prochainSommet] + duree[sommetCrt] + wait, heureDebut , cout, duree, horaires, tpsDebut, tpsLimite); 
 	        	vus.remove(prochainSommet);
 	        	nonVus.add(prochainSommet);
 	        }	    

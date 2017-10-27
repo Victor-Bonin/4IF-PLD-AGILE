@@ -37,6 +37,7 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 			t.start();
 		}
 		catch (Exception ex) {
+			ex.printStackTrace();
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}

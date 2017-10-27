@@ -25,6 +25,7 @@ public class Fenetre extends JFrame{
 	public static final int VUE_LIVRAISON_CHARGEE = 2;
 	public static final int VUE_TOURNEE_CALCULEE = 3;
 	public static final int VUE_TOURNEE_AJOUT = 4;
+	public static final int VUE_TOURNEE_CALCUL_EN_COURS = 5;
 
 	private Controleur ctrl;
 	
@@ -156,12 +157,19 @@ public class Fenetre extends JFrame{
 			footer.remove(importDemandeLivraisonButton);
 			footer.remove(exportButton);
 			footer.add(calculTourneeButton);
+			calculTourneeButton.setEnabled(true);
 			break;
 		case VUE_TOURNEE_AJOUT:
 		case VUE_TOURNEE_CALCULEE:
 			footer.remove(importDemandeLivraisonButton);
 			footer.remove(calculTourneeButton);
 			footer.add(exportButton);
+			break;
+		case VUE_TOURNEE_CALCUL_EN_COURS:
+			footer.remove(importDemandeLivraisonButton);
+			footer.remove(exportButton);
+			footer.add(calculTourneeButton);
+			calculTourneeButton.setEnabled(false);
 			break;
 		}
 		
@@ -189,15 +197,23 @@ public class Fenetre extends JFrame{
 			case VUE_LIVRAISON_CHARGEE:
 				vueTournee.initTournee(plan.getDemandeLivraison());
 				vuePlan.afficherIcones(plan.getDemandeLivraison());
-				ajouterEcouteursSynchro ();
+				for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
+					ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
+					vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
+				}
+				ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
+				vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
+				vuePlan.activerBouton(true);
 				break;
 			case VUE_TOURNEE_CALCULEE:
 				vueTournee.initTournee(plan.getTournee());
-				vuePlan.afficherIcones(plan.getTournee());
-				ajouterEcouteursSynchro ();
+				vuePlan.activerBouton(true);
 				break;
 			case VUE_TOURNEE_AJOUT:
 				vueTournee.creerLivraison();
+				break;
+			case VUE_TOURNEE_CALCUL_EN_COURS:
+				vuePlan.activerBouton(false);
 				break;
 			}
 

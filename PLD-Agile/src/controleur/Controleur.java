@@ -141,5 +141,9 @@ public class Controleur {
 	public void creerLivraison() {
 		etatCourant.creerLivraison(fenetre);
 	}
+	
+	public void appuiEntree() {
+		etatCourant.appuiEntree(this, plan, fenetre, listeCommande);
+	}
 
 }

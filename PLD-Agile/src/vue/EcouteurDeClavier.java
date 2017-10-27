@@ -49,7 +49,7 @@ public class EcouteurDeClavier implements KeyListener{
 		}
 		if(keycode == KeyEvent.VK_ENTER)
 		{
-			
+			ctrl.appuiEntree();
 		}
 	}
 

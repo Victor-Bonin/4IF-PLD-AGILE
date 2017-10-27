@@ -72,5 +72,10 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void afficherFenetre(Fenetre fenetre) {
 		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
 	}
+	
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+			
+	}
 
 }

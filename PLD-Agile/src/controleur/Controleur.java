@@ -141,7 +141,10 @@ public class Controleur {
 	public void creerLivraison() {
 		etatCourant.creerLivraison(fenetre);
 	}
-	public void obtenirPlusProcheIntersection() {
+	/*
+	public double obtenirPlusProcheIntersection(double x, double y) {
+		return etatCourant.obtenirPlusProcheIntersection(double x, double y);
 	}
+	*/
 
 }

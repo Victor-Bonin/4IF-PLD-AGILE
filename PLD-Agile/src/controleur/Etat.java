@@ -42,4 +42,5 @@ public interface Etat {
 	void afficherNotif(Fenetre fenetre);
 	void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre);
 	void creerLivraison(Fenetre fenetre);
+	//void obtenirPlusProcheIntersection(double x, double y);
 }

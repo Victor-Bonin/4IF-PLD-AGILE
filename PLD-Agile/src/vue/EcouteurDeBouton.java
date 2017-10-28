@@ -37,7 +37,6 @@ public class EcouteurDeBouton implements ActionListener{
 				ctrl.calculerTournee();
 				break;
 			case "nouvelle-livraison":
-				System.out.println("Clic");
 				ctrl.creerLivraison();
 				break;
 		}

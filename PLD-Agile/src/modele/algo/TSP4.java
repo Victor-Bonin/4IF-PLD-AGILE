@@ -1,45 +1,51 @@
 package modele.algo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 
-import modele.PlageHoraire;
-
-public class TSP4 extends TSP2 {
+public class TSP4 extends TemplateTSP {
 
 	@Override
-	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
-		return new IteratorDistHoraires(nonVus, sommetCrt, heureDebut, cout, horaires);
+	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
+		//return new IteratorDistHoraires(nonVus, sommetCrt, heureActuelle, cout, duree, horaires);
+		return new IteratorDistSimple(nonVus, sommetCrt, cout);
 	}
 	
 	@Override
-	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
-		float r = duree[sommetCourant];
+	protected int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
+		int borneMinDuree = duree[sommetCourant];
 
-		float minDebut = Float.MAX_VALUE;
-		float minAutre;
+		int minDebut = Integer.MAX_VALUE;
+		int minAutre;
 		/*
 		if(sommetCourant<0||sommetCourant>=cout.length||sommetCourant>=duree.length||sommetCourant>=horaires.length)
 			return Integer.MAX_VALUE;*/
 
 		for(Integer courant : nonVus) {
-			if(horaires[courant]!=null) {			
-			}
+			/*
+			//Si l'horaire de fin est depassé, la solution n'est pas viable.
+			if(horaires[courant][1]!=-1 && horaires[courant][1]<heureActuelle+cout[sommetCourant][courant]+duree[courant])
+				return Integer.MAX_VALUE;
 			
-			if(cout[sommetCourant][courant]<minDebut)
-				minDebut = cout[sommetCourant][courant];
+			//Sinon il faut prendre en compte l'attente avant le premier sommet
+			int distanceTemps = Math.max(
+					cout[sommetCourant][courant],
+					horaires[courant][0] - heureActuelle // si horaire[][] = -1, on est negatif, donc le max le prend pas
+					);
+			if(distanceTemps<minDebut)
+				minDebut = distanceTemps;
+			*/
+			//Et on calcule le min des distances entre les sommets restants
 			minAutre = cout[courant][0];
-			
 			for(Integer suivant : nonVus) {
 				if(courant!=suivant && cout[courant][suivant]<minAutre)
 					minAutre = cout[courant][suivant];
 			}
-			r+=minAutre;
-			r+=duree[courant];
+			borneMinDuree+=minAutre;
+			borneMinDuree+=duree[courant];
 		}
-		r+=minDebut;
+		//borneMinDuree+=minDebut;
 		
-		return r;
+		return borneMinDuree;
 	}
 }

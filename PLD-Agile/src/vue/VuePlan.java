@@ -55,6 +55,8 @@ public class VuePlan extends JPanel{
 
 	private PersoButton changerPlanButton;
 	private PersoButton changerDemandeLivraisonButton;
+	private PersoButton undoButton;
+	private PersoButton redoButton;
 
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSouris ecouteurSouris;
@@ -107,8 +109,20 @@ public class VuePlan extends JPanel{
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
+		undoButton = new PersoButton(Textes.BUTTON_UNDO, 2);
+		undoButton.setBounds((int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
+		undoButton.addActionListener(ecouteurBoutons);
+		undoButton.setActionCommand("undo_action");
+		
+		redoButton = new PersoButton(Textes.BUTTON_REDO, 2);
+		redoButton.setBounds(undoButton.getX(), undoButton.getHeight(), (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
+		redoButton.addActionListener(ecouteurBoutons);
+		redoButton.setActionCommand("redo_action");
+		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
+		add(undoButton);
+		add(redoButton);
 		
 		
 

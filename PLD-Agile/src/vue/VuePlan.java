@@ -98,24 +98,26 @@ public class VuePlan extends JPanel{
 		addMouseWheelListener(ecouteurSouris);
 		addMouseListener(ecouteurSouris);
 		addMouseMotionListener(ecouteurSouris);
+		
+		System.out.println("Arret ici");
 
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
-		changerPlanButton.setBounds(0, 0, (int)changerPlanButton.getPreferredSize().getWidth(), (int)changerPlanButton.getPreferredSize().getHeight());
+		//changerPlanButton.setBounds(200, 0, (int)changerPlanButton.getPreferredSize().getWidth(), (int)changerPlanButton.getPreferredSize().getHeight());
 		changerPlanButton.addActionListener(ecouteurBoutons);
 		changerPlanButton.setActionCommand("import-plan");
 		
 		changerDemandeLivraisonButton = new PersoButton("<html>" + Textes.BUTTON_NOUVELLE_LIVRAISON + "</html>",2);
-		changerDemandeLivraisonButton.setBounds(0, (int)changerPlanButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
+		//changerDemandeLivraisonButton.setBounds(200, (int)changerPlanButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
 		undoButton = new PersoButton(Textes.BUTTON_UNDO, 2);
-		undoButton.setBounds((int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
+		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
 		undoButton.addActionListener(ecouteurBoutons);
 		undoButton.setActionCommand("undo_action");
 		
 		redoButton = new PersoButton(Textes.BUTTON_REDO, 2);
-		redoButton.setBounds(undoButton.getX(), undoButton.getHeight(), (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
+		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
 		redoButton.addActionListener(ecouteurBoutons);
 		redoButton.setActionCommand("redo_action");
 		
@@ -124,8 +126,6 @@ public class VuePlan extends JPanel{
 		add(undoButton);
 		add(redoButton);
 		
-		
-
 		setBackground(CharteGraphique.GRAPH_BG);
 		
 		iconesLivraison = new ArrayList<JLabel>();
@@ -172,6 +172,10 @@ public class VuePlan extends JPanel{
 				zoom = rapportY;
 			}
 			
+			// Position des boutons
+			changerDemandeLivraisonButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
+			changerPlanButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), 0, (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
+						
 			firstCall = false;
 		}
 		

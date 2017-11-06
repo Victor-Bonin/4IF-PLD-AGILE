@@ -233,13 +233,27 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	//TODO : a supprimer
+	//TODO : a améliorer
 	public void ajouterIcone(Intersection intersection) {
 		vuePlan.afficherIcone(intersection);
+		vueTournee.setIntersectionEnCreation(intersection);
 	}
 	
 	public void commencerChoixIntersection() {
 		vuePlan.commencerChoixIntersection();
+	}
+	
+	//TODO : supprimer? (doit se faire avec le pattern)
+	public void initialiserTournee() {
+		vueTournee.initTournee(plan.getTournee());
+		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		ajouterEcouteursSynchro();
+	}
+	
+	public void annulerCreation() {
+		vueTournee.annulerCreation();
+		vuePlan.annulerCreation();
+		repaint();
 	}
 
 }

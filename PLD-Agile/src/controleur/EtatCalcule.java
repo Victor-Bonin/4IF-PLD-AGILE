@@ -21,6 +21,7 @@ Classe représentant l'état de l'app lorsque la tournée a été calculé.
  */
 package controleur;
 
+import modele.ExceptionPlanCo;
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
@@ -28,6 +29,8 @@ import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 import vue.VuePlan;
+import xml.AnnulationXML;
+import xml.DeserialiseurXML;
 
 public class EtatCalcule extends EtatPlanOuvert {
 	
@@ -48,8 +51,17 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 
 	@Override
-	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
-		listeCmd.ajoute(new CommandeAjouter(p, l));
+	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
+		//TODO : supprimer fenetre quand pattern en place
+		try {
+			listeCmd.ajoute(new CommandeAjouter(p, l));
+			p.ajouterPointLivraison(l);
+			fenetre.initialiserTournee();
+			fenetre.repaint();
+		}
+		catch (ExceptionPlanCo ex){
+			// TODO : traiter l'exception
+		}
 	}
 
 	@Override
@@ -58,8 +70,18 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 
 	@Override
-	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
-		listeCmd.ajoute(new CommandeSupprimer(p, l));
+	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
+		try {
+			System.out.println("supprimer");
+			listeCmd.ajoute(new CommandeSupprimer(p, l));
+			p.supprimerPointLivraison(l);
+			fenetre.initialiserTournee();
+			fenetre.repaint();
+		}
+		catch (ExceptionPlanCo ex){
+			// TODO : traiter l'exception
+		}
+		
 	}
 	
 	@Override
@@ -89,6 +111,11 @@ public class EtatCalcule extends EtatPlanOuvert {
 	@Override
 	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 			
+	}
+	
+	@Override 
+	public void annulerCreation(Fenetre fenetre) {
+		fenetre.annulerCreation();
 	}
 
 }

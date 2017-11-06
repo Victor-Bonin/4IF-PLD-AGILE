@@ -1,11 +1,15 @@
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +21,7 @@ import javax.swing.border.MatteBorder;
 
 import controleur.Controleur;
 import modele.DemandeLivraison;
+import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 
@@ -38,8 +43,12 @@ public class VueTournee extends JPanel{
 	private JLabel tourneeTitre;
 	private JPanel pan;
 	private JButton ajouterLivraison;
+	private JPanel panelAjout;
+	private JPanel panelCreation;
 	
 	private ArrayList<ElementTournee> elementsTournee;
+	ElementTournee elementDetaille;
+	ElementTournee elementEnCreation;
 	
 	EcouteurDeBouton ecouteurBoutons;
 	
@@ -71,6 +80,7 @@ public class VueTournee extends JPanel{
 		ajouterLivraison.setActionCommand("nouvelle-livraison");
 		ajouterLivraison.setFocusPainted(false);
 		
+		
 		c = new GridBagConstraints();
 
 		c.fill = GridBagConstraints.BOTH;
@@ -101,8 +111,6 @@ public class VueTournee extends JPanel{
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 
 		pan.setBackground(CharteGraphique.BG_COLOR);
-		
-		
 	}
 	
 	/**
@@ -113,45 +121,58 @@ public class VueTournee extends JPanel{
 		demLivraison = dem;
 		
 		elementsTournee.clear();
+		elementEnCreation = null;
 		
 		pan.removeAll();
-		pan.setLayout(new GridBagLayout());
-		c = new GridBagConstraints();
 		
-		c.anchor = GridBagConstraints.NORTHWEST;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-	    c.gridy = 0;
-
-	    ElementTournee entrepot = new ElementTournee(plan.getDemandeLivraison().getEntrepot());
-		pan.add(entrepot, c);
+		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
+		ElementTournee entrepot = new ElementTournee(plan.getDemandeLivraison().getEntrepot());
+		entrepot.setMaximumSize(entrepot.getPreferredSize());
+		pan.add(entrepot);
+		entrepot.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
 		int i = 0;
 		elementsTournee.add(entrepot);
 		
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
-		    c.gridy = i+1;
-		    ElementTournee liv = new ElementTournee(livraison, i+1, i);
-		    pan.add(liv, c);
+		    ElementTournee liv = new ElementTournee(ctrl, livraison, i+1, i);
+		    pan.add(liv);
+		    liv.setMaximumSize(liv.getPreferredSize());
+		    liv.setAlignmentX(Component.LEFT_ALIGNMENT);
 		    elementsTournee.add(liv);
 		    i++;
 		}
+		panelAjout = new JPanel();
+		panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelAjout.setBackground(CharteGraphique.BG_COLOR);
+		panelAjout.setLayout(new BorderLayout());
+		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);
+		pan.add(panelAjout);
+		//ajouterLivraison.setPreferredSize(jp.getPreferredSize());
+		//ajouterLivraison.setSize(pan.getWidth(), (int)ajouterLivraison.getPreferredSize().getHeight());
+		//pan.add(ajouterLivraison);
 		
-		c.gridy = i+1;
-		c.weighty = 1;
 		
-		
-		pan.add(ajouterLivraison, c);
+		pan.revalidate();
+		//pan.repaint();
 	}
 	
 	public void creerLivraison() {
-		c.gridy = demLivraison.getLivraisons().size()+1;
-		pan.remove(ajouterLivraison);
-		pan.add(new ElementTournee(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size()), c);
 		
-		c.gridy = demLivraison.getLivraisons().size()+2;
-		c.weighty = 1;
-		pan.add(new JLabel(), c);
+		panelCreation = new JPanel();
+		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelCreation.setBackground(CharteGraphique.BG_COLOR);
+		panelCreation.setLayout(new BorderLayout());
+		
+		elementEnCreation = new ElementTournee(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
+
+		pan.remove(panelAjout);
+		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
+		pan.add(panelCreation);
+		//elementEnCreation.setMaximumSize(elementEnCreation.getPreferredSize());
+		//elementEnCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
+		//pan.add(new JLabel());
 	}
 	
 	public ArrayList<ElementTournee> getElementsTournee(){
@@ -164,5 +185,25 @@ public class VueTournee extends JPanel{
 	
 	public void antiSurvol(int index){
 		elementsTournee.get(index+1).antiSurvolElement();
+	}
+	
+	public void afficherDetails(int index){
+		if(elementDetaille != null) {
+			elementDetaille.afficherDetails();
+		}
+		elementDetaille = elementsTournee.get(index+1);
+		elementDetaille.afficherDetails();
+		
+	}
+	
+	// TODO : combiner avec la modif?
+	public void setIntersectionEnCreation(Intersection i){
+		elementEnCreation.setIntersection(i);
+	}
+	
+	public void annulerCreation() {
+		pan.remove(panelCreation);
+		pan.add(panelAjout);
+		elementEnCreation = null;
 	}
 }

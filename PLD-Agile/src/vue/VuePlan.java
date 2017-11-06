@@ -312,6 +312,7 @@ public class VuePlan extends JPanel{
 		for (int i = 0; i<iconesLivraison.size(); i++) {
 			this.remove(iconesLivraison.get(i));
 		}
+		this.remove(iconeNouvelleLivraison);
 
 		//Dessiner les icones de points de livraisons
 		iconesLivraison = new ArrayList<JLabel>();
@@ -384,7 +385,8 @@ public class VuePlan extends JPanel{
 	
 	public void terminerChoixIntersection() {
 		// Enlever le listener
-		
+		removeMouseListener(ecouteurSourisChoixIntersec);
+		removeMouseMotionListener(ecouteurSourisChoixIntersec);
 	}
 	
 	public int positionXPlan(int xJPanel) {
@@ -404,5 +406,11 @@ public class VuePlan extends JPanel{
 			this.add(iconeNouvelleLivraison);
 		}
 		iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+	}
+	
+	public void annulerCreation() {
+		terminerChoixIntersection();
+		this.remove(iconeNouvelleLivraison);
+		nouvelleIntersection = null;
 	}
 }

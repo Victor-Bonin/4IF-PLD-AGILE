@@ -29,7 +29,7 @@ import vue.Fenetre;
 import vue.Textes;
 import vue.VuePlan;
 
-public class EtatCalcule extends EtatDemandeOuverte {
+public class EtatCalcule extends EtatPlanOuvert {
 	
 	@Override 
 	public void obtenirPlusProcheIntersection(Fenetre vue, Plan p ,double x, double y) {
@@ -41,7 +41,7 @@ public class EtatCalcule extends EtatDemandeOuverte {
 	public void commencerChoixIntersection(Fenetre vue) {
 		vue.commencerChoixIntersection();
 	}
-	
+
 	@Override
 	public void creerLivraison(Fenetre fenetre) {
 		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);
@@ -84,6 +84,11 @@ public class EtatCalcule extends EtatDemandeOuverte {
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
 		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
+	}
+	
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+			
 	}
 
 }

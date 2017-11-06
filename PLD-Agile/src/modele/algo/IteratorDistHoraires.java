@@ -1,10 +1,7 @@
 package modele.algo;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
-
-import modele.PlageHoraire;
 
 public class IteratorDistHoraires implements Iterator<Integer> {
 
@@ -17,7 +14,7 @@ public class IteratorDistHoraires implements Iterator<Integer> {
 	 * @param nonVus
 	 * @param sommetCrt
 	 */
-	public IteratorDistHoraires(Collection<Integer> nonVus, int sommetCrt, int heureDebut, float[][] cout, int[][] horaires){
+	public IteratorDistHoraires(Collection<Integer> nonVus, int sommetCrt, int heureActuelle, int[][] cout, int[] duree, int[][] horaires){
 		this.candidats = new Integer[nonVus.size()];
 		nbCandidats = 0;
 		for (Integer s : nonVus){
@@ -25,12 +22,16 @@ public class IteratorDistHoraires implements Iterator<Integer> {
 		}
 		
 		for(int i=0;i<candidats.length;i++) {
-			float max = cout[sommetCrt][candidats[i]];
+			int max = cout[sommetCrt][candidats[i]];
 			int maxIndex = i;
 			for(int j=i+1;j<candidats.length;j++) {
-				if(cout[sommetCrt][candidats[j]]>max) {
+				int distanceTemps = Math.max(
+						cout[sommetCrt][candidats[j]],
+						horaires[j][0] - heureActuelle // si horaire[][] = -1, on est negatif, donc le max le prend pas
+						);
+				if(distanceTemps>max) {
 					maxIndex = j;
-					max = cout[sommetCrt][candidats[j]];
+					max = distanceTemps;
 				}
 			}
 			Integer temp = candidats[i];

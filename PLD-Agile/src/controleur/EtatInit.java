@@ -60,4 +60,10 @@ public class EtatInit extends EtatDefaut{
 	public void afficherNotif(Fenetre fenetre) {
 		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 	}
+
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		ouvrirPlan(controleur, plan, fenetre, listeCommande);		
+	}
+
 }

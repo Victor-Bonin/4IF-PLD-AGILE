@@ -41,4 +41,6 @@ public abstract class EtatDefaut implements Etat{
 	public void obtenirPlusProcheIntersection(Fenetre fenetre, Plan plan ,double x, double y) {}
 	@Override 
 	public void commencerChoixIntersection(Fenetre fenetre) {}
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {}
 }

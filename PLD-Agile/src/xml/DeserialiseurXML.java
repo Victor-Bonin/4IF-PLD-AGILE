@@ -37,6 +37,15 @@ public class DeserialiseurXML {
 		chargerFichier(plan, xml);
 	}
 
+	/**
+	 * Remplit le plan a partir du contenu du fichier
+	 * @param plan
+	 * @param xml
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ExceptionXML
+	 */
 	public static void chargerFichier(Plan plan, File xml) throws ParserConfigurationException, SAXException, IOException, ExceptionXML {
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
 		Document document = docBuilder.parse(xml);
@@ -46,7 +55,6 @@ public class DeserialiseurXML {
 		}
 		else
 			throw new ExceptionXML("Document non conforme");
-
 	}
 
 	/**
@@ -65,6 +73,17 @@ public class DeserialiseurXML {
 		chargerDemandeLivraisonFichier(plan, xml);
 	}
 
+	/**
+	 * Remplit la demande de livraison du plan a partir du contenu du fichier
+	 * @param plan
+	 * @param xml
+	 * @throws ExceptionXML
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ExceptionPlanCo
+	 * @throws ParseException
+	 */
 	public static void chargerDemandeLivraisonFichier(Plan plan, File xml) throws ExceptionXML, ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
 		Document document = docBuilder.parse(xml);

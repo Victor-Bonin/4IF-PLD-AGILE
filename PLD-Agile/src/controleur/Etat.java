@@ -44,4 +44,5 @@ public interface Etat {
 	void creerLivraison(Fenetre fenetre);
 	void obtenirPlusProcheIntersection(Fenetre fenetre, Plan plan, double x, double y);
 	void commencerChoixIntersection(Fenetre fenetre);
+	void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande);
 }

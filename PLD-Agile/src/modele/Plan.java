@@ -10,7 +10,7 @@ import java.util.Set;
 
 import modele.algo.DjkSolution;
 import modele.algo.TSP;
-import modele.algo.TSP3;
+import modele.algo.TSP4;
 
 /**
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
@@ -77,7 +77,7 @@ public class Plan {
 		livraisons.add(0,entrepot);
 		int nbLivraisons = livraisons.size();
 		
-		TSP tsp = new TSP3();
+		TSP tsp = new TSP4();
 		
 		// Remplissage de la liste des intersections avec tous les troncons
 
@@ -98,7 +98,7 @@ public class Plan {
 	System.out.println("Temps d'init de l'algo : " + (finDelay - debutDelay) + "ms");
 
 	debutDelay = System.currentTimeMillis();
-		float[][] cout = new float[nbLivraisons][nbLivraisons];
+		int[][] cout = new int[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
 		// On lance Dijkstra depuis tous les points de livraison pour remplir le tableau cout
 		DjkSolution result;
@@ -122,7 +122,7 @@ public class Plan {
 				Intersection livrArrivee = it2.next();
 				trgId = livrArrivee.getId();
 				if(srcId != trgId){
-					cout[source][target]=result.dist.get(trgId);
+					cout[source][target]=Math.round(result.dist.get(trgId));
 					// On ajoute le plus court chemin entre source et target dans le tableau de plus courts chemins
 					pCourtsChemins[source][target] = new Chemin(livrDepart, livrArrivee);
 					do{
@@ -147,53 +147,48 @@ public class Plan {
 		horairesInt[0][1] = getSecondsInDay(entrepot.getHeureArrivee());
 		for(int i=1; i<nbLivraisons; i++){
 			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
-				horairesInt[0][0] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
-				horairesInt[0][1] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
+				horairesInt[i][0] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
+				horairesInt[i][1] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
 			}else{
-				horairesInt[0][0] = -1;
-				horairesInt[0][1] = -1;
+				horairesInt[i][0] = -1;
+				horairesInt[i][1] = -1;
 			}
 		}
-		/*
-		PlageHoraire[] horaires = new PlageHoraire[nbLivraisons];
-		horaires[0] = entrepot.getHoraires();
-		for(int i=1; i<nbLivraisons; i++){
-			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
-				horaires[i] = ((LivraisonPlageHoraire)livraisons.get(i)).getPlage();
-			}
-		}
-		*/
 		
 		//TSP
 		
 	debutDelay = System.currentTimeMillis();
-	Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
-	//Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horaires);
+		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
 	finDelay = System.currentTimeMillis();
 	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
 		
 		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
 
-		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons);
+		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons-1);
 		for (int i = 1; i < nbLivraisons; i++ ){
 			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
 		}
 		
-		livs.get(0).setHeurePassage((Calendar)entrepot.getHeureDepart().clone());
-		livs.get(0).getHeurePassage().add(Calendar.SECOND, 
-				(int)cout[0][meilleureSolution[1]] + livs.get(0).getDuree());
-//		System.out.println("Heure de passage au point de livraison 0 : "+livs.get(0).getHeurePassage().getTime());
+		Calendar heureDePassage = (Calendar)entrepot.getHeureDepart().clone();
+		int heureDePassageInt = getSecondsInDay(heureDePassage);
+		livs.get(0).setHeurePassage((Calendar)heureDePassage.clone());
+		livs.get(0).getHeurePassage().add(Calendar.SECOND,Math.max(cout[0][meilleureSolution[1]],horairesInt[meilleureSolution[1]][0]-heureDePassageInt));
+		
 		for(int i = 1; i<nbLivraisons-1; i++){
-			livs.get(i).setHeurePassage((Calendar)livs.get(i-1).getHeurePassage().clone());
-			livs.get(i).getHeurePassage().add(Calendar.SECOND, 
-					(int)cout[meilleureSolution[i-1]][meilleureSolution[i]] + livs.get(i).getDuree());
-//			System.out.println("Heure de passage au point de livraison "+i+" : "+livs.get(i).getHeurePassage().getTime());
+			heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
+			heureDePassage.add(Calendar.SECOND, duree[meilleureSolution[i]]);
+			heureDePassageInt = getSecondsInDay(heureDePassage);
+			livs.get(i).setHeurePassage((Calendar)heureDePassage.clone());
+			livs.get(i).getHeurePassage().add(Calendar.SECOND, Math.max(
+					cout[meilleureSolution[i]][meilleureSolution[i+1]],
+					horairesInt[meilleureSolution[i+1]][0]-heureDePassageInt));
 		}
+		
 		entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
-		entrepot.getHeureArrivee().add(Calendar.SECOND, (int)cout[meilleureSolution[nbLivraisons-1]][0]);
-//		System.out.println("Heure d'arrivee a l'entrepot : "+entrepot.getHeureArrivee().getTime());
+		entrepot.getHeureArrivee().add(Calendar.SECOND, (cout[meilleureSolution[nbLivraisons-1]][0] + duree[meilleureSolution[nbLivraisons-1]]));
 
 		demandeLivraison = new Tournee(entrepot, livs, itineraire);
+		
 	}
 	
 	/**
@@ -278,6 +273,7 @@ public class Plan {
 		result.prev = previousNode;
 		return result;
 	}
+	
 	
 	/**
 	 * Ajoute un entrepot a la demande de livraison du plan si l'entrepot correspond a une adresse du plan

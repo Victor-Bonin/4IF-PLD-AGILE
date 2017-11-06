@@ -111,15 +111,29 @@ public class VuePlan extends JPanel{
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
-		undoButton = new PersoButton(Textes.BUTTON_UNDO, 2);
+		undoButton = new PersoButton("", 2);
 		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
 		undoButton.addActionListener(ecouteurBoutons);
 		undoButton.setActionCommand("undo_action");
 		
-		redoButton = new PersoButton(Textes.BUTTON_REDO, 2);
+		redoButton = new PersoButton("", 2);
 		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
 		redoButton.addActionListener(ecouteurBoutons);
 		redoButton.setActionCommand("redo_action");
+		
+		try {
+			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_UNDO));
+			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_REDO));
+			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance((int)(undoButton.getPreferredSize().getHeight()/1.8f), (int)(undoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
+			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance((int)(redoButton.getPreferredSize().getHeight()/1.8f), (int)(redoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
+			redoButton.setIcon(imageIconRedo);
+			undoButton.setIcon(imageIconUndo);
+		} catch (IOException e) {
+			undoButton.setText(Textes.BUTTON_UNDO);
+			redoButton.setText(Textes.BUTTON_REDO);
+			e.printStackTrace();
+		}
+		
 		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
@@ -172,10 +186,6 @@ public class VuePlan extends JPanel{
 				zoom = rapportY;
 			}
 			
-			// Position des boutons
-			changerDemandeLivraisonButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
-			changerPlanButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), 0, (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
-						
 			firstCall = false;
 		}
 		
@@ -241,7 +251,11 @@ public class VuePlan extends JPanel{
 						positionY(livraison.getY())+20);
 			}
 		}
-			              
+		
+		
+		//Repositionner les boutons
+		changerDemandeLivraisonButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
+		changerPlanButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), 0, (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());         
 	  }
 
 	private int positionX(int x) {

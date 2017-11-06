@@ -39,6 +39,13 @@ public class EcouteurDeBouton implements ActionListener{
 			case "nouvelle-livraison":
 				ctrl.creerLivraison();
 				break;
+			case "choisir-intersection":
+				ctrl.commencerChoixIntersection();
+				break;
+			case "annuler-creation":
+				break;
+			case "valider-creation":
+				break;
 		}
 		
 	}

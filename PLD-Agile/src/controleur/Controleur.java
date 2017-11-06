@@ -21,6 +21,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 import vue.Fenetre;
@@ -141,10 +142,13 @@ public class Controleur {
 	public void creerLivraison() {
 		etatCourant.creerLivraison(fenetre);
 	}
-	/*
-	public double obtenirPlusProcheIntersection(double x, double y) {
-		return etatCourant.obtenirPlusProcheIntersection(double x, double y);
+	
+	public void obtenirPlusProcheIntersection(double x, double y) {
+		etatCourant.obtenirPlusProcheIntersection(fenetre, plan, x, y);
 	}
-	*/
+	
+	public void commencerChoixIntersection() {
+		etatCourant.commencerChoixIntersection(fenetre);
+	}
 
 }

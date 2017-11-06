@@ -147,7 +147,7 @@ public class VueTournee extends JPanel{
 	public void creerLivraison() {
 		c.gridy = demLivraison.getLivraisons().size()+1;
 		pan.remove(ajouterLivraison);
-		pan.add(new ElementTournee(demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size()), c);
+		pan.add(new ElementTournee(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size()), c);
 		
 		c.gridy = demLivraison.getLivraisons().size()+2;
 		c.weighty = 1;

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import controleur.Controleur;
+import modele.Intersection;
 import modele.Plan;
 
 /**
@@ -230,6 +231,15 @@ public class Fenetre extends JFrame{
 			ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i-1, vuePlan, vueTournee);
 			vueTournee.getElementsTournee().get(i).addMouseListener(ecouteurSynchro);
 		}
+	}
+	
+	//TODO : a supprimer
+	public void ajouterIcone(Intersection intersection) {
+		vuePlan.afficherIcone(intersection);
+	}
+	
+	public void commencerChoixIntersection() {
+		vuePlan.commencerChoixIntersection();
 	}
 
 }

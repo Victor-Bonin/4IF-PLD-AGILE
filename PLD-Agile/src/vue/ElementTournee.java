@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -19,10 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import controleur.Controleur;
 import modele.Entrepot;
 import modele.Intersection;
 import modele.Livraison;
@@ -45,6 +48,8 @@ public class ElementTournee extends JPanel{
 	
 	private ImageIcon imageIconNormal;
 	private ImageIcon imageIconSurvol;
+	
+	EcouteurDeBouton ecouteurBoutons;
 	
 	// TODO : mettre tous les JLabel en attribut
 	
@@ -238,7 +243,7 @@ public class ElementTournee extends JPanel{
 		}
 	}	
 	
-	public ElementTournee(int nom, int p) {
+	public ElementTournee(Controleur ctrl, int nom, int p) {
 		super();
 		
 		place = p;
@@ -269,6 +274,44 @@ public class ElementTournee extends JPanel{
 		heureLabel = new JLabel(Textes.TOURNEE_PASSAGE + "-");
 		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		
+		JLabel imageLabel = new JLabel();
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon imageIcon = new ImageIcon(scaledImage);
+			imageLabel.setIcon(imageIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		JButton boutonAnnuler = new JButton();
+		boutonAnnuler.setFocusPainted(false);
+		boutonAnnuler.setBackground(CharteGraphique.BG_COLOR);
+		boutonAnnuler.setBorder(null);
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_ANNULER));
+			Image scaledAnnuler = img.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon annulerIcon = new ImageIcon(scaledAnnuler);
+			boutonAnnuler.setIcon(annulerIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		JButton boutonValider = new JButton();
+		boutonValider.setFocusPainted(false);
+		boutonValider.setBackground(CharteGraphique.BG_COLOR);
+		boutonValider.setBorder(null);
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_VALIDER));
+			Image scaledValider = img.getScaledInstance(25, 25,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon validerIcon = new ImageIcon(scaledValider);
+			boutonValider.setIcon(validerIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
 		
 		// Création du JPanel de modification de la livraison
 		JPanel details = new JPanel();
@@ -323,17 +366,8 @@ public class ElementTournee extends JPanel{
 	    c.weighty = 1;
 	    c.gridheight = 3;
 	    c.insets = new Insets(0,0,0,10);
-	    
-		try {
-			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
-			add(imageLabel,c);
+		add(imageLabel,c);
 			
-		} catch (IOException e) {
-	    	e.printStackTrace();
-	    }
 		
 		c.insets = new Insets(0,0,0,0);
 		c.gridheight = 1;
@@ -343,6 +377,12 @@ public class ElementTournee extends JPanel{
 		c.weightx = 1;
 		c.gridx = 2;
 		add(idLabel,c);
+		
+		c.weightx = 1;
+		c.gridx = 3;
+		c.anchor = GridBagConstraints.NORTHEAST;
+		add(boutonAnnuler,c);
+		c.anchor = GridBagConstraints.NORTHWEST;
 		
 		c.gridwidth = 2;
 		c.gridy = 1;
@@ -355,11 +395,25 @@ public class ElementTournee extends JPanel{
 		add(heureLabel, c);
 		
 		c.insets = new Insets(10,0,0,0);
-		c.gridwidth = 3;
+		c.gridwidth = 4;
 		c.gridy = 3;
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
+		
+		c.gridwidth = 1;
+		c.gridy = 4;
+		c.gridx = 3;
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.NORTHEAST;
+		add(boutonValider, c);
+		
+		
+		ecouteurBoutons = new EcouteurDeBouton(ctrl);
+		boutonChoixIntersec.addActionListener(ecouteurBoutons);
+		boutonChoixIntersec.setActionCommand("choisir-intersection");
+		boutonValider.addActionListener(ecouteurBoutons);
+		boutonValider.setActionCommand("valider-creation");
 		
 	}
 	

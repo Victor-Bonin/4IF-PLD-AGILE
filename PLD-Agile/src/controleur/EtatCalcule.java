@@ -21,14 +21,27 @@ Classe représentant l'état de l'app lorsque la tournée a été calculé.
  */
 package controleur;
 
+import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
+import vue.VuePlan;
 
 public class EtatCalcule extends EtatDemandeOuverte {
-
+	
+	@Override 
+	public void obtenirPlusProcheIntersection(Fenetre vue, Plan p ,double x, double y) {
+		Intersection i = p.obtenirPlusProcheIntersection(x, y);
+		vue.ajouterIcone(i);
+	}
+	
+	@Override 
+	public void commencerChoixIntersection(Fenetre vue) {
+		vue.commencerChoixIntersection();
+	}
+	
 	@Override
 	public void creerLivraison(Fenetre fenetre) {
 		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);

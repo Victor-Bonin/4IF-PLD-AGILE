@@ -217,7 +217,7 @@ public class ElementTournee extends JPanel{
 		//addMouseListener(new PopupTriggerListener());
 	}
 	
-	public ElementTournee(Entrepot entrepot) {
+	public ElementTournee(Controleur ctrl, Entrepot entrepot) {
 		super();
 		
 		setOpaque(true);
@@ -231,10 +231,7 @@ public class ElementTournee extends JPanel{
 						)
 				));
 		
-		/*String description = composeToolTipString(entrepot);
-		
-		setToolTipText("<html>" + description + "</html>");*/
-		
+
 		nomLabel = new JLabel(Textes.TOURNEE_ENTREPOT + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
 		nomLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
@@ -269,10 +266,28 @@ public class ElementTournee extends JPanel{
 			dureeLivraisonLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
     	}
     	
+    	//détails
     	details = new JPanel();
 		details.setBackground(CharteGraphique.BG_COLOR);
 		details.setLayout(new BorderLayout());
+
+		Set<String> listeTronconsIntersection = ctrl.nomsTronconsIntersection(entrepot);
+		JPanel nomsTronconsIntersection = new JPanel();
+		nomsTronconsIntersection.setLayout(new BoxLayout(nomsTronconsIntersection, BoxLayout.PAGE_AXIS));
+		nomsTronconsIntersection.setBackground(Color.WHITE);
+		for(String nomTroncon : listeTronconsIntersection){
+			if (nomTroncon.equals("")){
+				nomTroncon = "Rue Inconnue";
+			}
+			JLabel labelNomTroncon = new JLabel (nomTroncon);
+			nomsTronconsIntersection.add(labelNomTroncon);
+			labelNomTroncon.setAlignmentX(Component.LEFT_ALIGNMENT);
+		}
+		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);
+		
+		String description = composeToolTipString(entrepot, listeTronconsIntersection);
+		setToolTipText("<html>" + description + "</html>");
     	
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();

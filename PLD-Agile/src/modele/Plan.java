@@ -436,4 +436,17 @@ public class Plan {
 		}
 		return (int)(cal.getTimeInMillis()/1000);
 	}
+	
+	public Intersection obtenirPlusProcheIntersection(double x, double y) {
+		Intersection plusProche = null;
+		double distanceMin = Double.MAX_VALUE;
+		for (Intersection intersec : intersections.values()) {
+			double distance = Math.pow(intersec.getX()-x, 2) + Math.pow(intersec.getY()-y, 2);
+		    if(distance < distanceMin) {
+		    	distanceMin = distance;
+		    	plusProche = intersec;
+		    }
+		}
+		return plusProche;
+	}
 }

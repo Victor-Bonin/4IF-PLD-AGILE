@@ -67,7 +67,8 @@ public class EtatPlanOuvert extends EtatInit {
 	
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
-		fenetre.goToVue(Fenetre.VUE_PLAN);
+		fenetre.setEtatCourant(fenetre.etatPlanOuvert);
+		fenetre.goToVue();
 	}
 	
 	@Override

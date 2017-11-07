@@ -1,10 +1,13 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,15 +17,23 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
 
+import controleur.Controleur;
 import modele.Entrepot;
 import modele.Intersection;
 import modele.Livraison;
@@ -37,25 +48,35 @@ import modele.LivraisonPlageHoraire;
 public class ElementTournee extends JPanel{
 	private static final long serialVersionUID = 6534684555513953601L;
 	private Calendar date;
+	private JPanel details;
 	private JLabel nomLabel;
 	private JLabel idLabel;
 	private JLabel heureLabel;
 	private JLabel dureeLivraisonLabel;
 	private JLabel imageLabel;
+	private JSpinner dureeModification;
+	private JButton boutonValider;
+	JPopupMenu menu;
 	
 	private ImageIcon imageIconNormal;
 	private ImageIcon imageIconSurvol;
+	
+	private Livraison livraison;
+	
+	EcouteurDeBoutonsElementTournee ecouteurBoutons;
 	
 	// TODO : mettre tous les JLabel en attribut
 	
 	private int place;
 	
 	private boolean isSelected = false;
+	private boolean areDetailsVisible = false;
 	
-	public ElementTournee(Livraison livraison, int nom, int p) {
+	public ElementTournee(Controleur ctrl, Livraison livraison, int nom, int p) {
 		super();
 		
 		place = p;
+		this.livraison = livraison;
 		
 		setOpaque(true);
 		setBackground(CharteGraphique.BG_COLOR);
@@ -82,6 +103,27 @@ public class ElementTournee extends JPanel{
 		
 		dureeLivraisonLabel = new JLabel(Textes.TOURNEE_DUREE + (int)(livraison.getDuree()/60) + " min");
 		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+		
+		
+		// JPanel détails
+		details = new JPanel();
+		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setLayout(new BorderLayout());
+		JButton boutonSupprimer = new JButton();
+		boutonSupprimer.setFocusPainted(false);
+		boutonSupprimer.setBackground(CharteGraphique.BG_COLOR);
+		boutonSupprimer.setBorder(null);
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_SUPPRIMER));
+			Image scaledSupprimer = img.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon supprimerIcon = new ImageIcon(scaledSupprimer);
+			boutonSupprimer.setIcon(supprimerIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		details.add(boutonSupprimer, BorderLayout.EAST);
+		details.setVisible(false);
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -136,6 +178,22 @@ public class ElementTournee extends JPanel{
 			c.gridx = 1;
 			add(heureLabel, c);
 		}
+		
+		c.insets = new Insets(10,0,0,0);
+		c.gridwidth = 4;
+		c.gridy = 3;
+		c.gridx = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(details, c);
+		
+		ecouteurBoutons = new EcouteurDeBoutonsElementTournee(ctrl, this);
+		boutonSupprimer.addActionListener(ecouteurBoutons);
+		boutonSupprimer.setActionCommand("supprimer-livraison");
+		
+		menu = new JPopupMenu("Popup");
+		JMenuItem item = new JMenuItem("Nouvelle livraison");
+		menu.add(item);
+		//addMouseListener(new PopupTriggerListener());
 	}
 	
 	public ElementTournee(Entrepot entrepot) {
@@ -189,7 +247,11 @@ public class ElementTournee extends JPanel{
 			dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 			dureeLivraisonLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
     	}
-
+    	
+    	details = new JPanel();
+		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setLayout(new BorderLayout());
+		details.setVisible(false);
     	
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -234,9 +296,16 @@ public class ElementTournee extends JPanel{
 			c.gridx = 1;
 			add(dureeLivraisonLabel, c);
 		}
+		
+		c.insets = new Insets(10,0,0,0);
+		c.gridwidth = 4;
+		c.gridy = 3;
+		c.gridx = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(details, c);
 	}	
 	
-	public ElementTournee(int nom, int p) {
+	public ElementTournee(Controleur ctrl, int nom, int p) {
 		super();
 		
 		place = p;
@@ -267,6 +336,45 @@ public class ElementTournee extends JPanel{
 		heureLabel = new JLabel(Textes.TOURNEE_PASSAGE + "-");
 		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		
+		JLabel imageLabel = new JLabel();
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
+			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon imageIcon = new ImageIcon(scaledImage);
+			imageLabel.setIcon(imageIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		JButton boutonAnnuler = new JButton();
+		boutonAnnuler.setFocusPainted(false);
+		boutonAnnuler.setBackground(CharteGraphique.BG_COLOR);
+		boutonAnnuler.setBorder(null);
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_ANNULER));
+			Image scaledAnnuler = img.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon annulerIcon = new ImageIcon(scaledAnnuler);
+			boutonAnnuler.setIcon(annulerIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		boutonValider = new JButton();
+		boutonValider.setFocusPainted(false);
+		boutonValider.setBackground(CharteGraphique.BG_COLOR);
+		boutonValider.setBorder(null);
+		try {
+			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_VALIDER));
+			Image scaledValider = img.getScaledInstance(25, 25,  java.awt.Image.SCALE_SMOOTH);
+			ImageIcon validerIcon = new ImageIcon(scaledValider);
+			boutonValider.setIcon(validerIcon);
+			
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		boutonValider.setEnabled(false);
 		
 		// Création du JPanel de modification de la livraison
 		JPanel details = new JPanel();
@@ -300,7 +408,10 @@ public class ElementTournee extends JPanel{
 		                               0, //min
 		                               10000, //max
 		                               1);                //step
-		JSpinner dureeModification = new JSpinner(modele);
+		dureeModification = new JSpinner(modele);
+		JFormattedTextField duree = ((JSpinner.NumberEditor) dureeModification.getEditor()).getTextField();
+		((NumberFormatter) duree.getFormatter()).setAllowsInvalid(false);
+		
 		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE);
 		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		
@@ -321,17 +432,8 @@ public class ElementTournee extends JPanel{
 	    c.weighty = 1;
 	    c.gridheight = 3;
 	    c.insets = new Insets(0,0,0,10);
-	    
-		try {
-			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
-			add(imageLabel,c);
+		add(imageLabel,c);
 			
-		} catch (IOException e) {
-	    	e.printStackTrace();
-	    }
 		
 		c.insets = new Insets(0,0,0,0);
 		c.gridheight = 1;
@@ -341,6 +443,12 @@ public class ElementTournee extends JPanel{
 		c.weightx = 1;
 		c.gridx = 2;
 		add(idLabel,c);
+		
+		c.weightx = 1;
+		c.gridx = 3;
+		c.anchor = GridBagConstraints.NORTHEAST;
+		add(boutonAnnuler,c);
+		c.anchor = GridBagConstraints.NORTHWEST;
 		
 		c.gridwidth = 2;
 		c.gridy = 1;
@@ -353,11 +461,27 @@ public class ElementTournee extends JPanel{
 		add(heureLabel, c);
 		
 		c.insets = new Insets(10,0,0,0);
-		c.gridwidth = 3;
+		c.gridwidth = 4;
 		c.gridy = 3;
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
+		
+		c.gridwidth = 1;
+		c.gridy = 4;
+		c.gridx = 3;
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.NORTHEAST;
+		add(boutonValider, c);
+		
+		
+		ecouteurBoutons = new EcouteurDeBoutonsElementTournee(ctrl, this);
+		boutonChoixIntersec.addActionListener(ecouteurBoutons);
+		boutonChoixIntersec.setActionCommand("choisir-intersection");
+		boutonValider.addActionListener(ecouteurBoutons);
+		boutonValider.setActionCommand("valider-creation");
+		boutonAnnuler.addActionListener(ecouteurBoutons);
+		boutonAnnuler.setActionCommand("annuler-creation");
 		
 	}
 	
@@ -408,6 +532,31 @@ public class ElementTournee extends JPanel{
 	
 	public void antiSurvolElement(){
 		imageLabel.setIcon(imageIconNormal);
+	}
+	
+	// TODO : Héritage
+	
+	// Attention à bien les séparer une fois hérité!!
+	public Livraison getLivraison() {
+		return livraison;
+	}
+	
+	public void setDuree() {
+		livraison.setDuree((Integer)dureeModification.getValue()*60);
+	}
+	
+	public void setIntersection(Intersection i) {
+		boutonValider.setEnabled(true);;
+		livraison = new Livraison(i, (Integer)dureeModification.getValue()*60);
+	}
+	
+	public void afficherDetails() {
+		if(areDetailsVisible){
+			details.setVisible(false);
+		} else {
+			details.setVisible(true);
+		}
+		areDetailsVisible = !areDetailsVisible;
 	}
 	
 }

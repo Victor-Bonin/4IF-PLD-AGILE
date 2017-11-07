@@ -21,6 +21,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 	
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
-		fenetre.goToVue(fenetre.VUE_TOURNEE_CALCUL_EN_COURS);
+		fenetre.setEtatCourant(fenetre.etatCalculEnCours);
+		fenetre.goToVue();
 	}
 }

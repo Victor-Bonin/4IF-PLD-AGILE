@@ -60,13 +60,18 @@ public class VuePlan extends JPanel{
 
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSouris ecouteurSouris;
+	private EcouteurDeSourisChoixIntersection ecouteurSourisChoixIntersec;
 	
 	private ArrayList<JLabel> iconesLivraison;
 	private JLabel iconeEntrepot; 
+	private JLabel iconeLivraisonSouris;
+	private JLabel iconeNouvelleLivraison;
 	private ImageIcon imageIconL;
 	private ImageIcon imageIconLS;
 	private ImageIcon imageIconE;
 	private ImageIcon imageIconES;
+	
+	Intersection nouvelleIntersection;
 	
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
@@ -91,6 +96,9 @@ public class VuePlan extends JPanel{
 		} catch (IOException e) {
 	    	e.printStackTrace();
 	    }  
+		
+		iconeLivraisonSouris = new JLabel(imageIconL);
+		iconeNouvelleLivraison = new JLabel(imageIconL);
 		
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
 		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
@@ -138,6 +146,10 @@ public class VuePlan extends JPanel{
 		setBackground(CharteGraphique.GRAPH_BG);
 		
 		iconesLivraison = new ArrayList<JLabel>();
+		
+		//TODO : supprimer
+		ecouteurSourisChoixIntersec = new EcouteurDeSourisChoixIntersection(ctrl, this);
+		
 	}
 	
 	private void initMinMax(){
@@ -154,6 +166,8 @@ public class VuePlan extends JPanel{
 			}
 		}
 	}
+	
+	@Override
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
@@ -325,6 +339,7 @@ public class VuePlan extends JPanel{
 		for (int i = 0; i<iconesLivraison.size(); i++) {
 			this.remove(iconesLivraison.get(i));
 		}
+		this.remove(iconeNouvelleLivraison);
 
 		//Dessiner les icones de points de livraisons
 		iconesLivraison = new ArrayList<JLabel>();
@@ -352,6 +367,9 @@ public class VuePlan extends JPanel{
 		if (plan.getDemandeLivraison().getEntrepot()!=null) {
 			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
 		}
+		if(iconeNouvelleLivraison.getParent() == this) {
+			iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		}
 	}
 	
 	public void survol(int index){
@@ -378,6 +396,48 @@ public class VuePlan extends JPanel{
 		return iconeEntrepot;
 	}
 	
+	public void commencerChoixIntersection() {
+		addMouseListener(ecouteurSourisChoixIntersec);
+		addMouseMotionListener(ecouteurSourisChoixIntersec);
+		this.add(iconeLivraisonSouris);
+	}
+	
+	public void actualiserIconeSouris(int x, int y) {
+		// Activer le listener
+		iconeLivraisonSouris.setBounds(x+10, y+10, largeurBalise, hauteurBalise);
+	}
+	
+	public void terminerChoixIntersection() {
+		// Enlever le listener
+		removeMouseListener(ecouteurSourisChoixIntersec);
+		removeMouseMotionListener(ecouteurSourisChoixIntersec);
+	}
+	
+	public int positionXPlan(int xJPanel) {
+		return (int)((xJPanel - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX);
+	}
+	
+	public int positionYPlan(int yJPanel) {
+		return (int)((yJPanel - coordonneeY - this.getHeight()/ 2 + (maxY-minY)/(2*zoom))*zoom + minY);
+	}
+	
+	public void afficherIcone(Intersection intersection) {
+		nouvelleIntersection = intersection;
+		iconeLivraisonSouris.setBounds(100, 100, largeurBalise, hauteurBalise);
+		this.remove(iconeLivraisonSouris);
+		//JLabel liv = new JLabel(imageIconL);
+		if (iconeNouvelleLivraison.getParent() != this) {
+			this.add(iconeNouvelleLivraison);
+		}
+		iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+	}
+	
+	public void annulerCreation() {
+		terminerChoixIntersection();
+		this.remove(iconeNouvelleLivraison);
+		nouvelleIntersection = null;
+	}
+
 	public void activerBouton(boolean activer) {
 		changerDemandeLivraisonButton.setEnabled(activer);
 		changerPlanButton.setEnabled(activer);

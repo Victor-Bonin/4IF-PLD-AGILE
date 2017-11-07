@@ -53,12 +53,11 @@ public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
-		//TODO : supprimer fenetre quand pattern en place
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l));
 			p.ajouterPointLivraison(l);
-			fenetre.initialiserTournee();
-			fenetre.repaint();
+			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);// TODO : traiter l'exception
 		}
@@ -74,8 +73,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 		try {
 			listeCmd.ajoute(new CommandeSupprimer(p, l));
 			p.supprimerPointLivraison(l);
-			fenetre.initialiserTournee();
-			fenetre.repaint();
+			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);

@@ -126,10 +126,10 @@ public class VuePlan extends JPanel{
 		redoButton.setActionCommand("redo_action");
 		
 		try {
-			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_UNDO));
-			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_REDO));
-			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance((int)(undoButton.getPreferredSize().getHeight()/1.8f), (int)(undoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
-			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance((int)(redoButton.getPreferredSize().getHeight()/1.8f), (int)(redoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
+			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_ARRIERE));
+			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_AVANT));
+			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance((int)(undoButton.getPreferredSize().getHeight()), (int)(undoButton.getPreferredSize().getHeight()), java.awt.Image.SCALE_SMOOTH));
+			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance((int)(redoButton.getPreferredSize().getHeight()), (int)(redoButton.getPreferredSize().getHeight()), java.awt.Image.SCALE_SMOOTH));
 			redoButton.setIcon(imageIconRedo);
 			undoButton.setIcon(imageIconUndo);
 		} catch (IOException e) {

@@ -153,6 +153,11 @@ public class Plan {
 		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
 	finDelay = System.currentTimeMillis();
 	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
+
+		if(meilleureSolution==null)
+			throw new ExceptionPlanCo("Solution ou tournee vide !");
+		if(meilleureSolution[0]==null)
+			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas être trouvée");
 	
 		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}

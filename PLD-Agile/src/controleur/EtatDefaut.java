@@ -5,6 +5,7 @@ package controleur;
 
 import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import vue.Fenetre;
 
 public abstract class EtatDefaut implements Etat{
@@ -26,7 +27,7 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override
-	public void exporterFeuilleDeRoute() {}
+	public void exporterFeuilleDeRoute(Tournee tournee) {}
 	@Override
 	public void undo(ListeCommande listeCommande) {}
 	@Override

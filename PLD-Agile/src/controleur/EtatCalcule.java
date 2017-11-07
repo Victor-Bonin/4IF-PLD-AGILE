@@ -21,8 +21,11 @@ Classe représentant l'état de l'app lorsque la tournée a été calculé.
  */
 package controleur;
 
+import java.io.IOException;
+
 import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
@@ -59,8 +62,12 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 
 	@Override
-	public void exporterFeuilleDeRoute() {
-		
+	public void exporterFeuilleDeRoute(Tournee tournee) {
+		try {
+			tournee.exportFeuilleDeRoute();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

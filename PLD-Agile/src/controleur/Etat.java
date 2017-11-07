@@ -23,6 +23,7 @@ package controleur;
 
 import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import vue.Fenetre;
 
 public interface Etat {
@@ -35,7 +36,6 @@ public interface Etat {
 	void deplacerLivraison();
 	void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd);
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
-	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande);
 	void redo(ListeCommande listeCommande);
 	void afficherFenetre(Fenetre fenetre);
@@ -43,4 +43,5 @@ public interface Etat {
 	void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre);
 	void creerLivraison(Fenetre fenetre);
 	void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande);
+	void exporterFeuilleDeRoute(Tournee tournee);
 }

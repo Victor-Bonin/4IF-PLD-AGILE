@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import controleur.Controleur;
+import modele.Intersection;
 import modele.Plan;
 
 /**
@@ -63,6 +64,7 @@ public class Fenetre extends JFrame{
 		initFooter();
 		
 		setVisible(true);
+		
 	}
 	
 	
@@ -127,8 +129,10 @@ public class Fenetre extends JFrame{
 		
 		
 		vuePlan = new VuePlan(ctrl, plan);
-		vueTournee = new VueTournee(ctrl, plan.getDemandeLivraison());
+		vueTournee = new VueTournee(ctrl, plan);
 		//vueTournee.addMouseWheelListener(ecouteurSouris);
+		
+		this.addComponentListener(new ResizeListener(vuePlan));
 		
 		if(contentContainer != null){
 			getContentPane().remove(contentContainer);
@@ -227,6 +231,29 @@ public class Fenetre extends JFrame{
 			ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i-1, vuePlan, vueTournee);
 			vueTournee.getElementsTournee().get(i).addMouseListener(ecouteurSynchro);
 		}
+	}
+	
+	//TODO : a améliorer
+	public void ajouterIcone(Intersection intersection) {
+		vuePlan.afficherIcone(intersection);
+		vueTournee.setIntersectionEnCreation(intersection);
+	}
+	
+	public void commencerChoixIntersection() {
+		vuePlan.commencerChoixIntersection();
+	}
+	
+	//TODO : supprimer? (doit se faire avec le pattern)
+	public void initialiserTournee() {
+		vueTournee.initTournee(plan.getTournee());
+		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		ajouterEcouteursSynchro();
+	}
+	
+	public void annulerCreation() {
+		vueTournee.annulerCreation();
+		vuePlan.annulerCreation();
+		repaint();
 	}
 
 }

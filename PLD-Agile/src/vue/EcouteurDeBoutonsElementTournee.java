@@ -10,34 +10,34 @@ import java.awt.event.MouseEvent;
  * @author 4104
  *
  */
-public class EcouteurDeBouton implements ActionListener{
+public class EcouteurDeBoutonsElementTournee implements ActionListener{
 	private controleur.Controleur ctrl;
+	private ElementTournee elemTournee;
 	
 	/**
 	 * Constructeur d'une instance d'un écouteur
 	 * @param c le controleur sur lequel on appelera les actions
 	 */
-	public EcouteurDeBouton(controleur.Controleur c){
+	public EcouteurDeBoutonsElementTournee(controleur.Controleur c, ElementTournee el){
 		ctrl = c;
+		elemTournee = el;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		switch(event.getActionCommand()){
-			case "import-plan":
-				ctrl.ouvrirPlan();
+			case "choisir-intersection":
+				ctrl.commencerChoixIntersection();
 				break;
-			case "import-demande-livraison":
-				ctrl.ouvrirLivraison();
+			case "annuler-creation":
+				ctrl.annulerCreation();
 				break;
-			case "export-feuille":
-				ctrl.exporterFeuilleDeRoute();
+			case "valider-creation":
+				elemTournee.setDuree();
+				ctrl.ajouterLivraison(elemTournee.getLivraison());
 				break;
-			case "calcul-tournee":
-				ctrl.calculerTournee();
-				break;
-			case "nouvelle-livraison":
-				ctrl.creerLivraison();
+			case "supprimer-livraison":
+				ctrl.supprimerLivraison(elemTournee.getLivraison());
 				break;
 		}
 		

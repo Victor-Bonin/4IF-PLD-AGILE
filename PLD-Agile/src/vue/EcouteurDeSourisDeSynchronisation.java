@@ -40,7 +40,7 @@ public class EcouteurDeSourisDeSynchronisation extends MouseAdapter {
 	
 	@Override
 	public void mousePressed(MouseEvent e){
-		
+		vueTournee.afficherDetails(place);
 	}
 
 

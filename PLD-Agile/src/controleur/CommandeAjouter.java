@@ -21,6 +21,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.ExceptionPlanCo;
 import modele.Livraison;
 import modele.Plan;
 
@@ -44,13 +45,13 @@ public class CommandeAjouter implements Commande {
 	}
 	
 	@Override
-	public void doCde() {
-		//Faire appel à plan.ajouterLivraison(Livraison);
+	public void doCde() throws ExceptionPlanCo {
+		plan.ajouterPointLivraison(livraison);
 	}
 
 	@Override
-	public void undoCde() {
-		//Faire appel à plan.supprimerLivraison(Livraison);
+	public void undoCde() throws ExceptionPlanCo {
+		plan.supprimerPointLivraison(livraison);
 	}
 
 }

@@ -1,5 +1,6 @@
 package controleur;
 
+import modele.ExceptionPlanCo;
 import modele.Livraison;
 import modele.Plan;
 
@@ -23,13 +24,13 @@ public class CommandeSupprimer implements Commande {
 	}
 	
 	@Override
-	public void doCde() {
-		// Appeller plan.supprimerLivraison(Livraison)		
+	public void doCde() throws ExceptionPlanCo {
+		plan.supprimerPointLivraison(livraison);		
 	}
 
 	@Override
-	public void undoCde() {
-		// Appeller plan.ajouterLivraison(Livraison)
+	public void undoCde() throws ExceptionPlanCo {
+		plan.ajouterPointLivraison(livraison);
 	}
 
 }

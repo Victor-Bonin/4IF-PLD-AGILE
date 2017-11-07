@@ -21,15 +21,19 @@ Interface Commande pour le design pattern Commande.
  */
 package controleur;
 
+import modele.ExceptionPlanCo;
+
 public interface Commande {
 
 	/**
 	 * Execute la commande this
+	 * @throws ExceptionPlanCo 
 	 */
-	void doCde();
+	void doCde() throws ExceptionPlanCo;
 	
 	/**
 	 * Execute la commande inverse a this
+	 * @throws ExceptionPlanCo 
 	 */
-	void undoCde();
+	void undoCde() throws ExceptionPlanCo;
 }

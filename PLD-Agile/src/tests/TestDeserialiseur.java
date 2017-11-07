@@ -22,7 +22,6 @@ import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class TestDeserialiseur {
 
@@ -48,7 +47,7 @@ public class TestDeserialiseur {
 		planCharge = new Plan();
 		try {
 			DeserialiseurXML.chargerFichier(planCharge, planFile);
-		} catch (ParserConfigurationException | SAXException | IOException | ExceptionXML e) {
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo e) {
 			e.printStackTrace();
 		}
 		livraisons = new ArrayList<Livraison>();
@@ -60,7 +59,7 @@ public class TestDeserialiseur {
 	public void chargerPlanTest() {
 		try {
 			DeserialiseurXML.chargerFichier(plan, planFile);
-		} catch (ParserConfigurationException | SAXException | IOException | ExceptionXML e) {
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo e) {
 			e.printStackTrace();
 		}
 		assertTrue(plan.getIntersections().containsKey(1029591870L));
@@ -71,10 +70,15 @@ public class TestDeserialiseur {
 	}
 	
 	@Test
+	public void chargerPlanFailTest() {
+		
+	}
+	
+	@Test
 	public void chargerDemandeLivraisonTest() {
 		try {
 			DeserialiseurXML.chargerDemandeLivraisonFichier(planCharge, DLFile);
-		} catch (ExceptionXML | ParserConfigurationException | SAXException | IOException | ExceptionPlanCo | ParseException e) {
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo | ParseException e) {
 			e.printStackTrace();
 		}
 		assertTrue(planCharge.getDemandeLivraison().getEntrepot().equals(entrepot));

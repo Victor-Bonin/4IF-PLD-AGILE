@@ -378,5 +378,10 @@ public class VuePlan extends JPanel{
 	public JLabel getIconeEntrepot(){
 		return iconeEntrepot;
 	}
+	
+	public void activerBouton(boolean activer) {
+		changerDemandeLivraisonButton.setEnabled(activer);
+		changerPlanButton.setEnabled(activer);
+	}
 
 }

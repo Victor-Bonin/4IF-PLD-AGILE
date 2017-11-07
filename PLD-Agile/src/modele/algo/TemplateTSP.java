@@ -8,7 +8,7 @@ public abstract class TemplateTSP implements TSP {
 	private Integer[] meilleureSolution;
 	private int coutMeilleureSolution = 0;
 	private Boolean tempsLimiteAtteint;
-	private int compteur = 0;
+//	private int compteur = 0;
 	
 	public Boolean getTempsLimiteAtteint(){
 		return tempsLimiteAtteint;
@@ -23,8 +23,8 @@ public abstract class TemplateTSP implements TSP {
 		ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
 		vus.add(0); // le premier sommet visite est 0
 		branchAndBound(0, nonVus, vus, horaires[0][0] , couts, durees, horaires, System.currentTimeMillis(), tpsLimite);
-		System.out.println("Tentatives : " + compteur);
-		System.out.println("Total d'apres algo : " + (coutMeilleureSolution/60));
+//		System.out.println("Tentatives : " + compteur);
+//		System.out.println("Total d'apres algo : " + (coutMeilleureSolution/60));
 		return meilleureSolution;
 	}
 	
@@ -76,7 +76,7 @@ public abstract class TemplateTSP implements TSP {
 	 * @param tpsLimite : limite de temps pour la resolution
 	 */	
 	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int heureFinActuelle, int[][] couts, int[] durees, int[][] horaires, long tpsDebut, int tpsLimite){
-		 compteur++;
+//		 compteur++;
 		 if (System.currentTimeMillis() - tpsDebut > tpsLimite){
 			 tempsLimiteAtteint = true;
 			 return;

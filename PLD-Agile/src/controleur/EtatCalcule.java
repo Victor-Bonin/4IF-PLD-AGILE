@@ -56,7 +56,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l));
 			p.ajouterPointLivraison(l);
-			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+			p.calculerItinerairesSeuls();
+			fenetre.setEtatCourant(fenetre.etatCalcule);
 			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);// TODO : traiter l'exception
@@ -73,7 +74,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 		try {
 			listeCmd.ajoute(new CommandeSupprimer(p, l));
 			p.supprimerPointLivraison(l);
-			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+			p.calculerItinerairesSeuls();
+			fenetre.setEtatCourant(fenetre.etatCalcule);
 			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){

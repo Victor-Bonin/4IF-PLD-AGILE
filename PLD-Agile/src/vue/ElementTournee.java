@@ -112,9 +112,8 @@ public class ElementTournee extends JPanel{
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 			imageLabel = new JLabel(imageIconNormal);
 			add(imageLabel,c);
-			
 		} catch (IOException e) {
-	    	e.printStackTrace();
+	    		System.out.println("Une image est manquante");
 	    }
 		
 		c.insets = new Insets(0,0,0,0);
@@ -211,9 +210,8 @@ public class ElementTournee extends JPanel{
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 			imageLabel = new JLabel(imageIconNormal);
 			add(imageLabel,c);
-			
 		} catch (IOException e) {
-	    	e.printStackTrace();
+	    		System.out.println("Une image est manquante");
 	    }
 		
 		c.insets = new Insets(0,0,0,0);

@@ -1,7 +1,9 @@
 package tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +24,6 @@ import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class TestDeserialiseur {
 
@@ -48,7 +49,7 @@ public class TestDeserialiseur {
 		planCharge = new Plan();
 		try {
 			DeserialiseurXML.chargerFichier(planCharge, planFile);
-		} catch (ParserConfigurationException | SAXException | IOException | ExceptionXML e) {
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo e) {
 			e.printStackTrace();
 		}
 		livraisons = new ArrayList<Livraison>();
@@ -60,7 +61,7 @@ public class TestDeserialiseur {
 	public void chargerPlanTest() {
 		try {
 			DeserialiseurXML.chargerFichier(plan, planFile);
-		} catch (ParserConfigurationException | SAXException | IOException | ExceptionXML e) {
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo e) {
 			e.printStackTrace();
 		}
 		assertTrue(plan.getIntersections().containsKey(1029591870L));
@@ -71,15 +72,55 @@ public class TestDeserialiseur {
 	}
 	
 	@Test
+	public void chargerPlanEchecTest() {
+		try {
+			DeserialiseurXML.chargerFichier(plan, new File("assets/Tests/DLTest.xml"));
+			fail();
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo e) {
+			assertEquals(e.getMessage(), ExceptionPlanCo.DOCUMENT_NON_CONFORME);
+		}
+	}
+	
+	@Test
+	public void chargerPlanStructureIncorrecteTest() {
+		try {
+			DeserialiseurXML.chargerFichier(plan, new File("assets/Tests/PlanTestEchec.xml"));
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo e) {
+			return;
+		}
+		fail();
+	}
+	
+	@Test
 	public void chargerDemandeLivraisonTest() {
 		try {
 			DeserialiseurXML.chargerDemandeLivraisonFichier(planCharge, DLFile);
-		} catch (ExceptionXML | ParserConfigurationException | SAXException | IOException | ExceptionPlanCo | ParseException e) {
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo | ParseException e) {
 			e.printStackTrace();
 		}
 		assertTrue(planCharge.getDemandeLivraison().getEntrepot().equals(entrepot));
 		assertTrue(planCharge.getDemandeLivraison().getLivraisons().size() == 2);
 		assertTrue(planCharge.getDemandeLivraison().getLivraisons().get(0).equals(livraisons.get(0)));
 		assertTrue(planCharge.getDemandeLivraison().getLivraisons().get(1).equals(livraisons.get(1)));
+	}
+	
+	@Test
+	public void chargerDemandeLivraisonEchecTest() {
+		try {
+			DeserialiseurXML.chargerDemandeLivraisonFichier(planCharge, new File("assets/Tests/PlanTest.xml"));
+			fail();
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo | ParseException e) {
+			assertEquals(e.getMessage(), ExceptionPlanCo.DOCUMENT_NON_CONFORME);
+		}
+	}
+	
+	@Test
+	public void chargerDemandeLivraisonStructureIncorrecteTest() {
+		try {
+			DeserialiseurXML.chargerDemandeLivraisonFichier(planCharge, new File("assets/Tests/DLTestEchec.xml"));
+		} catch (ParserConfigurationException | SAXException | IOException | ExceptionPlanCo | ParseException e) {
+			return;
+		}
+		fail();
 	}
 }

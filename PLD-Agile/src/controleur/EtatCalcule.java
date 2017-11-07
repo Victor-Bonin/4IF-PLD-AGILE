@@ -28,9 +28,6 @@ import modele.Plan;
 import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
-import vue.VuePlan;
-import xml.AnnulationXML;
-import xml.DeserialiseurXML;
 
 public class EtatCalcule extends EtatPlanOuvert {
 	
@@ -55,11 +52,12 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l));
-			p.ajouterPointLivraison(l);
-			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+			fenetre.setEtatCourant(fenetre.etatModifie);
 			fenetre.goToVue();
 		}
-		catch (ExceptionPlanCo ex){fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);// TODO : traiter l'exception
+		catch (ExceptionPlanCo ex){
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			// TODO : traiter l'exception
 		}
 	}
 
@@ -72,7 +70,6 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
 		try {
 			listeCmd.ajoute(new CommandeSupprimer(p, l));
-			p.supprimerPointLivraison(l);
 			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
 			fenetre.goToVue();
 		}
@@ -82,12 +79,22 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 	
 	@Override
-	public void undo(ListeCommande listeCommande) {
-		listeCommande.undo();
+	public void undo(ListeCommande listeCommande, Fenetre fenetre) {
+		try {
+			listeCommande.undo();
+			fenetre.goToVue();
+		} catch (ExceptionPlanCo e) {
+			// TODO Gérer exception
+		}
 	}
 	@Override
-	public void redo(ListeCommande listeCommande) {
-		listeCommande.redo();
+	public void redo(ListeCommande listeCommande, Fenetre fenetre) {
+		try {
+			listeCommande.redo();
+			fenetre.goToVue();
+		} catch (ExceptionPlanCo e) {
+			// TODO Gérer exception
+		}
 	}
 
 	@Override

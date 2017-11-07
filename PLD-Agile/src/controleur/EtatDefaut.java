@@ -28,9 +28,9 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void exporterFeuilleDeRoute() {}
 	@Override
-	public void undo(ListeCommande listeCommande) {}
+	public void undo(ListeCommande listeCommande, Fenetre fenetre) {}
 	@Override
-	public void redo(ListeCommande listeCommande) {}
+	public void redo(ListeCommande listeCommande, Fenetre fenetre) {}
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {}
 	@Override

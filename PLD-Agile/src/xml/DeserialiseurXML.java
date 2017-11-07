@@ -30,9 +30,9 @@ public class DeserialiseurXML {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 * @throws IOException
-	 * @throws ExceptionXML
+	 * @throws ExceptionPlanCo
 	 */
-	public static void charger(Plan plan) throws ExceptionXML, ParserConfigurationException, SAXException, IOException {
+	public static void charger(Plan plan) throws ExceptionPlanCo, ParserConfigurationException, SAXException, IOException {
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
 		chargerFichier(plan, xml);
 	}
@@ -44,9 +44,9 @@ public class DeserialiseurXML {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 * @throws IOException
-	 * @throws ExceptionXML
+	 * @throws ExceptionPlanCo
 	 */
-	public static void chargerFichier(Plan plan, File xml) throws ParserConfigurationException, SAXException, IOException, ExceptionXML {
+	public static void chargerFichier(Plan plan, File xml) throws ParserConfigurationException, SAXException, IOException, ExceptionPlanCo {
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
 		Document document = docBuilder.parse(xml);
 		Element racine = document.getDocumentElement();
@@ -54,13 +54,12 @@ public class DeserialiseurXML {
 			construireAPartirDeDOMXML(racine, plan);
 		}
 		else
-			throw new ExceptionXML("Document non conforme");
+			throw new ExceptionPlanCo(ExceptionPlanCo.DOCUMENT_NON_CONFORME);
 	}
 
 	/**
 	 * Ouvre un fichier xml et remplit la demande de livraison du plan a partir du contenu du fichier
 	 * @param plan Objet plan déjà instancié
-	 * @throws ExceptionXML 
 	 * @throws ParserConfigurationException 
 	 * @throws IOException 
 	 * @throws SAXException 
@@ -68,7 +67,7 @@ public class DeserialiseurXML {
 	 * @throws ExceptionPlanCo 
 	 * @throws Exception
 	 */
-	public static void chargerDemandeLivraison(Plan plan) throws ExceptionXML, ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
+	public static void chargerDemandeLivraison(Plan plan) throws ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
 		File xml = OuvreurDeFichierXML.getInstance().ouvre(true);
 		chargerDemandeLivraisonFichier(plan, xml);
 	}
@@ -77,14 +76,13 @@ public class DeserialiseurXML {
 	 * Remplit la demande de livraison du plan a partir du contenu du fichier
 	 * @param plan
 	 * @param xml
-	 * @throws ExceptionXML
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 * @throws IOException
 	 * @throws ExceptionPlanCo
 	 * @throws ParseException
 	 */
-	public static void chargerDemandeLivraisonFichier(Plan plan, File xml) throws ExceptionXML, ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
+	public static void chargerDemandeLivraisonFichier(Plan plan, File xml) throws ParserConfigurationException, SAXException, IOException, ExceptionPlanCo, ParseException{
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();	
 		Document document = docBuilder.parse(xml);
 		Element racine = document.getDocumentElement();
@@ -92,7 +90,7 @@ public class DeserialiseurXML {
 			construireDemandeLivraisonAPartirDeDOMXML(racine, plan);
 		}
 		else
-			throw new ExceptionXML("Document non conforme");
+			throw new ExceptionPlanCo(ExceptionPlanCo.DOCUMENT_NON_CONFORME);
 
 	}
 
@@ -100,10 +98,10 @@ public class DeserialiseurXML {
 	 * Extrait les donnees du noeud racine à partir du fichier xml et remplit le plan avec ces donnees
 	 * @param noeudDOMRacine Noeud racine du fichier xml
 	 * @param plan Objet plan déjà instancie
-	 * @throws ExceptionXML
+	 * @throws ExceptionPlanCo
 	 * @throws NumberFormatException
 	 */
-	private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionXML, NumberFormatException
+	private static void construireAPartirDeDOMXML(Element noeudDOMRacine, Plan plan) throws ExceptionPlanCo, NumberFormatException
 	{
 		plan.reset();	
 		NodeList listeNoeuds = noeudDOMRacine.getElementsByTagName("noeud");
@@ -117,7 +115,7 @@ public class DeserialiseurXML {
 			try {
 				plan.ajouterTroncon(Long.parseLong(xmlTroncon.getAttribute("origine")), Long.parseLong(xmlTroncon.getAttribute("destination")), Float.parseFloat(xmlTroncon.getAttribute("longueur")), xmlTroncon.getAttribute("nomRue"));
 			} catch (Exception e) {
-				throw new ExceptionXML(e.getMessage());
+				throw new ExceptionPlanCo(e.getMessage());
 			}
 		}
 	}

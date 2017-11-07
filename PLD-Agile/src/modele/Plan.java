@@ -57,7 +57,7 @@ public class Plan {
 			troncons.add(troncon);
 		}
 		else {
-			throw new ExceptionPlanCo("Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.");
+			throw new ExceptionPlanCo(ExceptionPlanCo.INTERSECTION_ABSENTE);
 		}
 	}
 		
@@ -155,9 +155,9 @@ public class Plan {
 	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
 
 		if(meilleureSolution==null)
-			throw new ExceptionPlanCo("Solution ou tournee vide !");
+			throw new ExceptionPlanCo(ExceptionPlanCo.SOLUTION_VIDE);
 		if(meilleureSolution[0]==null)
-			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas été trouvée");
+			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
 	
 		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}
@@ -309,7 +309,7 @@ public class Plan {
 			Entrepot entrepot = new Entrepot(intersection, heureDepart);
 			demandeLivraison.setEntrepot(entrepot);
 		} else {
-			throw new ExceptionPlanCo("L'entrepôt ne correspond à aucune adresse connue");
+			throw new ExceptionPlanCo(ExceptionPlanCo.ENTREPOT_INCONNU);
 		}
 	}
 
@@ -330,19 +330,20 @@ public class Plan {
 			}
 			demandeLivraison.ajoutePointLivraison(livraison);
 		} else {
+			// TODO : standardiser le message de l'exception
 			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
 	
 	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		if (livraison.getDuree() < 0) 
-			throw new ExceptionPlanCo("La livraison possède une durée négative");
+			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison);
 	}
 	
 	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
 		if (livraison.getDuree() < 0) 
-			throw new ExceptionPlanCo("La livraison possède une durée négative");
+			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison, index);
 		
 	}

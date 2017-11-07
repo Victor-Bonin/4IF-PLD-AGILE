@@ -30,29 +30,29 @@ public class DemandeLivraison {
 	
 	public void ajoutePointLivraison(Livraison lvrsn, int index) throws ExceptionPlanCo {
 		if(lvrsn == null)
-			throw new ExceptionPlanCo("Dev ONLY : PdL null ajt 0xce");
+			throw new ExceptionPlanCo(ExceptionPlanCo.DEV_ONLY_1);
 		if(livraisons.contains(lvrsn))
-			throw new ExceptionPlanCo("Point de livraison déjà dans la demande de livraison");
+			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DEJA_PRESENTE);
 
 		try {
 			livraisons.add(index, lvrsn);
 		}
 		catch (IndexOutOfBoundsException e) {
-			throw new ExceptionPlanCo("Dev ONLY : PdL out of bounds ajt 0xce");
+			throw new ExceptionPlanCo(ExceptionPlanCo.DEV_ONLY_2);
 		}
 		catch (Exception e) {
-			throw new ExceptionPlanCo("Erreur lors de l'ajout de la livraison");		
+			throw new ExceptionPlanCo(ExceptionPlanCo.ERREUR_AJOUT_LIVRAISON);		
 		}
 		
 	}
 	
 	public void supprimerPointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
 		if(lvrsn == null)
-			throw new ExceptionPlanCo("Dev ONLY : PdL null sppr 0xce");
+			throw new ExceptionPlanCo(ExceptionPlanCo.DEV_ONLY_3);
 		if(!livraisons.contains(lvrsn))
-			throw new ExceptionPlanCo("Point de livraison non présent dans la demande de livraison");
+			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_ABSENTE);
 		if (!livraisons.remove(lvrsn))
-			throw new ExceptionPlanCo("Erreur lors de la suppression de la livraison");
+			throw new ExceptionPlanCo(ExceptionPlanCo.ERREUR_SUPPRESSION_LIVRAISON);
 	}
 
 	public void setEntrepot(Entrepot entrpt){

@@ -127,14 +127,14 @@ public class Controleur {
 	 * Methode appelee apres un clic sur le bouton "Undo" ou apres presse Ctrl+Z
 	 */
 	public void undo() {
-		etatCourant.undo(listeCommande);
+		etatCourant.undo(listeCommande, fenetre);
 	}
 
 	/**
 	 * Methode appelee apres un clic sur le bouton "Redo" ou apres presse Ctrl+Y
 	 */
 	public void redo() {
-		etatCourant.redo(listeCommande);
+		etatCourant.redo(listeCommande, fenetre);
 	}
 	
 	/**

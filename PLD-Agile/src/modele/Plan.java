@@ -17,7 +17,7 @@ import modele.algo.TSP4;
  * @author 4104
  */
 public class Plan {
-	private final int VITESSE = 15 *(10000/3600); // 15km/h en dm/s
+	private final float VITESSE = 15 *(10000f/3600); // 15km/h en dm/s
 	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;

@@ -48,7 +48,10 @@ public class planTest {
 		File dlTest = new File("assets/DLTest.xml");
 		try{
 			DeserialiseurXML.chargerFichier(plan, planTest);
+			assert(plan.getIntersections() != null);
+			assert(plan.getTroncons() != null);
 			DeserialiseurXML.chargerDemandeLivraisonFichier(plan, dlTest);
+			assert(plan.getDemandeLivraison() != null);
 			plan.calculTournee();
 		} catch (Exception e) {
 			fail("Error " + e);
@@ -62,19 +65,61 @@ public class planTest {
 		Intersection interTest3 = plan.getIntersections().get(3L);
 		Intersection interTest4 = plan.getIntersections().get(4L);
 		Intersection interTest5 = plan.getIntersections().get(5L);
+		Troncon troncon12 = null;
+		Troncon troncon13 = null;
+		Troncon troncon15 = null;
+		Troncon troncon23 = null;
+		Troncon troncon31 = null;
+		Troncon troncon32 = null;
+		Troncon troncon34 = null;
+		Troncon troncon35 = null;
+		Troncon troncon43 = null;
+		Troncon troncon45 = null;
+		Troncon troncon54 = null;
+		for(Troncon t : plan.getTroncons()){
+			if(t.getDebut().getId() == 1 && t.getFin().getId() == 2){
+				troncon12 = t;
+			}else if(t.getDebut().getId() == 1 && t.getFin().getId() == 3){
+				troncon13 = t;
+			}else if(t.getDebut().getId() == 1 && t.getFin().getId() == 5){
+				troncon15 = t;
+			}else if(t.getDebut().getId() == 2 && t.getFin().getId() == 3){
+				troncon23 = t;
+			}else if(t.getDebut().getId() == 3 && t.getFin().getId() == 1){
+				troncon31 = t;
+			}else if(t.getDebut().getId() == 3 && t.getFin().getId() == 2){
+				troncon32 = t;
+			}else if(t.getDebut().getId() == 3 && t.getFin().getId() == 4){
+				troncon34 = t;
+			}else if(t.getDebut().getId() == 3 && t.getFin().getId() == 5){
+				troncon35 = t;
+			}else if(t.getDebut().getId() == 4 && t.getFin().getId() == 3){
+				troncon43 = t;
+			}else if(t.getDebut().getId() == 4 && t.getFin().getId() == 5){
+				troncon45 = t;
+			}else if(t.getDebut().getId() == 5 && t.getFin().getId() == 4){
+				troncon54 = t;
+			}
+		}
 		
 		List<Livraison> solutionExpected = new ArrayList<Livraison>();
-		solutionExpected.add((Livraison)(Intersection)entrepotTest);
-		solutionExpected.add((Livraison)interTest3);
-		solutionExpected.add((Livraison)interTest5);
+		solutionExpected.add(new Livraison((Intersection)entrepotTest, 0));
+		solutionExpected.add(new Livraison(interTest3, 900));
+		solutionExpected.add(new Livraison(interTest5, 600));
 		
 		List<Chemin> cheminExpected = new ArrayList<Chemin>();
-		cheminExpected.add(new Chemin(interTest1,interTest2));
-		cheminExpected.add(new Chemin(interTest2,interTest3));
-		cheminExpected.add(new Chemin(interTest3,interTest5));
-		cheminExpected.add(new Chemin(interTest5,interTest4));
-		cheminExpected.add(new Chemin(interTest4,interTest3));
-		cheminExpected.add(new Chemin(interTest3,interTest1));
+		Chemin chemin13 = new Chemin(interTest1,interTest3);
+		chemin13.addTroncon(0, troncon12);
+		chemin13.addTroncon(1, troncon23);
+		cheminExpected.add(chemin13);
+		Chemin chemin35 = new Chemin(interTest3,interTest5);
+		chemin35.addTroncon(0, troncon35);
+		cheminExpected.add(chemin35);
+		Chemin chemin51 = new Chemin(interTest5,interTest1);
+		chemin51.addTroncon(0, troncon54);
+		chemin51.addTroncon(1, troncon43);
+		chemin51.addTroncon(2, troncon31);
+		cheminExpected.add(chemin51);
 		Itineraire itineraireExpected = new Itineraire(cheminExpected);
 		
 		tourneeExpected = new Tournee(plan.getDemandeLivraison().getEntrepot() , solutionExpected, itineraireExpected);

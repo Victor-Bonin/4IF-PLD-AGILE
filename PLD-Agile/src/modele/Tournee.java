@@ -16,8 +16,8 @@ public class Tournee extends DemandeLivraison{
 		super.setLivraisons(meilleureSolution);
 	}
 	
-	public List<Chemin> getItineraire(){
-		return itineraire.getChemins();
+	public Itineraire getItineraire(){
+		return itineraire;
 	}
 	
 	public boolean equals(Object obj) {

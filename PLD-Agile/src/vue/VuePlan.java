@@ -186,9 +186,9 @@ public class VuePlan extends JPanel{
 		//Dessiner les tronçons de la tournée
 		if(plan.getTournee()!=null){
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON_WAY);
-			for(int i=0; i<plan.getTournee().getItineraire().size(); i++) {
-				for(int j=0; j<plan.getTournee().getItineraire().get(i).getTroncons().size();j++){
-					Troncon troncon = plan.getTournee().getItineraire().get(i).getTroncons().get(j);
+			for(int i=0; i<plan.getTournee().getItineraire().getChemins().size(); i++) {
+				for(int j=0; j<plan.getTournee().getItineraire().getChemins().get(i).getTroncons().size();j++){
+					Troncon troncon = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j);
 					g2d.drawLine(positionX(troncon.getDebut().getX()), 
 							positionY(troncon.getDebut().getY()),
 							positionX(troncon.getFin().getX()),

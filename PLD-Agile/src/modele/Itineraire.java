@@ -19,15 +19,20 @@ public class Itineraire {
 	}
 	
 	public Itineraire(List<Chemin> itineraire){
-		this.itineraire.addAll(itineraire);
+		this.itineraire = new ArrayList<Chemin>(itineraire);
 	}
 	
 	public List<Chemin> getChemins(){
 		return itineraire;
 	}
 	
-	public boolean equals(Object obj) {
-		return this.itineraire.equals(((Itineraire)obj).getChemins());
+	public boolean equals(Itineraire itineraire) {
+		boolean isEqual = true;
+		for(int i =0; i<this.itineraire.size(); i++){
+			isEqual = isEqual && this.itineraire.get(i).equals(itineraire.getChemins().get(i));
+		}
+		
+		return isEqual;
 	}
 	
 }

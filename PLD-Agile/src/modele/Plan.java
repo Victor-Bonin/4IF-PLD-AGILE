@@ -17,7 +17,7 @@ import modele.algo.TSP4;
  * @author 4104
  */
 public class Plan {
-	private final int VITESSE = 15 *(10000/3600); // 15km/h en dm/s
+	private final float VITESSE = 15 *(10000f/3600); // 15km/h en dm/s
 	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
@@ -357,10 +357,11 @@ public class Plan {
 	 * troncons voisins de n intersections.
 	 * @param idIntersection id de l'intersection dont il faut les voisins
 	 * @return la liste des voisins de l'intersection désiré
+	 * Edit : cette méthode ne sert à rien.
 	 */
-	public List<Troncon> listerTronconVoisin(Long idIntersection){
+	public Set<Troncon> listerTronconVoisin(Long idIntersection){
 		Intersection intersection = intersections.get(idIntersection);
-		List<Troncon> tronconsVoisins = new ArrayList<Troncon>();
+		Set<Troncon> tronconsVoisins = new HashSet<Troncon>();
 		if(intersection == null)
 			return tronconsVoisins;
 		for (Troncon t : troncons)
@@ -369,6 +370,21 @@ public class Plan {
 		return tronconsVoisins;
 	}
 	
+	/**
+	 * Retourne la liste des noms des troncons voisins d'une intersection
+	 * @param idIntersection id de l'intersection dont il faut les voisins
+	 * @return la liste des voisins de l'intersection désiré
+	 */
+	public Set<String> nomsTronconVoisin(Long idIntersection){
+		Intersection intersection = intersections.get(idIntersection);
+		Set<String> tronconsVoisins = new HashSet<String>();
+		if(intersection == null)
+			return tronconsVoisins;
+		for (Troncon t : troncons)
+			if (t.getDebut().equals(intersection) || t.getFin().equals(intersection))
+				tronconsVoisins.add(t.GetNomRue());
+		return tronconsVoisins;
+	}
 	/**
 	 * Créer un dico contenant pour chaque intersection 
 	 * la liste des troncons qui partent ou viennent vers elle
@@ -440,5 +456,18 @@ public class Plan {
 			return -1;
 		}
 		return (int)(cal.getTimeInMillis()/1000);
+	}
+	
+	public Intersection obtenirPlusProcheIntersection(double x, double y) {
+		Intersection plusProche = null;
+		double distanceMin = Double.MAX_VALUE;
+		for (Intersection intersec : intersections.values()) {
+			double distance = Math.pow(intersec.getX()-x, 2) + Math.pow(intersec.getY()-y, 2);
+		    if(distance < distanceMin) {
+		    	distanceMin = distance;
+		    	plusProche = intersec;
+		    }
+		}
+		return plusProche;
 	}
 }

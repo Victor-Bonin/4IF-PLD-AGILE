@@ -48,6 +48,12 @@ public interface CharteGraphique {
 	public static final String ICONE_HANGAR = "ressources/entrepot-marker.png";
 	public static final String ICONE_LIVRAISON_BOUTON = "ressources/map-marker-button.png";
 	public static final String ICONE_HANGAR_SURVOL = "ressources/entrepot-marker2.png";
+	public static final String ICONE_VALIDER = "ressources/valider.png";
+	public static final String ICONE_SUPPRIMER = "ressources/supprimer.png";
+	public static final String ICONE_ANNULER = "ressources/effacer.png";
+	public static final String ICONE_RETOUR_AVANT = "ressources/retour-avant.png";
+	public static final String ICONE_RETOUR_ARRIERE = "ressources/retour-arriere.png";
+
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;

@@ -1,11 +1,15 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.List;
+import java.util.Set;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -15,6 +19,7 @@ import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -32,6 +37,7 @@ import javax.swing.border.MatteBorder;
 import controleur.Controleur;
 import modele.Entrepot;
 import modele.Intersection;
+import modele.Troncon;
 import modele.Livraison;
 import modele.LivraisonPlageHoraire;
 
@@ -86,10 +92,6 @@ public class ElementTournee extends JPanel{
 				));
 		
 		
-		String description = composeToolTipString(livraison);
-		setToolTipText("<html>" + description + "</html>");
-		
-		
 		nomLabel = new JLabel(Textes.TOURNEE_LIVRAISON + nom + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
 		
@@ -119,7 +121,26 @@ public class ElementTournee extends JPanel{
 	    	e.printStackTrace();
 	    }
 		details.add(boutonSupprimer, BorderLayout.EAST);
+		
+		
+		Set<String> listeTronconsIntersection = ctrl.nomsTronconsIntersection(livraison);
+		JPanel nomsTronconsIntersection = new JPanel();
+		nomsTronconsIntersection.setLayout(new BoxLayout(nomsTronconsIntersection, BoxLayout.PAGE_AXIS));
+		nomsTronconsIntersection.setBackground(Color.WHITE);
+		for(String nomTroncon : listeTronconsIntersection){
+			if (nomTroncon.equals("")){
+				nomTroncon = "Rue Inconnue";
+			}
+			JLabel labelNomTroncon = new JLabel (nomTroncon);
+			nomsTronconsIntersection.add(labelNomTroncon);
+			labelNomTroncon.setAlignmentX(Component.LEFT_ALIGNMENT);
+		}
+		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);
+		
+		String description = composeToolTipString(livraison, listeTronconsIntersection);
+		setToolTipText("<html>" + description + "</html>");
+		
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -207,9 +228,9 @@ public class ElementTournee extends JPanel{
 						)
 				));
 		
-		String description = composeToolTipString(entrepot);
+		/*String description = composeToolTipString(entrepot);
 		
-		setToolTipText("<html>" + description + "</html>");
+		setToolTipText("<html>" + description + "</html>");*/
 		
 		nomLabel = new JLabel(Textes.TOURNEE_ENTREPOT + " - ");
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
@@ -480,7 +501,7 @@ public class ElementTournee extends JPanel{
 		
 	}
 	
-	private String composeToolTipString(Intersection intersec) {
+	private String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
 		//TODO : Afficher le nom des rues qui y passent avec
 		String s = "";
 		if(intersec instanceof Entrepot) {
@@ -490,6 +511,13 @@ public class ElementTournee extends JPanel{
 		}
 		s += intersec.getId() + "<br>"
 				+ Textes.TOURNEE_INTERSECTION;
+		
+		for(String nom : listeNomsRues){
+			if (nom.equals("")){
+				nom = "Rue Inconnue";
+			}
+			s += "<br>" + nom;
+		}
 		/*
 		 * Faudra avoir un truc comme ça
 		 * 

@@ -107,7 +107,7 @@ public class VueTournee extends JPanel{
 		pan.removeAll();
 		
 		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
-		ElementTournee entrepot = new ElementTournee(plan.getDemandeLivraison().getEntrepot());
+		ElementTournee entrepot = new ElementTournee(ctrl, plan.getDemandeLivraison().getEntrepot());
 		entrepot.setMaximumSize(entrepot.getPreferredSize());
 		pan.add(entrepot);
 		entrepot.setAlignmentX(Component.LEFT_ALIGNMENT);

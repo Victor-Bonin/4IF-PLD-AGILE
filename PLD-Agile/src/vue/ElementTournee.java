@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -193,7 +195,25 @@ public class ElementTournee extends JPanel{
 		menu = new JPopupMenu("Popup");
 		JMenuItem item = new JMenuItem("Nouvelle livraison");
 		menu.add(item);
-		//addMouseListener(new PopupTriggerListener());
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.creerLivraison();
+			}
+	    });
+		addMouseListener(new MouseAdapter (){
+		 public void mousePressed(MouseEvent ev) {
+	        if (ev.isPopupTrigger()) {
+	          menu.show(ev.getComponent(), ev.getX(), ev.getY());
+	        }
+	      }
+
+	      public void mouseReleased(MouseEvent ev) {
+	        if (ev.isPopupTrigger()) {
+	          menu.show(ev.getComponent(), ev.getX(), ev.getY());
+	        }
+	      }
+		});
 	}
 	
 	public ElementTournee(Entrepot entrepot) {

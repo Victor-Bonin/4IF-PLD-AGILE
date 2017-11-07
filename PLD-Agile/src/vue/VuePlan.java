@@ -99,15 +99,11 @@ public class VuePlan extends JPanel{
 		addMouseListener(ecouteurSouris);
 		addMouseMotionListener(ecouteurSouris);
 		
-		System.out.println("Arret ici");
-
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
-		//changerPlanButton.setBounds(200, 0, (int)changerPlanButton.getPreferredSize().getWidth(), (int)changerPlanButton.getPreferredSize().getHeight());
 		changerPlanButton.addActionListener(ecouteurBoutons);
 		changerPlanButton.setActionCommand("import-plan");
 		
 		changerDemandeLivraisonButton = new PersoButton("<html>" + Textes.BUTTON_NOUVELLE_LIVRAISON + "</html>",2);
-		//changerDemandeLivraisonButton.setBounds(200, (int)changerPlanButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		

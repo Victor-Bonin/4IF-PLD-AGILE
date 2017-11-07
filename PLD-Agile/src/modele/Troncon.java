@@ -23,7 +23,7 @@ public class Troncon {
 	}
 	
 	public boolean equals(Object obj) {
-		return (this.interDebut == ((Troncon)obj).getDebut() && this.interFin == ((Troncon)obj).getFin());
+		return (this.interDebut.equals(((Troncon)obj).getDebut()) && this.interFin.equals(((Troncon)obj).getFin()));
 	}
 	
 	public float getLongueur(){

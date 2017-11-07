@@ -62,25 +62,6 @@ public class VueTournee extends JPanel{
 		setBackground(CharteGraphique.BG_COLOR);
 		setLayout(new GridBagLayout());
 		
-
-		// Bouton d'ajout de livraison
-		ajouterLivraison = new JButton("+");
-		ajouterLivraison.setBackground(CharteGraphique.BG_COLOR);
-		ajouterLivraison.setFont(CharteGraphique.TITLE_FONT);
-		ajouterLivraison.setForeground(CharteGraphique.NOTIFICATION_COLOR);
-		ajouterLivraison.setBorder(new CompoundBorder(
-				new EmptyBorder(0, 10, 0, 10),
-				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
-						new EmptyBorder(5, 0, 5, 0)
-						)
-				));
-		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		ajouterLivraison.addActionListener(ecouteurBoutons);
-		ajouterLivraison.setActionCommand("nouvelle-livraison");
-		ajouterLivraison.setFocusPainted(false);
-		
-		
 		c = new GridBagConstraints();
 
 		c.fill = GridBagConstraints.BOTH;
@@ -126,7 +107,7 @@ public class VueTournee extends JPanel{
 		pan.removeAll();
 		
 		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
-		ElementTournee entrepot = new ElementTournee(plan.getDemandeLivraison().getEntrepot());
+		ElementTournee entrepot = new ElementTournee(ctrl, plan.getDemandeLivraison().getEntrepot());
 		entrepot.setMaximumSize(entrepot.getPreferredSize());
 		pan.add(entrepot);
 		entrepot.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -143,19 +124,15 @@ public class VueTournee extends JPanel{
 		    elementsTournee.add(liv);
 		    i++;
 		}
+		
+		
 		panelAjout = new JPanel();
 		panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelAjout.setBackground(CharteGraphique.BG_COLOR);
 		panelAjout.setLayout(new BorderLayout());
-		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);
 		pan.add(panelAjout);
-		//ajouterLivraison.setPreferredSize(jp.getPreferredSize());
-		//ajouterLivraison.setSize(pan.getWidth(), (int)ajouterLivraison.getPreferredSize().getHeight());
-		//pan.add(ajouterLivraison);
-		
 		
 		pan.revalidate();
-		//pan.repaint();
 	}
 	
 	public void creerLivraison() {
@@ -205,5 +182,32 @@ public class VueTournee extends JPanel{
 		pan.remove(panelCreation);
 		pan.add(panelAjout);
 		elementEnCreation = null;
+	}
+	
+	public void ajouterBoutonPlus() {
+		// Bouton d'ajout de livraison
+		ajouterLivraison = new JButton("+");
+		ajouterLivraison.setBackground(CharteGraphique.BG_COLOR);
+		ajouterLivraison.setFont(CharteGraphique.TITLE_FONT);
+		ajouterLivraison.setForeground(CharteGraphique.NOTIFICATION_COLOR);
+		ajouterLivraison.setBorder(new CompoundBorder(
+				new EmptyBorder(0, 10, 0, 10),
+				new CompoundBorder(
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new EmptyBorder(5, 0, 5, 0)
+						)
+				));
+		ecouteurBoutons = new EcouteurDeBouton(ctrl);
+		ajouterLivraison.addActionListener(ecouteurBoutons);
+		ajouterLivraison.setActionCommand("nouvelle-livraison");
+		ajouterLivraison.setFocusPainted(false);
+		
+		//panelAjout = new JPanel();
+		//panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
+		//panelAjout.setBackground(CharteGraphique.BG_COLOR);
+		//panelAjout.setLayout(new BorderLayout());
+		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);
+		//pan.add(panelAjout);
+		
 	}
 }

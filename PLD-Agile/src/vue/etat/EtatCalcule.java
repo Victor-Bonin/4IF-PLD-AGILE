@@ -25,6 +25,9 @@ public class EtatCalcule extends EtatDefaut {
 		vueTournee.initTournee(plan.getTournee());
 		vuePlan.afficherIcones(plan.getTournee());
 		vuePlan.activerBouton(true);
+		
+		vueTournee.ajouterBoutonPlus();
+		vuePlan.activerAnnulationBouton(true);
 		fenetre.ajouterEcouteursSynchro();
 	}
 }

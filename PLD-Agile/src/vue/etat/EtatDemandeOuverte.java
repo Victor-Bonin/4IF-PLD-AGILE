@@ -28,6 +28,7 @@ public class EtatDemandeOuverte extends EtatDefaut {
 		
 		vueTournee.initTournee(plan.getDemandeLivraison());
 		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		vuePlan.activerAnnulationBouton(false);
 		
 		fenetre.ajouterEcouteursSynchro();
 		vuePlan.activerBouton(true);

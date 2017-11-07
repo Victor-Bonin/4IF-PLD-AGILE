@@ -16,6 +16,7 @@ public class EtatPlanOuvert extends EtatDefaut{
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		fenetre.setContent();
+		fenetre.getVuePlan().activerAnnulationBouton(false);
 	}
 
 }

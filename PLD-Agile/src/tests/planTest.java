@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -154,7 +155,7 @@ public class planTest {
 		catch (Exception e) {
 			fail("Erreur listerTronconVoisinPetit parse XML");
 		}
-		List<Troncon> troncons = plan.listerTronconVoisin(1029591870L);
+		Set<Troncon> troncons = plan.listerTronconVoisin(1029591870L);
 		assertEquals(3, troncons.size());
 	}
 	
@@ -169,7 +170,7 @@ public class planTest {
 			fail("Erreur listerTronconVoisinGrand parse XML");
 		}
 		// 3.6 s
-		List<Troncon> troncons = plan.listerTronconVoisin(998859048L);
+		Set<Troncon> troncons = plan.listerTronconVoisin(998859048L);
 		assertEquals(5, troncons.size());
 		// 3.7s
 		troncons = plan.listerTronconVoisin(100218027L);

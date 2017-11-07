@@ -79,17 +79,19 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 	
 	@Override
-	public void undo(ListeCommande listeCommande) {
+	public void undo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
 			listeCommande.undo();
+			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
 			// TODO Gérer exception
 		}
 	}
 	@Override
-	public void redo(ListeCommande listeCommande) {
+	public void redo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
 			listeCommande.redo();
+			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
 			// TODO Gérer exception
 		}

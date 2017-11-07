@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
 import modele.DemandeLivraison;
@@ -17,6 +18,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -116,11 +118,13 @@ public class VuePlan extends JPanel{
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
 		undoButton = new PersoButton("", 2);
+		undoButton.setMargin(new Insets(10,20,10,20));
 		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
 		undoButton.addActionListener(ecouteurBoutons);
 		undoButton.setActionCommand("undo_action");
 		
 		redoButton = new PersoButton("", 2);
+		redoButton.setMargin(new Insets(10,20,10,20));
 		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
 		redoButton.addActionListener(ecouteurBoutons);
 		redoButton.setActionCommand("redo_action");
@@ -128,8 +132,8 @@ public class VuePlan extends JPanel{
 		try {
 			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_ARRIERE));
 			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_AVANT));
-			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance((int)(undoButton.getPreferredSize().getHeight()), (int)(undoButton.getPreferredSize().getHeight()), java.awt.Image.SCALE_SMOOTH));
-			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance((int)(redoButton.getPreferredSize().getHeight()), (int)(redoButton.getPreferredSize().getHeight()), java.awt.Image.SCALE_SMOOTH));
+			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
 			redoButton.setIcon(imageIconRedo);
 			undoButton.setIcon(imageIconUndo);
 		} catch (IOException e) {

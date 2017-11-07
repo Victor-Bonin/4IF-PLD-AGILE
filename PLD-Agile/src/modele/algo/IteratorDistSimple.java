@@ -14,7 +14,7 @@ public class IteratorDistSimple implements Iterator<Integer> {
 	 * @param nonVus
 	 * @param sommetCrt
 	 */
-	public IteratorDistSimple(Collection<Integer> nonVus, int sommetCrt, float[][] cout){
+	public IteratorDistSimple(Collection<Integer> nonVus, int sommetCrt, int[][] cout){
 		this.candidats = new Integer[nonVus.size()];
 		nbCandidats = 0;
 		for (Integer s : nonVus){
@@ -22,7 +22,7 @@ public class IteratorDistSimple implements Iterator<Integer> {
 		}
 		
 		for(int i=0;i<candidats.length;i++) {
-			float max = cout[sommetCrt][candidats[i]];
+			int max = cout[sommetCrt][candidats[i]];
 			int maxIndex = i;
 			for(int j=i+1;j<candidats.length;j++) {
 				if(cout[sommetCrt][candidats[j]]>max) {

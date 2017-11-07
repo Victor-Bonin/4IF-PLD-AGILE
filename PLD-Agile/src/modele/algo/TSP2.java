@@ -3,6 +3,9 @@ package modele.algo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * @deprecated
+ */
 public class TSP2 extends TemplateTSP {
 
 	@Override

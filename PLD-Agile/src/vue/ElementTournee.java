@@ -51,6 +51,7 @@ public class ElementTournee extends JPanel{
 	private JLabel dureeLivraisonLabel;
 	private JLabel imageLabel;
 	private JSpinner dureeModification;
+	private JButton boutonValider;
 	JPopupMenu menu;
 	
 	private ImageIcon imageIconNormal;
@@ -99,6 +100,8 @@ public class ElementTournee extends JPanel{
 		dureeLivraisonLabel = new JLabel(Textes.TOURNEE_DUREE + (int)(livraison.getDuree()/60) + " min");
 		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		
+		
+		// JPanel détails
 		details = new JPanel();
 		details.setBackground(CharteGraphique.BG_COLOR);
 		details.setLayout(new BorderLayout());
@@ -356,7 +359,7 @@ public class ElementTournee extends JPanel{
 	    	e.printStackTrace();
 	    }
 		
-		JButton boutonValider = new JButton();
+		boutonValider = new JButton();
 		boutonValider.setFocusPainted(false);
 		boutonValider.setBackground(CharteGraphique.BG_COLOR);
 		boutonValider.setBorder(null);
@@ -369,6 +372,7 @@ public class ElementTournee extends JPanel{
 		} catch (IOException e) {
 	    	e.printStackTrace();
 	    }
+		boutonValider.setEnabled(false);
 		
 		// Création du JPanel de modification de la livraison
 		JPanel details = new JPanel();

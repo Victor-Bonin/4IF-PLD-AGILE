@@ -340,12 +340,9 @@ public class VuePlan extends JPanel{
 		if (plan.getDemandeLivraison().getEntrepot()!=null) {
 			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
 		}
-		
-		/*
-		if (iconeNouvelleLivraison.getParent() != this) {
-			this.add(iconeNouvelleLivraison);
-		}*/
-		iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		if(iconeNouvelleLivraison.getParent() == this) {
+			iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		}
 	}
 	
 	public void survol(int index){

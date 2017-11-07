@@ -25,15 +25,11 @@ public class EtatDemandeOuverte extends EtatDefaut {
 		VueTournee vueTournee = fenetre.getVueTournee();
 		VuePlan vuePlan = fenetre.getVuePlan();
 		Plan plan = fenetre.getPlan();
+		
 		vueTournee.initTournee(plan.getDemandeLivraison());
 		vuePlan.afficherIcones(plan.getDemandeLivraison());
-		EcouteurDeSourisDeSynchronisation ecouteurSynchro = null;
-		for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
-			ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
-			vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
-		}
-		ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
-		vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
+		
+		fenetre.ajouterEcouteursSynchro();
 		vuePlan.activerBouton(true);
 		
 	}

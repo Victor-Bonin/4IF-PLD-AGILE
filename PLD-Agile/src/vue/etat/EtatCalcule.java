@@ -2,6 +2,7 @@ package vue.etat;
 
 import javax.swing.JPanel;
 
+import modele.Plan;
 import vue.Fenetre;
 import vue.VuePlan;
 import vue.VueTournee;
@@ -19,7 +20,11 @@ public class EtatCalcule extends EtatDefaut {
 	public void afficherVue(Fenetre fenetre) {
 		VueTournee vueTournee = fenetre.getVueTournee();
 		VuePlan vuePlan = fenetre.getVuePlan();
-		vueTournee.initTournee(fenetre.getPlan().getTournee());
+		Plan plan = fenetre.getPlan();
+
+		vueTournee.initTournee(plan.getTournee());
+		vuePlan.afficherIcones(plan.getTournee());
 		vuePlan.activerBouton(true);
+		fenetre.ajouterEcouteursSynchro();
 	}
 }

@@ -157,7 +157,7 @@ public class Plan {
 		if(meilleureSolution==null)
 			throw new ExceptionPlanCo("Solution ou tournee vide !");
 		if(meilleureSolution[0]==null)
-			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas être trouvée");
+			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas été trouvée");
 	
 		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}

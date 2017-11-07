@@ -43,13 +43,13 @@ public class EtatPlanOuvert extends EtatInit {
 				DeserialiseurXML.chargerDemandeLivraison(plan);
 				listeCommande.reset();
 				controleur.setEtatCourant(controleur.etatDemandeOuverte);
-				controleur.afficherFenetre();
 				controleur.afficherNotif();
 			}
 			catch (AnnulationXML ex) {
 				controleur.afficherNotif();
 			}
 			catch(ExceptionXML | ExceptionPlanCo ex) {
+				listeCommande.reset();
 				if(ex.getMessage() != "")
 					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 				else
@@ -57,6 +57,8 @@ public class EtatPlanOuvert extends EtatInit {
 			}
 			catch(Exception ex) {
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			}finally{
+				controleur.afficherFenetre();
 			}
 	}
 	

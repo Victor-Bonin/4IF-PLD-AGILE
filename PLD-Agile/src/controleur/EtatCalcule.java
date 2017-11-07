@@ -31,7 +31,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void creerLivraison(Fenetre fenetre) {
-		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);
+		fenetre.setEtatCourant(fenetre.etatAjoutLivraison);
+		fenetre.goToVue();
 	}
 
 	@Override
@@ -70,7 +71,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
-		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
+		fenetre.setEtatCourant(fenetre.etatCalcule);
+		fenetre.goToVue();
 	}
 	
 	@Override

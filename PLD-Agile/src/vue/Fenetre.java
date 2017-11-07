@@ -12,6 +12,8 @@ import javax.swing.KeyStroke;
 import controleur.Controleur;
 import modele.Plan;
 
+import vue.etat.*;
+
 /**
  * Extension de JFrame permettant d'afficher et d'interagir avec les éléments de PlanCo
  * 
@@ -46,6 +48,14 @@ public class Fenetre extends JFrame{
 	private PersoButton calculTourneeButton;
 	private PersoButton exportButton;
 	private Plan plan;
+	
+	private Etat etatCourant;
+	public final EtatInit etatInit = new EtatInit();
+	public final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
+	public final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
+	public final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
+	public final EtatCalcule etatCalcule = new EtatCalcule();
+	public final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
 	
 	
 	public Fenetre(Controleur ctrl, Plan plan){
@@ -139,38 +149,8 @@ public class Fenetre extends JFrame{
 		getContentPane().add(contentContainer, BorderLayout.CENTER);
 	}
 	
-	private void setFooter(int vueInt){
-		switch(vueInt){
-		case VUE_DEFAUT:
-			footer.remove(importDemandeLivraisonButton);
-			footer.remove(exportButton);
-			footer.remove(calculTourneeButton);
-			break;
-		case VUE_PLAN:
-			footer.remove(exportButton);
-			footer.remove(calculTourneeButton);
-			footer.add(importDemandeLivraisonButton);
-			break;
-		case VUE_LIVRAISON_CHARGEE:
-			footer.remove(importDemandeLivraisonButton);
-			footer.remove(exportButton);
-			footer.add(calculTourneeButton);
-			calculTourneeButton.setEnabled(true);
-			break;
-		case VUE_TOURNEE_AJOUT:
-		case VUE_TOURNEE_CALCULEE:
-			footer.remove(importDemandeLivraisonButton);
-			footer.remove(calculTourneeButton);
-			footer.add(exportButton);
-			break;
-		case VUE_TOURNEE_CALCUL_EN_COURS:
-			footer.remove(importDemandeLivraisonButton);
-			footer.remove(exportButton);
-			footer.add(calculTourneeButton);
-			calculTourneeButton.setEnabled(false);
-			break;
-		}
-		
+	private void setFooter(){
+		etatCourant.setFooter(footer, this);		
 		getContentPane().add(footer, BorderLayout.SOUTH);
 	}
 
@@ -182,45 +162,15 @@ public class Fenetre extends JFrame{
 	 * @see #VUE_PLAN
 	 * @see #VUE_TOURNEE_CALCULEE
 	 */
-	public void goToVue(int vue){
-
+	public void goToVue(){
 		if(plan!=null){
-			
-			switch(vue){
-			case VUE_DEFAUT:
-				break;
-			case VUE_PLAN:
-				setContent();
-				break;
-			case VUE_LIVRAISON_CHARGEE:
-				vueTournee.initTournee(plan.getDemandeLivraison());
-				vuePlan.afficherIcones(plan.getDemandeLivraison());
-				for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
-					ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
-					vuePlan.getIconesLivraison().get(i).addMouseListener(ecouteurSynchro);
-				}
-				ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(-1, vuePlan, vueTournee);
-				vuePlan.getIconeEntrepot().addMouseListener(ecouteurSynchro);
-				vuePlan.activerBouton(true);
-				break;
-			case VUE_TOURNEE_CALCULEE:
-				vueTournee.initTournee(plan.getTournee());
-				vuePlan.activerBouton(true);
-				break;
-			case VUE_TOURNEE_AJOUT:
-				vueTournee.creerLivraison();
-				break;
-			case VUE_TOURNEE_CALCUL_EN_COURS:
-				vuePlan.activerBouton(false);
-				break;
-			}
-
-			setFooter(vue);
-			setVisible(true);
-			repaint();
+			etatCourant.afficherVue(this);
 		}
+		setFooter();
+		setVisible(true);
+		repaint();
 	}
-	
+
 	/**
 	 * Afficher une notification dans la fenêtre
 	 * @param texte texte a afficher
@@ -269,5 +219,9 @@ public class Fenetre extends JFrame{
 	
 	public Plan getPlan() {
 		return plan;
+	}
+	
+	public void setEtatCourant(Etat etat){
+		etatCourant = etat;
 	}
 }

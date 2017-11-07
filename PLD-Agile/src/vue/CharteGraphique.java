@@ -48,6 +48,8 @@ public interface CharteGraphique {
 	public static final String ICONE_HANGAR = "ressources/entrepot-marker.png";
 	public static final String ICONE_LIVRAISON_BOUTON = "ressources/map-marker-button.png";
 	public static final String ICONE_HANGAR_SURVOL = "ressources/entrepot-marker2.png";
+	public static final String ICONE_UNDO = "ressources/undo.png";
+	public static final String ICONE_REDO = "ressources/redo.png";
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;

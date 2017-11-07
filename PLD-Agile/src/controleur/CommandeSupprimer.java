@@ -26,11 +26,13 @@ public class CommandeSupprimer implements Commande {
 	@Override
 	public void doCde() throws ExceptionPlanCo {
 		plan.supprimerPointLivraison(livraison);		
+		plan.calculerItinerairesSeuls();
 	}
 
 	@Override
 	public void undoCde() throws ExceptionPlanCo {
 		plan.ajouterPointLivraison(livraison);
+		plan.calculerItinerairesSeuls();
 	}
 
 }

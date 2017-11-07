@@ -46,13 +46,13 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void creerLivraison(Fenetre fenetre) {
 		fenetre.setEtatCourant(fenetre.etatAjoutLivraison);
 		fenetre.goToVue();
-	}
+	} 
 
 	@Override
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l));
-			fenetre.setEtatCourant(fenetre.etatModifie);
+			fenetre.setEtatCourant(fenetre.etatCalcule);
 			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){
@@ -70,7 +70,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
 		try {
 			listeCmd.ajoute(new CommandeSupprimer(p, l));
-			fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+			fenetre.setEtatCourant(fenetre.etatCalcule);
 			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){

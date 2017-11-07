@@ -61,16 +61,10 @@ public class Plan {
 		}
 	}
 		
-		
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
 	public void calculTournee() throws Exception {
-		
-	//A supprimer, permets de mesurer les temps pour du debug
-	long debutDelay;
-	long finDelay;
-		
 		
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
@@ -94,7 +88,10 @@ public class Plan {
 			adjMap.get(t.getDebut().getId()).add(t);
 		}
 
-	debutDelay = System.currentTimeMillis();
+//		long debutDelay;
+//		long finDelay;
+//		debutDelay = System.currentTimeMillis();
+//		
 		//Dijktra
 		int[][] cout = new int[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
@@ -106,7 +103,7 @@ public class Plan {
 		while(it.hasNext()) {
 			Intersection livrDepart = it.next();
 			srcId = livrDepart.getId();
-			result = dijkstraFull(adjMap, srcId);
+			result = dijkstra(adjMap, srcId, null);
 			Iterator<Intersection> it2 = livraisons.iterator();
 			int target = 0;
 			while(it2.hasNext()) {
@@ -126,8 +123,8 @@ public class Plan {
 			source++;
 		}
 		
-	finDelay = System.currentTimeMillis();
-	System.out.println("Temps de Dijkstra: " + (finDelay - debutDelay) + "ms");
+//		finDelay = System.currentTimeMillis();
+//		System.out.println("Temps de Dijkstra: " + (finDelay - debutDelay) + "ms");
 	
 	
 		//Data for the TSP
@@ -148,18 +145,66 @@ public class Plan {
 				horairesInt[i][1] = -1;
 			}
 		}
-	debutDelay = System.currentTimeMillis();
+		
+//		debutDelay = System.currentTimeMillis();
 		//TSP
 		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
-	finDelay = System.currentTimeMillis();
-	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
+//		finDelay = System.currentTimeMillis();
+//		System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
 
 		if(meilleureSolution==null)
 			throw new ExceptionPlanCo(ExceptionPlanCo.SOLUTION_VIDE);
 		if(meilleureSolution[0]==null)
 			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
 	
-		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
+		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, meilleureSolution);
+	}
+	
+	public void calculerItinerairesSeuls(){
+		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
+		Entrepot entrepot = demandeLivraison.getEntrepot();
+		livraisons.add(0,entrepot);
+		
+		int nbLivraisons = livraisons.size();
+		
+		Integer[] solutionChoisie = new Integer[nbLivraisons];
+		for(int i=0;i<livraisons.size();i++)
+			solutionChoisie[i] = i;
+
+		//Data for Dijkstra
+		HashMap<Long, List<Troncon>> adjMap = new HashMap<Long, List<Troncon>>();
+		Troncon t;
+		long idDebut;
+		for(int i=0; i<troncons.size(); i++){
+			t = troncons.get(i);
+			idDebut = t.getDebut().getId();
+			if(!adjMap.containsKey(idDebut)){
+				adjMap.put(idDebut,new ArrayList<Troncon>());
+			}
+			adjMap.get(t.getDebut().getId()).add(t);
+		}
+		//Dijktra
+		int[][] cout = new int[nbLivraisons][nbLivraisons];
+		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
+		DjkSolution result;
+		for(int i=0;i<nbLivraisons;i++) {
+			int srcIndex = i;
+			int trgIndex = (i+1)%nbLivraisons;
+			Intersection srcLivraison = livraisons.get(srcIndex);
+			Intersection trgLivraison = livraisons.get(trgIndex);
+			long srcId = srcLivraison.getId();
+			long trgId = trgLivraison.getId();
+			
+			result = dijkstra(adjMap, srcId, livraisons.get(trgIndex).getId());
+			cout[srcIndex][trgIndex]=Math.round(result.dist.get(trgId));
+			pCourtsChemins[srcIndex][trgIndex] = new Chemin(srcLivraison, trgLivraison);
+			do{
+				pCourtsChemins[srcIndex][trgIndex].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
+				trgId = result.prev.get(trgId);
+			}while(trgId != srcId); 
+		}
+		
+		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, solutionChoisie);
 	}
 	
 	/**
@@ -169,7 +214,7 @@ public class Plan {
 	 * @param livraisons
 	 * @param ordreTournee
 	 */
-	private void setTourneeFromTsp(Chemin[][] pCourtsChemins, int[][] couts, List<Intersection> livraisons, Integer[] ordreTournee) {
+	private void setItinerairesEtHeures(Chemin[][] pCourtsChemins, int[][] couts, List<Intersection> livraisons, Integer[] ordreTournee) {
 		int nbLivraisons = ordreTournee.length; 
 		Itineraire itineraire = new Itineraire(pCourtsChemins, ordreTournee);
 		Entrepot entrepot = (Entrepot)livraisons.get(0);
@@ -216,8 +261,7 @@ public class Plan {
 	/**
 	 * Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
 	 */
-	private DjkSolution dijkstraFull(HashMap<Long, List<Troncon>> adjMap, long source/*, long[] targets*/){
-
+	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source, Long target){
 		Long current = source;
 		
 		//Distances
@@ -274,28 +318,17 @@ public class Plan {
 				}	
 			}
 			
-			/*
-			 * On ne va pas utiliser l'arret anticipé, dans notre cas 
-			 * vérifier la condition demande plus de calcul que finir les itérations.
-			 * En général on traite tout de même 10 000 noeuds au moins sur 12 000, 
-			 * (Condition donc testée 10 000 fois au lieu de laisser tourner 2000 fois)
-			 */
-			/*
-			//Can we end shortly ?
-			continueLoop = false;
-			for(int i=0;i<targets.length;i++) {
-				if(!explored.contains(targets[i])) {
-					continueLoop = true;
-				}
-			}
-			*/
+
+			if(target!=null)
+				if(explored.contains(target))
+					continueLoop = false;
+			
 		}
 		DjkSolution result = new DjkSolution();
 		result.dist = dist;
 		result.prev = previousNode;
 		return result;
 	}
-	
 	
 	/**
 	 * Ajoute un entrepot a la demande de livraison du plan si l'entrepot correspond a une adresse du plan

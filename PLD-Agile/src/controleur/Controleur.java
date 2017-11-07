@@ -21,9 +21,15 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+
+import java.util.List;
+import java.util.Set;
+
+import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 import modele.Tournee;
+import modele.Troncon;
 import vue.Fenetre;
 
 public class Controleur {
@@ -87,8 +93,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres cree avoir un point de livraison via la carte ou le bouton "+"
 	 */
-	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
-		etatCourant.ajouterLivraison(p, l, listeCmd);
+	public void ajouterLivraison(Livraison l) {
+		etatCourant.ajouterLivraison(fenetre, plan, l, listeCommande);
 	}
 
 	/**
@@ -101,8 +107,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres avoir supprimer un point de livraison
 	 */
-	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
-		etatCourant.supprimerLivraison(p, l, listeCmd);
+	public void supprimerLivraison(Livraison l) {
+		etatCourant.supprimerLivraison(fenetre, plan, l, listeCommande);
 	}
 
 	/**
@@ -155,8 +161,32 @@ public class Controleur {
 		etatCourant.creerLivraison(fenetre);
 	}
 	
+	/**
+	 * Methode permettant de trouver l'inersection la plus proche de x et y en paramètres
+	 */
+	public void obtenirPlusProcheIntersection(double x, double y) {
+		etatCourant.obtenirPlusProcheIntersection(fenetre, plan, x, y);
+	}
+	
+	/**
+	 * Methode permettant de commencer à choisir une intersection sur vuePlan
+	 */
+	public void commencerChoixIntersection() {
+		etatCourant.commencerChoixIntersection(fenetre);
+	}
+	
 	public void appuiEntree() {
 		etatCourant.appuiEntree(this, plan, fenetre, listeCommande);
 	}
+	
+	public void annulerCreation() {
+		etatCourant.annulerCreation(fenetre);
+	}
 
+	public Set<String> nomsTronconsIntersection(Intersection inter){
+		Set<String> liste;
+		liste = plan.nomsTronconVoisin(inter.getId());
+		return liste;
+	}
+	
 }

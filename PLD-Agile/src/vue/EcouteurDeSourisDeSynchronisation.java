@@ -28,7 +28,6 @@ public class EcouteurDeSourisDeSynchronisation extends MouseAdapter {
 	public void mouseEntered(MouseEvent e){
 		vuePlan.survol(place);
 		vueTournee.survol(place);
-		
 	}
 	
 	@Override
@@ -40,7 +39,9 @@ public class EcouteurDeSourisDeSynchronisation extends MouseAdapter {
 	
 	@Override
 	public void mousePressed(MouseEvent e){
-		
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			vueTournee.afficherDetails(place);
+		}
 	}
 
 

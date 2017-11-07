@@ -30,4 +30,8 @@ public class Livraison extends Intersection{
 	public void setHeurePassage(Calendar heurePassage){
 		this.heurePassage = heurePassage;
 	}
+	
+	public void setDuree(int d) {
+		duree = d;
+	}
 }

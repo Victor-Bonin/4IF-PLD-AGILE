@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
 import modele.DemandeLivraison;
@@ -17,6 +18,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -60,20 +62,25 @@ public class VuePlan extends JPanel{
 
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSouris ecouteurSouris;
+	private EcouteurDeSourisChoixIntersection ecouteurSourisChoixIntersec;
 	
 	private ArrayList<JLabel> iconesLivraison;
 	private JLabel iconeEntrepot; 
+	private JLabel iconeLivraisonSouris;
+	private JLabel iconeNouvelleLivraison;
 	private ImageIcon imageIconL;
 	private ImageIcon imageIconLS;
 	private ImageIcon imageIconE;
 	private ImageIcon imageIconES;
 	
+	Intersection nouvelleIntersection;
+	
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
 		this.plan = plan;
-		
+
 		this.setLayout(null);
-		
+
 		try {
 			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			imgLivraisonSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
@@ -92,6 +99,9 @@ public class VuePlan extends JPanel{
 	    	e.printStackTrace();
 	    }  
 		
+		iconeLivraisonSouris = new JLabel(imageIconL);
+		iconeNouvelleLivraison = new JLabel(imageIconL);
+		
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
 		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
 
@@ -106,39 +116,18 @@ public class VuePlan extends JPanel{
 		changerDemandeLivraisonButton = new PersoButton("<html>" + Textes.BUTTON_NOUVELLE_LIVRAISON + "</html>",2);
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
-		
-		undoButton = new PersoButton("", 2);
-		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
-		undoButton.addActionListener(ecouteurBoutons);
-		undoButton.setActionCommand("undo_action");
-		
-		redoButton = new PersoButton("", 2);
-		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
-		redoButton.addActionListener(ecouteurBoutons);
-		redoButton.setActionCommand("redo_action");
-		
-		try {
-			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_UNDO));
-			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_REDO));
-			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance((int)(undoButton.getPreferredSize().getHeight()/1.8f), (int)(undoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
-			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance((int)(redoButton.getPreferredSize().getHeight()/1.8f), (int)(redoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
-			redoButton.setIcon(imageIconRedo);
-			undoButton.setIcon(imageIconUndo);
-		} catch (IOException e) {
-			undoButton.setText(Textes.BUTTON_UNDO);
-			redoButton.setText(Textes.BUTTON_REDO);
-			e.printStackTrace();
-		}
-		
-		
+
+		initAnnulationBouton();
+
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
-		add(undoButton);
-		add(redoButton);
-		
+
 		setBackground(CharteGraphique.GRAPH_BG);
 		
 		iconesLivraison = new ArrayList<JLabel>();
+		
+		//TODO : supprimer
+		ecouteurSourisChoixIntersec = new EcouteurDeSourisChoixIntersection(ctrl, this);
 	}
 	
 	private void initMinMax(){
@@ -155,6 +144,8 @@ public class VuePlan extends JPanel{
 			}
 		}
 	}
+	
+	@Override
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
@@ -210,9 +201,9 @@ public class VuePlan extends JPanel{
 		//Dessiner les tronçons de la tournée
 		if(plan.getTournee()!=null){
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON_WAY);
-			for(int i=0; i<plan.getTournee().getItineraire().size(); i++) {
-				for(int j=0; j<plan.getTournee().getItineraire().get(i).getTroncons().size();j++){
-					Troncon troncon = plan.getTournee().getItineraire().get(i).getTroncons().get(j);
+			for(int i=0; i<plan.getTournee().getItineraire().getChemins().size(); i++) {
+				for(int j=0; j<plan.getTournee().getItineraire().getChemins().get(i).getTroncons().size();j++){
+					Troncon troncon = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j);
 					g2d.drawLine(positionX(troncon.getDebut().getX()), 
 							positionY(troncon.getDebut().getY()),
 							positionX(troncon.getFin().getX()),
@@ -326,6 +317,7 @@ public class VuePlan extends JPanel{
 		for (int i = 0; i<iconesLivraison.size(); i++) {
 			this.remove(iconesLivraison.get(i));
 		}
+		this.remove(iconeNouvelleLivraison);
 
 		//Dessiner les icones de points de livraisons
 		iconesLivraison = new ArrayList<JLabel>();
@@ -353,6 +345,9 @@ public class VuePlan extends JPanel{
 		if (plan.getDemandeLivraison().getEntrepot()!=null) {
 			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
 		}
+		if(iconeNouvelleLivraison.getParent() == this) {
+			iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		}
 	}
 	
 	public void survol(int index){
@@ -379,9 +374,89 @@ public class VuePlan extends JPanel{
 		return iconeEntrepot;
 	}
 	
+	public void commencerChoixIntersection() {
+		addMouseListener(ecouteurSourisChoixIntersec);
+		addMouseMotionListener(ecouteurSourisChoixIntersec);
+		this.add(iconeLivraisonSouris);
+	}
+	
+	public void actualiserIconeSouris(int x, int y) {
+		// Activer le listener
+		iconeLivraisonSouris.setBounds(x+10, y+10, largeurBalise, hauteurBalise);
+	}
+	
+	public void terminerChoixIntersection() {
+		// Enlever le listener
+		removeMouseListener(ecouteurSourisChoixIntersec);
+		removeMouseMotionListener(ecouteurSourisChoixIntersec);
+	}
+	
+	public int positionXPlan(int xJPanel) {
+		return (int)((xJPanel - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX);
+	}
+	
+	public int positionYPlan(int yJPanel) {
+		return (int)((yJPanel - coordonneeY - this.getHeight()/ 2 + (maxY-minY)/(2*zoom))*zoom + minY);
+	}
+	
+	public void afficherIcone(Intersection intersection) {
+		nouvelleIntersection = intersection;
+		iconeLivraisonSouris.setBounds(100, 100, largeurBalise, hauteurBalise);
+		this.remove(iconeLivraisonSouris);
+		//JLabel liv = new JLabel(imageIconL);
+		if (iconeNouvelleLivraison.getParent() != this) {
+			this.add(iconeNouvelleLivraison);
+		}
+		iconeNouvelleLivraison.setBounds(positionX(nouvelleIntersection.getX())-largeurBalise/2, positionY(nouvelleIntersection.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+	}
+	
+	public void annulerCreation() {
+		terminerChoixIntersection();
+		this.remove(iconeNouvelleLivraison);
+		nouvelleIntersection = null;
+	}
+
 	public void activerBouton(boolean activer) {
 		changerDemandeLivraisonButton.setEnabled(activer);
 		changerPlanButton.setEnabled(activer);
+	}
+
+
+	public void activerAnnulationBouton(boolean activer) {
+		if (activer) {
+			add(undoButton);
+			add(redoButton);
+		}
+		else {
+			remove(undoButton);
+			remove(redoButton);
+		}
+	}
+	
+	private void initAnnulationBouton() {
+		undoButton = new PersoButton("", 2);
+		undoButton.setMargin(new Insets(10,20,10,20));
+		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
+		undoButton.addActionListener(ecouteurBoutons);
+		undoButton.setActionCommand("undo_action");
+		
+		redoButton = new PersoButton("", 2);
+		redoButton.setMargin(new Insets(10,20,10,20));
+		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
+		redoButton.addActionListener(ecouteurBoutons);
+		redoButton.setActionCommand("redo_action");
+		
+		try {
+			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_ARRIERE));
+			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_AVANT));
+			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+			redoButton.setIcon(imageIconRedo);
+			undoButton.setIcon(imageIconUndo);
+		} catch (IOException e) {
+			undoButton.setText(Textes.BUTTON_UNDO);
+			redoButton.setText(Textes.BUTTON_REDO);
+		}
 	}
 
 }

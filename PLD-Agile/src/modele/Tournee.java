@@ -18,9 +18,13 @@ public class Tournee extends DemandeLivraison{
 		super.setEntrepot(entrepot);
 		super.setLivraisons(meilleureSolution);
 	}
-
-	public List<Chemin> getItineraire(){
-		return itineraire.getChemins();
+	
+	public Itineraire getItineraire(){
+		return itineraire;
+	}
+	
+	public boolean equals(Object obj) {
+		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
 
 	public void exportFeuilleDeRoute() throws IOException {
@@ -33,7 +37,7 @@ public class Tournee extends DemandeLivraison{
 		// Liste des livraisons
 		List<Livraison> livraisons = this.getLivraisons();
 		// Liste des chemins empruntés
-		List<Chemin> chemins = this.getItineraire();
+		List<Chemin> chemins = this.getItineraire().getChemins();
 		for (int i = 0; i < chemins.size(); i++) {
 			System.out.println(i);
 

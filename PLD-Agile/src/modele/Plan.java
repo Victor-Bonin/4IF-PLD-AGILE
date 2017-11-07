@@ -18,7 +18,7 @@ import modele.algo.TSP4;
  */
 public class Plan {
 	private final int VITESSE = 15 *(10000/3600); // 15km/h en dm/s
-	private final int LIMITE_TSP = 15000000;
+	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
 	private DemandeLivraison demandeLivraison;
@@ -157,7 +157,7 @@ public class Plan {
 		if(meilleureSolution==null)
 			throw new ExceptionPlanCo("Solution ou tournee vide !");
 		if(meilleureSolution[0]==null)
-			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas être trouvée");
+			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas été trouvée");
 	
 		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}

@@ -21,12 +21,10 @@ public class TSP4 extends TemplateTSP {
 		//if(sommetCourant<0||sommetCourant>=cout.length||sommetCourant>=duree.length||sommetCourant>=horaires.length)
 		//	return Integer.MAX_VALUE;
 
-		for(Integer premierNonVu : nonVus) {
-			
+		for(Integer premierNonVu : nonVus) {	
 			//Si l'horaire de fin est depassé, la solution n'est pas viable.
-			if(horaires[premierNonVu][1]!=-1 && horaires[premierNonVu][1]<heureActuelle+couts[sommetCourant][premierNonVu]+durees[premierNonVu]) {
+			if(horaires[premierNonVu][1]!=-1 && horaires[premierNonVu][1]<heureActuelle+couts[sommetCourant][premierNonVu]+durees[premierNonVu])
 				return Integer.MAX_VALUE;
-			}
 			
 			//Sinon il faut prendre en compte l'attente avant le premier sommet
 			int distanceActuelPremierNonVu = couts[sommetCourant][premierNonVu];
@@ -38,18 +36,20 @@ public class TSP4 extends TemplateTSP {
 			
 			if(distanceActuelPremierNonVu<minActuelPremierNonVu)
 				minActuelPremierNonVu = distanceActuelPremierNonVu;
-			
-			//Et on calcule le min des distances entre les sommets restants
-			minAutres = couts[premierNonVu][0];
-			for(Integer suivant : nonVus) {
-				if(!premierNonVu.equals(suivant) && couts[premierNonVu][suivant]<minAutres)
-					minAutres = couts[premierNonVu][suivant];
-			}
-			borneMinDuree+=minAutres;
-			borneMinDuree+=durees[premierNonVu];
 		}
 		borneMinDuree+=minActuelPremierNonVu;
-		
+
+		//Et on calcule le min des distances entre les sommets restants
+		for(Integer premiecandidatSuite : nonVus) {
+			minAutres = couts[premiecandidatSuite][0];
+			for(Integer suivant : nonVus) {
+				if(!premiecandidatSuite.equals(suivant) && couts[premiecandidatSuite][suivant]<minAutres)
+					minAutres = couts[premiecandidatSuite][suivant];
+			}
+			borneMinDuree+=minAutres;
+			borneMinDuree+=durees[premiecandidatSuite];
+		}
+
 		return borneMinDuree;
 	}
 }

@@ -81,7 +81,7 @@ public class Plan {
 		
 		// Remplissage de la liste des intersections avec tous les troncons
 
-	debutDelay = System.currentTimeMillis();
+		//Data for Dijkstra
 		HashMap<Long, List<Troncon>> adjMap = new HashMap<Long, List<Troncon>>();
 		Troncon t;
 		long idDebut;
@@ -94,28 +94,19 @@ public class Plan {
 			adjMap.get(t.getDebut().getId()).add(t);
 		}
 
-	finDelay = System.currentTimeMillis();
-	System.out.println("Temps d'init de l'algo : " + (finDelay - debutDelay) + "ms");
-
 	debutDelay = System.currentTimeMillis();
+		//Dijktra
 		int[][] cout = new int[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
-		// On lance Dijkstra depuis tous les points de livraison pour remplir le tableau cout
 		DjkSolution result;
 		long srcId;
 		long trgId;
-		/*
-		long[] targetsForDijkstra = new long[livraisons.size()];
-		for(int i=0;i<targetsForDijkstra.length;i++) {
-			targetsForDijkstra[i] = livraisons.get(i).getId();
-		}*/
-		
 		Iterator<Intersection> it = livraisons.iterator();
 		int source = 0;
 		while(it.hasNext()) {
 			Intersection livrDepart = it.next();
 			srcId = livrDepart.getId();
-			result = dijkstra(adjMap, srcId/*, targetsForDijkstra*/);
+			result = dijkstraFull(adjMap, srcId);
 			Iterator<Intersection> it2 = livraisons.iterator();
 			int target = 0;
 			while(it2.hasNext()) {
@@ -137,6 +128,9 @@ public class Plan {
 		
 	finDelay = System.currentTimeMillis();
 	System.out.println("Temps de Dijkstra: " + (finDelay - debutDelay) + "ms");
+	
+	
+		//Data for the TSP
 		int[] duree = new int[nbLivraisons];
 		for(int i=1; i<nbLivraisons; i++){
 			duree[i] = ((Livraison)livraisons.get(i)).getDuree();
@@ -154,38 +148,61 @@ public class Plan {
 				horairesInt[i][1] = -1;
 			}
 		}
-		
-		//TSP
-		
 	debutDelay = System.currentTimeMillis();
+		//TSP
 		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
 	finDelay = System.currentTimeMillis();
 	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
-		
-		Itineraire itineraire = new Itineraire(pCourtsChemins, meilleureSolution);
+	
+		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
+	}
+	
+	/**
+	 * 
+	 * @param pCourtsChemins
+	 * @param couts
+	 * @param livraisons
+	 * @param ordreTournee
+	 */
+	private void setTourneeFromTsp(Chemin[][] pCourtsChemins, int[][] couts, List<Intersection> livraisons, Integer[] ordreTournee) {
+		int nbLivraisons = ordreTournee.length; 
+		Itineraire itineraire = new Itineraire(pCourtsChemins, ordreTournee);
+		Entrepot entrepot = (Entrepot)livraisons.get(0);
 
 		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons-1);
 		for (int i = 1; i < nbLivraisons; i++ ){
-			livs.add((Livraison)livraisons.get(meilleureSolution[i]));
+			livs.add((Livraison)livraisons.get(ordreTournee[i]));
 		}
 		
 		Calendar heureDePassage = (Calendar)entrepot.getHeureDepart().clone();
 		int heureDePassageInt = getSecondsInDay(heureDePassage);
-		livs.get(0).setHeurePassage((Calendar)heureDePassage.clone());
-		livs.get(0).getHeurePassage().add(Calendar.SECOND,Math.max(cout[0][meilleureSolution[1]],horairesInt[meilleureSolution[1]][0]-heureDePassageInt));
+		Livraison livPremiere = livs.get(0);
+		livPremiere.setHeurePassage((Calendar)heureDePassage.clone());
+		if(livPremiere instanceof LivraisonPlageHoraire){
+			livPremiere.getHeurePassage().add(Calendar.SECOND,Math.max(couts[0][ordreTournee[1]],
+					getSecondsInDay(((LivraisonPlageHoraire)livs.get(0)).getDebut()) - heureDePassageInt));
+		}else {
+			livPremiere.getHeurePassage().add(Calendar.SECOND,couts[0][ordreTournee[1]]);
+		}
 		
 		for(int i = 1; i<nbLivraisons-1; i++){
+			Livraison livI = livs.get(i);
+			
 			heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
-			heureDePassage.add(Calendar.SECOND, duree[meilleureSolution[i]]);
+			heureDePassage.add(Calendar.SECOND, livs.get(i-1).getDuree());
 			heureDePassageInt = getSecondsInDay(heureDePassage);
-			livs.get(i).setHeurePassage((Calendar)heureDePassage.clone());
-			livs.get(i).getHeurePassage().add(Calendar.SECOND, Math.max(
-					cout[meilleureSolution[i]][meilleureSolution[i+1]],
-					horairesInt[meilleureSolution[i+1]][0]-heureDePassageInt));
+			
+			livI.setHeurePassage((Calendar)heureDePassage.clone());
+			if(livI instanceof LivraisonPlageHoraire){
+				livI.getHeurePassage().add(Calendar.SECOND,Math.max(couts[ordreTournee[i]][ordreTournee[i+1]],
+						getSecondsInDay(((LivraisonPlageHoraire)livs.get(i)).getDebut()) - heureDePassageInt));
+			}else {
+				livI.getHeurePassage().add(Calendar.SECOND,couts[ordreTournee[i]][ordreTournee[i+1]]);
+			}
 		}
 		
 		entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
-		entrepot.getHeureArrivee().add(Calendar.SECOND, (cout[meilleureSolution[nbLivraisons-1]][0] + duree[meilleureSolution[nbLivraisons-1]]));
+		entrepot.getHeureArrivee().add(Calendar.SECOND, (couts[ordreTournee[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree()));
 
 		demandeLivraison = new Tournee(entrepot, livs, itineraire);
 		
@@ -194,7 +211,7 @@ public class Plan {
 	/**
 	 * Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
 	 */
-	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source/*, long[] targets*/){
+	private DjkSolution dijkstraFull(HashMap<Long, List<Troncon>> adjMap, long source/*, long[] targets*/){
 
 		Long current = source;
 		

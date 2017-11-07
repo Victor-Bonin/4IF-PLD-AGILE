@@ -80,7 +80,7 @@ public abstract class TemplateTSP implements TSP {
 		 int bound = bound(sommetCrt, nonVus, heureDebut + coutVus, cout, duree, horaires);
 		 
 		 if (nonVus.isEmpty()){ // tous les sommets ont ete visites
-	    	coutVus += cout[sommetCrt][0] + duree[sommetCrt];
+	    	coutVus += duree[sommetCrt] + cout[sommetCrt][0];
 	    	if (coutVus < coutMeilleureSolution){ // on a trouve une solution meilleure que meilleureSolution
 	    		vus.toArray(meilleureSolution);
 	    		coutMeilleureSolution = coutVus;
@@ -92,11 +92,9 @@ public abstract class TemplateTSP implements TSP {
 	        	Integer prochainSommet = it.next();
 	        	vus.add(prochainSommet);
 	        	nonVus.remove(prochainSommet);
-	        	int wait = 0;
-	        	if(horaires[sommetCrt][0]!=-1) {
-		        	wait = horaires[sommetCrt][0] - heureDebut - coutVus;
-		        	wait=(wait<0)?0:wait;
-	        	}
+	        	int wait = horaires[prochainSommet][0] - heureDebut - coutVus;
+	        	wait=(wait<0)?0:wait;
+	        	
 	        	branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[sommetCrt] + wait, heureDebut , cout, duree, horaires, tpsDebut, tpsLimite); 
 	        	vus.remove(prochainSommet);
 	        	nonVus.add(prochainSommet);

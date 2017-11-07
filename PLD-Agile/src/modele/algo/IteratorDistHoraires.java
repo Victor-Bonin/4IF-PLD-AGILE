@@ -22,12 +22,14 @@ public class IteratorDistHoraires implements Iterator<Integer> {
 		}
 		
 		for(int i=0;i<candidats.length;i++) {
-			int max = cout[sommetCrt][candidats[i]];
+			int max = Math.max(
+					cout[sommetCrt][candidats[i]],
+					horaires[candidats[i]][0] - heureActuelle );
 			int maxIndex = i;
 			for(int j=i+1;j<candidats.length;j++) {
 				int distanceTemps = Math.max(
 						cout[sommetCrt][candidats[j]],
-						horaires[j][0] - heureActuelle // si horaire[][] = -1, on est negatif, donc le max le prend pas
+						horaires[candidats[j]][0] - heureActuelle // si horaire[][] = -1, on est negatif, donc le max le prend pas
 						);
 				if(distanceTemps>max) {
 					maxIndex = j;

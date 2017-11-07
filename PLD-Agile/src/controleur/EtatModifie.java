@@ -29,6 +29,8 @@ import vue.Textes;
 
 public class EtatModifie extends EtatCalcule{
 
+	//TODO DELETE ??
+	//TODO // ON A PAS D'ETAT MODIFE !
 	@Override
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {
 		try {

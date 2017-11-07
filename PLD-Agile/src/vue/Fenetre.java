@@ -55,6 +55,7 @@ public class Fenetre extends JFrame{
 	public final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
 	public final EtatCalcule etatCalcule = new EtatCalcule();
 	public final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
+	public final EtatModifie etatModifie = new EtatModifie();
 	
 	
 	public Fenetre(Controleur ctrl, Plan plan){

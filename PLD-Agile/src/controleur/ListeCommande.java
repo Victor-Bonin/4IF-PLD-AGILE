@@ -23,6 +23,10 @@ package controleur;
 
 import java.util.LinkedList;
 
+/**
+ * Classe stockant l'historique des commandes effectuees par l'utilisateur, permettant le do / undo / delete d'une commande.
+ * @author 4104
+ */
 public class ListeCommande{
 	private LinkedList<Commande> liste;
 	private int indiceCrt;

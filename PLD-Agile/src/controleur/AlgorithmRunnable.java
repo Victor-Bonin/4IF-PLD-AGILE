@@ -5,6 +5,10 @@ import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 
+/**
+ * Permet de gerer le calcul de la tournee dans un thread separe
+ * @author 4104
+ */
 public class AlgorithmRunnable implements Runnable {
 	private Plan plan;
 	private Etat etat;
@@ -17,8 +21,11 @@ public class AlgorithmRunnable implements Runnable {
 		fenetre = fen;
 		controleur = ctrl;
 	}
-		
-	public void run(){
+
+	/**
+	 * Calcule la tournee puis indique au controleur lorsqu'il a fini
+	 */
+	public void run() {
 		try {
 			plan.calculTournee();
 			controleur.setEtatCourant(controleur.etatCalcule);

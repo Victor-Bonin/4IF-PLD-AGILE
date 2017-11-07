@@ -1,24 +1,21 @@
 package modele.algo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
-
-import modele.PlageHoraire;
 
 public class TSP2 extends TemplateTSP {
 
 	@Override
-	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
+	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
 		return new IteratorSeq(nonVus, sommetCrt);
 	}
 
 	@Override
-	protected float bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureDebut, float[][] cout, int[] duree, int[][] horaires) {
-		float r = duree[sommetCourant];
+	protected int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
+		int r = duree[sommetCourant];
 		
-		float minDebut = Float.MAX_VALUE;
-		float minAutre ;
+		int minDebut = Integer.MAX_VALUE;
+		int minAutre ;
 		/*
 		if(sommetCourant<0||sommetCourant>=cout.length)
 			return 0;

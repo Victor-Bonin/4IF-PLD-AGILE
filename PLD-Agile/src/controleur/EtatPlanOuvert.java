@@ -71,4 +71,9 @@ public class EtatPlanOuvert extends EtatInit {
 		fenetre.goToVue(Fenetre.VUE_PLAN);
 	}
 	
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		ouvrirLivraison(controleur, plan, fenetre, listeCommande);		
+	}
+	
 }

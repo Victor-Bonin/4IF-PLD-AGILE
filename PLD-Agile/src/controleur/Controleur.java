@@ -131,16 +131,29 @@ public class Controleur {
 		etatCourant.redo(listeCommande);
 	}
 	
+	/**
+	 * Methode changeant l'etat de la fenetre
+	 */
 	public void afficherFenetre() {
 		etatCourant.afficherFenetre(fenetre);
 	}
 	
+	/**
+	 * Methode permettant de modifier le contenu de la zone de notification
+	 */
 	public void afficherNotif() {
 		etatCourant.afficherNotif(fenetre);
 	}
 	
+	/**
+	 * Methode appelee apres un clic sur le bouton + ou apres presse Ctrl+N
+	 */
 	public void creerLivraison() {
 		etatCourant.creerLivraison(fenetre);
+	}
+	
+	public void appuiEntree() {
+		etatCourant.appuiEntree(this, plan, fenetre, listeCommande);
 	}
 
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -14,20 +15,27 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import modele.Chemin;
+import modele.Entrepot;
 import modele.Intersection;
+import modele.Itineraire;
+import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import modele.Troncon;
 import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
 public class planTest {
-	Plan plan = new Plan();
+	Plan plan;
 	Intersection inter1;
 	Intersection inter2;
 	Troncon tronconExpected;
+	Tournee tourneeExpected;
 
 	@Before
 	public void init() {		
+		plan = new Plan();
 		plan.ajouterIntersection(56454, 2484, 4242);
 		plan.ajouterIntersection(3542, 5612, 4343);
 		inter1 = plan.getIntersections().get(4242L);
@@ -36,6 +44,93 @@ public class planTest {
 	}
 
 
+	@Test
+	public void calculerTourneeTest(){
+		File planTest = new File("assets/planTest.xml");
+		File dlTest = new File("assets/DLTest.xml");
+		try{
+			DeserialiseurXML.chargerFichier(plan, planTest);
+			assert(plan.getIntersections() != null);
+			assert(plan.getTroncons() != null);
+			DeserialiseurXML.chargerDemandeLivraisonFichier(plan, dlTest);
+			assert(plan.getDemandeLivraison() != null);
+			plan.calculTournee();
+		} catch (Exception e) {
+			fail("Error " + e);
+			e.printStackTrace();
+		}
+		Tournee tournee = plan.getTournee();
+		
+		Entrepot entrepotTest = plan.getDemandeLivraison().getEntrepot();
+		Intersection interTest1 = plan.getIntersections().get(1L);
+		Intersection interTest3 = plan.getIntersections().get(3L);
+		Intersection interTest5 = plan.getIntersections().get(5L);
+		Troncon troncon12 = null;
+		Troncon troncon23 = null;
+		Troncon troncon31 = null;
+		Troncon troncon35 = null;
+		Troncon troncon43 = null;
+		Troncon troncon54 = null;
+		for(Troncon t : plan.getTroncons()){
+			if(t.getDebut().getId() == 1 && t.getFin().getId() == 2){
+				troncon12 = t;
+			}else if(t.getDebut().getId() == 2 && t.getFin().getId() == 3){
+				troncon23 = t;
+			}else if(t.getDebut().getId() == 3 && t.getFin().getId() == 1){
+				troncon31 = t;
+			}else if(t.getDebut().getId() == 3 && t.getFin().getId() == 5){
+				troncon35 = t;
+			}else if(t.getDebut().getId() == 4 && t.getFin().getId() == 3){
+				troncon43 = t;
+			}else if(t.getDebut().getId() == 5 && t.getFin().getId() == 4){
+				troncon54 = t;
+			}
+		}
+		
+		List<Livraison> solutionExpected = new ArrayList<Livraison>();
+		solutionExpected.add(new Livraison((Intersection)entrepotTest, 0));
+		solutionExpected.add(new Livraison(interTest3, 900));
+		solutionExpected.add(new Livraison(interTest5, 600));
+		
+		List<Chemin> cheminExpected = new ArrayList<Chemin>();
+		Chemin chemin13 = new Chemin(interTest1,interTest3);
+		chemin13.addTroncon(0, troncon12);
+		chemin13.addTroncon(1, troncon23);
+		cheminExpected.add(chemin13);
+		Chemin chemin35 = new Chemin(interTest3,interTest5);
+		chemin35.addTroncon(0, troncon35);
+		cheminExpected.add(chemin35);
+		Chemin chemin51 = new Chemin(interTest5,interTest1);
+		chemin51.addTroncon(0, troncon54);
+		chemin51.addTroncon(1, troncon43);
+		chemin51.addTroncon(2, troncon31);
+		cheminExpected.add(chemin51);
+		Itineraire itineraireExpected = new Itineraire(cheminExpected);
+		
+		tourneeExpected = new Tournee(plan.getDemandeLivraison().getEntrepot() , solutionExpected, itineraireExpected);
+		
+		
+		assertEquals(tournee, tourneeExpected);
+	}
+	
+	@Test
+	public void calculerTourneeTestEchec(){
+		File planTest = new File("assets/planTest.xml");
+		File dlTest = new File("assets/DLTestEchec.xml");
+		try{
+			DeserialiseurXML.chargerFichier(plan, planTest);
+			assert(plan.getIntersections() != null);
+			assert(plan.getTroncons() != null);
+			DeserialiseurXML.chargerDemandeLivraisonFichier(plan, dlTest);
+			assert(plan.getDemandeLivraison() != null);
+			plan.calculTournee();
+			fail();
+		} catch (Exception e) {
+			assertEquals( e.getMessage(), "Aucune solution respectant les contraintes n'a pas être trouvée");
+		}
+	}
+	
+	
 	@Test
 	public void ajouterTronconTest() {
 		try {
@@ -64,7 +159,7 @@ public class planTest {
 		assertEquals(3, troncons.size());
 	}
 	
-	@Test
+	//@Test
 	public void listerTronconVoisinGrand() {
 		File xml = new File("assets/planLyonGrand.xml");
 		try {

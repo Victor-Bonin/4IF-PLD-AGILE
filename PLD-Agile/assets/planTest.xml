@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reseau>
+<noeud id="1" x="15824" y="28015"/>
+<noeud id="2" x="15890" y="24600"/>
+<noeud id="3" x="15674" y="26409"/>
+<noeud id="4" x="15387" y="28030"/>
+<noeud id="5" x="15560" y="28876"/>
+<troncon destination="2" longueur="50000.0" nomRue="Rue du Professeur Florence" origine="1"/>
+<troncon destination="3" longueur="50000.0" nomRue="Place d'Arsonval" origine="2"/>
+<troncon destination="2" longueur="100000.0" nomRue="Rue Jean Perréal" origine="3"/>
+<troncon destination="1" longueur="100000.0" nomRue="Avenue des Frères Lumière" origine="3"/>
+<troncon destination="3" longueur="150000.0" nomRue="Rue du Professeur Calmette" origine="1"/>
+<troncon destination="4" longueur="200000.0" nomRue="Rue du Professeur Calmette" origine="3"/>
+<troncon destination="3" longueur="150000.0" nomRue="Place d'Arsonval" origine="4"/>
+<troncon destination="5" longueur="100000.0" nomRue="Place d'Arsonval" origine="3"/>
+<troncon destination="5" longueur="250000.0" nomRue="Rue des Alouettes" origine="4"/>
+<troncon destination="4" longueur="150000.0" nomRue="Rue des Alouettes" origine="5"/>
+<troncon destination="5" longueur="150000.0" nomRue="Rue Jean Perréal" origine="4"/>
+</reseau>
+
+

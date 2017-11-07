@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reseau>
+<noeud id="1029591870" x="15427" y="27866"/>
+<noeud id="103755060" x="15602" y="27911"/>
+<noeud id="1039285693" x="16034" y="27050"/>
+<troncon destination="1029591870" longueur="16.637556" nomRue="Avenue des Frères Lumière" origine="103755060"/>
+<troncon destination="1039285693" longueur="82.35745" nomRue="Boulevard Jean XXIII" origine="1029591870"/>
+<troncon destination="103755060" longueur="26.469484" nomRue="Place d'Arsonval" origine="1039285693"/>
+</reseau>
+

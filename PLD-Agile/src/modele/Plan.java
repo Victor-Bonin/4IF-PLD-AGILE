@@ -17,7 +17,7 @@ import modele.algo.TSP4;
  * @author 4104
  */
 public class Plan {
-	private final int VITESSE = 15 *(10000/3600); // 15km/h en dm/s
+	private final float VITESSE = 15 *(10000f/3600); // 15km/h en dm/s
 	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
@@ -153,6 +153,11 @@ public class Plan {
 		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
 	finDelay = System.currentTimeMillis();
 	System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
+
+		if(meilleureSolution==null)
+			throw new ExceptionPlanCo("Solution ou tournee vide !");
+		if(meilleureSolution[0]==null)
+			throw new ExceptionPlanCo("Aucune solution respectant les contraintes n'a pas être trouvée");
 	
 		setTourneeFromTsp(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}

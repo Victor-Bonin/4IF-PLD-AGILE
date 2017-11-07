@@ -18,7 +18,21 @@ public class Itineraire {
 		itineraire.add(pCourtsChemins[meilleureSolution[meilleureSolution.length-1]][meilleureSolution[0]]);
 	}
 	
+	public Itineraire(List<Chemin> itineraire){
+		this.itineraire = new ArrayList<Chemin>(itineraire);
+	}
+	
 	public List<Chemin> getChemins(){
 		return itineraire;
 	}
+	
+	public boolean equals(Itineraire itineraire) {
+		boolean isEqual = true;
+		for(int i =0; i<this.itineraire.size(); i++){
+			isEqual = isEqual && this.itineraire.get(i).equals(itineraire.getChemins().get(i));
+		}
+		
+		return isEqual;
+	}
+	
 }

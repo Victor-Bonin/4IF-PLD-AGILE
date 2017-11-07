@@ -26,7 +26,7 @@ import xml.DeserialiseurXML;
 import xml.ExceptionXML;
 
 public class planTest {
-	Plan plan = new Plan();
+	Plan plan;
 	Intersection inter1;
 	Intersection inter2;
 	Troncon tronconExpected;
@@ -34,6 +34,7 @@ public class planTest {
 
 	@Before
 	public void init() {		
+		plan = new Plan();
 		plan.ajouterIntersection(56454, 2484, 4242);
 		plan.ajouterIntersection(3542, 5612, 4343);
 		inter1 = plan.getIntersections().get(4242L);

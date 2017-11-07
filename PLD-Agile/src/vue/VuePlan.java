@@ -55,10 +55,12 @@ public class VuePlan extends JPanel{
 
 	private PersoButton changerPlanButton;
 	private PersoButton changerDemandeLivraisonButton;
+	private PersoButton undoButton;
+	private PersoButton redoButton;
 
 	private EcouteurDeBouton ecouteurBoutons;
 	private EcouteurDeSouris ecouteurSouris;
-	EcouteurDeSourisChoixIntersection ecouteurSourisChoixIntersec;
+	private EcouteurDeSourisChoixIntersection ecouteurSourisChoixIntersec;
 	
 	private ArrayList<JLabel> iconesLivraison;
 	private JLabel iconeEntrepot; 
@@ -104,22 +106,44 @@ public class VuePlan extends JPanel{
 		addMouseWheelListener(ecouteurSouris);
 		addMouseListener(ecouteurSouris);
 		addMouseMotionListener(ecouteurSouris);
-
+		
 		changerPlanButton = new PersoButton(Textes.BUTTON_NOUVEAU_PLAN,2);
-		changerPlanButton.setBounds(0, 0, (int)changerPlanButton.getPreferredSize().getWidth(), (int)changerPlanButton.getPreferredSize().getHeight());
 		changerPlanButton.addActionListener(ecouteurBoutons);
 		changerPlanButton.setActionCommand("import-plan");
 		
 		changerDemandeLivraisonButton = new PersoButton("<html>" + Textes.BUTTON_NOUVELLE_LIVRAISON + "</html>",2);
-		changerDemandeLivraisonButton.setBounds(0, (int)changerPlanButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
 		changerDemandeLivraisonButton.addActionListener(ecouteurBoutons);
 		changerDemandeLivraisonButton.setActionCommand("import-demande-livraison");
 		
+		undoButton = new PersoButton("", 2);
+		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
+		undoButton.addActionListener(ecouteurBoutons);
+		undoButton.setActionCommand("undo_action");
+		
+		redoButton = new PersoButton("", 2);
+		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
+		redoButton.addActionListener(ecouteurBoutons);
+		redoButton.setActionCommand("redo_action");
+		
+		try {
+			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_UNDO));
+			BufferedImage redoImage = ImageIO.read(new File(CharteGraphique.ICONE_REDO));
+			ImageIcon imageIconUndo = new ImageIcon(undoImage.getScaledInstance((int)(undoButton.getPreferredSize().getHeight()/1.8f), (int)(undoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
+			ImageIcon imageIconRedo = new ImageIcon(redoImage.getScaledInstance((int)(redoButton.getPreferredSize().getHeight()/1.8f), (int)(redoButton.getPreferredSize().getHeight()/1.8f), java.awt.Image.SCALE_SMOOTH));
+			redoButton.setIcon(imageIconRedo);
+			undoButton.setIcon(imageIconUndo);
+		} catch (IOException e) {
+			undoButton.setText(Textes.BUTTON_UNDO);
+			redoButton.setText(Textes.BUTTON_REDO);
+			e.printStackTrace();
+		}
+		
+		
 		add(changerPlanButton);
 		add(changerDemandeLivraisonButton);
+		add(undoButton);
+		add(redoButton);
 		
-		
-
 		setBackground(CharteGraphique.GRAPH_BG);
 		
 		iconesLivraison = new ArrayList<JLabel>();
@@ -237,7 +261,11 @@ public class VuePlan extends JPanel{
 						positionY(livraison.getY())+20);
 			}
 		}
-			              
+		
+		
+		//Repositionner les boutons
+		changerDemandeLivraisonButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight(), (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());
+		changerPlanButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), 0, (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());         
 	  }
 
 	private int positionX(int x) {
@@ -410,4 +438,10 @@ public class VuePlan extends JPanel{
 		this.remove(iconeNouvelleLivraison);
 		nouvelleIntersection = null;
 	}
+
+	public void activerBouton(boolean activer) {
+		changerDemandeLivraisonButton.setEnabled(activer);
+		changerPlanButton.setEnabled(activer);
+	}
+
 }

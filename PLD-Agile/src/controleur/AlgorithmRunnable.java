@@ -1,23 +1,24 @@
 package controleur;
 
 import modele.Plan;
+import vue.CharteGraphique;
 import vue.Fenetre;
+import vue.Textes;
 
 /**
  * Permet de gerer le calcul de la tournee dans un thread separe
  * @author 4104
  */
 public class AlgorithmRunnable implements Runnable {
-
 	private Plan plan;
-	private EtatDemandeOuverte etat;
+	private Etat etat;
 	private Fenetre fenetre;
 	private Controleur controleur;
 
-	public AlgorithmRunnable(Plan plan, EtatDemandeOuverte et, Controleur ctrl, Fenetre fen){
+	public AlgorithmRunnable(Plan plan, Etat et, Controleur ctrl, Fenetre fen){
 		this.plan = plan;
 		etat = et;
-		fenetre= fen;
+		fenetre = fen;
 		controleur = ctrl;
 	}
 
@@ -27,11 +28,13 @@ public class AlgorithmRunnable implements Runnable {
 	public void run() {
 		try {
 			plan.calculTournee();
+			controleur.setEtatCourant(controleur.etatCalcule);
+			controleur.afficherFenetre();
+			controleur.afficherNotif();
 		} catch (Exception e) {
-			System.out.println("Erreur lors de l'execution du thread");
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);	
 			e.printStackTrace();
 		}
-		etat.finAlgo(controleur, fenetre);
 	}       
 
 }

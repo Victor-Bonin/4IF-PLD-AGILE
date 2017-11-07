@@ -30,16 +30,10 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
-		try {
-			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
-			AlgorithmRunnable runnable = new AlgorithmRunnable(plan, this, controleur, fenetre);
-			Thread t = new Thread(runnable);
-			t.start();
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
-		}
+		controleur.setEtatCourant(controleur.etatCalculEnCours);
+		controleur.afficherFenetre();
+		controleur.afficherNotif();
+		controleur.calculerTournee();
 	}
 	
 	@Override
@@ -49,16 +43,10 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
-		fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
+		fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+		fenetre.goToVue();
 	}
 
-	public void finAlgo(Controleur controleur, Fenetre fenetre) {
-		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
-		controleur.setEtatCourant(controleur.etatCalcule);
-		controleur.afficherFenetre();
-		controleur.afficherNotif();		
-	}
-	
 	@Override
 	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 		calculerTournee(controleur, plan, fenetre);		

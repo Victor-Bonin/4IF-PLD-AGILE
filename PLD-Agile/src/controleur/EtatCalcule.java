@@ -47,7 +47,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void creerLivraison(Fenetre fenetre) {
-		fenetre.goToVue(fenetre.VUE_TOURNEE_AJOUT);
+		fenetre.setEtatCourant(fenetre.etatAjoutLivraison);
+		fenetre.goToVue();
 	}
 
 	@Override
@@ -59,8 +60,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 			fenetre.initialiserTournee();
 			fenetre.repaint();
 		}
-		catch (ExceptionPlanCo ex){
-			// TODO : traiter l'exception
+		catch (ExceptionPlanCo ex){fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);// TODO : traiter l'exception
 		}
 	}
 
@@ -72,16 +72,14 @@ public class EtatCalcule extends EtatPlanOuvert {
 	@Override
 	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
 		try {
-			System.out.println("supprimer");
 			listeCmd.ajoute(new CommandeSupprimer(p, l));
 			p.supprimerPointLivraison(l);
 			fenetre.initialiserTournee();
 			fenetre.repaint();
 		}
 		catch (ExceptionPlanCo ex){
-			// TODO : traiter l'exception
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
-		
 	}
 	
 	@Override
@@ -105,7 +103,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
-		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
+		fenetre.setEtatCourant(fenetre.etatCalcule);
+		fenetre.goToVue();
 	}
 	
 	@Override

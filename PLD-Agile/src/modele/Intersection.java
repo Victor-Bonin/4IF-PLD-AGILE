@@ -27,6 +27,8 @@ public class Intersection {
 	 * @return true si les adresses sont identiques
 	 */
 	public boolean equals(Object obj) {
+		if(!(obj instanceof Intersection))
+			return false;
 		return (this.id == ((Intersection)obj).getId());
 	}
 	
@@ -34,15 +36,13 @@ public class Intersection {
 		return this.id;
 	}
 
-	// Lol...
-	//TODO wtf ?
+	// Rotation de la carte car les donnees des fichiers XML n'ont pas le même repère
 	public int getX() {
 		return y;
 	}
 
-	// Lol...
-	//TODO wtf ?
 	public int getY() {
+		// Rotation de la carte car les donnees des fichiers XML n'ont pas le même repère
 		return 10000000 - x;
 	}
 

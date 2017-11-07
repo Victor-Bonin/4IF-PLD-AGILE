@@ -39,10 +39,11 @@ public class Controleur {
 
 	//Instances associees a chaque etat possible du controleur
 	protected final EtatInit etatInit = new EtatInit();
-	protected final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
 	protected final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
-	protected final EtatModifie etatModifie = new EtatModifie();
+	protected final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
+	protected final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
 	protected final EtatCalcule etatCalcule = new EtatCalcule();
+	protected final EtatModifie etatModifie = new EtatModifie();
 
 	/**
 	 * Cree le controleur de l'app

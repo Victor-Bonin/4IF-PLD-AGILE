@@ -135,7 +135,6 @@ public class VuePlan extends JPanel{
 		} catch (IOException e) {
 			undoButton.setText(Textes.BUTTON_UNDO);
 			redoButton.setText(Textes.BUTTON_REDO);
-			e.printStackTrace();
 		}
 		
 		

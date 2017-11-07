@@ -17,15 +17,16 @@ public class TSP4 extends TemplateTSP {
 
 		int minDebut = Integer.MAX_VALUE;
 		int minAutre;
-		/*
-		if(sommetCourant<0||sommetCourant>=cout.length||sommetCourant>=duree.length||sommetCourant>=horaires.length)
-			return Integer.MAX_VALUE;*/
+		
+		//if(sommetCourant<0||sommetCourant>=cout.length||sommetCourant>=duree.length||sommetCourant>=horaires.length)
+		//	return Integer.MAX_VALUE;
 
 		for(Integer courant : nonVus) {
-			/*
+			
 			//Si l'horaire de fin est depassé, la solution n'est pas viable.
-			if(horaires[courant][1]!=-1 && horaires[courant][1]<heureActuelle+cout[sommetCourant][courant]+duree[courant])
+			if(horaires[courant][1]!=-1 && horaires[courant][1]<heureActuelle+cout[sommetCourant][courant]+duree[courant]) {
 				return Integer.MAX_VALUE;
+			}
 			
 			//Sinon il faut prendre en compte l'attente avant le premier sommet
 			int distanceTemps = Math.max(
@@ -34,7 +35,7 @@ public class TSP4 extends TemplateTSP {
 					);
 			if(distanceTemps<minDebut)
 				minDebut = distanceTemps;
-			*/
+			
 			//Et on calcule le min des distances entre les sommets restants
 			minAutre = cout[courant][0];
 			for(Integer suivant : nonVus) {
@@ -44,7 +45,7 @@ public class TSP4 extends TemplateTSP {
 			borneMinDuree+=minAutre;
 			borneMinDuree+=duree[courant];
 		}
-		//borneMinDuree+=minDebut;
+		borneMinDuree+=minDebut;
 		
 		return borneMinDuree;
 	}

@@ -39,6 +39,12 @@ public class EcouteurDeBouton implements ActionListener{
 			case "nouvelle-livraison":
 				ctrl.creerLivraison();
 				break;
+			case "undo_action":
+				ctrl.undo();
+				break;
+			case "redo_action":
+				ctrl.redo();
+				break;
 		}
 		
 	}

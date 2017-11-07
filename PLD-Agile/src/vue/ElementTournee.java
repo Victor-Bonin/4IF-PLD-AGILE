@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -28,6 +29,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
 
 import controleur.Controleur;
 import modele.Entrepot;
@@ -407,6 +411,9 @@ public class ElementTournee extends JPanel{
 		                               10000, //max
 		                               1);                //step
 		dureeModification = new JSpinner(modele);
+		JFormattedTextField duree = ((JSpinner.NumberEditor) dureeModification.getEditor()).getTextField();
+		((NumberFormatter) duree.getFormatter()).setAllowsInvalid(false);
+		
 		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE);
 		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		
@@ -541,6 +548,7 @@ public class ElementTournee extends JPanel{
 	}
 	
 	public void setIntersection(Intersection i) {
+		boutonValider.setEnabled(true);;
 		livraison = new Livraison(i, (Integer)dureeModification.getValue()*60);
 	}
 	

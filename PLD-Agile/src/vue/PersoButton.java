@@ -23,8 +23,5 @@ public class PersoButton extends JButton{
 		}
 		setFocusPainted(false);
 		setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-	}
-	
-	
-	
+	}	
 }

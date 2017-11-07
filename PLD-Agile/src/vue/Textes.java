@@ -32,6 +32,8 @@ public interface Textes {
 	public static final String BUTTON_NOUVEAU_PLAN = "Changer de plan";
 	public static final String BUTTON_NOUVELLE_LIVRAISON = "<div style='text-align:center'>Importer nouvelle <br>demande de livraison</div>";
 	public static final String BUTTON_CALCUL_TOURNEE = "Calculer la tournée";
+	public static final String BUTTON_UNDO = "Undo";
+	public static final String BUTTON_REDO = "Redo";
 	
 	public static final String TITRE_TOURNEE = "Tournée :";
 	public static final String TOURNEE_LIVRAISON = "Livraison ";

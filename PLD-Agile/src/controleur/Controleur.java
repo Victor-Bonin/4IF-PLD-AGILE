@@ -21,6 +21,7 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
 import vue.Fenetre;
@@ -33,10 +34,11 @@ public class Controleur {
 
 	//Instances associees a chaque etat possible du controleur
 	protected final EtatInit etatInit = new EtatInit();
-	protected final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
 	protected final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
-	protected final EtatModifie etatModifie = new EtatModifie();
+	protected final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
+	protected final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
 	protected final EtatCalcule etatCalcule = new EtatCalcule();
+	protected final EtatModifie etatModifie = new EtatModifie();
 
 	/**
 	 * Cree le controleur de l'app
@@ -84,8 +86,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres cree avoir un point de livraison via la carte ou le bouton "+"
 	 */
-	public void ajouterLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
-		etatCourant.ajouterLivraison(p, l, listeCmd);
+	public void ajouterLivraison(Livraison l) {
+		etatCourant.ajouterLivraison(fenetre, plan, l, listeCommande);
 	}
 
 	/**
@@ -98,8 +100,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres avoir supprimer un point de livraison
 	 */
-	public void supprimerLivraison(Plan p, Livraison l, ListeCommande listeCmd) {
-		etatCourant.supprimerLivraison(p, l, listeCmd);
+	public void supprimerLivraison(Livraison l) {
+		etatCourant.supprimerLivraison(fenetre, plan, l, listeCommande);
 	}
 
 	/**
@@ -151,8 +153,26 @@ public class Controleur {
 		etatCourant.creerLivraison(fenetre);
 	}
 	
+	/**
+	 * Methode permettant de trouver l'inersection la plus proche de x et y en paramètres
+	 */
+	public void obtenirPlusProcheIntersection(double x, double y) {
+		etatCourant.obtenirPlusProcheIntersection(fenetre, plan, x, y);
+	}
+	
+	/**
+	 * Methode permettant de commencer à choisir une intersection sur vuePlan
+	 */
+	public void commencerChoixIntersection() {
+		etatCourant.commencerChoixIntersection(fenetre);
+	}
+	
 	public void appuiEntree() {
 		etatCourant.appuiEntree(this, plan, fenetre, listeCommande);
+	}
+	
+	public void annulerCreation() {
+		etatCourant.annulerCreation(fenetre);
 	}
 
 }

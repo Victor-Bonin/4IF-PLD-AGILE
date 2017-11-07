@@ -56,7 +56,6 @@ public class EtatPlanOuvert extends EtatInit {
 					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			}
 			catch(Exception ex) {
-				ex.printStackTrace();
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			}
 	}

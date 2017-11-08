@@ -134,12 +134,12 @@ public class Plan {
 		}
 		
 		int[][] horairesInt = new int[nbLivraisons][2]; 
-		horairesInt[0][0] = getSecondsInDay(entrepot.getHeureDepart());
-		horairesInt[0][1] = getSecondsInDay(entrepot.getHeureArrivee());
+		horairesInt[0][0] =  Livraison.getSecondsInDay(entrepot.getHeureDepart());
+		horairesInt[0][1] =  Livraison.getSecondsInDay(entrepot.getHeureArrivee());
 		for(int i=1; i<nbLivraisons; i++){
 			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
-				horairesInt[i][0] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
-				horairesInt[i][1] = getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
+				horairesInt[i][0] =  Livraison.getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
+				horairesInt[i][1] =  Livraison.getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
 			}else{
 				horairesInt[i][0] = -1;
 				horairesInt[i][1] = -1;
@@ -225,12 +225,13 @@ public class Plan {
 		}
 		
 		Calendar heureDePassage = (Calendar)entrepot.getHeureDepart().clone();
-		int heureDePassageInt = getSecondsInDay(heureDePassage);
+		int heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
 		Livraison livPremiere = livs.get(0);
 		livPremiere.setHeurePassage((Calendar)heureDePassage.clone());
 		if(livPremiere instanceof LivraisonPlageHoraire){
-			livPremiere.getHeurePassage().add(Calendar.SECOND,Math.max(couts[0][ordreTournee[1]],
-					getSecondsInDay(((LivraisonPlageHoraire)livs.get(0)).getDebut()) - heureDePassageInt));
+			int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(0)).getDebut()) - heureDePassageInt);
+			((LivraisonPlageHoraire)livPremiere).setAttente(attente);
+			livPremiere.getHeurePassage().add(Calendar.SECOND,Math.max(couts[0][ordreTournee[1]],attente));
 		}else {
 			livPremiere.getHeurePassage().add(Calendar.SECOND,couts[0][ordreTournee[1]]);
 		}
@@ -240,12 +241,13 @@ public class Plan {
 			
 			heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
 			heureDePassage.add(Calendar.SECOND, livs.get(i-1).getDuree());
-			heureDePassageInt = getSecondsInDay(heureDePassage);
+			heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
 			
 			livI.setHeurePassage((Calendar)heureDePassage.clone());
 			if(livI instanceof LivraisonPlageHoraire){
-				livI.getHeurePassage().add(Calendar.SECOND,Math.max(couts[ordreTournee[i]][ordreTournee[i+1]],
-						getSecondsInDay(((LivraisonPlageHoraire)livs.get(i)).getDebut()) - heureDePassageInt));
+				int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(i)).getDebut()) - heureDePassageInt);
+				((LivraisonPlageHoraire)livI).setAttente(attente);
+				livI.getHeurePassage().add(Calendar.SECOND,Math.max(couts[ordreTournee[i]][ordreTournee[i+1]],attente));
 			}else {
 				livI.getHeurePassage().add(Calendar.SECOND,couts[ordreTournee[i]][ordreTournee[i+1]]);
 			}
@@ -476,20 +478,6 @@ public class Plan {
 		if (demandeLivraison instanceof Tournee)
 			return (Tournee)demandeLivraison;
 		return null;
-	}
-	
-	/**
-	 * With an offset for the moment
-	 * @param cal
-	 * @return
-	 */
-	private int getSecondsInDay(Calendar cal) {
-		//TODO changer date
-		//cal.set(Calendar.YEAR, 1900);
-		if(cal==null) {
-			return -1;
-		}
-		return (int)(cal.getTimeInMillis()/1000);
 	}
 	
 	public Intersection obtenirPlusProcheIntersection(double x, double y) {

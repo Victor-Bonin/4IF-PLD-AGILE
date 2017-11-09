@@ -1,10 +1,14 @@
 package modele;
 
+import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 /**
  * Ensemble ordonne de livraisons avec un point de depart et d’arrivee ainsi qu’un itineraire
@@ -27,8 +31,8 @@ public class Tournee extends DemandeLivraison{
 		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
 
-	// TODO : recupérer les rues qui composent l'intersection + gérer rues inconnues + mise en page html + plages horaires + probleme évident avec les heures
-	public void exportFeuilleDeRoute() throws IOException {
+	// TODO : recupérer les rues qui composent l'intersection + plages horaires + probleme évident avec les heures + améliorer popup + notification
+	public void exportFeuilleDeRoute() throws IOException, ExceptionPlanCo {
 		this.getEntrepot().getHeureDepart();
 		String nomRue = "";
 		float longueurTroncon;
@@ -59,27 +63,41 @@ public class Tournee extends DemandeLivraison{
 				}
 
 				longueurRue = String.valueOf(Math.round(longueurTroncon));
+				if (nomRue.equals("")) {
+					nomRue = "Rue 'Inconnue'";
+				}
 				feuilleDeRoute += "<br>Prenez la rue "+ nomRue +" pendant "+ longueurRue +"m \r\n </br>";
 			}
 			if (i < livraisons.size()){
 				if (livraisons.get(i) instanceof LivraisonPlageHoraire) {
-					feuilleDeRoute += "<br> <b> Livraison n° "+ (i+1) +" : Arriv&eacutee &agrave "+ livraisons.get(i).getHeurePassage().getTime().getHours() +"h "+ livraisons.get(i).getHeurePassage().getTime().getMinutes() +", Dur&eacutee : "+ (livraisons.get(i).getDuree()/60) +" min \r\n </b></br>";
+					feuilleDeRoute += "<br> <b> Livraison n° "+ (i+1) +" : Arriv&eacutee &agrave "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +", Dur&eacutee : "+ (livraisons.get(i).getDuree()/60) +" min \r\n </b></br>";
 				}
 				else {
-				feuilleDeRoute += "<br> <b> Livraison n° "+ (i+1) +" : Arriv&eacutee &agrave "+ livraisons.get(i).getHeurePassage().getTime().getHours() +"h "+ livraisons.get(i).getHeurePassage().getTime().getMinutes() +", Dur&eacutee : "+ (livraisons.get(i).getDuree()/60) +" min \r\n </b></br>";
+					feuilleDeRoute += "<br> <b> Livraison n° "+ (i+1) +" : Arriv&eacutee &agrave "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +", Dur&eacutee : "+ (livraisons.get(i).getDuree()/60) +" min \r\n </b></br>";
 				}
 			}
 		}
 
-		String pathname = "./Feuille de Route.html";
-		File file = new File(pathname);
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file));		
-		String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
-		bw.write(contenu);
-		bw.close();
+		creerFeuilleDeRoute (feuilleDeRoute);
+	}
 
-		System.out.println(feuilleDeRoute);
+	public void creerFeuilleDeRoute(String feuilleDeRoute) throws ExceptionPlanCo, IOException {
 
-
+		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
+		int returnVal = fileChooser.showSaveDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			BufferedWriter bw;
+			bw = new BufferedWriter(new FileWriter(file));
+			String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
+			bw.write(contenu);
+			bw.close();
+			Desktop.getDesktop().browse(file.toURI());
+		}
+		else 
+			if (returnVal == JFileChooser.CANCEL_OPTION)
+				throw new ExceptionPlanCo(ExceptionPlanCo.ANNULATION_SAUVEGARDE_FEUILLE_DE_ROUTE);
+			else
+				throw new ExceptionPlanCo(ExceptionPlanCo.PROBLEME_SAUVEGARDE_FEUILLE_DE_ROUTE);	
 	}
 }

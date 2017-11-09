@@ -27,7 +27,7 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override
-	public void exporterFeuilleDeRoute(Tournee tournee) {}
+	public void exporterFeuilleDeRoute(Fenetre fenetre, Tournee tournee) {}
 	@Override
 	public void undo(ListeCommande listeCommande, Fenetre fenetre) {}
 	@Override

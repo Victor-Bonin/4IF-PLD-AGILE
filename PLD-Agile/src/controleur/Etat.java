@@ -45,6 +45,6 @@ public interface Etat {
 	void obtenirPlusProcheIntersection(Fenetre fenetre, Plan plan, double x, double y);
 	void commencerChoixIntersection(Fenetre fenetre);
 	void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande);
-	void exporterFeuilleDeRoute(Tournee tournee);
+	void exporterFeuilleDeRoute(Fenetre fenetre, Tournee tournee);
 	void annulerCreation(Fenetre fenetre);
 }

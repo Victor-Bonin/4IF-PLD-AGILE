@@ -123,7 +123,7 @@ public class Controleur {
 	 */
 	public void exporterFeuilleDeRoute() {
 		this.tournee = plan.getTournee();
-		etatCourant.exporterFeuilleDeRoute(tournee);
+		etatCourant.exporterFeuilleDeRoute(fenetre, tournee);
 	}
 
 	/**

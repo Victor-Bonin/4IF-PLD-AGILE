@@ -33,13 +33,13 @@ import vue.Fenetre;
 import vue.Textes;
 
 public class EtatCalcule extends EtatPlanOuvert {
-	
+
 	@Override 
 	public void obtenirPlusProcheIntersection(Fenetre vue, Plan p ,double x, double y) {
 		Intersection i = p.obtenirPlusProcheIntersection(x, y);
 		vue.ajouterIcone(i);
 	}
-	
+
 	@Override 
 	public void commencerChoixIntersection(Fenetre vue) {
 		vue.commencerChoixIntersection();
@@ -80,7 +80,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}
-	
+
 	@Override
 	public void undo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
@@ -101,11 +101,15 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 
 	@Override
-	public void exporterFeuilleDeRoute(Tournee tournee) {
+	public void exporterFeuilleDeRoute(Fenetre fenetre, Tournee tournee) {
 		try {
 			tournee.exportFeuilleDeRoute();
+			fenetre.changeNotification(Textes.NOTIF_FDR_EXPORTEE, CharteGraphique.NOTIFICATION_COLOR);
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+		} catch (ExceptionPlanCo e) {
+			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}
 
@@ -119,12 +123,12 @@ public class EtatCalcule extends EtatPlanOuvert {
 		fenetre.setEtatCourant(fenetre.etatCalcule);
 		fenetre.goToVue();
 	}
-	
+
 	@Override
 	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
-			
+
 	}
-	
+
 	@Override 
 	public void annulerCreation(Fenetre fenetre) {
 		fenetre.annulerCreation();

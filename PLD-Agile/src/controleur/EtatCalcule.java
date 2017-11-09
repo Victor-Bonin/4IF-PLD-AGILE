@@ -52,8 +52,6 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l));
-			fenetre.setEtatCourant(fenetre.etatCalcule);
-			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);

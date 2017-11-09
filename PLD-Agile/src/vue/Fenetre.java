@@ -2,13 +2,18 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
 import modele.Intersection;
+import modele.Livraison;
 import modele.Plan;
 
 import vue.etat.*;
@@ -19,7 +24,7 @@ import vue.etat.*;
  * @author 4104
  *
  */
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame implements Observer {
 	private static final long serialVersionUID = 4042713508717400450L;
 	public static final int VUE_DEFAUT = 0;
 	public static final int VUE_PLAN = 1;
@@ -62,6 +67,7 @@ public class Fenetre extends JFrame{
 		super(Textes.NOM_APPLI);
 		this.ctrl = ctrl;
 		this.plan = plan;
+		plan.addObserver(this);
 		
 		initListeners();
 		
@@ -196,6 +202,10 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
+	public void ajouterEcouteurSynchro(Livraison livraison) {
+		
+	}
+	
 	//TODO : a améliorer
 	public void ajouterIcone(Intersection intersection) {
 		vuePlan.afficherIcone(intersection);
@@ -250,5 +260,40 @@ public class Fenetre extends JFrame{
 	
 	public void setEtatCourant(Etat etat){
 		etatCourant = etat;
+	}
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		Plan p = (Plan) arg0;
+		// code demandé par Clara
+		if(vuePlan.getIconeLivraisonSouris().getParent() == vuePlan)
+			vuePlan.remove(vuePlan.getIconeLivraisonSouris());
+
+		if(arg1 instanceof Livraison)
+		{
+			Livraison livraison = (Livraison) arg1;
+			updateAjoutLivraison(p, livraison);
+		}
+	}
+	
+	public void updateAjoutLivraison(Plan p, Livraison livraison) {
+		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
+
+		ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, index+1, index);
+	    vueTournee.ajoutElementTournee(liv);
+	    vueTournee.annulerCreation();
+		vuePlan.annulerCreation();
+	    JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
+	    iconeLivraison.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
+	    iconeLivraison.setVisible(true);
+	    liv.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
+	        
+	    setVisible(true);
+	    repaint();
+	    vuePlan.repaint();
+	    vueTournee.repaint();
+		vueTournee.revalidate();
+		vuePlan.revalidate();   
 	}
 }

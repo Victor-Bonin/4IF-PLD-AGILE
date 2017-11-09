@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 import modele.algo.DjkSolution;
@@ -16,7 +17,7 @@ import modele.algo.TSP4;
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
  * @author 4104
  */
-public class Plan {
+public class Plan extends Observable {
 	private final float VITESSE = 15 *(10000f/3600); // 15km/h en dm/s
 	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
@@ -64,7 +65,7 @@ public class Plan {
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
-	public void calculTournee() throws Exception {
+	public void calculTournee() throws ExceptionPlanCo {
 		
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
@@ -371,20 +372,21 @@ public class Plan {
 	}
 	
 	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
-		if (livraison.getDuree() < 0) 
-			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
-		demandeLivraison.ajoutePointLivraison(livraison);
+		ajouterPointLivraison(livraison, demandeLivraison.getLivraisons().size());
 	}
 	
 	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
 		if (livraison.getDuree() < 0) 
 			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison, index);
-		
+		setChanged();
+		notifyObservers(livraison);
 	}
 	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
-		demandeLivraison.supprimerPointLivraison(livraison);	
+		demandeLivraison.supprimerPointLivraison(livraison);
+		setChanged();
+		notifyObservers(livraison);
 	}
 	
 	/**

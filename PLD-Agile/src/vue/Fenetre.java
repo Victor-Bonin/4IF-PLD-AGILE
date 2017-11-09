@@ -320,6 +320,9 @@ public class Fenetre extends JFrame implements Observer {
 		vuePlan.revalidate();
 		vuePlan.setVisible(true);
 		vuePlan.repaint();
-		
+	}
+	
+	public void nettoyerNouvelleLivraison() {
+		vuePlan.annulerCreation();
 	}
 }

@@ -21,6 +21,9 @@ public class ExceptionPlanCo extends Exception {
 	public static String ANNULATION_OUVERTURE_FICHIER = "Annulation";
 	public static String PROBLEME_OUVERTURE_FICHIER = "Probleme a l'ouverture du fichier"; 
 	public static String DOCUMENT_NON_CONFORME = "Document non conforme";
+	public static String ANNULATION_SAUVEGARDE_FEUILLE_DE_ROUTE = "Annulation de la sauvegarde";
+	public static String PROBLEME_SAUVEGARDE_FEUILLE_DE_ROUTE = "Probleme lors de la sauvegarde du fichier";
+
 	
 	/**
 	 * Exception personnalisee pour le modele de PlanCo

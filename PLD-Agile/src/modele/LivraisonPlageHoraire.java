@@ -53,6 +53,12 @@ public class LivraisonPlageHoraire extends Livraison {
 		return getSecondsInDay(plage.getFin()) - (getSecondsInDay(heurePassage) + duree);
 	}
 	
+	public Calendar getArriveeEstimee() {
+		Calendar heureEstimee = (Calendar) this.getHeurePassage().clone();
+		heureEstimee.add(Calendar.SECOND, - this.getAttente());
+		return (heureEstimee);
+		}
+	
 	public Calendar getDebut() {
 		return plage.getDebut();
 	}

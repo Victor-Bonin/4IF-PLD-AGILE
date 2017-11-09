@@ -23,6 +23,7 @@ package controleur;
 
 import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import vue.Fenetre;
 
 public interface Etat {
@@ -35,7 +36,6 @@ public interface Etat {
 	void deplacerLivraison();
 	void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int position);
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
-	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande, Fenetre fenetre);
 	void redo(ListeCommande listeCommande, Fenetre fenetre);
 	void afficherFenetre(Fenetre fenetre);
@@ -46,5 +46,6 @@ public interface Etat {
 	void obtenirPlusProcheIntersection(Fenetre fenetre, Plan plan, double x, double y);
 	void commencerChoixIntersection(Fenetre fenetre);
 	void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande);
+	void exporterFeuilleDeRoute(Fenetre fenetre, Tournee tournee);
 	void annulerCreation(Fenetre fenetre);
 }

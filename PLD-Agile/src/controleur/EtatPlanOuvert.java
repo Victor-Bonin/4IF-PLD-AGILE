@@ -44,6 +44,9 @@ public class EtatPlanOuvert extends EtatInit {
 			catch(ExceptionPlanCo ex) {
 				listeCommande.reset();
 				controleur.setEtatCourant(controleur.etatPlanOuvert);
+				fenetre.getVuePlan().nettoyerIcones();
+				fenetre.getVuePlan().revalidate();
+				fenetre.getVuePlan().repaint();
 				if(ex.getMessage() != "")
 					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 				else

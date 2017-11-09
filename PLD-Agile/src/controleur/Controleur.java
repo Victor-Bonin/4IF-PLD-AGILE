@@ -152,6 +152,13 @@ public class Controleur {
 	}
 	
 	/**
+	 * Methode appelee apres un clic droit -> Ajouter après sur l'un des éléments de la tournée
+	 */
+	public void creerLivraisonApres(int position) {
+		etatCourant.creerLivraisonApres(fenetre, position);
+	}
+	
+	/**
 	 * Methode appelee apres un clic sur le bouton + ou apres presse Ctrl+N
 	 */
 	public void creerLivraison() {

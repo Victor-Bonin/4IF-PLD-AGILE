@@ -386,7 +386,7 @@ public class VuePlan extends JPanel{
 	
 	public void actualiserIconeSouris(int x, int y) {
 		// Activer le listener
-		iconeLivraisonSouris.setBounds(x+10, y+10, largeurBalise, hauteurBalise);
+		iconeLivraisonSouris.setBounds(x-largeurBalise/2, y-hauteurBalise, largeurBalise, hauteurBalise);
 	}
 	
 	public void terminerChoixIntersection() {

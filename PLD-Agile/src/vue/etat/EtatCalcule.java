@@ -26,7 +26,9 @@ public class EtatCalcule extends EtatDefaut {
 			vuePlan.nettoyerIcones();
 		}else {
 			vueTournee.initTournee(plan.getDemandeLivraison());
-			vueTournee.afficherBoutonsSuppression();
+			if(vueTournee.getElementsTournee().size()>2){
+				vueTournee.afficherBoutonsSuppression();
+			}
 			vuePlan.afficherIcones(plan.getDemandeLivraison());
 		}
 		vuePlan.activerBouton(true);

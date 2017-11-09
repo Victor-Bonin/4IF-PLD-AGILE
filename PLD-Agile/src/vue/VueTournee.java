@@ -103,6 +103,8 @@ public class VueTournee extends JPanel{
 	 * Actualise le panneau des tournées selon la DemandeLivraison donnee en parametre (peut être une tournee)
 	 * @param dem DemandeLivraison qui doit être représentée
 	 */
+	
+	// TODO : Enelever le paramètre? on ne l'utilise pas!
 	public void initTournee(DemandeLivraison dem) {
 		demLivraison = dem;
 		
@@ -134,7 +136,6 @@ public class VueTournee extends JPanel{
 		    liv.addMouseListener(ecouteurDrag);
 		    i++;
 		}
-		
 		
 		panelAjout = new JPanel();
 		panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -300,7 +301,7 @@ public class VueTournee extends JPanel{
 				));
 		if(dragSource != dragCible && dragCible != null) {
 			ctrl.supprimerLivraison(dragSource.getLivraison(), dragSource.getPosition());
-			ctrl.ajouterLivraison(dragSource.getLivraison(), dragCible.getPosition()+1);
+			ctrl.ajouterLivraison(dragSource.getLivraison(), dragCible.getPosition());
 			revalidate();
 			repaint();
 		}

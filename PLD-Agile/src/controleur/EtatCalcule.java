@@ -49,9 +49,11 @@ public class EtatCalcule extends EtatPlanOuvert {
 	} 
 
 	@Override
-	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
+	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {
 		try {
-			listeCmd.ajoute(new CommandeAjouter(p, l));
+			listeCmd.ajoute(new CommandeAjouter(p, l, position));
+			fenetre.setEtatCourant(fenetre.etatModifie);
+			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
@@ -65,10 +67,10 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 
 	@Override
-	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd) {
+	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {
 		try {
-			listeCmd.ajoute(new CommandeSupprimer(p, l));
-			fenetre.setEtatCourant(fenetre.etatCalcule);
+			listeCmd.ajoute(new CommandeSupprimer(p, l, position));
+			fenetre.setEtatCourant(fenetre.etatModifie);
 			fenetre.goToVue();
 		}
 		catch (ExceptionPlanCo ex){

@@ -2,19 +2,16 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -138,9 +135,9 @@ public class VueTournee extends JPanel{
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelCreation.setBackground(CharteGraphique.BG_COLOR);
 		panelCreation.setLayout(new BorderLayout());
-		
+		System.out.println("Avant :" + demLivraison.getLivraisons().size());
 		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
-
+		System.out.println("GetPosition:" + elementEnCreation.getPosition());
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
 		pan.add(panelCreation);
@@ -207,5 +204,23 @@ public class VueTournee extends JPanel{
 	    element.setMaximumSize(element.getPreferredSize());
 	    element.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    elementsTournee.add(element);
+	}
+	
+	public void masquerBoutonsSuppression() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).masquerBoutonSupprimer();
+			}
+		}
+	}
+	
+	public void afficherBoutonsSuppression() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).afficherBoutonSupprimer();
+			}
+		}
 	}
 }

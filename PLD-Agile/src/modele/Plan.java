@@ -12,6 +12,8 @@ import java.util.Set;
 import modele.algo.DjkSolution;
 import modele.algo.TSP;
 import modele.algo.TSP4;
+import modele.evenement.EvenementInsertion;
+import modele.evenement.EvenementSuppression;
 
 /**
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
@@ -379,14 +381,19 @@ public class Plan extends Observable {
 		if (livraison.getDuree() < 0) 
 			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison, index);
+		calculerItinerairesSeuls();
+
 		setChanged();
-		notifyObservers(livraison);
+		notifyObservers(new EvenementInsertion(livraison));
 	}
 	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
+		int index = demandeLivraison.getLivraisons().indexOf(livraison);
 		demandeLivraison.supprimerPointLivraison(livraison);
+		calculerItinerairesSeuls();
+
 		setChanged();
-		notifyObservers(livraison);
+		notifyObservers(new EvenementSuppression(livraison, index));
 	}
 	
 	/**

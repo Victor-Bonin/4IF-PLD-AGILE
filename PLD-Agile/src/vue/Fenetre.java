@@ -15,7 +15,8 @@ import controleur.Controleur;
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
-
+import modele.evenement.EvenementInsertion;
+import modele.evenement.EvenementSuppression;
 import vue.etat.*;
 
 /**
@@ -202,10 +203,6 @@ public class Fenetre extends JFrame implements Observer {
 		}
 	}
 	
-	public void ajouterEcouteurSynchro(Livraison livraison) {
-		
-	}
-	
 	//TODO : a améliorer
 	public void ajouterIcone(Intersection intersection) {
 		vuePlan.afficherIcone(intersection);
@@ -270,30 +267,59 @@ public class Fenetre extends JFrame implements Observer {
 		if(vuePlan.getIconeLivraisonSouris().getParent() == vuePlan)
 			vuePlan.remove(vuePlan.getIconeLivraisonSouris());
 
-		if(arg1 instanceof Livraison)
+		if(arg1 instanceof EvenementInsertion)
 		{
-			Livraison livraison = (Livraison) arg1;
+			Livraison livraison = ((EvenementInsertion) arg1).getLivraison();
 			updateAjoutLivraison(p, livraison);
+		}
+		if(arg1 instanceof EvenementSuppression)
+		{
+			EvenementSuppression evtSuppr = ((EvenementSuppression) arg1); 
+			Livraison livraison = evtSuppr.getLivraison();
+			int index = evtSuppr.getIndex();
+			updateSuppressionLivraison(p, livraison, index);
 		}
 	}
 	
 	public void updateAjoutLivraison(Plan p, Livraison livraison) {
-		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
+		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.ajouterBoutonPlus();
+		vueTournee.afficherBoutonsSuppression();
 
-		ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, index+1, index);
-	    vueTournee.ajoutElementTournee(liv);
-	    vueTournee.annulerCreation();
 		vuePlan.annulerCreation();
-	    JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
+		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
+		
+		JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
 	    iconeLivraison.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
-	    iconeLivraison.setVisible(true);
-	    liv.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
-	        
-	    setVisible(true);
-	    repaint();
-	    vuePlan.repaint();
-	    vueTournee.repaint();
-		vueTournee.revalidate();
-		vuePlan.revalidate();   
+	    
+	    revalidate();
+		setVisible(true);
+		repaint();
+		
+		vuePlan.revalidate();
+		vuePlan.setVisible(true);
+		vuePlan.repaint();
+	}
+	
+	public void updateSuppressionLivraison (Plan p, Livraison livraison, int index) {
+		JLabel iconeLivraison = vuePlan.getIconesLivraison().get(index);
+		iconeLivraison.removeMouseListener(iconeLivraison.getMouseListeners()[0]);
+		vuePlan.remove(iconeLivraison);
+		vuePlan.getIconesLivraison().remove(iconeLivraison);
+		
+		
+		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.ajouterBoutonPlus();
+		vueTournee.afficherBoutonsSuppression();
+		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		
+		revalidate();
+		setVisible(true);
+		repaint();
+
+		vuePlan.revalidate();
+		vuePlan.setVisible(true);
+		vuePlan.repaint();
+		
 	}
 }

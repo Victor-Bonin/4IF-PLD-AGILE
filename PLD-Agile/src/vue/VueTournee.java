@@ -223,4 +223,8 @@ public class VueTournee extends JPanel{
 			}
 		}
 	}
+
+	public void supprimerElementDetaille() {
+		this.remove(elementDetaille);
+	}
 }

@@ -187,7 +187,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			Image scaledAnnuler = img.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
 			ImageIcon annulerIcon = new ImageIcon(scaledAnnuler);
 			boutonAnnuler.setIcon(annulerIcon);
-
+			nomPanel.add(boutonAnnuler, BorderLayout.EAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -247,7 +247,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 		pan.add(choixDuree, BorderLayout.PAGE_END);
 		details.add(pan, BorderLayout.PAGE_START);
 		details.add(boutonAction, BorderLayout.EAST);
-
 
 		ecouteurBoutons = new EcouteurDeBoutonsElementTournee(ctrl, this);
 		boutonChoixIntersec.addActionListener(ecouteurBoutons);

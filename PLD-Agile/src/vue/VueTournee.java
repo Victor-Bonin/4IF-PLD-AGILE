@@ -197,6 +197,8 @@ public class VueTournee extends JPanel{
 		pan.remove(panelCreation);
 		pan.add(panelAjout);
 		elementEnCreation = null;
+		revalidate();
+		repaint();
 	}
 	
 	public void ajouterBoutonPlus() {

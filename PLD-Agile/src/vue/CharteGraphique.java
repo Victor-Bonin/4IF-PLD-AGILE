@@ -15,6 +15,7 @@ public interface CharteGraphique {
 	public static final Color BG_COLOR = Color.WHITE;
 	public static final Color SEPARATOR_COLOR = new Color(220,220,220);
 	public static final Color SEPARATOR_DARK_COLOR = new Color(150,150,150);
+	public static final Color LIVRAISON_SELECTIONNEE = new Color(244, 255, 255);
 
 	//TEXTS
 	public static final Color TITLE_COLOR = Color.RED;

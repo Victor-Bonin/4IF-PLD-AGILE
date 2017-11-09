@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -36,6 +37,10 @@ public class VueTournee extends JPanel{
 	private DemandeLivraison demLivraison;
 	private Plan plan;
 	
+	private boolean isDragged = false;
+	private ElementTourneeLivraison dragSource;
+	private ElementTourneeLivraison dragCible;
+	
 	private GridBagConstraints c;
 	private JLabel tourneeTitre;
 	private JPanel pan;
@@ -48,6 +53,7 @@ public class VueTournee extends JPanel{
 	ElementTourneeLivraison elementEnCreation;
 	
 	EcouteurDeBouton ecouteurBoutons;
+	EcouteurDeSourisDragnDrop ecouteurDrag;
 	
 	public VueTournee(Controleur ctrl, Plan p){
 		super();
@@ -89,6 +95,8 @@ public class VueTournee extends JPanel{
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 
 		pan.setBackground(CharteGraphique.BG_COLOR);
+		
+		ecouteurDrag =  new EcouteurDeSourisDragnDrop(this);
 	}
 	
 	/**
@@ -112,6 +120,9 @@ public class VueTournee extends JPanel{
 		int i = 0;
 		elementsTournee.add(entrepot);
 		
+		
+		
+		
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
 		    ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, i+1, i);
@@ -119,6 +130,8 @@ public class VueTournee extends JPanel{
 		    liv.setMaximumSize(liv.getPreferredSize());
 		    liv.setAlignmentX(Component.LEFT_ALIGNMENT);
 		    elementsTournee.add(liv);
+		    liv.addMouseMotionListener(ecouteurDrag);
+		    liv.addMouseListener(ecouteurDrag);
 		    i++;
 		}
 		
@@ -242,5 +255,57 @@ public class VueTournee extends JPanel{
 				((ElementTourneeLivraison) element).afficherBoutonSupprimer();
 			}
 		}
+	}
+	
+	public void dragCommencer(ElementTourneeLivraison elemt) {
+		isDragged = true;
+		dragSource = elemt;
+		//elemt.setBackground(CharteGraphique.LIVRAISON_SELECTIONNEE);
+	}
+	
+	public void dragIn(ElementTourneeLivraison elemt) {
+		if(isDragged == true){
+			elemt.setBorder(new CompoundBorder(
+					new EmptyBorder(10, 10, 0, 10),
+					new CompoundBorder(
+							new MatteBorder(0,0,5,0, CharteGraphique.SEPARATOR_COLOR),
+							new EmptyBorder(10, 10, 10, 10)
+							)
+					));
+			dragCible = elemt;
+		}
+	}
+	
+	public void dragOut(ElementTourneeLivraison elemt) {
+		if(isDragged == true){
+			elemt.setBorder(new CompoundBorder(
+					new EmptyBorder(10, 10, 5, 10),
+					new CompoundBorder(
+							new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+							new EmptyBorder(10, 10, 10, 10)
+							)
+					));
+			dragCible = null;
+		}
+	}
+	
+	public void stopDrag(ElementTourneeLivraison elemt) {
+		isDragged = false;
+		dragSource.setBorder(new CompoundBorder(
+				new EmptyBorder(10, 10, 5, 10),
+				new CompoundBorder(
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new EmptyBorder(10, 10, 10, 10)
+						)
+				));
+		if(dragSource != dragCible && dragCible != null) {
+			ctrl.supprimerLivraison(dragSource.getLivraison(), dragSource.getPosition());
+			ctrl.ajouterLivraison(dragSource.getLivraison(), dragCible.getPosition()+1);
+			revalidate();
+			repaint();
+		}
+		dragCible = null;
+		dragSource = null;
+		//dragSource.setBackground(CharteGraphique.BG_COLOR);
 	}
 }

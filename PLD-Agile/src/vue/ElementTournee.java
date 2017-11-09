@@ -52,7 +52,7 @@ public class ElementTournee extends JPanel{
 	protected JPopupMenu menu;
 		
 	protected Controleur controleur;	
-	protected JLabel nomLabel;
+	public JLabel nomLabel;
 	protected JLabel idLabel;
 	protected JLabel imageLabel;
 	protected JPanel infos;
@@ -77,7 +77,7 @@ public class ElementTournee extends JPanel{
 		setBackground(CharteGraphique.BG_COLOR);
 		
 		setBorder(new CompoundBorder(
-				new EmptyBorder(10, 10, 0, 10),
+				new EmptyBorder(10, 10, 5, 10),
 				new CompoundBorder(
 						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
 						new EmptyBorder(10, 10, 10, 10)
@@ -132,6 +132,8 @@ public class ElementTournee extends JPanel{
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
+		
+		
 	}
 	
 	

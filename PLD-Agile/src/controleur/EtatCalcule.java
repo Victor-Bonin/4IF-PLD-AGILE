@@ -58,8 +58,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l, position));
-		}
-		catch (ExceptionPlanCo ex){
+			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_AJOUTEE, CharteGraphique.NOTIFICATION_COLOR);
+		}catch (ExceptionPlanCo ex){
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			// TODO : traiter l'exception
 		}finally {
@@ -77,8 +77,8 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {
 		try {
 			listeCmd.ajoute(new CommandeSupprimer(p, l, position));
-		}
-		catch (ExceptionPlanCo ex){
+			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_SUPPRIMEE, CharteGraphique.NOTIFICATION_COLOR);
+		}catch (ExceptionPlanCo ex){
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}finally {
 			fenetre.setEtatCourant(fenetre.etatModifie);

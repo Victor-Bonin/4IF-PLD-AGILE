@@ -39,6 +39,8 @@ import modele.LivraisonPlageHoraire;
 public class ElementTourneeLivraison extends ElementTournee{
 
 	private Livraison livraison;
+	
+	private boolean clicDroitAutorise;
 
 	// TODO : A supprimer?
 	private Calendar date;
@@ -54,6 +56,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		position = p;
 		this.livraison = livraison;
+		clicDroitAutorise = false;
 
 		initialiserLivraison();
 
@@ -133,16 +136,16 @@ public class ElementTourneeLivraison extends ElementTournee{
 		
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
-				if (ev.isPopupTrigger()) {
+				if (clicDroitAutorise && ev.isPopupTrigger()) {
 					menu.show(ev.getComponent(), ev.getX(), ev.getY());
 				}
 			}
 
-			public void mouseReleased(MouseEvent ev) {
-				if (ev.isPopupTrigger()) {
+			/*public void mouseReleased(MouseEvent ev) {
+				if (clicDroitAutorise && ev.isPopupTrigger()) {
 					menu.show(ev.getComponent(), ev.getX(), ev.getY());
 				}
-			}
+			}*/
 		});
 				
 		if(livraison instanceof LivraisonPlageHoraire) {
@@ -316,5 +319,9 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 	public int getPosition() {
 		return position;
+	}
+	
+	public void autoriserClicDroit() {
+		clicDroitAutorise = true;
 	}
 }

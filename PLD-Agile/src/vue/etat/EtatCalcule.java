@@ -30,7 +30,7 @@ public class EtatCalcule extends EtatDefaut {
 			vuePlan.afficherIcones(plan.getDemandeLivraison());
 		}
 		vuePlan.activerBouton(true);
-		
+		vueTournee.autoriserClicDroit();
 		vueTournee.ajouterBoutonPlus();
 		vuePlan.activerAnnulationBouton(false);
 		fenetre.ajouterEcouteursSynchro();

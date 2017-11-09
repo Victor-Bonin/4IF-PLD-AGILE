@@ -243,4 +243,13 @@ public class VueTournee extends JPanel{
 			}
 		}
 	}
+	
+	public void autoriserClicDroit() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).autoriserClicDroit();
+			}
+		}
+	}
 }

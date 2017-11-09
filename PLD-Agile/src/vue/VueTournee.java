@@ -197,6 +197,8 @@ public class VueTournee extends JPanel{
 		pan.remove(panelCreation);
 		pan.add(panelAjout);
 		elementEnCreation = null;
+		revalidate();
+		repaint();
 	}
 	
 	public void ajouterBoutonPlus() {
@@ -240,6 +242,15 @@ public class VueTournee extends JPanel{
 			if(element instanceof ElementTourneeLivraison)
 			{
 				((ElementTourneeLivraison) element).afficherBoutonSupprimer();
+			}
+		}
+	}
+	
+	public void autoriserClicDroit() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).autoriserClicDroit();
 			}
 		}
 	}

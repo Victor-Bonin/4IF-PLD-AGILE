@@ -14,13 +14,14 @@ public class EcouteurDeSourisDragnDropEntrepot extends MouseAdapter {
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		vueTournee.dragIn((ElementTourneeLivraison)e.getSource());
-		vueTournee.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		System.out.println("entered");
+		vueTournee.dragIn((ElementTourneeEntrepot)e.getSource());
+		vueTournee.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
-		vueTournee.dragOut((ElementTourneeLivraison)e.getSource());
+		vueTournee.dragOut((ElementTourneeEntrepot)e.getSource());
 	}
 		
 }

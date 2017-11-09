@@ -3,6 +3,9 @@ package modele.algo;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * @deprecated
+ */
 public class IteratorDistSimple implements Iterator<Integer> {
 
 	private Integer[] candidats;

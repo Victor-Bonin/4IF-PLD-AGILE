@@ -7,8 +7,8 @@ import java.util.Calendar;
  * @author 4104
  */
 public class Livraison extends Intersection{
-	private int duree;
-	private Calendar heurePassage;
+	protected int duree;
+	protected Calendar heurePassage;
 	
 	public Livraison(Intersection inter, int dureeArret) {
 		super(inter);
@@ -33,5 +33,19 @@ public class Livraison extends Intersection{
 	
 	public void setDuree(int d) {
 		duree = d;
+	}
+
+	/**
+	 * With an offset for the moment
+	 * @param cal
+	 * @return
+	 */
+	public static int getSecondsInDay(Calendar cal) {
+		//TODO changer date
+		//cal.set(Calendar.YEAR, 1900);
+		if(cal==null) {
+			return -1;
+		}
+		return (int)(cal.getTimeInMillis()/1000);
 	}
 }

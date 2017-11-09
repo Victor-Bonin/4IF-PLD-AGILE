@@ -29,12 +29,14 @@ import vue.Textes;
 
 public class EtatModifie extends EtatCalcule{
 
+	//TODO DELETE ??
+	//TODO // ON A PAS D'ETAT MODIFE !
 	@Override
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {
 		try {
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE, CharteGraphique.NOTIFICATION_COLOR);
 			// TODO : changer ça en calcul itinéraire
-			plan.calculTournee();
+			plan.calculerItinerairesSeuls();
 			controleur.afficherFenetre();
 			controleur.afficherNotif();
 		}

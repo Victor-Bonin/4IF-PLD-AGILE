@@ -32,6 +32,7 @@ import javax.swing.text.NumberFormatter;
 import controleur.Controleur;
 import modele.Intersection;
 import modele.Livraison;
+import modele.LivraisonPlageHoraire;
 
 public class ElementTourneeLivraison extends ElementTournee{
 
@@ -127,6 +128,19 @@ public class ElementTourneeLivraison extends ElementTournee{
 				}
 			}
 		});
+		
+		//JPanel indicationPlageTendue = new JPanel();
+		//indicationPlageTendue.setBackground(Color.BLUE);
+		//indicationPlageTendue.setBounds(0,  0, 20, 100);
+		
+		//add(indicationPlageTendue);
+		
+		if(livraison instanceof LivraisonPlageHoraire) {
+			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();
+			if(retard <= 0) {
+				this.setBackground(CharteGraphique.LIVRAISON_RETARD);
+			}
+		}
 	}
 
 	public ElementTourneeLivraison(Controleur ctrl, int nom, int p) {
@@ -252,6 +266,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		infos.add(dureeLivraisonLabel, BorderLayout.PAGE_START );
 		infos.add(heureLabel, BorderLayout.WEST );
+
 	}
 
 	public Livraison getLivraison() {

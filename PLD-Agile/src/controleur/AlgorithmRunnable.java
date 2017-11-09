@@ -29,11 +29,11 @@ public class AlgorithmRunnable implements Runnable {
 		try {
 			plan.calculTournee();
 			controleur.setEtatCourant(controleur.etatCalcule);
-			controleur.afficherFenetre();
 			controleur.afficherNotif();
 		} catch (Exception e) {
 			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);	
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
+		} finally {
 			controleur.afficherFenetre();
 		}
 	}       

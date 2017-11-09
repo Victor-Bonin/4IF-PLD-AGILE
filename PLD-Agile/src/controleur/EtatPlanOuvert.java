@@ -42,14 +42,16 @@ public class EtatPlanOuvert extends EtatInit {
 				controleur.afficherNotif();
 			}
 			catch(ExceptionPlanCo ex) {
-				listeCommande.reset();
-				controleur.setEtatCourant(controleur.etatPlanOuvert);
-				fenetre.getVuePlan().nettoyerIcones();
-				fenetre.getVuePlan().revalidate();
-				fenetre.getVuePlan().repaint();
-				if(ex.getMessage() != "")
+				if(ex.getMessage() != ExceptionPlanCo.ANNULATION_OUVERTURE_FICHIER) {
+					listeCommande.reset();
+					controleur.setEtatCourant(controleur.etatPlanOuvert);
+					fenetre.getVuePlan().nettoyerIcones();
+					fenetre.getVuePlan().revalidate();
+					fenetre.getVuePlan().repaint();
+				}
+				if(ex.getMessage() != "") {
 					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
-				else
+				}else
 					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			}
 			catch(Exception ex) {

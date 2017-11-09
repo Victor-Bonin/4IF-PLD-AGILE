@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  * Cette classe correspond à la vue du plan en particulier
@@ -207,10 +208,12 @@ public class VuePlan extends JPanel{
 			for(int i=0; i<plan.getTournee().getItineraire().getChemins().size(); i++) {
 				for(int j=0; j<plan.getTournee().getItineraire().getChemins().get(i).getTroncons().size();j++){
 					Troncon troncon = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j);
-					g2d.drawLine(positionX(troncon.getDebut().getX()), 
-							positionY(troncon.getDebut().getY()),
-							positionX(troncon.getFin().getX()),
-							positionY(troncon.getFin().getY()));
+					int x1 = positionX(troncon.getDebut().getX());
+					int x2 = positionX(troncon.getFin().getX());
+					int y1 = positionY(troncon.getDebut().getY());
+					int y2 = positionY(troncon.getFin().getY());
+					
+					g2d.drawLine(x1, y1, x2, y2);
 				}
 			}
 		}

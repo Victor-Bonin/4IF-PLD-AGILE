@@ -418,7 +418,7 @@ public class VuePlan extends JPanel{
 	public void annulerCreation() {
 		terminerChoixIntersection();
 		remove(iconeNouvelleLivraison);
-		ecouteurSourisChoixIntersec = new EcouteurDeSourisChoixIntersection(ctrl, this);
+		remove(iconeLivraisonSouris);
 		nouvelleIntersection = null;
 	}
 

@@ -28,6 +28,7 @@ public interface Textes {
 	public static final String NOTIF_CALCUL_ITINERAIRE_FAILED = "Echec lors du calcul de votre itinéraire";
 	public static final String NOTIF_UNDO = "Action annulée";
 	public static final String NOTIF_REDO = "Action refaite";
+	public static final String NOTIF_FDR_EXPORTEE = "La feuille de route a été exportée";
 	
 	
 	public static final String BUTTON_EXPORT_ROUTE = "Exporter la feuille de route";

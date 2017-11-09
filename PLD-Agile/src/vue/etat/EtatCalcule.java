@@ -22,7 +22,7 @@ public class EtatCalcule extends EtatDefaut {
 		VuePlan vuePlan = fenetre.getVuePlan();
 		Plan plan = fenetre.getPlan();
 
-		if(plan.getDemandeLivraison().getLivraisons().isEmpty()) {
+		if(plan.getDemandeLivraison().getLivraisons().isEmpty() && plan.getDemandeLivraison().getEntrepot()==null) {
 			vuePlan.nettoyerIcones();
 		}else {
 			vueTournee.initTournee(plan.getDemandeLivraison());

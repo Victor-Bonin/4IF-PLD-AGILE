@@ -26,10 +26,12 @@ import java.util.Set;
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import vue.Fenetre;
 
 public class Controleur {
 	private Plan plan;
+	private Tournee tournee;
 	private ListeCommande listeCommande;
 	private Etat etatCourant;
 	private Fenetre fenetre;
@@ -117,7 +119,8 @@ public class Controleur {
 	 * Methode appelee apres un clic sur le bouton "Exporter feuille de route"
 	 */
 	public void exporterFeuilleDeRoute() {
-		etatCourant.exporterFeuilleDeRoute();
+		this.tournee = plan.getTournee();
+		etatCourant.exporterFeuilleDeRoute(fenetre, tournee);
 	}
 
 	/**

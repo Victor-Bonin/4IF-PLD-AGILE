@@ -154,30 +154,17 @@ public class ElementTournee extends JPanel{
 			}
 			s += "<br>" + nom;
 		}
-		/*
-		 * Faudra avoir un truc comme Ã§a
-		 * 
-		 * 
-		 * liste = entrepot.getRues();
-		 * 
-		 * ou
-		 * 
-		 * liste = plan.getRues(entrepot);
-		 * 
-		 * for(i:liste)
-		 * 		description += "<br> - " + i;
-		 */
-
+		
 		if(intersec instanceof LivraisonPlageHoraire) {
 			s+= "<br> " + Textes.TOURNEE_PLAGE;
 			LivraisonPlageHoraire livraison = (LivraisonPlageHoraire)intersec;
 			if(livraison.getDebut()!= null)
-				s+=  livraison.getDebut().get(Calendar.HOUR_OF_DAY);
+				s+=  livraison.getDebut().get(Calendar.HOUR_OF_DAY) + "h";
 			else
 				s+= ".";
 			s+= " - ";
 			if(livraison.getFin()!= null)
-				s+= livraison.getFin().get(Calendar.HOUR_OF_DAY);
+				s+= livraison.getFin().get(Calendar.HOUR_OF_DAY) + "h";
 			else
 				s+= ".";
 			

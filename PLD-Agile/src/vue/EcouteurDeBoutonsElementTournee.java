@@ -34,10 +34,10 @@ public class EcouteurDeBoutonsElementTournee implements ActionListener{
 				break;
 			case "valider-creation":
 				elemTournee.setDuree();
-				ctrl.ajouterLivraison(elemTournee.getLivraison());
+				ctrl.ajouterLivraison(elemTournee.getLivraison(), elemTournee.getPosition());
 				break;
 			case "supprimer-livraison":
-				ctrl.supprimerLivraison(elemTournee.getLivraison());
+				ctrl.supprimerLivraison(elemTournee.getLivraison(), elemTournee.getPosition());
 				break;
 		}
 		

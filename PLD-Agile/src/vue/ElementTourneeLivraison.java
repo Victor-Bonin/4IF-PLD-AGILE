@@ -39,7 +39,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 	// TODO : A supprimer?
 	private Calendar date;
-	private int place;
+	private int position;
 
 	private JPopupMenu menu;
 	private JLabel dureeLivraisonLabel;
@@ -50,7 +50,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 	public ElementTourneeLivraison(Controleur ctrl, Livraison livraison, int nom, int p) {
 		super(ctrl);
 
-		this.place = p;
+		position = p;
 		this.livraison = livraison;
 
 		initialiserLivraison();
@@ -275,5 +275,9 @@ public class ElementTourneeLivraison extends ElementTournee{
 	public void afficherBoutonSupprimer()
 	{
 		details.add(boutonAction, BorderLayout.EAST);
+	}
+
+	public int getPosition() {
+		return position;
 	}
 }

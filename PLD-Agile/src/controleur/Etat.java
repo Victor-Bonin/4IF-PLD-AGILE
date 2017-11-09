@@ -31,9 +31,9 @@ public interface Etat {
 			ListeCommande listeCommande);
 	void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande);
-	void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd);
+	void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position);
 	void deplacerLivraison();
-	void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd);
+	void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int position);
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
 	void exporterFeuilleDeRoute();
 	void undo(ListeCommande listeCommande, Fenetre fenetre);

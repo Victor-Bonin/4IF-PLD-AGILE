@@ -11,7 +11,9 @@ public class EtatModifie extends EtatDefaut {
 	public void afficherVue(Fenetre fenetre) {
 		VuePlan vuePlan = fenetre.getVuePlan();
 		vuePlan.activerAnnulationBouton(true);
-		
+
+		VueTournee vueTournee = fenetre.getVueTournee();
+		vueTournee.autoriserClicDroit();
 		fenetre.ajouterEcouteursSynchro();
 	}
 }

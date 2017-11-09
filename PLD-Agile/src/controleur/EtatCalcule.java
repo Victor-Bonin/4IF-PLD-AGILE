@@ -95,6 +95,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 			// TODO Gérer exception
 		}
 	}
+	
 	@Override
 	public void redo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {

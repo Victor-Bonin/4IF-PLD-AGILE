@@ -3,7 +3,9 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -84,7 +86,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			nomsTronconsIntersection.add(labelNomTroncon);
 			labelNomTroncon.setAlignmentX(Component.LEFT_ALIGNMENT);
 		}
-		String plageHoraire = "Plage horaire de livraison : ";
+		String plageHoraire = Textes.TOURNEE_PLAGE;
 		if(livraison instanceof LivraisonPlageHoraire) {
 			LivraisonPlageHoraire livraisonHoraire = (LivraisonPlageHoraire)livraison;
 			if(livraisonHoraire.getDebut()!= null)
@@ -97,7 +99,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			else
 				plageHoraire+= ".";
 			JLabel labelPlageHoraire = new JLabel (plageHoraire);
-			nomsTronconsIntersection.add(labelPlageHoraire);
+			details.add(labelPlageHoraire, BorderLayout.WEST);
 		}
 		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);
@@ -142,17 +144,20 @@ public class ElementTourneeLivraison extends ElementTournee{
 				}
 			}
 		});
-		
-		//JPanel indicationPlageTendue = new JPanel();
-		//indicationPlageTendue.setBackground(Color.BLUE);
-		//indicationPlageTendue.setBounds(0,  0, 20, 100);
-		
-		//add(indicationPlageTendue);
-		
+				
 		if(livraison instanceof LivraisonPlageHoraire) {
 			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();
 			if(retard <= 0) {
-				this.setBackground(CharteGraphique.LIVRAISON_RETARD);
+				JPanel indicationPlageTendue = new JPanel();
+				GridBagConstraints c = new GridBagConstraints();
+				c.anchor = GridBagConstraints.NORTHWEST;
+				c.gridx = 0;
+			    c.gridy = 0;
+			    c.weighty = 1;
+			    c.gridheight = 2;
+			    c.insets = new Insets(0,0,0,10);
+				add(indicationPlageTendue, c);
+				indicationPlageTendue.setBackground(CharteGraphique.LIVRAISON_RETARD);
 			}
 		}
 	}

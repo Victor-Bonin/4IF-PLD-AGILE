@@ -45,4 +45,5 @@ public interface Textes {
 	public static final String TOURNEE_INTERSECTION = "Intersection de : ";
 	public static final String TOURNEE_PLAGE = "Plage horaire : ";
 	public static final String TOURNEE_PASSAGE = "Passage estimé : ";
+	public static final String ATTENTE = "Attente : ";
 }

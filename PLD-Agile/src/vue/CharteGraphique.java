@@ -62,5 +62,5 @@ public interface CharteGraphique {
 	public static final Color GRAPH_TEXT_COLOR =  Color.BLACK;
 	
 	//LIST
-	public static final Color LIVRAISON_RETARD = Color.MAGENTA;
+	public static final Color LIVRAISON_RETARD = new Color(250, 120, 100);
 }

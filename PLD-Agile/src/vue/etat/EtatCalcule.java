@@ -22,7 +22,7 @@ public class EtatCalcule extends EtatDefaut {
 		VuePlan vuePlan = fenetre.getVuePlan();
 		Plan plan = fenetre.getPlan();
 
-		if(plan.getDemandeLivraison().getLivraisons().isEmpty()) {
+		if(plan.getDemandeLivraison().getLivraisons().isEmpty() && plan.getDemandeLivraison().getEntrepot()==null) {
 			vuePlan.nettoyerIcones();
 		}else {
 			vueTournee.initTournee(plan.getDemandeLivraison());
@@ -30,7 +30,7 @@ public class EtatCalcule extends EtatDefaut {
 			vuePlan.afficherIcones(plan.getDemandeLivraison());
 		}
 		vuePlan.activerBouton(true);
-		
+		vueTournee.autoriserClicDroit();
 		vueTournee.ajouterBoutonPlus();
 		vuePlan.activerAnnulationBouton(false);
 		fenetre.ajouterEcouteursSynchro();

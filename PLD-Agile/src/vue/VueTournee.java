@@ -115,10 +115,7 @@ public class VueTournee extends JPanel{
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
 		    ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, i+1, i);
-		    pan.add(liv);
-		    liv.setMaximumSize(liv.getPreferredSize());
-		    liv.setAlignmentX(Component.LEFT_ALIGNMENT);
-		    elementsTournee.add(liv);
+		    ajoutElementTournee(liv);
 		    i++;
 		}
 		
@@ -138,9 +135,7 @@ public class VueTournee extends JPanel{
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelCreation.setBackground(CharteGraphique.BG_COLOR);
 		panelCreation.setLayout(new BorderLayout());
-		
 		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
-
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
 		pan.add(panelCreation);
@@ -197,6 +192,8 @@ public class VueTournee extends JPanel{
 		pan.remove(panelCreation);
 		pan.add(panelAjout);
 		elementEnCreation = null;
+		revalidate();
+		repaint();
 	}
 	
 	public void ajouterBoutonPlus() {
@@ -217,13 +214,14 @@ public class VueTournee extends JPanel{
 		ajouterLivraison.setActionCommand("nouvelle-livraison");
 		ajouterLivraison.setFocusPainted(false);
 		
-		//panelAjout = new JPanel();
-		//panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//panelAjout.setBackground(CharteGraphique.BG_COLOR);
-		//panelAjout.setLayout(new BorderLayout());
-		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);
-		//pan.add(panelAjout);
-		
+		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);	
+	}
+	
+	public void ajoutElementTournee(ElementTournee element) {
+		pan.add(element);
+	    element.setMaximumSize(element.getPreferredSize());
+	    element.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    elementsTournee.add(element);
 	}
 	
 	public void masquerBoutonsSuppression() {
@@ -240,6 +238,19 @@ public class VueTournee extends JPanel{
 			if(element instanceof ElementTourneeLivraison)
 			{
 				((ElementTourneeLivraison) element).afficherBoutonSupprimer();
+			}
+		}
+	}
+	
+	public void supprimerElementDetaille() {
+		this.remove(elementDetaille);	
+	}
+	
+	public void autoriserClicDroit() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).autoriserClicDroit();
 			}
 		}
 	}

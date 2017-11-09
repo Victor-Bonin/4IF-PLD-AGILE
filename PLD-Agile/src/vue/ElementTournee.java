@@ -52,6 +52,7 @@ public class ElementTournee extends JPanel{
 	protected JPopupMenu menu;
 		
 	protected Controleur controleur;	
+	protected JPanel nomPanel;
 	protected JLabel nomLabel;
 	protected JLabel idLabel;
 	protected JLabel imageLabel;
@@ -84,8 +85,12 @@ public class ElementTournee extends JPanel{
 						)
 				));
 		
+		nomPanel = new JPanel();
+		nomPanel.setLayout(new BorderLayout());
+		nomPanel.setBackground(CharteGraphique.BG_COLOR);
 		nomLabel = new JLabel();
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
+		nomPanel.add(nomLabel, BorderLayout.WEST);
 		
 		idLabel = new JLabel();
 		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
@@ -114,7 +119,7 @@ public class ElementTournee extends JPanel{
 		c.insets = new Insets(0,0,0,0);
 		c.gridheight = 1;
 		c.gridx = 1;
-		add(nomLabel,c);
+		add(nomPanel,c);
 		
 		c.weightx = 1;
 		c.gridx = 2;

@@ -323,10 +323,7 @@ public class VuePlan extends JPanel{
 		//Dessiner les icones de points de livraisons
 		iconesLivraison = new ArrayList<JLabel>();
 		for (Livraison livraison : demande.getLivraisons()) {
-			JLabel liv = new JLabel(imageIconL);
-			this.add(liv);
-			liv.setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
-			iconesLivraison.add(liv);
+			afficherIconeLivraison(livraison);
 		}
 		//Dessiner l'icone de l'entrepot
 		if (demande.getEntrepot()!=null) {
@@ -468,5 +465,20 @@ public class VuePlan extends JPanel{
 			redoButton.setText(Textes.BUTTON_REDO);
 		}
 	}
-
+	
+	public JLabel afficherIconeLivraison(Livraison livraison) {
+		JLabel liv = new JLabel(imageIconL);
+		this.add(liv);
+		liv.setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		iconesLivraison.add(liv);
+		return liv;
+	}
+	
+	public JLabel getIconeNouvelleLivraison() {
+		return iconeNouvelleLivraison;
+	}
+	
+	public JLabel getIconeLivraisonSouris() {
+		return iconeLivraisonSouris;
+	}
 }

@@ -7,6 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +21,9 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -98,5 +104,29 @@ public class ElementTourneeEntrepot extends ElementTournee{
 
 		infos.add(heureArriveeLabel, BorderLayout.WEST );
 		infos.add(heureDepartLabel, BorderLayout.PAGE_START );
+		
+		menu = new JPopupMenu("Popup");
+		JMenuItem item = new JMenuItem("Nouvelle livraison");
+		menu.add(item);
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.creerLivraisonApres(-1);
+			}
+		});
+		
+		addMouseListener(new MouseAdapter (){
+			public void mousePressed(MouseEvent ev) {
+				if (ev.isPopupTrigger()) {
+					menu.show(ev.getComponent(), ev.getX(), ev.getY());
+				}
+			}
+
+			public void mouseReleased(MouseEvent ev) {
+				if (ev.isPopupTrigger()) {
+					menu.show(ev.getComponent(), ev.getX(), ev.getY());
+				}
+			}
+		});
 	}	
 }

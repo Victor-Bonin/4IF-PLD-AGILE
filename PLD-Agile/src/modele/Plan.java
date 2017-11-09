@@ -387,19 +387,33 @@ public class Plan extends Observable {
 		if (livraison.getDuree() < 0) 
 			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison, index);
-		calculerItinerairesSeuls();
+		try {
+			calculerItinerairesSeuls();
+		}
+		catch (Exception e) {
+			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
+		}
+		finally {
+			setChanged();
+			notifyObservers(new EvenementInsertion(livraison));
+		}
 
-		setChanged();
-		notifyObservers(new EvenementInsertion(livraison));
 	}
 	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		int index = demandeLivraison.getLivraisons().indexOf(livraison);
 		demandeLivraison.supprimerPointLivraison(livraison);
-		calculerItinerairesSeuls();
-
-		setChanged();
-		notifyObservers(new EvenementSuppression(livraison, index));
+		
+		try {
+			calculerItinerairesSeuls();
+		}
+		catch (Exception e) {
+			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
+		}
+		finally {
+			setChanged();
+			notifyObservers(new EvenementInsertion(livraison));
+		}
 	}
 	
 	/**

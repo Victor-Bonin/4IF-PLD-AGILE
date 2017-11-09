@@ -291,7 +291,8 @@ public class Fenetre extends JFrame implements Observer {
 		
 		JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
 	    iconeLivraison.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
-	    
+	    vuePlan.afficherIcones(plan.getDemandeLivraison());
+		
 	    revalidate();
 		setVisible(true);
 		repaint();
@@ -306,7 +307,6 @@ public class Fenetre extends JFrame implements Observer {
 		iconeLivraison.removeMouseListener(iconeLivraison.getMouseListeners()[0]);
 		vuePlan.remove(iconeLivraison);
 		vuePlan.getIconesLivraison().remove(iconeLivraison);
-		
 		
 		vueTournee.initTournee(plan.getDemandeLivraison());
 		vueTournee.ajouterBoutonPlus();

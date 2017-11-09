@@ -15,7 +15,7 @@ public class ExceptionPlanCo extends Exception {
 	public static String ERREUR_SUPPRESSION_LIVRAISON = "Erreur lors de la suppression de la livraison";
 	public static String INTERSECTION_ABSENTE = "Les intersections de depart et/ou de fin pour ce troncon ne sont pas presentes dans le plan.";
 	public static String SOLUTION_VIDE = "Solution ou tournee vide !";
-	public static String AUCUNE_SOLUTION = "Aucune solution respectant les contraintes n'a pas été trouvée";
+	public static String AUCUNE_SOLUTION = "Aucune solution respectant les contraintes a été trouvée";
 	public static String ENTREPOT_INCONNU = "L'entrepôt ne correspond à aucune adresse connue";
 	public static String LIVRAISON_DUREE_NEGATIVE = "La livraison possède une durée négative";
 	public static String ANNULATION_OUVERTURE_FICHIER = "Annulation";
@@ -23,7 +23,6 @@ public class ExceptionPlanCo extends Exception {
 	public static String DOCUMENT_NON_CONFORME = "Document non conforme";
 	public static String ANNULATION_SAUVEGARDE_FEUILLE_DE_ROUTE = "Annulation de la sauvegarde";
 	public static String PROBLEME_SAUVEGARDE_FEUILLE_DE_ROUTE = "Probleme lors de la sauvegarde du fichier";
-
 	
 	/**
 	 * Exception personnalisee pour le modele de PlanCo

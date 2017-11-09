@@ -21,18 +21,17 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-
-import java.util.List;
 import java.util.Set;
 
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
-import modele.Troncon;
+import modele.Tournee;
 import vue.Fenetre;
 
 public class Controleur {
 	private Plan plan;
+	private Tournee tournee;
 	private ListeCommande listeCommande;
 	private Etat etatCourant;
 	private Fenetre fenetre;
@@ -98,8 +97,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres avoir permuter un point de livraison avec un autre
 	 */
-	public void permuterLivraison() {
-		etatCourant.deplacerLivraison();
+	public void permuterLivraison(Livraison livraison, int anciennePos, int nouvellePos) {
+		etatCourant.deplacerLivraison(fenetre, plan, livraison, listeCommande, anciennePos, nouvellePos);
 	}
 
 	/**
@@ -120,7 +119,8 @@ public class Controleur {
 	 * Methode appelee apres un clic sur le bouton "Exporter feuille de route"
 	 */
 	public void exporterFeuilleDeRoute() {
-		etatCourant.exporterFeuilleDeRoute();
+		this.tournee = plan.getTournee();
+		etatCourant.exporterFeuilleDeRoute(fenetre, tournee);
 	}
 
 	/**

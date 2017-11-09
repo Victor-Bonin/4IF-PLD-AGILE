@@ -22,18 +22,40 @@ Une commande peut être exécutée et annulée.
  */
 package controleur;
 
+import modele.ExceptionPlanCo;
+import modele.Livraison;
+import modele.Plan;
+
 public class CommandePermuter implements Commande {
 
+	private Plan plan;
+	private Livraison livraison;
+	private int anciennePosition;
+	private int nouvellePosition;
+	
+	/**
+	 * Cree la commande qui permet de changer la position d'une livraison dans la demande de livraison
+	 * @param p
+	 * @param l
+	 * @param positionDansListe
+	 */
+	public CommandePermuter(Plan pln, Livraison lvrsn, int anciennePosition, int nouvellePosition) {
+		plan = pln;
+		livraison = lvrsn;
+		this.anciennePosition = anciennePosition;
+		this.nouvellePosition = nouvellePosition;
+	}
+	
 	@Override
-	public void doCde() {
-		// TODO Auto-generated method stub
-		
+	public void doCde() throws ExceptionPlanCo {
+		plan.supprimerPointLivraison(livraison);
+		plan.ajouterPointLivraison(livraison, nouvellePosition);
 	}
 
 	@Override
-	public void undoCde() {
-		// TODO Auto-generated method stub
-		
+	public void undoCde() throws ExceptionPlanCo {
+		plan.supprimerPointLivraison(livraison);
+		plan.ajouterPointLivraison(livraison, anciennePosition);
 	}
 
 }

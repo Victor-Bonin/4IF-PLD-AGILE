@@ -5,6 +5,7 @@ package controleur;
 
 import modele.Livraison;
 import modele.Plan;
+import modele.Tournee;
 import vue.Fenetre;
 
 public abstract class EtatDefaut implements Etat{
@@ -18,7 +19,7 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {}
 	@Override
-	public void deplacerLivraison() {}
+	public void deplacerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int anciennePos, int nouvellePos) {}
 	@Override
 	public void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int position) {}
 	@Override
@@ -26,7 +27,7 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {}
 	@Override
-	public void exporterFeuilleDeRoute() {}
+	public void exporterFeuilleDeRoute(Fenetre fenetre, Tournee tournee) {}
 	@Override
 	public void undo(ListeCommande listeCommande, Fenetre fenetre) {}
 	@Override

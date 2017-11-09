@@ -33,7 +33,7 @@ public interface Etat {
 	void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande);
 	void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position);
-	void deplacerLivraison();
+	void deplacerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int anciennePos, int nouvellePos);
 	void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int position);
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
 	void undo(ListeCommande listeCommande, Fenetre fenetre);

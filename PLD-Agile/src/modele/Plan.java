@@ -6,17 +6,20 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 import modele.algo.DjkSolution;
 import modele.algo.TSP;
 import modele.algo.TSP4;
+import modele.evenement.EvenementInsertion;
+import modele.evenement.EvenementSuppression;
 
 /**
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
  * @author 4104
  */
-public class Plan {
+public class Plan extends Observable {
 	private final float VITESSE = 15 *(1000f/3600); // 15km/h en m/s
 	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
@@ -377,19 +380,40 @@ public class Plan {
 	}
 	
 	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
-		if (livraison.getDuree() < 0) 
-			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
-		demandeLivraison.ajoutePointLivraison(livraison);
+		ajouterPointLivraison(livraison, demandeLivraison.getLivraisons().size());
 	}
 	
 	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
 		if (livraison.getDuree() < 0) 
 			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison, index);
+		try {
+			calculerItinerairesSeuls();
+		}
+		catch (Exception e) {
+			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
+		}
+		finally {
+			setChanged();
+			notifyObservers(new EvenementInsertion(livraison));
+		}
+
 	}
 	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
-		demandeLivraison.supprimerPointLivraison(livraison);	
+		int index = demandeLivraison.getLivraisons().indexOf(livraison);
+		demandeLivraison.supprimerPointLivraison(livraison);
+		
+		try {
+			calculerItinerairesSeuls();
+		}
+		catch (Exception e) {
+			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
+		}
+		finally {
+			setChanged();
+			notifyObservers(new EvenementInsertion(livraison));
+		}
 	}
 	
 	/**

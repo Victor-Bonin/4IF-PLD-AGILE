@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
@@ -465,7 +466,8 @@ public class VuePlan extends JPanel{
 	
 	public void annulerCreation() {
 		terminerChoixIntersection();
-		this.remove(iconeNouvelleLivraison);
+		remove(iconeNouvelleLivraison);
+		remove(iconeLivraisonSouris);
 		nouvelleIntersection = null;
 	}
 

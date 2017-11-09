@@ -141,11 +141,11 @@ public class ElementTourneeLivraison extends ElementTournee{
 				}
 			}
 
-			/*public void mouseReleased(MouseEvent ev) {
+			public void mouseReleased(MouseEvent ev) {
 				if (clicDroitAutorise && ev.isPopupTrigger()) {
 					menu.show(ev.getComponent(), ev.getX(), ev.getY());
 				}
-			}*/
+			}
 		});
 				
 		if(livraison instanceof LivraisonPlageHoraire) {
@@ -172,7 +172,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 		position = p;
 		
 		initialiserLivraison();
-
 		nomLabel.setText(Textes.TOURNEE_LIVRAISON_NOUVELLE);
 		idLabel.setText("");
 		dureeLivraisonLabel.setText(Textes.TOURNEE_DUREE + "- min");

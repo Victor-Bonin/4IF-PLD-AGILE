@@ -97,8 +97,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres avoir permuter un point de livraison avec un autre
 	 */
-	public void permuterLivraison() {
-		etatCourant.deplacerLivraison();
+	public void permuterLivraison(Livraison livraison, int anciennePos, int nouvellePos) {
+		etatCourant.deplacerLivraison(fenetre, plan, livraison, listeCommande, anciennePos, nouvellePos);
 	}
 
 	/**
@@ -191,6 +191,10 @@ public class Controleur {
 		Set<String> liste;
 		liste = plan.nomsTronconVoisin(inter.getId());
 		return liste;
+	}
+	
+	public void nettoyerNouvelleLivraison() {
+		fenetre.nettoyerNouvelleLivraison();
 	}
 	
 }

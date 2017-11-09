@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
@@ -24,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  * Cette classe correspond à la vue du plan en particulier
@@ -199,7 +201,8 @@ public class VuePlan extends JPanel{
 		}
 
 		
-		g2d.setStroke(new BasicStroke(Math.max(200/zoom, 4), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g2d.setStroke(new BasicStroke(Math.max(100/zoom, 4), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		float decalageRueDoubleSens = Math.max(100/zoom, 4);
 
 		//Dessiner les tronçons de la tournée
 		if(plan.getTournee()!=null){
@@ -207,10 +210,56 @@ public class VuePlan extends JPanel{
 			for(int i=0; i<plan.getTournee().getItineraire().getChemins().size(); i++) {
 				for(int j=0; j<plan.getTournee().getItineraire().getChemins().get(i).getTroncons().size();j++){
 					Troncon troncon = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j);
-					g2d.drawLine(positionX(troncon.getDebut().getX()), 
-							positionY(troncon.getDebut().getY()),
-							positionX(troncon.getFin().getX()),
-							positionY(troncon.getFin().getY()));
+
+					//Deplacement lie à ce vecteur
+					int x1 = positionX(troncon.getDebut().getX());
+					int y1 = positionY(troncon.getDebut().getY());
+					
+					int x2 = positionX(troncon.getFin().getX());
+					int y2 = positionY(troncon.getFin().getY());
+					
+					if(100/zoom>2) {
+
+						float norm = (float) Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+						float xNorm = ((float)(x2-x1))/norm;
+						float yNorm = ((float)(y2-y1))/norm;
+
+						//Considération du vecteur précédent
+						float xNormPrec = 0;
+						float yNormPrec = 0;
+						if(j>0) {
+							int x1Prec = x1;
+							int y1Prec = y1;
+							Troncon tronconPrec = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j-1);
+							x1Prec = positionX(tronconPrec.getDebut().getX());
+							y1Prec = positionY(tronconPrec.getDebut().getY());
+							float normPrec = (float) Math.sqrt((x1-x1Prec)*(x1-x1Prec)+(y1-y1Prec)*(y1-y1Prec));
+							xNormPrec = ((float)(x1-x1Prec))/normPrec;
+							yNormPrec = ((float)(y1-y1Prec))/normPrec;
+						}
+
+						//Considération du vecteur suivant
+						float xNormSuiv = 0;
+						float yNormSuiv = 0;
+						if(j+1<plan.getTournee().getItineraire().getChemins().get(i).getTroncons().size()) {
+							int x2Suiv = x2;
+							int y2Suiv = y2;
+							Troncon tronconSuiv = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j+1);
+							x2Suiv = positionX(tronconSuiv.getFin().getX());
+							y2Suiv = positionY(tronconSuiv.getFin().getY());
+							float normSuiv = (float) Math.sqrt((x2Suiv-x2)*(x2Suiv-x2)+(y2Suiv-y2)*(y2Suiv-y2));
+							xNormSuiv = ((float)(x2Suiv-x2))/normSuiv;
+							yNormSuiv = ((float)(y2Suiv-y2))/normSuiv;
+						}
+						
+
+						x1 = x1 - (int)(decalageRueDoubleSens*(yNorm/2+yNormPrec/2));
+						x2 = x2 - (int)(decalageRueDoubleSens*(yNorm/2+yNormSuiv/2));
+					
+						y1 = y1 + (int)(decalageRueDoubleSens*(xNorm/2+xNormPrec/2));
+						y2 = y2 + (int)(decalageRueDoubleSens*(xNorm/2+xNormSuiv/2));
+					}
+					g2d.drawLine(x1, y1, x2, y2);
 				}
 			}
 		}
@@ -320,10 +369,7 @@ public class VuePlan extends JPanel{
 		//Dessiner les icones de points de livraisons
 		iconesLivraison = new ArrayList<JLabel>();
 		for (Livraison livraison : demande.getLivraisons()) {
-			JLabel liv = new JLabel(imageIconL);
-			this.add(liv);
-			liv.setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
-			iconesLivraison.add(liv);
+			afficherIconeLivraison(livraison);
 		}
 		//Dessiner l'icone de l'entrepot
 		if (demande.getEntrepot()!=null) {
@@ -335,10 +381,11 @@ public class VuePlan extends JPanel{
 	public void actualiserIcones(){
 		//Dessiner les icones de points de livraisons
 		int i = 0;
-		for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
-			iconesLivraison.get(i).setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
-			i++;
-		}
+		if(!plan.getDemandeLivraison().getLivraisons().isEmpty())
+			for (Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
+				iconesLivraison.get(i).setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+				i++;
+			}
 		//Dessiner l'icone de l'entrepot
 		if (plan.getDemandeLivraison().getEntrepot()!=null) {
 			iconeEntrepot.setBounds(positionX(plan.getDemandeLivraison().getEntrepot().getX())-largeurBalise/2, positionY(plan.getDemandeLivraison().getEntrepot().getY())-hauteurBalise, largeurBalise, hauteurBalise);
@@ -419,7 +466,8 @@ public class VuePlan extends JPanel{
 	
 	public void annulerCreation() {
 		terminerChoixIntersection();
-		this.remove(iconeNouvelleLivraison);
+		remove(iconeNouvelleLivraison);
+		remove(iconeLivraisonSouris);
 		nouvelleIntersection = null;
 	}
 
@@ -465,5 +513,20 @@ public class VuePlan extends JPanel{
 			redoButton.setText(Textes.BUTTON_REDO);
 		}
 	}
-
+	
+	public JLabel afficherIconeLivraison(Livraison livraison) {
+		JLabel liv = new JLabel(imageIconL);
+		this.add(liv);
+		liv.setBounds(positionX(livraison.getX())-largeurBalise/2, positionY(livraison.getY())-hauteurBalise, largeurBalise, hauteurBalise);
+		iconesLivraison.add(liv);
+		return liv;
+	}
+	
+	public JLabel getIconeNouvelleLivraison() {
+		return iconeNouvelleLivraison;
+	}
+	
+	public JLabel getIconeLivraisonSouris() {
+		return iconeLivraisonSouris;
+	}
 }

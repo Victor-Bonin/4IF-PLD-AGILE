@@ -28,6 +28,7 @@ public class EcouteurDeBouton implements ActionListener{
 				ctrl.ouvrirPlan();
 				break;
 			case "import-demande-livraison":
+				ctrl.nettoyerNouvelleLivraison();
 				ctrl.ouvrirLivraison();
 				break;
 			case "export-feuille":

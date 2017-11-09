@@ -22,7 +22,7 @@ import modele.Tournee;
 import modele.Troncon;
 import xml.DeserialiseurXML;
 
-public class planTest {
+public class PlanTest {
 	Plan plan;
 	Intersection inter1;
 	Intersection inter2;
@@ -90,16 +90,16 @@ public class planTest {
 		
 		List<Chemin> cheminExpected = new ArrayList<Chemin>();
 		Chemin chemin13 = new Chemin(interTest1,interTest3);
-		chemin13.addTroncon(0, troncon12);
-		chemin13.addTroncon(1, troncon23);
+		chemin13.ajouterTroncon(0, troncon12);
+		chemin13.ajouterTroncon(1, troncon23);
 		cheminExpected.add(chemin13);
 		Chemin chemin35 = new Chemin(interTest3,interTest5);
-		chemin35.addTroncon(0, troncon35);
+		chemin35.ajouterTroncon(0, troncon35);
 		cheminExpected.add(chemin35);
 		Chemin chemin51 = new Chemin(interTest5,interTest1);
-		chemin51.addTroncon(0, troncon54);
-		chemin51.addTroncon(1, troncon43);
-		chemin51.addTroncon(2, troncon31);
+		chemin51.ajouterTroncon(0, troncon54);
+		chemin51.ajouterTroncon(1, troncon43);
+		chemin51.ajouterTroncon(2, troncon31);
 		cheminExpected.add(chemin51);
 		Itineraire itineraireExpected = new Itineraire(cheminExpected);
 		

@@ -20,7 +20,7 @@ public class Chemin {
 		this.troncons = new ArrayList<Troncon>();
 	}
 	
-	public void addTroncon (int index, Troncon troncon){
+	public void ajouterTroncon (int index, Troncon troncon){
 		this.troncons.add(index, troncon);;
 	}
 	
@@ -36,11 +36,22 @@ public class Chemin {
 		return arrivee;
 	}
 	
-	public boolean equals(Chemin chemin){
+	public boolean egal(Chemin chemin){
 		boolean isEqual = true;
-		for(int i =0; i<this.troncons.size(); i++){
+		if (!((this.getTroncons().size()) == (chemin.getTroncons().size()))) {
+			return false;
+		}
+		for(int i =0; i<this.troncons.size(); i++) {
 			isEqual = isEqual && this.troncons.get(i).equals(chemin.getTroncons().get(i));
 		}
 		return isEqual;
+		
+		/** for(int i =0; i<this.troncons.size(); i++){
+			if (!this.troncons.get(i).equals(chemin.getTroncons().get(i))) {
+				return false;
+			}
+			isEqual = isEqual && this.troncons.get(i).equals(chemin.getTroncons().get(i));
+		}
+		return true;*/
 	}
 }

@@ -19,7 +19,7 @@ public abstract class EtatDefaut implements Etat{
 	@Override
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {}
 	@Override
-	public void deplacerLivraison() {}
+	public void deplacerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int anciennePos, int nouvellePos) {}
 	@Override
 	public void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int position) {}
 	@Override

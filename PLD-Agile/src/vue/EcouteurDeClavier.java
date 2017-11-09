@@ -45,6 +45,9 @@ public class EcouteurDeClavier implements KeyListener{
 			case KeyEvent.VK_N:
 				ctrl.creerLivraison();
 				break;
+			case KeyEvent.VK_E:
+				ctrl.exporterFeuilleDeRoute();
+				break;
 			}
 		}
 		if(keycode == KeyEvent.VK_ENTER)

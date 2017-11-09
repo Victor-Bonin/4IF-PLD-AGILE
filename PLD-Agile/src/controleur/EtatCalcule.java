@@ -126,12 +126,11 @@ public class EtatCalcule extends EtatPlanOuvert {
 
 	@Override
 	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
-
+		this.exporterFeuilleDeRoute(fenetre, plan.getTournee());
 	}
 
 	@Override 
 	public void annulerCreation(Fenetre fenetre) {
 		fenetre.annulerCreation();
 	}
-
 }

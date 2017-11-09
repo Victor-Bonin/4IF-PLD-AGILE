@@ -64,7 +64,7 @@ public class Plan {
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
-	public void calculTournee() throws Exception {
+	public void calculTournee() throws ExceptionPlanCo {
 		
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
@@ -160,7 +160,7 @@ public class Plan {
 		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}
 	
-	public void calculerItinerairesSeuls(){
+	public void calculerItinerairesSeuls() throws ExceptionPlanCo {
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
@@ -196,6 +196,8 @@ public class Plan {
 			long trgId = trgLivraison.getId();
 			
 			result = dijkstra(adjMap, srcId, livraisons.get(trgIndex).getId());
+			if(!result.dist.containsKey(trgId))
+				throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
 			cout[srcIndex][trgIndex]=Math.round(result.dist.get(trgId));
 			pCourtsChemins[srcIndex][trgIndex] = new Chemin(srcLivraison, trgLivraison);
 			do{

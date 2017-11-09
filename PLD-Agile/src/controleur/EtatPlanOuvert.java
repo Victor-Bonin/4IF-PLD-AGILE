@@ -44,6 +44,7 @@ public class EtatPlanOuvert extends EtatInit {
 			catch(ExceptionPlanCo ex) {
 				if(ex.getMessage() != ExceptionPlanCo.ANNULATION_OUVERTURE_FICHIER) {
 					listeCommande.reset();
+					plan.resetDemandeLivraison();
 					controleur.setEtatCourant(controleur.etatPlanOuvert);
 					fenetre.getVuePlan().nettoyerIcones();
 					fenetre.getVuePlan().revalidate();

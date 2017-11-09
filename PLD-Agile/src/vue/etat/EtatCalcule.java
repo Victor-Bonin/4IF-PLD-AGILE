@@ -22,8 +22,13 @@ public class EtatCalcule extends EtatDefaut {
 		VuePlan vuePlan = fenetre.getVuePlan();
 		Plan plan = fenetre.getPlan();
 
-		vueTournee.initTournee(plan.getTournee());
-		vuePlan.afficherIcones(plan.getTournee());
+		if(plan.getDemandeLivraison().getLivraisons().isEmpty()) {
+			vuePlan.nettoyerIcones();
+		}else {
+			vueTournee.initTournee(plan.getDemandeLivraison());
+			vueTournee.afficherBoutonsSuppression();
+			vuePlan.afficherIcones(plan.getDemandeLivraison());
+		}
 		vuePlan.activerBouton(true);
 		
 		vueTournee.ajouterBoutonPlus();

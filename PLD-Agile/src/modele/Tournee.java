@@ -4,11 +4,14 @@ import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.lang.Object;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Ensemble ordonne de livraisons avec un point de depart et d’arrivee ainsi qu’un itineraire
@@ -31,13 +34,14 @@ public class Tournee extends DemandeLivraison{
 		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
 
-	// TODO : recupérer les rues qui composent l'intersection + plages horaires + probleme évident avec les heures + améliorer popup + notification
+	// TODO : recupérer les rues qui composent l'intersection
 	public void exportFeuilleDeRoute() throws IOException, ExceptionPlanCo {
-		this.getEntrepot().getHeureDepart();
+		Calendar heureDepart = this.getEntrepot().getHeureDepart();
+		Calendar heureArrivee = this.getEntrepot().getHeureArrivee();
 		String nomRue = "";
 		float longueurTroncon;
 		String longueurRue = "";
-		String feuilleDeRoute = "";
+		String feuilleDeRoute = "<b> Bonjour ! Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"</b>";
 		int nbTronconsConseq;
 		// Liste des livraisons
 		List<Livraison> livraisons = this.getLivraisons();
@@ -49,7 +53,7 @@ public class Tournee extends DemandeLivraison{
 			for (int j = 0; j < troncons.size(); j = j + 1 + nbTronconsConseq) {
 
 				nomRue = troncons.get(j).GetNomRue();
-				longueurTroncon = troncons.get(j).getLongueur()/10;
+				longueurTroncon = troncons.get(j).getLongueur();
 				long fin = troncons.get(j).getFin().getId();
 				nbTronconsConseq = 0;
 				if (j < troncons.size()-1) {
@@ -66,33 +70,55 @@ public class Tournee extends DemandeLivraison{
 				if (nomRue.equals("")) {
 					nomRue = "Rue 'Inconnue'";
 				}
-				feuilleDeRoute += "<br>Prenez la rue "+ nomRue +" pendant "+ longueurRue +"m \r\n </br>";
+				feuilleDeRoute += "<br><br>Prenez la rue "+ nomRue +" pendant "+ longueurRue +"m";
 			}
 			if (i < livraisons.size()){
 				if (livraisons.get(i) instanceof LivraisonPlageHoraire) {
-					feuilleDeRoute += "<br> <b> Livraison n° "+ (i+1) +" : Arriv&eacutee &agrave "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +", Dur&eacutee : "+ (livraisons.get(i).getDuree()/60) +" min \r\n </b></br>";
+					feuilleDeRoute += "<br><br><b> Livraison n° "+ (i+1) 
+							+" :  Heure d'arrivée estimée  à "+ (((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.MINUTE)
+							+"<br> Vous pouvez livrer à partir de : "+ (((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.MINUTE)
+							+"<br>Attente estimée : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getAttente()/60))
+							+"min<br>Retard maximum : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getRetardPossible()/60))
+							+"min<br> Durée : "+ (livraisons.get(i).getDuree()/60) +" min </b>";
 				}
 				else {
-					feuilleDeRoute += "<br> <b> Livraison n° "+ (i+1) +" : Arriv&eacutee &agrave "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +", Dur&eacutee : "+ (livraisons.get(i).getDuree()/60) +" min \r\n </b></br>";
+					feuilleDeRoute += "<br><br><b> Livraison n° "+ (i+1) +" : Arrivée à "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +", Durée : "+ (livraisons.get(i).getDuree()/60) +" min  </b>";
 				}
 			}
 		}
-
+		feuilleDeRoute += "<br><br><b> Vous êtes arrivés !</b>";
 		creerFeuilleDeRoute (feuilleDeRoute);
 	}
 
 	public void creerFeuilleDeRoute(String feuilleDeRoute) throws ExceptionPlanCo, IOException {
 
 		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("FICHIER HTML", "html");
+		fileChooser.setDialogTitle("Choisir où sauvegarder");
+		fileChooser.setFileFilter(filter);
+		fileChooser.setAcceptAllFileFilterUsed(false);
 		int returnVal = fileChooser.showSaveDialog(null);
+		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
-			BufferedWriter bw;
-			bw = new BufferedWriter(new FileWriter(file));
-			String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
-			bw.write(contenu);
-			bw.close();
-			Desktop.getDesktop().browse(file.toURI());
+			if (file.getName().endsWith(".html")) {
+				BufferedWriter bw;
+				bw = new BufferedWriter(new FileWriter(file));
+				String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
+				bw.write(contenu);
+				bw.close();
+				Desktop.getDesktop().browse(file.toURI());
+			} else {
+				String fileName = (file.getName());
+				java.io.File fichier = new java.io.File(fileName +".html"); 
+				BufferedWriter bw;
+				bw = new BufferedWriter(new FileWriter(fichier));
+				String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
+				bw.write(contenu);
+				bw.close();
+				Desktop.getDesktop().browse(fichier.toURI());
+			}
 		}
 		else 
 			if (returnVal == JFileChooser.CANCEL_OPTION)

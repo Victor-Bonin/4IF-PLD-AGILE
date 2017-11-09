@@ -41,7 +41,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 	private Calendar date;
 	private int position;
 
-	private JPopupMenu menu;
 	private JLabel dureeLivraisonLabel;
 	private JButton boutonAction;
 	private JLabel heureLabel;
@@ -110,7 +109,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ctrl.creerLivraison();
+				ctrl.creerLivraisonApres(position);
 			}
 		});
 		
@@ -129,12 +128,15 @@ public class ElementTourneeLivraison extends ElementTournee{
 		});
 	}
 
+	// TODO : enlever nom et remplacer par position!
 	public ElementTourneeLivraison(Controleur ctrl, int nom, int p) {
 		super(ctrl);
-
+		
+		position = p;
+		
 		initialiserLivraison();
 
-		nomLabel.setText(Textes.TOURNEE_LIVRAISON + nom + " - ");
+		nomLabel.setText(Textes.TOURNEE_LIVRAISON_NOUVELLE);
 		idLabel.setText("");
 		dureeLivraisonLabel.setText(Textes.TOURNEE_DUREE + "- min");
 		heureLabel.setText(Textes.TOURNEE_PASSAGE + "-");

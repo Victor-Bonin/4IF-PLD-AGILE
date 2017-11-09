@@ -49,33 +49,9 @@ import modele.LivraisonPlageHoraire;
  */
 public class ElementTournee extends JPanel{
 	private static final long serialVersionUID = 6534684555513953601L;
-	private Calendar date;
-	
-	
-	
-	
-	JPopupMenu menu;
-	
-	
-	
-	
-	
-	
-	
-	private boolean isSelected = false;
-	
-	
-	// Utilisés dans les classes filles
-	//private Livraison livraison;
-	private JLabel dureeLivraisonLabel;
-	//private JButton boutonValider;
-	private JLabel heureLabel;	
-	//private JSpinner dureeModification;
-	
-	// Variables classe mère
-	protected Controleur controleur;
-	//protected int place;
-	
+	protected JPopupMenu menu;
+		
+	protected Controleur controleur;	
 	protected JLabel nomLabel;
 	protected JLabel idLabel;
 	protected JLabel imageLabel;

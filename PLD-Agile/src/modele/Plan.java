@@ -20,7 +20,7 @@ import modele.evenement.EvenementSuppression;
  * @author 4104
  */
 public class Plan extends Observable {
-	private final float VITESSE = 15 *(10000f/3600); // 15km/h en dm/s
+	private final float VITESSE = 15 *(1000f/3600); // 15km/h en m/s
 	private final int LIMITE_TSP = 10000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;

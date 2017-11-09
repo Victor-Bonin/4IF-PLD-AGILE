@@ -32,9 +32,9 @@ public interface Etat {
 			ListeCommande listeCommande);
 	void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande);
-	void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd);
+	void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position);
 	void deplacerLivraison();
-	void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd);
+	void supprimerLivraison(Fenetre f, Plan p, Livraison l, ListeCommande listeCmd, int position);
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
 	void undo(ListeCommande listeCommande, Fenetre fenetre);
 	void redo(ListeCommande listeCommande, Fenetre fenetre);
@@ -42,6 +42,7 @@ public interface Etat {
 	void afficherNotif(Fenetre fenetre);
 	void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre);
 	void creerLivraison(Fenetre fenetre);
+	void creerLivraisonApres(Fenetre fenetre, int position);
 	void obtenirPlusProcheIntersection(Fenetre fenetre, Plan plan, double x, double y);
 	void commencerChoixIntersection(Fenetre fenetre);
 	void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande);

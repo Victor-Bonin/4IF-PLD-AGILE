@@ -33,20 +33,22 @@ public class CommandeAjouter implements Commande {
 
 	private Plan plan;
 	private Livraison livraison;
+	private int position;
 	
 	/**
 	 * Cree la commande qui ajoute la livraison l au plan p
 	 * @param p Plan	
 	 * @param l Livraison
 	 */
-	public CommandeAjouter(Plan p, Livraison l) {
+	public CommandeAjouter(Plan p, Livraison l, int positionDansListe) {
 		plan = p;
 		livraison = l;
+		position = positionDansListe;
 	}
 	
 	@Override
 	public void doCde() throws ExceptionPlanCo {
-		plan.ajouterPointLivraison(livraison);
+		plan.ajouterPointLivraison(livraison, position);
 		plan.calculerItinerairesSeuls();
 	}
 

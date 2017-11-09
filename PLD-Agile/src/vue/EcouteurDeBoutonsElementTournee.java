@@ -12,13 +12,13 @@ import java.awt.event.MouseEvent;
  */
 public class EcouteurDeBoutonsElementTournee implements ActionListener{
 	private controleur.Controleur ctrl;
-	private ElementTournee elemTournee;
+	private ElementTourneeLivraison elemTournee;
 	
 	/**
 	 * Constructeur d'une instance d'un écouteur
 	 * @param c le controleur sur lequel on appelera les actions
 	 */
-	public EcouteurDeBoutonsElementTournee(controleur.Controleur c, ElementTournee el){
+	public EcouteurDeBoutonsElementTournee(controleur.Controleur c, ElementTourneeLivraison el){
 		ctrl = c;
 		elemTournee = el;
 	}
@@ -34,10 +34,10 @@ public class EcouteurDeBoutonsElementTournee implements ActionListener{
 				break;
 			case "valider-creation":
 				elemTournee.setDuree();
-				ctrl.ajouterLivraison(elemTournee.getLivraison());
+				ctrl.ajouterLivraison(elemTournee.getLivraison(), elemTournee.getPosition());
 				break;
 			case "supprimer-livraison":
-				ctrl.supprimerLivraison(elemTournee.getLivraison());
+				ctrl.supprimerLivraison(elemTournee.getLivraison(), elemTournee.getPosition());
 				break;
 		}
 		

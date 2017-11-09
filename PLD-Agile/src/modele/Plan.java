@@ -64,7 +64,7 @@ public class Plan {
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
 	 */
-	public void calculTournee() throws Exception {
+	public void calculTournee() throws ExceptionPlanCo {
 		
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
@@ -160,7 +160,7 @@ public class Plan {
 		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}
 	
-	public void calculerItinerairesSeuls(){
+	public void calculerItinerairesSeuls() throws ExceptionPlanCo {
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
@@ -196,12 +196,14 @@ public class Plan {
 			long trgId = trgLivraison.getId();
 			
 			result = dijkstra(adjMap, srcId, livraisons.get(trgIndex).getId());
+			if(!result.dist.containsKey(trgId))
+				throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
 			cout[srcIndex][trgIndex]=Math.round(result.dist.get(trgId));
 			pCourtsChemins[srcIndex][trgIndex] = new Chemin(srcLivraison, trgLivraison);
-			do{
+			while(trgId != srcId){
 				pCourtsChemins[srcIndex][trgIndex].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
 				trgId = result.prev.get(trgId);
-			}while(trgId != srcId); 
+			}
 		}
 		
 		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, solutionChoisie);
@@ -224,37 +226,41 @@ public class Plan {
 			livs.add((Livraison)livraisons.get(ordreTournee[i]));
 		}
 		
-		Calendar heureDePassage = (Calendar)entrepot.getHeureDepart().clone();
-		int heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
-		Livraison livPremiere = livs.get(0);
-		livPremiere.setHeurePassage((Calendar)heureDePassage.clone());
-		if(livPremiere instanceof LivraisonPlageHoraire){
-			int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(0)).getDebut()) - heureDePassageInt);
-			((LivraisonPlageHoraire)livPremiere).setAttente(attente);
-			livPremiere.getHeurePassage().add(Calendar.SECOND,Math.max(couts[0][ordreTournee[1]],attente));
+		if(livs.isEmpty()) {
+			entrepot.setHeureArrivee((Calendar)entrepot.getHeureArrivee().clone());
 		}else {
-			livPremiere.getHeurePassage().add(Calendar.SECOND,couts[0][ordreTournee[1]]);
-		}
-		
-		for(int i = 1; i<nbLivraisons-1; i++){
-			Livraison livI = livs.get(i);
-			
-			heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
-			heureDePassage.add(Calendar.SECOND, livs.get(i-1).getDuree());
-			heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
-			
-			livI.setHeurePassage((Calendar)heureDePassage.clone());
-			if(livI instanceof LivraisonPlageHoraire){
-				int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(i)).getDebut()) - heureDePassageInt);
-				((LivraisonPlageHoraire)livI).setAttente(attente);
-				livI.getHeurePassage().add(Calendar.SECOND,Math.max(couts[ordreTournee[i]][ordreTournee[i+1]],attente));
+			Calendar heureDePassage = (Calendar)entrepot.getHeureDepart().clone();
+			int heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
+			Livraison livPremiere = livs.get(0);
+			livPremiere.setHeurePassage((Calendar)heureDePassage.clone());
+			if(livPremiere instanceof LivraisonPlageHoraire){
+				int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(0)).getDebut()) - heureDePassageInt);
+				((LivraisonPlageHoraire)livPremiere).setAttente(attente);
+				livPremiere.getHeurePassage().add(Calendar.SECOND,Math.max(couts[0][ordreTournee[1]],attente));
 			}else {
-				livI.getHeurePassage().add(Calendar.SECOND,couts[ordreTournee[i]][ordreTournee[i+1]]);
+				livPremiere.getHeurePassage().add(Calendar.SECOND,couts[0][ordreTournee[1]]);
 			}
+			
+			for(int i = 1; i<nbLivraisons-1; i++){
+				Livraison livI = livs.get(i);
+				
+				heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
+				heureDePassage.add(Calendar.SECOND, livs.get(i-1).getDuree());
+				heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
+				
+				livI.setHeurePassage((Calendar)heureDePassage.clone());
+				if(livI instanceof LivraisonPlageHoraire){
+					int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(i)).getDebut()) - heureDePassageInt);
+					((LivraisonPlageHoraire)livI).setAttente(attente);
+					livI.getHeurePassage().add(Calendar.SECOND,Math.max(couts[ordreTournee[i]][ordreTournee[i+1]],attente));
+				}else {
+					livI.getHeurePassage().add(Calendar.SECOND,couts[ordreTournee[i]][ordreTournee[i+1]]);
+				}
+			}
+			
+			entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
+			entrepot.getHeureArrivee().add(Calendar.SECOND, (couts[ordreTournee[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree()));
 		}
-		
-		entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
-		entrepot.getHeureArrivee().add(Calendar.SECOND, (couts[ordreTournee[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree()));
 
 		demandeLivraison = new Tournee(entrepot, livs, itineraire);
 		
@@ -380,7 +386,6 @@ public class Plan {
 		if (livraison.getDuree() < 0) 
 			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
 		demandeLivraison.ajoutePointLivraison(livraison, index);
-		
 	}
 	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {

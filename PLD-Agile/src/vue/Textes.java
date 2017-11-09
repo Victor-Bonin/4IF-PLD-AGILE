@@ -20,6 +20,8 @@ public interface Textes {
 	public static final String NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED = "Echec lors de l'import de la demande de livraison. Vérifier votre fichier.";
 	public static final String NOTIF_TOURNEE_CALCULE = "Vous pouvez maintenant éditer votre tournée ou exporter une feuille de route";
 	public static final String NOTIF_ITINERAIRE_CALCULE = "Itinéraire mis à jour, vous pouvez toujours éditer votre tournée ou exporter une feuille de route";
+	public static final String NOTIF_LIVRAISON_AJOUTEE = "Une livraison a été ajoutée à l'itinéraire.";
+	public static final String NOTIF_LIVRAISON_SUPPRIMEE = "Une livraison a été supprimée de l'itinéraire.";
 	public static final String NOTIF_CALCUL_TOURNEE = "Calcul en cours...";
 	public static final String NOTIF_CALCUL_TOURNEE_FAILED = "Echec lors du calcul de votre tournée";
 	public static final String NOTIF_CALCUL_ITINERAIRE = "Calcul de l'itinéraire en cours...";
@@ -38,6 +40,7 @@ public interface Textes {
 	
 	public static final String TITRE_TOURNEE = "Tournée :";
 	public static final String TOURNEE_LIVRAISON = "Livraison ";
+	public static final String TOURNEE_LIVRAISON_NOUVELLE = "Nouvelle livraison ";
 	public static final String TOURNEE_ENTREPOT = "Entrepot ";
 	public static final String TOURNEE_DUREE = "Durée ";
 	public static final String TOURNEE_INTERSECTION = "Intersection de : ";

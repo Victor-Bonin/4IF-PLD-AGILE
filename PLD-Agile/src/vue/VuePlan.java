@@ -197,7 +197,10 @@ public class VuePlan extends JPanel{
 				positionY(t.getFin().getY()));
 			
 		}
+
 		
+		g2d.setStroke(new BasicStroke(Math.max(200/zoom, 4), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
 		//Dessiner les tronçons de la tournée
 		if(plan.getTournee()!=null){
 			g2d.setColor(CharteGraphique.GRAPH_TRONCON_WAY);
@@ -386,7 +389,7 @@ public class VuePlan extends JPanel{
 	
 	public void actualiserIconeSouris(int x, int y) {
 		// Activer le listener
-		iconeLivraisonSouris.setBounds(x+10, y+10, largeurBalise, hauteurBalise);
+		iconeLivraisonSouris.setBounds(x-largeurBalise/2, y-hauteurBalise, largeurBalise, hauteurBalise);
 	}
 	
 	public void terminerChoixIntersection() {

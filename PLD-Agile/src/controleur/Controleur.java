@@ -93,8 +93,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres cree avoir un point de livraison via la carte ou le bouton "+"
 	 */
-	public void ajouterLivraison(Livraison l) {
-		etatCourant.ajouterLivraison(fenetre, plan, l, listeCommande);
+	public void ajouterLivraison(Livraison l, int position) {
+		etatCourant.ajouterLivraison(fenetre, plan, l, listeCommande, position);
 	}
 
 	/**
@@ -107,8 +107,8 @@ public class Controleur {
 	/**
 	 * Methode appelee apres avoir supprimer un point de livraison
 	 */
-	public void supprimerLivraison(Livraison l) {
-		etatCourant.supprimerLivraison(fenetre, plan, l, listeCommande);
+	public void supprimerLivraison(Livraison l, int position) {
+		etatCourant.supprimerLivraison(fenetre, plan, l, listeCommande, position);
 	}
 
 	/**
@@ -152,6 +152,13 @@ public class Controleur {
 	 */
 	public void afficherNotif() {
 		etatCourant.afficherNotif(fenetre);
+	}
+	
+	/**
+	 * Methode appelee apres un clic droit -> Ajouter après sur l'un des éléments de la tournée
+	 */
+	public void creerLivraisonApres(int position) {
+		etatCourant.creerLivraisonApres(fenetre, position);
 	}
 	
 	/**

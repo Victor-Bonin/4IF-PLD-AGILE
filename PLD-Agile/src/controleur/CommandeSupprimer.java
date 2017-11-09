@@ -3,6 +3,7 @@ package controleur;
 import modele.ExceptionPlanCo;
 import modele.Livraison;
 import modele.Plan;
+import vue.CharteGraphique;
 
 /**
  * Commande de suppression d'un point de livraison de la demande de livraison.
@@ -12,15 +13,17 @@ public class CommandeSupprimer implements Commande {
 
 	private Plan plan;
 	private Livraison livraison;
+	private int position;
 	
 	/**
 	 * Cree la commande qui supprime la livraison l du plan p
 	 * @param p
 	 * @param l
 	 */
-	public CommandeSupprimer(Plan p, Livraison l) {
+	public CommandeSupprimer(Plan p, Livraison l, int positionDansListe) {
 		plan = p;
 		livraison = l;
+		position = positionDansListe;
 	}
 	
 	@Override
@@ -31,7 +34,7 @@ public class CommandeSupprimer implements Commande {
 
 	@Override
 	public void undoCde() throws ExceptionPlanCo {
-		plan.ajouterPointLivraison(livraison);
+		plan.ajouterPointLivraison(livraison, position);
 		plan.calculerItinerairesSeuls();
 	}
 

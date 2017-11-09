@@ -55,6 +55,7 @@ public class Fenetre extends JFrame{
 	public final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
 	public final EtatCalcule etatCalcule = new EtatCalcule();
 	public final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
+	public final EtatModifie etatModifie = new EtatModifie();
 	
 	
 	public Fenetre(Controleur ctrl, Plan plan){
@@ -204,13 +205,14 @@ public class Fenetre extends JFrame{
 	public void commencerChoixIntersection() {
 		vuePlan.commencerChoixIntersection();
 	}
-	
+	/*
 	//TODO : supprimer? (doit se faire avec le pattern)
 	public void initialiserTournee() {
 		vueTournee.initTournee(plan.getTournee());
 		vuePlan.afficherIcones(plan.getDemandeLivraison());
 		ajouterEcouteursSynchro();
 	}
+	*/
 	
 	public void annulerCreation() {
 		vueTournee.annulerCreation();

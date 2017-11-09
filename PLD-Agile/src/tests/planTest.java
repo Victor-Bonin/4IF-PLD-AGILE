@@ -3,20 +3,17 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import modele.Chemin;
 import modele.Entrepot;
+import modele.ExceptionPlanCo;
 import modele.Intersection;
 import modele.Itineraire;
 import modele.Livraison;
@@ -24,7 +21,6 @@ import modele.Plan;
 import modele.Tournee;
 import modele.Troncon;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class planTest {
 	Plan plan;
@@ -46,8 +42,8 @@ public class planTest {
 
 	@Test
 	public void calculerTourneeTest(){
-		File planTest = new File("assets/planTest.xml");
-		File dlTest = new File("assets/DLTest.xml");
+		File planTest = new File("assets/Tests/planCalculTourneeTest.xml");
+		File dlTest = new File("assets/Tests/DLCalculTourneeTest.xml");
 		try{
 			DeserialiseurXML.chargerFichier(plan, planTest);
 			assert(plan.getIntersections() != null);
@@ -115,8 +111,8 @@ public class planTest {
 	
 	@Test
 	public void calculerTourneeTestEchec(){
-		File planTest = new File("assets/planTest.xml");
-		File dlTest = new File("assets/DLTestEchec.xml");
+		File planTest = new File("assets/Tests/planCalculTourneeTest.xml");
+		File dlTest = new File("assets/Tests/DLCalculTourneeTestEchec.xml");
 		try{
 			DeserialiseurXML.chargerFichier(plan, planTest);
 			assert(plan.getIntersections() != null);
@@ -126,7 +122,7 @@ public class planTest {
 			plan.calculTournee();
 			fail();
 		} catch (Exception e) {
-			assertEquals( e.getMessage(), "Aucune solution respectant les contraintes n'a pas être trouvée");
+			assertEquals( e.getMessage(), ExceptionPlanCo.AUCUNE_SOLUTION);
 		}
 	}
 	

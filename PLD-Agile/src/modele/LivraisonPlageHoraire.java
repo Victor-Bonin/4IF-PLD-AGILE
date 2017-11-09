@@ -30,6 +30,7 @@ import java.util.Calendar;
 public class LivraisonPlageHoraire extends Livraison {
 
 	private PlageHoraire plage;
+	private int attente;
 
 	public LivraisonPlageHoraire(Intersection inter, int dureeArret, Calendar debut, Calendar fin) {
 		super(inter, dureeArret);
@@ -38,6 +39,18 @@ public class LivraisonPlageHoraire extends Livraison {
 	
 	public PlageHoraire getPlage(){
 		return this.plage;
+	}
+	
+	public void setAttente(int attente) {
+		this.attente = attente;
+	}
+	
+	public int getAttente() {
+		return attente;
+	}
+	
+	public int getRetardPossible() {
+		return getSecondsInDay(plage.getFin()) - (getSecondsInDay(heurePassage) + duree);
 	}
 	
 	public Calendar getDebut() {

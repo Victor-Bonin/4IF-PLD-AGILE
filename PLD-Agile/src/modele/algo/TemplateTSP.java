@@ -8,7 +8,7 @@ public abstract class TemplateTSP implements TSP {
 	private Integer[] meilleureSolution;
 	private int coutMeilleureSolution = 0;
 	private Boolean tempsLimiteAtteint;
-	private int compteur = 0;
+//	private int compteur = 0;
 	
 	public Boolean getTempsLimiteAtteint(){
 		return tempsLimiteAtteint;
@@ -23,8 +23,8 @@ public abstract class TemplateTSP implements TSP {
 		ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
 		vus.add(0); // le premier sommet visite est 0
 		branchAndBound(0, nonVus, vus, horaires[0][0] , couts, durees, horaires, System.currentTimeMillis(), tpsLimite);
-		System.out.println("Tentatives : " + compteur);
-		System.out.println("Total d'apres algo : " + (coutMeilleureSolution/60));
+//		System.out.println("Tentatives : " + compteur);
+//		System.out.println("Total d'apres algo : " + (coutMeilleureSolution/60));
 		return meilleureSolution;
 	}
 	
@@ -42,8 +42,10 @@ public abstract class TemplateTSP implements TSP {
 	 * Methode devant etre redefinie par les sous-classes de TemplateTSP
 	 * @param sommetCourant
 	 * @param nonVus : tableau des sommets restant a visiter
-	 * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
-	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param heureActuelle : heure a laquelle on quitte le sommetCourant
+	 * @param couts : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
+	 * @param durees : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param horaires : horaires[i][k] = horaire du créneau pour le point i, k=0 pour horaireDébut, k=1 pour horaire fin
 	 * @return une borne inferieure du cout des permutations commencant par sommetCourant, 
 	 * contenant chaque sommet de nonVus exactement une fois et terminant par le sommet 0
 	 */
@@ -53,8 +55,10 @@ public abstract class TemplateTSP implements TSP {
 	 * Methode devant etre redefinie par les sous-classes de TemplateTSP
 	 * @param sommetCrt
 	 * @param nonVus : tableau des sommets restant a visiter
-	 * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
-	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param heureActuelle : heure a laquelle on quitte le sommetCourant
+	 * @param couts : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
+	 * @param durees : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param horaires : horaires[i][k] = horaire du créneau pour le point i, k=0 pour horaireDébut, k=1 pour horaire fin
 	 * @return un iterateur permettant d'iterer sur tous les sommets de nonVus
 	 */
 	protected abstract Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] couts, int[] durees, int[][] horaires);
@@ -65,13 +69,14 @@ public abstract class TemplateTSP implements TSP {
 	 * @param nonVus la liste des sommets qui n'ont pas encore ete visites
 	 * @param vus la liste des sommets visites (y compris sommetCrt)
 	 * @param heureFinActuelle la somme des couts des arcs du chemin passant par tous les sommets de vus + la somme des duree des sommets de vus
-	 * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
-	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param couts : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
+	 * @param durees : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param horaires : horaires[i][k] = horaire du créneau pour le point i, k=0 pour horaireDébut, k=1 pour horaire fin
 	 * @param tpsDebut : moment ou la resolution a commence
 	 * @param tpsLimite : limite de temps pour la resolution
 	 */	
 	 void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int heureFinActuelle, int[][] couts, int[] durees, int[][] horaires, long tpsDebut, int tpsLimite){
-		 compteur++;
+//		 compteur++;
 		 if (System.currentTimeMillis() - tpsDebut > tpsLimite){
 			 tempsLimiteAtteint = true;
 			 return;

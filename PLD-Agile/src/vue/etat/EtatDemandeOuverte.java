@@ -2,6 +2,7 @@ package vue.etat;
 
 import javax.swing.JPanel;
 
+import modele.DemandeLivraison;
 import modele.Plan;
 import vue.EcouteurDeSourisDeSynchronisation;
 import vue.Fenetre;
@@ -26,8 +27,12 @@ public class EtatDemandeOuverte extends EtatDefaut {
 		VuePlan vuePlan = fenetre.getVuePlan();
 		Plan plan = fenetre.getPlan();
 		
-		vueTournee.initTournee(plan.getDemandeLivraison());
-		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		if(plan.getDemandeLivraison().getLivraisons().isEmpty()) {
+			vuePlan.nettoyerIcones();
+		}else {
+			vueTournee.initTournee(plan.getDemandeLivraison());
+			vuePlan.afficherIcones(plan.getDemandeLivraison());
+		}
 		vuePlan.activerAnnulationBouton(false);
 		
 		fenetre.ajouterEcouteursSynchro();

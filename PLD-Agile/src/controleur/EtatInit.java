@@ -21,13 +21,12 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
+import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.Fenetre;
 import vue.CharteGraphique;
 import vue.Textes;
-import xml.AnnulationXML;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class EtatInit extends EtatDefaut{
 
@@ -42,10 +41,7 @@ public class EtatInit extends EtatDefaut{
 			controleur.afficherFenetre();
 			controleur.afficherNotif();
 		}
-		catch (AnnulationXML ex){
-			controleur.afficherNotif();
-		}
-		catch (ExceptionXML ex){
+		catch (ExceptionPlanCo ex){
 			if (ex.getMessage() != "")
 				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			else

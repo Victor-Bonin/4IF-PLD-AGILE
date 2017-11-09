@@ -147,6 +147,24 @@ public class VueTournee extends JPanel{
 		//elementEnCreation.setMaximumSize(elementEnCreation.getPreferredSize());
 		//elementEnCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
 		//pan.add(new JLabel());
+		pan.revalidate();
+		pan.repaint();
+	}
+	
+	
+	public void creerLivraisonApres(int place) {
+		panelCreation = new JPanel();
+		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelCreation.setBackground(CharteGraphique.BG_COLOR);
+		panelCreation.setLayout(new BorderLayout());
+		
+		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,place+1);
+
+		pan.remove(panelAjout);
+		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
+		pan.add(panelCreation, place+2);
+		pan.revalidate();
+		pan.repaint();
 	}
 	
 	public ArrayList<ElementTournee> getElementsTournee(){

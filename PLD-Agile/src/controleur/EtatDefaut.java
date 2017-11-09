@@ -37,6 +37,8 @@ public abstract class EtatDefaut implements Etat{
 	public void afficherNotif(Fenetre fenetre) {}
 	@Override
 	public void creerLivraison(Fenetre fenetre) {}
+	@Override
+	public void creerLivraisonApres(Fenetre fenetre, int position) {}
 	@Override 
 	public void obtenirPlusProcheIntersection(Fenetre fenetre, Plan plan ,double x, double y) {}
 	@Override 

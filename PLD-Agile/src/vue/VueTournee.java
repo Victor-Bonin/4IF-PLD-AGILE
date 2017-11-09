@@ -48,7 +48,7 @@ public class VueTournee extends JPanel{
 	
 	private ArrayList<ElementTournee> elementsTournee;
 	ElementTournee elementDetaille;
-	ElementTournee elementEnCreation;
+	ElementTourneeLivraison elementEnCreation;
 	
 	EcouteurDeBouton ecouteurBoutons;
 	
@@ -107,7 +107,7 @@ public class VueTournee extends JPanel{
 		pan.removeAll();
 		
 		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
-		ElementTournee entrepot = new ElementTournee(ctrl, plan.getDemandeLivraison().getEntrepot());
+		ElementTournee entrepot = new ElementTourneeEntrepot(ctrl, plan.getDemandeLivraison().getEntrepot());
 		entrepot.setMaximumSize(entrepot.getPreferredSize());
 		pan.add(entrepot);
 		entrepot.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -117,7 +117,7 @@ public class VueTournee extends JPanel{
 		
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
-		    ElementTournee liv = new ElementTournee(ctrl, livraison, i+1, i);
+		    ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, i+1, i);
 		    pan.add(liv);
 		    liv.setMaximumSize(liv.getPreferredSize());
 		    liv.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -142,7 +142,7 @@ public class VueTournee extends JPanel{
 		panelCreation.setBackground(CharteGraphique.BG_COLOR);
 		panelCreation.setLayout(new BorderLayout());
 		
-		elementEnCreation = new ElementTournee(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
+		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
 
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);

@@ -50,30 +50,115 @@ import modele.LivraisonPlageHoraire;
 public class ElementTournee extends JPanel{
 	private static final long serialVersionUID = 6534684555513953601L;
 	private Calendar date;
-	private JPanel details;
-	private JLabel nomLabel;
-	private JLabel idLabel;
-	private JLabel heureLabel;
-	private JLabel dureeLivraisonLabel;
-	private JLabel imageLabel;
-	private JSpinner dureeModification;
-	private JButton boutonValider;
+	
+	
+	
+	
 	JPopupMenu menu;
 	
-	private ImageIcon imageIconNormal;
-	private ImageIcon imageIconSurvol;
 	
-	private Livraison livraison;
 	
-	EcouteurDeBoutonsElementTournee ecouteurBoutons;
 	
-	// TODO : mettre tous les JLabel en attribut
 	
-	private int place;
+	
 	
 	private boolean isSelected = false;
-	private boolean areDetailsVisible = false;
 	
+	
+	// Utilisés dans les classes filles
+	//private Livraison livraison;
+	private JLabel dureeLivraisonLabel;
+	//private JButton boutonValider;
+	private JLabel heureLabel;	
+	//private JSpinner dureeModification;
+	
+	// Variables classe mère
+	protected Controleur controleur;
+	//protected int place;
+	
+	protected JLabel nomLabel;
+	protected JLabel idLabel;
+	protected JLabel imageLabel;
+	protected JPanel infos;
+	protected JPanel details;
+	
+	protected ImageIcon imageIconNormal;
+	protected ImageIcon imageIconSurvol;
+	
+	protected EcouteurDeBoutonsElementTournee ecouteurBoutons;
+	
+	protected boolean areDetailsVisible = false;
+	
+	// TODO : mettre tous les JLabel en attribut
+
+	
+	public ElementTournee(Controleur ctrl) {
+		super();
+		
+		this.controleur = ctrl;
+		
+		setOpaque(true);
+		setBackground(CharteGraphique.BG_COLOR);
+		
+		setBorder(new CompoundBorder(
+				new EmptyBorder(10, 10, 0, 10),
+				new CompoundBorder(
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new EmptyBorder(10, 10, 10, 10)
+						)
+				));
+		
+		nomLabel = new JLabel();
+		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
+		
+		idLabel = new JLabel();
+		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
+		
+		imageLabel = new JLabel();
+		
+		infos = new JPanel();
+		infos.setLayout(new BorderLayout());
+		infos.setBackground(CharteGraphique.BG_COLOR);
+		
+		details = new JPanel();
+		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setLayout(new BorderLayout());
+
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.gridx = 0;
+	    c.gridy = 0;
+	    c.weighty = 1;
+	    c.gridheight = 2;
+	    c.insets = new Insets(0,0,0,10);
+	    add(imageLabel,c);
+	   		
+		c.insets = new Insets(0,0,0,0);
+		c.gridheight = 1;
+		c.gridx = 1;
+		add(nomLabel,c);
+		
+		c.weightx = 1;
+		c.gridx = 2;
+		add(idLabel,c);
+		
+		c.gridwidth = 2;
+		c.gridy = 1;
+		c.gridx = 1;
+		c.fill = GridBagConstraints.VERTICAL;
+		add(infos, c);
+		
+		c.insets = new Insets(10,0,0,0);
+		c.gridwidth = 4;
+		c.gridy = 2;
+		c.gridx = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(details, c);
+	}
+	
+	/*
 	public ElementTournee(Controleur ctrl, Livraison livraison, int nom, int p) {
 		super();
 		
@@ -103,7 +188,7 @@ public class ElementTournee extends JPanel{
 		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		
 		
-		// JPanel détails
+		// JPanel details
 		details = new JPanel();
 		details.setBackground(CharteGraphique.BG_COLOR);
 		details.setLayout(new BorderLayout());
@@ -141,6 +226,9 @@ public class ElementTournee extends JPanel{
 		String description = composeToolTipString(livraison, listeTronconsIntersection);
 		setToolTipText("<html>" + description + "</html>");
 		
+		infos = new JPanel();
+		infos.setLayout(new BorderLayout());
+		heureLabel = new JLabel();
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -158,7 +246,7 @@ public class ElementTournee extends JPanel{
 	    		texte += "0";
 	    	}
 	    	texte += date.get(Calendar.MINUTE);
-	    	heureLabel = new JLabel(texte);
+	    	heureLabel.setText(texte);
 			heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 	    }
 
@@ -175,6 +263,9 @@ public class ElementTournee extends JPanel{
 	    		System.out.println("Une image est manquante");
 	    }
 		
+		infos.add(dureeLivraisonLabel, BorderLayout.PAGE_START );
+		infos.add(heureLabel, BorderLayout.WEST );
+		
 		c.insets = new Insets(0,0,0,0);
 		c.gridheight = 1;
 		c.gridx = 1;
@@ -184,21 +275,16 @@ public class ElementTournee extends JPanel{
 		c.gridx = 2;
 		add(idLabel,c);
 		
+		
 		c.gridwidth = 2;
 		c.gridy = 1;
 		c.gridx = 1;
-		add(dureeLivraisonLabel, c);
-		
-		if(livraison.getHeurePassage() != null) {
-			c.gridwidth = 2;
-			c.gridy = 2;
-			c.gridx = 1;
-			add(heureLabel, c);
-		}
+		add(infos, c);
 		
 		c.insets = new Insets(10,0,0,0);
 		c.gridwidth = 4;
-		c.gridy = 3;
+		//c.gridy = 3;
+		c.gridy = 2;
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
@@ -232,7 +318,7 @@ public class ElementTournee extends JPanel{
 	}
 	
 	public ElementTournee(Controleur ctrl, Entrepot entrepot) {
-		super();
+		//super();
 		
 		setOpaque(true);
 		setBackground(CharteGraphique.BG_COLOR);
@@ -263,7 +349,7 @@ public class ElementTournee extends JPanel{
     	heureLabel = new JLabel(texte);
 		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 		heureLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-		
+		dureeLivraisonLabel = new JLabel();
     	if (entrepot.getHeureArrivee() != null) {
 	    	texte = entrepot.getHeureArrivee().get(Calendar.HOUR_OF_DAY) + "h";
 	    	if(entrepot.getHeureArrivee().get(Calendar.MINUTE)<10) {
@@ -271,11 +357,11 @@ public class ElementTournee extends JPanel{
 	    	}
 	    	texte += entrepot.getHeureArrivee().get(Calendar.MINUTE);
 	    	if((entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())>1000*60*60*24) {
-	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j après";
+	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j aprÃ¨s";
 	    		System.out.println(entrepot.getHeureArrivee().get(Calendar.HOUR_OF_DAY) + "  " +entrepot.getHeureDepart().get(Calendar.HOUR_OF_DAY));
 	    	}
 	    	
-	    	dureeLivraisonLabel = new JLabel(texte);
+	    	dureeLivraisonLabel.setText(texte);
 			dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
 			dureeLivraisonLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
     	}
@@ -309,7 +395,7 @@ public class ElementTournee extends JPanel{
 		c.gridx = 0;
 	    c.gridy = 0;
 	    c.weighty = 1;
-	    c.gridheight = 3;
+	    c.gridheight = 2;
 	    c.insets = new Insets(0,0,0,10);
 
 
@@ -335,21 +421,21 @@ public class ElementTournee extends JPanel{
 		c.gridx = 2;
 		add(idLabel,c);
 		
+		infos= new JPanel();
+		infos.setLayout(new BorderLayout());
+		infos.add(heureLabel, BorderLayout.WEST );
+		infos.add(dureeLivraisonLabel, BorderLayout.PAGE_START );
+		
+		
 		c.gridwidth = 2;
 		c.gridy = 1;
 		c.gridx = 1;
-		add(heureLabel, c);
-		
-		if(entrepot.getHeureArrivee() != null) {
-			c.gridwidth = 2;
-			c.gridy = 2;
-			c.gridx = 1;
-			add(dureeLivraisonLabel, c);
-		}
+		add(infos, c);
 		
 		c.insets = new Insets(10,0,0,0);
 		c.gridwidth = 4;
-		c.gridy = 3;
+		//c.gridy = 3;
+		c.gridy = 2;
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
@@ -426,7 +512,7 @@ public class ElementTournee extends JPanel{
 	    }
 		boutonValider.setEnabled(false);
 		
-		// Création du JPanel de modification de la livraison
+		// CrÃ©ation du JPanel de modification de la livraison
 		JPanel details = new JPanel();
 		details.setBackground(CharteGraphique.BG_COLOR);
 		details.setLayout(new BorderLayout());
@@ -473,7 +559,7 @@ public class ElementTournee extends JPanel{
 		details.add(choixDuree, BorderLayout.PAGE_END);
 		
 		
-		// Ajout à l'ElementTournee
+		// Ajout Ã  l'ElementTournee
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -534,8 +620,10 @@ public class ElementTournee extends JPanel{
 		boutonAnnuler.setActionCommand("annuler-creation");
 		
 	}
+	*/
 	
-	private String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
+	
+	protected String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
 		//TODO : Afficher le nom des rues qui y passent avec
 		String s = "";
 		if(intersec instanceof Entrepot) {
@@ -553,7 +641,7 @@ public class ElementTournee extends JPanel{
 			s += "<br>" + nom;
 		}
 		/*
-		 * Faudra avoir un truc comme ça
+		 * Faudra avoir un truc comme Ã§a
 		 * 
 		 * 
 		 * liste = entrepot.getRues();
@@ -591,21 +679,7 @@ public class ElementTournee extends JPanel{
 		imageLabel.setIcon(imageIconNormal);
 	}
 	
-	// TODO : Héritage
 	
-	// Attention à bien les séparer une fois hérité!!
-	public Livraison getLivraison() {
-		return livraison;
-	}
-	
-	public void setDuree() {
-		livraison.setDuree((Integer)dureeModification.getValue()*60);
-	}
-	
-	public void setIntersection(Intersection i) {
-		boutonValider.setEnabled(true);;
-		livraison = new Livraison(i, (Integer)dureeModification.getValue()*60);
-	}
 	
 	public void afficherDetails() {
 		if(areDetailsVisible){

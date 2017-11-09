@@ -12,13 +12,13 @@ import java.awt.event.MouseEvent;
  */
 public class EcouteurDeBoutonsElementTournee implements ActionListener{
 	private controleur.Controleur ctrl;
-	private ElementTournee elemTournee;
+	private ElementTourneeLivraison elemTournee;
 	
 	/**
 	 * Constructeur d'une instance d'un écouteur
 	 * @param c le controleur sur lequel on appelera les actions
 	 */
-	public EcouteurDeBoutonsElementTournee(controleur.Controleur c, ElementTournee el){
+	public EcouteurDeBoutonsElementTournee(controleur.Controleur c, ElementTourneeLivraison el){
 		ctrl = c;
 		elemTournee = el;
 	}

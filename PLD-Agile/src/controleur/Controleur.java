@@ -193,4 +193,8 @@ public class Controleur {
 		return liste;
 	}
 	
+	public void nettoyerNouvelleLivraison() {
+		fenetre.nettoyerNouvelleLivraison();
+	}
+	
 }

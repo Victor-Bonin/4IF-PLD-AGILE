@@ -34,7 +34,7 @@ public class EtatDemandeOuverte extends EtatDefaut {
 			vuePlan.afficherIcones(plan.getDemandeLivraison());
 		}
 		vuePlan.activerAnnulationBouton(false);
-		
+
 		fenetre.ajouterEcouteursSynchro();
 		vuePlan.activerBouton(true);
 		

@@ -142,6 +142,7 @@ public class VueTournee extends JPanel{
 	}
 	
 	public void creerLivraison() {
+		this.annulerCreation();
 		
 		panelCreation = new JPanel();
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);

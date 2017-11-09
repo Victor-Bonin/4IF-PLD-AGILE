@@ -299,8 +299,9 @@ public class VueTournee extends JPanel{
 						)
 				));
 		if(dragSource != dragCible && dragCible != null) {
-			ctrl.supprimerLivraison(dragSource.getLivraison(), dragSource.getPosition());
-			ctrl.ajouterLivraison(dragSource.getLivraison(), dragCible.getPosition()+1);
+			//ctrl.supprimerLivraison(dragSource.getLivraison(), dragSource.getPosition());
+			//ctrl.ajouterLivraison(dragSource.getLivraison(), dragCible.getPosition()+1);
+			ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), dragCible.getPosition());
 			revalidate();
 			repaint();
 		}

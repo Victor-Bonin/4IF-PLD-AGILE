@@ -68,8 +68,14 @@ public class EtatCalcule extends EtatPlanOuvert {
 	}
 
 	@Override
-	public void deplacerLivraison() {
-		// TODO Auto-generated method stub
+	public void deplacerLivraison(Fenetre fenetre, Plan plan, Livraison livraison, ListeCommande listeCmd, int anciennePos, int nouvellePos) {
+		try {
+			listeCmd.ajoute(new CommandePermuter(plan, livraison, anciennePos, nouvellePos));
+			fenetre.setEtatCourant(fenetre.etatModifie);
+			fenetre.goToVue();
+		} catch(ExceptionPlanCo ex){
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+		}
 	}
 
 	@Override

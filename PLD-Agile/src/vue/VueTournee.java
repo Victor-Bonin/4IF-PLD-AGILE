@@ -148,6 +148,7 @@ public class VueTournee extends JPanel{
 	
 	
 	public void creerLivraisonApres(int place) {
+		this.annulerCreation();
 		panelCreation = new JPanel();
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelCreation.setBackground(CharteGraphique.BG_COLOR);
@@ -189,9 +190,12 @@ public class VueTournee extends JPanel{
 	}
 	
 	public void annulerCreation() {
-		pan.remove(panelCreation);
-		pan.add(panelAjout);
-		elementEnCreation = null;
+		if(panelCreation != null)
+		{
+			pan.remove(panelCreation);
+			pan.add(panelAjout);
+			elementEnCreation = null;
+		}
 		revalidate();
 		repaint();
 	}

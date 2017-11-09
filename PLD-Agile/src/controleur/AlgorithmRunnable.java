@@ -23,7 +23,7 @@ public class AlgorithmRunnable implements Runnable {
 	}
 
 	/**
-	 * Calcule la tournee puis indique au controleur lorsqu'il a fini
+	 * Calcule la tournee puis indique au controleur qu'il a fini en changeant son etat
 	 */
 	public void run() {
 		try {

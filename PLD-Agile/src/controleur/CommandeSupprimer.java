@@ -3,7 +3,6 @@ package controleur;
 import modele.ExceptionPlanCo;
 import modele.Livraison;
 import modele.Plan;
-import vue.CharteGraphique;
 
 /**
  * Commande de suppression d'un point de livraison de la demande de livraison.

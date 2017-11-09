@@ -3,7 +3,9 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -37,6 +39,8 @@ import modele.LivraisonPlageHoraire;
 public class ElementTourneeLivraison extends ElementTournee{
 
 	private Livraison livraison;
+	
+	private boolean clicDroitAutorise;
 
 	// TODO : A supprimer?
 	private Calendar date;
@@ -52,6 +56,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		position = p;
 		this.livraison = livraison;
+		clicDroitAutorise = false;
 
 		initialiserLivraison();
 
@@ -84,7 +89,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			nomsTronconsIntersection.add(labelNomTroncon);
 			labelNomTroncon.setAlignmentX(Component.LEFT_ALIGNMENT);
 		}
-		String plageHoraire = "Plage horaire de livraison : ";
+		String plageHoraire = Textes.TOURNEE_PLAGE;
 		if(livraison instanceof LivraisonPlageHoraire) {
 			LivraisonPlageHoraire livraisonHoraire = (LivraisonPlageHoraire)livraison;
 			if(livraisonHoraire.getDebut()!= null)
@@ -97,7 +102,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			else
 				plageHoraire+= ".";
 			JLabel labelPlageHoraire = new JLabel (plageHoraire);
-			nomsTronconsIntersection.add(labelPlageHoraire);
+			details.add(labelPlageHoraire, BorderLayout.WEST);
 		}
 		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);
@@ -131,17 +136,33 @@ public class ElementTourneeLivraison extends ElementTournee{
 		
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
-				if (ev.isPopupTrigger()) {
+				if (clicDroitAutorise && ev.isPopupTrigger()) {
 					menu.show(ev.getComponent(), ev.getX(), ev.getY());
 				}
 			}
 
-			public void mouseReleased(MouseEvent ev) {
-				if (ev.isPopupTrigger()) {
+			/*public void mouseReleased(MouseEvent ev) {
+				if (clicDroitAutorise && ev.isPopupTrigger()) {
 					menu.show(ev.getComponent(), ev.getX(), ev.getY());
 				}
-			}
+			}*/
 		});
+				
+		if(livraison instanceof LivraisonPlageHoraire) {
+			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();
+			if(retard <= 0) {
+				JPanel indicationPlageTendue = new JPanel();
+				GridBagConstraints c = new GridBagConstraints();
+				c.anchor = GridBagConstraints.NORTHWEST;
+				c.gridx = 0;
+			    c.gridy = 0;
+			    c.weighty = 1;
+			    c.gridheight = 2;
+			    c.insets = new Insets(0,0,0,10);
+				add(indicationPlageTendue, c);
+				indicationPlageTendue.setBackground(CharteGraphique.LIVRAISON_RETARD);
+			}
+		}
 	}
 
 	// TODO : enlever nom et remplacer par position!
@@ -165,7 +186,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			Image scaledAnnuler = img.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
 			ImageIcon annulerIcon = new ImageIcon(scaledAnnuler);
 			boutonAnnuler.setIcon(annulerIcon);
-
+			nomPanel.add(boutonAnnuler, BorderLayout.EAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -226,7 +247,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 		details.add(pan, BorderLayout.PAGE_START);
 		details.add(boutonAction, BorderLayout.EAST);
 
-
 		ecouteurBoutons = new EcouteurDeBoutonsElementTournee(ctrl, this);
 		boutonChoixIntersec.addActionListener(ecouteurBoutons);
 		boutonChoixIntersec.setActionCommand("choisir-intersection");
@@ -269,6 +289,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		infos.add(dureeLivraisonLabel, BorderLayout.PAGE_START );
 		infos.add(heureLabel, BorderLayout.WEST );
+
 	}
 
 	public Livraison getLivraison() {
@@ -296,5 +317,9 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 	public int getPosition() {
 		return position;
+	}
+	
+	public void autoriserClicDroit() {
+		clicDroitAutorise = true;
 	}
 }

@@ -93,15 +93,18 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void undo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
 			listeCommande.undo();
+			fenetre.changeNotification(Textes.NOTIF_UNDO, CharteGraphique.NOTIFICATION_COLOR);
 			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
 			// TODO Gérer exception
 		}
 	}
+	
 	@Override
 	public void redo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
 			listeCommande.redo();
+			fenetre.changeNotification(Textes.NOTIF_REDO, CharteGraphique.NOTIFICATION_COLOR);
 			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
 			// TODO Gérer exception

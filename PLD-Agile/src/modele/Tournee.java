@@ -86,7 +86,7 @@ public class Tournee extends DemandeLivraison{
 				}
 			}
 		}
-		feuilleDeRoute += "<br><br><b> Vous êtes arrivés !</b>";
+		feuilleDeRoute += "<br><br><b> Vous êtes arrivé !</b>";
 		creerFeuilleDeRoute (feuilleDeRoute);
 	}
 
@@ -94,7 +94,7 @@ public class Tournee extends DemandeLivraison{
 
 		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("FICHIER HTML", "html");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichier HTML", "html");
 		fileChooser.setDialogTitle("Choisir où sauvegarder");
 		fileChooser.setFileFilter(filter);
 		fileChooser.setAcceptAllFileFilterUsed(false);

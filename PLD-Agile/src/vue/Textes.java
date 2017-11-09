@@ -26,6 +26,8 @@ public interface Textes {
 	public static final String NOTIF_CALCUL_TOURNEE_FAILED = "Echec lors du calcul de votre tournée";
 	public static final String NOTIF_CALCUL_ITINERAIRE = "Calcul de l'itinéraire en cours...";
 	public static final String NOTIF_CALCUL_ITINERAIRE_FAILED = "Echec lors du calcul de votre itinéraire";
+	public static final String NOTIF_UNDO = "Action annulée";
+	public static final String NOTIF_REDO = "Action refaite";
 	public static final String NOTIF_FDR_EXPORTEE = "La feuille de route a été exportée";
 	
 	
@@ -46,4 +48,5 @@ public interface Textes {
 	public static final String TOURNEE_INTERSECTION = "Intersection de : ";
 	public static final String TOURNEE_PLAGE = "Plage horaire : ";
 	public static final String TOURNEE_PASSAGE = "Passage estimé : ";
+	public static final String ATTENTE = "Attente : ";
 }

@@ -32,6 +32,7 @@ import javax.swing.text.NumberFormatter;
 import controleur.Controleur;
 import modele.Intersection;
 import modele.Livraison;
+import modele.LivraisonPlageHoraire;
 
 public class ElementTourneeLivraison extends ElementTournee{
 
@@ -83,6 +84,21 @@ public class ElementTourneeLivraison extends ElementTournee{
 			JLabel labelNomTroncon = new JLabel (nomTroncon);
 			nomsTronconsIntersection.add(labelNomTroncon);
 			labelNomTroncon.setAlignmentX(Component.LEFT_ALIGNMENT);
+		}
+		String plageHoraire = "Plage horaire de livraison : ";
+		if(livraison instanceof LivraisonPlageHoraire) {
+			LivraisonPlageHoraire livraisonHoraire = (LivraisonPlageHoraire)livraison;
+			if(livraisonHoraire.getDebut()!= null)
+				plageHoraire+=  livraisonHoraire.getDebut().get(Calendar.HOUR_OF_DAY) + "h";
+			else
+				plageHoraire+= ".";
+			plageHoraire+= " - ";
+			if(livraisonHoraire.getFin()!= null)
+				plageHoraire+= livraisonHoraire.getFin().get(Calendar.HOUR_OF_DAY) + "h";
+			else
+				plageHoraire+= ".";
+			JLabel labelPlageHoraire = new JLabel (plageHoraire);
+			nomsTronconsIntersection.add(labelPlageHoraire);
 		}
 		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);

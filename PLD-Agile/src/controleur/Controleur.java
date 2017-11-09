@@ -21,14 +21,11 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-
-import java.util.List;
 import java.util.Set;
 
 import modele.Intersection;
 import modele.Livraison;
 import modele.Plan;
-import modele.Troncon;
 import vue.Fenetre;
 
 public class Controleur {

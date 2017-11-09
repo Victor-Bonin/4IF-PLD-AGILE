@@ -43,12 +43,15 @@ public class EtatPlanOuvert extends EtatInit {
 			}
 			catch(ExceptionPlanCo ex) {
 				listeCommande.reset();
+				controleur.setEtatCourant(controleur.etatPlanOuvert);
 				if(ex.getMessage() != "")
 					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 				else
 					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			}
 			catch(Exception ex) {
+				listeCommande.reset();
+				controleur.setEtatCourant(controleur.etatPlanOuvert);
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			}finally{
 				controleur.afficherFenetre();

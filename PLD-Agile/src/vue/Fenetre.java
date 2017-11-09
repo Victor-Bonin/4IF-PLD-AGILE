@@ -2,15 +2,21 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
 import modele.Intersection;
+import modele.Livraison;
 import modele.Plan;
-
+import modele.evenement.EvenementInsertion;
+import modele.evenement.EvenementSuppression;
 import vue.etat.*;
 
 /**
@@ -19,7 +25,7 @@ import vue.etat.*;
  * @author 4104
  *
  */
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame implements Observer {
 	private static final long serialVersionUID = 4042713508717400450L;
 	public static final int VUE_DEFAUT = 0;
 	public static final int VUE_PLAN = 1;
@@ -62,6 +68,7 @@ public class Fenetre extends JFrame{
 		super(Textes.NOM_APPLI);
 		this.ctrl = ctrl;
 		this.plan = plan;
+		plan.addObserver(this);
 		
 		initListeners();
 		
@@ -250,5 +257,69 @@ public class Fenetre extends JFrame{
 	
 	public void setEtatCourant(Etat etat){
 		etatCourant = etat;
+	}
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		Plan p = (Plan) arg0;
+		// code demandé par Clara
+		if(vuePlan.getIconeLivraisonSouris().getParent() == vuePlan)
+			vuePlan.remove(vuePlan.getIconeLivraisonSouris());
+
+		if(arg1 instanceof EvenementInsertion)
+		{
+			Livraison livraison = ((EvenementInsertion) arg1).getLivraison();
+			updateAjoutLivraison(p, livraison);
+		}
+		if(arg1 instanceof EvenementSuppression)
+		{
+			EvenementSuppression evtSuppr = ((EvenementSuppression) arg1); 
+			Livraison livraison = evtSuppr.getLivraison();
+			int index = evtSuppr.getIndex();
+			updateSuppressionLivraison(p, livraison, index);
+		}
+	}
+	
+	public void updateAjoutLivraison(Plan p, Livraison livraison) {
+		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.ajouterBoutonPlus();
+		vueTournee.afficherBoutonsSuppression();
+
+		vuePlan.annulerCreation();
+		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
+		
+		JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
+	    iconeLivraison.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
+	    vuePlan.afficherIcones(plan.getDemandeLivraison());
+		
+	    revalidate();
+		setVisible(true);
+		repaint();
+		
+		vuePlan.revalidate();
+		vuePlan.setVisible(true);
+		vuePlan.repaint();
+	}
+	
+	public void updateSuppressionLivraison (Plan p, Livraison livraison, int index) {
+		JLabel iconeLivraison = vuePlan.getIconesLivraison().get(index);
+		iconeLivraison.removeMouseListener(iconeLivraison.getMouseListeners()[0]);
+		vuePlan.remove(iconeLivraison);
+		vuePlan.getIconesLivraison().remove(iconeLivraison);
+		
+		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.ajouterBoutonPlus();
+		vueTournee.afficherBoutonsSuppression();
+		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		
+		revalidate();
+		setVisible(true);
+		repaint();
+
+		vuePlan.revalidate();
+		vuePlan.setVisible(true);
+		vuePlan.repaint();
+		
 	}
 }

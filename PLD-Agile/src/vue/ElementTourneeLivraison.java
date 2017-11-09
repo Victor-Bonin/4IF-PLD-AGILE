@@ -141,11 +141,11 @@ public class ElementTourneeLivraison extends ElementTournee{
 				}
 			}
 
-			/*public void mouseReleased(MouseEvent ev) {
+			public void mouseReleased(MouseEvent ev) {
 				if (clicDroitAutorise && ev.isPopupTrigger()) {
 					menu.show(ev.getComponent(), ev.getX(), ev.getY());
 				}
-			}*/
+			}
 		});
 				
 		if(livraison instanceof LivraisonPlageHoraire) {

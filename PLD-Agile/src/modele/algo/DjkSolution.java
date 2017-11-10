@@ -33,7 +33,6 @@ import java.util.HashMap;
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
  * </pre>
- * 
  *  
  * @author 4104
  */

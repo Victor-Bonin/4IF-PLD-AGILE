@@ -43,28 +43,46 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
  * </pre>
- * 
  *  
  * @author 4104
  */
-public class Tournee extends DemandeLivraison{
+public class Tournee extends DemandeLivraison {
+
 	private Itineraire itineraire;
 
-	public Tournee(Entrepot entrepot, List<Livraison> meilleureSolution, Itineraire iti){
-		this.itineraire = iti;
+	/**
+	 * Constructeur de tournee.
+	 * @param entrepot l'entrepot de la tournee
+	 * @param meilleureSolution la liste des points de livraisons classé par ordre de passage
+	 * @param itineraire l'itineraire
+	 */
+	public Tournee(Entrepot entrepot, List<Livraison> meilleureSolution, Itineraire itineraire) {
+		this.itineraire = itineraire;
 		super.setEntrepot(entrepot);
 		super.setLivraisons(meilleureSolution);
 	}
 
-	public Itineraire getItineraire(){
+	/**
+	 * Retourne l'itineraire de la tournee.
+	 * @return l'itineraire de la tournee
+	 */
+	public Itineraire getItineraire() {
 		return itineraire;
 	}
 
+	/**
+	 * Compare les itineraires de de la tournee.
+	 * @return true si les itineraires sont egaux, false sinon
+	 */
 	public boolean equals(Object obj) {
 		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
 
-	// TODO : recupérer les rues qui composent l'intersection
+	/**
+	 * Exporte la feuille de route de la tournee. Si l'export rate des exceptions IOException et ExceptionPlanCo sont lancées.
+	 * @throws IOException Une exception qui est levee si une erreur s'est produite
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void exportFeuilleDeRoute() throws IOException, ExceptionPlanCo {
 		Calendar heureDepart = this.getEntrepot().getHeureDepart();
 		Calendar heureArrivee = this.getEntrepot().getHeureArrivee();
@@ -73,11 +91,14 @@ public class Tournee extends DemandeLivraison{
 		String longueurRue = "";
 		String feuilleDeRoute = "<h2> Bonjour ! <br/>Début de la tournée à "+ heureDepart.get(Calendar.HOUR_OF_DAY)+"h"+ heureDepart.get(Calendar.MINUTE) +"min<br/>Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"min</h2>";
 		int nbTronconsConseq;
+		
 		// Liste des livraisons
 		List<Livraison> livraisons = this.getLivraisons();
+		
 		// Liste des chemins empruntés
 		List<Chemin> chemins = this.getItineraire().getChemins();
 		for (int i = 0; i < chemins.size(); i++) {
+			
 			// Liste des troncons empruntés sur ce chemin
 			List<Troncon> troncons = chemins.get(i).getTroncons();
 			for (int j = 0; j < troncons.size(); j = j + 1 + nbTronconsConseq) {
@@ -86,7 +107,7 @@ public class Tournee extends DemandeLivraison{
 				longueurTroncon = troncons.get(j).getLongueur();
 				nbTronconsConseq = 0;
 				if (j < troncons.size()-1) {
-					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).GetNomRue())){
+					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).GetNomRue())) {
 						longueurTroncon += troncons.get(j + nbTronconsConseq + 1).getLongueur();
 						nbTronconsConseq ++;
 						if (j + nbTronconsConseq == troncons.size() -1) {
@@ -99,16 +120,16 @@ public class Tournee extends DemandeLivraison{
 				if (nomRue.equals("")) {
 					nomRue = "Rue 'Inconnue'";
 				}
-				feuilleDeRoute += "Prenez la rue "+ nomRue +" pendant "+ longueurRue +"m<br/>";
+				feuilleDeRoute += "Prenez la rue " + nomRue + " pendant " + longueurRue + "m<br/>";
 			}
-			if (i < livraisons.size()){
+			if (i < livraisons.size()) {
 				if (livraisons.get(i) instanceof LivraisonPlageHoraire) {
-					feuilleDeRoute += "<br/><h3> Livraison n° "+ (i+1) 
-							+" :  Arrivée à "+ (((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.MINUTE)
-							+"min</h3><b> Vous pouvez livrer à partir de : "+ (((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.MINUTE)
-							+"min<br/>Attente estimée : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getAttente()/60))
-							+"min<br/>Retard maximum : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getRetardPossible()/60))
-							+"min<br/> Durée : "+ (livraisons.get(i).getDuree()/60) +" min <br/></b>";
+					feuilleDeRoute += "<br/><h3> Livraison n° " + (i+1) 
+							+ " :  Arrivée à " + (((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.MINUTE)
+							+ "min</h3><b> Vous pouvez livrer à partir de : " + (((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.MINUTE)
+							+ "min<br/>Attente estimée : " + (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getAttente()/60))
+							+ "min<br/>Retard maximum : " + (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getRetardPossible()/60))
+							+ "min<br/> Durée : " + (livraisons.get(i).getDuree()/60) +" min <br/></b>";
 				} 
 				else {
 					feuilleDeRoute += "<br/><h3> Livraison n° "+ (i+1) +" : Arrivée à "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +" min, Durée : "+ (livraisons.get(i).getDuree()/60) +" min  </h3>";
@@ -116,9 +137,15 @@ public class Tournee extends DemandeLivraison{
 			}
 		}
 		feuilleDeRoute += "<br/><br/><h4> Vous êtes arrivé !</h4>";
-		creerFeuilleDeRoute (feuilleDeRoute);
+		creerFeuilleDeRoute(feuilleDeRoute);
 	}
 
+	/**
+	 * Creer la feuille de route de la tournee. Si la création rate des exceptions ExceptionPlanCo et IOException sont lancées.
+	 * @param feuilleDeRoute le fichier correspondant a la feuille de route a creer
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 * @throws IOException Une exception qui est levee si une erreur s'est produite
+	 */
 	public void creerFeuilleDeRoute(String feuilleDeRoute) throws ExceptionPlanCo, IOException {
 
 		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
@@ -128,7 +155,7 @@ public class Tournee extends DemandeLivraison{
 		fileChooser.setFileFilter(filter);
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		int returnVal = fileChooser.showSaveDialog(null);
-		
+
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
 			if (file.getName().endsWith(".html")) {

@@ -33,46 +33,63 @@ import java.util.Calendar;
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
  * </pre>
- * 
  *  
  * @author 4104
  */
-public class Livraison extends Intersection{
+public class Livraison extends Intersection {
+
 	protected int duree;
 	protected Calendar heurePassage;
-	
+
+	/**
+	 * Constructeur d'une livraison a partir de l'intersection correspondant a son adresse et de la duree de la livraison.
+	 * @param inter l'intersection
+	 * @param dureeArret la durée de la livraison
+	 */
 	public Livraison(Intersection inter, int dureeArret) {
 		super(inter);
 		duree = dureeArret;
 	}
-	
-	public boolean equals(Object obj) {
-		return (this.getId() == ((Intersection)obj).getId());
-	}
-	
-	public int getDuree(){
+
+	/**
+	 * Retourne la durée de la livraison.
+	 * @return la duree de la livraison
+	 */
+	public int getDuree() {
 		return this.duree;
 	}
-	
-	public Calendar getHeurePassage(){
+
+	/**
+	 * Retourne l'heure de passage de la livraison.
+	 * @return l'heure de passage de la livraison
+	 */
+	public Calendar getHeurePassage() {
 		return this.heurePassage;
 	}
-	
-	public void setHeurePassage(Calendar heurePassage){
+
+	/**
+	 * Change l'heure de passage de la livraison.
+	 * @param heurePassage la nouvelle heure de passage pour cette livraison
+	 */
+	public void setHeurePassage(Calendar heurePassage) {
 		this.heurePassage = heurePassage;
 	}
-	
+
+	/**
+	 * Change la durée de la livraison.
+	 * @param d la nouvelle durée de la livraison
+	 */
 	public void setDuree(int d) {
 		duree = d;
 	}
 
 	/**
-	 * With an offset for the moment
-	 * @param cal
-	 * @return
+	 * Convertit le calendrier passe en parametre en seconde par rapport a une date 
+	 * @param cal la date a convertir en secondes
+	 * @return int le nombre de secondes qui s'est ecoule
 	 */
 	public static int getSecondsInDay(Calendar cal) {
-		//TODO changer date
+		//TODO changer date mettre date du jour
 		//cal.set(Calendar.YEAR, 1900);
 		if(cal==null) {
 			return -1;

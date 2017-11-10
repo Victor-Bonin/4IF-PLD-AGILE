@@ -4,7 +4,7 @@ import modele.Livraison;
 
 /**
  * <pre>
- * 
+ * Represente un evenement d'insertion, lorsqu'un point de livraison est ajoute
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -34,16 +34,23 @@ import modele.Livraison;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- * 
  * @author 4104
  */
 public class EvenementInsertion {
 	private Livraison livraison;
 	
+	/**
+	 * Constructeur d'EvenementInsertion
+	 * @param livraison la livraison insere
+	 */
 	public EvenementInsertion(Livraison livraison) {
 		this.livraison = livraison;
 	}
 	
+	/**
+	 * Retourne la livraison inseree
+	 * @return la livraison insere
+	 */
 	public Livraison getLivraison() {
 		return livraison;
 	}

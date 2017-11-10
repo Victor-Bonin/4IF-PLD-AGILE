@@ -35,7 +35,6 @@ import java.util.Iterator;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- * 
  * @author 4104
  * @deprecated un TSP avec une meilleure heuristique est disponible
  * @see TSP4

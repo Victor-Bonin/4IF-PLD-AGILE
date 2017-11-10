@@ -101,12 +101,18 @@ public class VuePlan extends JPanel{
 	
 	Intersection nouvelleIntersection;
 	
+	/**
+	 * Constructeur d'un JPanel corrspondant a l'affichage du plan
+	 * @param ctrl : le controleur associe
+	 * @param plan : l'objet Plan a afficher
+	 */
 	public VuePlan(Controleur ctrl, Plan plan){
 		this.ctrl = ctrl;
 		this.plan = plan;
 
 		this.setLayout(null);
-
+		
+		// Recuperation des icones
 		try {
 			imgLivraison = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			imgLivraisonSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
@@ -125,6 +131,7 @@ public class VuePlan extends JPanel{
 	    	e.printStackTrace();
 	    }  
 		
+		// Creation des différents JPanels
 		iconeLivraisonSouris = new JLabel(imageIconL);
 		iconeNouvelleLivraison = new JLabel(imageIconL);
 		
@@ -152,10 +159,14 @@ public class VuePlan extends JPanel{
 		
 		iconesLivraison = new ArrayList<JLabel>();
 		
-		//TODO : supprimer
+		// Ecouteur permettant de détecter le choix d'une intersection àà la création d'une livraison
 		ecouteurSourisChoixIntersec = new EcouteurDeSourisChoixIntersection(ctrl, this);
 	}
 	
+	/**
+	 * Initialise les attributs minX, maxX, minY et maxY en fonction des valeurs minimales et maximales des coordonnees
+	 * du plan
+	 */
 	private void initMinMax(){
 		for (Intersection intersection : plan.getIntersections().values()) {
 			if(intersection.getX()>maxX) {
@@ -171,21 +182,16 @@ public class VuePlan extends JPanel{
 		}
 	}
 	
+	/**
+	 * Affiche les elements tels que les troncons du plan, le chemin de la tournee et les numeros des points de
+	 * livraison
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		
 		super.paintComponent(g);
 		
-		
-		/*
-		posSourisX = this.getMousePosition().getX();
-		double sourisPlanX = (posSourisX - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX;
-		posSourisY = this.getMousePosition().getY();
-		double sourisPlanY = (posSourisY - coordonneeY - this.getHeight()/ 2 + (maxY-minY)/(2*zoom))*zoom + minY;
-		System.out.println(sourisPlanX);
-		System.out.println(sourisPlanY);
-		*/
-		
+		// Au premier appel on calcule les maxima et minima
 		if (firstCall){
 
 			initMinMax();
@@ -204,7 +210,7 @@ public class VuePlan extends JPanel{
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-		//L'antialiasing permet de lisser les lignes !
+		//L'antialiasing permet de lisser les lignes
 		g2d.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING, 
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -321,18 +327,32 @@ public class VuePlan extends JPanel{
 		changerPlanButton.setBounds((int)(getWidth()-changerDemandeLivraisonButton.getPreferredSize().getWidth()), 0, (int)changerDemandeLivraisonButton.getPreferredSize().getWidth(), (int)changerDemandeLivraisonButton.getPreferredSize().getHeight());         
 	  }
 
+	/**
+	 * Retourne la position x dans le JLabel a partir d'une position dans l'espace du plan en prenant en compte
+	 * le zoom et le deplacement de la vue
+	 * @param x : la position x du point dans le repere du plan
+	 * @return la position dans le JPanel en partant du bord gauche
+	 */
 	private int positionX(int x) {
 		return (int) ((x-minX)/zoom + this.getWidth()/ 2 -(maxX-minX)/(2*zoom) + coordonneeX);
 	}
 	
+	/**
+	 * Retourne la position y dans le JLabel a partir d'une position dans l'espace du plan en prenant en compte
+	 * le zoom et le deplacement de la vue
+	 * @param y : la position y du point dans le repere du plan
+	 * @return la position dans le JPanel en partant du bord superieur
+	 */
 	private int positionY(int y) {
 		return (int)((y-minY)/zoom + this.getHeight()/2 - (maxY-minY)/(2*zoom) + coordonneeY);
 	}
 
+	/**
+	 * Met a jour la vue pour zoomer d'un cran sur la position de la souris
+	 */
 	public void zoom(){
 		
 		// On calcule les coordonnées de la souris sur le plan
-		// TODO : fonction
 		posSourisX = this.getMousePosition().getX();
 		double sourisPlanX = (posSourisX - coordonneeX - this.getWidth()/ 2 + (maxX-minX)/(2*zoom))*zoom + minX;
 		posSourisY = this.getMousePosition().getY();
@@ -354,6 +374,12 @@ public class VuePlan extends JPanel{
 		actualiserIcones();
 		repaint();
 	}
+	
+	/**
+	 * Met a jour la vue du plan en la deplacant sur x et y
+	 * @param x : le deplacement selon x par rapport a la position initiale
+	 * @param y : le deplacement selon y par rapport a la position initiale
+	 */
 	public void move(int x, int y){
 		this.coordonneeX += x;
 		this.coordonneeY += y;
@@ -361,6 +387,9 @@ public class VuePlan extends JPanel{
 		repaint();
 	}
 	
+	/**
+	 * Met a jour la vue pour dezoomer d'un cran sur la position de la souris
+	 */
 	public void dezoom(){
 		
 		posSourisX = this.getMousePosition().getX();
@@ -387,6 +416,10 @@ public class VuePlan extends JPanel{
 		return changerDemandeLivraisonButton;
 	}
 	
+	/**
+	 * Affiche les icones correspondant a la demande de livraison du Plan
+	 * @param demande : la DemandeLivraison a afficher
+	 */
 	public void afficherIcones(DemandeLivraison demande){
 		nettoyerIcones();
 
@@ -402,6 +435,9 @@ public class VuePlan extends JPanel{
 		}
 	}
 	
+	/**
+	 * Met a jour les icones des livraisons pour prendre en compte le decalage ou le zoom
+	 */
 	public void actualiserIcones(){
 		//Dessiner les icones de points de livraisons
 		int i = 0;
@@ -419,6 +455,9 @@ public class VuePlan extends JPanel{
 		}
 	}
 	
+	/**
+	 * Supprime l'integralite des icones des livraisons
+	 */
 	public void nettoyerIcones() {
 		//Supprimer les anciennes icones
 		for (int i = 0; i<iconesLivraison.size(); i++) {
@@ -428,6 +467,10 @@ public class VuePlan extends JPanel{
 		this.remove(iconeNouvelleLivraison);
 	}
 	
+	/**
+	 * Mise en surbrillance de l'icone d'un element
+	 * @param index : place de l'icone dans la liste des icones (l'entrepot est a -1)
+	 */
 	public void survol(int index){
 		if (index == -1){
 			iconeEntrepot.setIcon(imageIconES);
@@ -436,6 +479,10 @@ public class VuePlan extends JPanel{
 		}
 	}
 	
+	/**
+	 * Suppression de la surbrillance de l'icone d'un element
+	 * @param index : place de l'icone dans la liste des icones (l'entrepot est a -1)
+	 */
 	public void antiSurvol(int index){
 		if (index == -1){
 			iconeEntrepot.setIcon(imageIconE);
@@ -452,6 +499,9 @@ public class VuePlan extends JPanel{
 		return iconeEntrepot;
 	}
 	
+	/**
+	 * Ajoute de l'ecouteur ecouteurSourisChoixIntersec pour detecter le choix d'une intersection sur le plan
+	 */
 	public void commencerChoixIntersection() {
 		addMouseListener(ecouteurSourisChoixIntersec);
 		addMouseMotionListener(ecouteurSourisChoixIntersec);

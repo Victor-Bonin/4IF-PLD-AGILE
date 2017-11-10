@@ -3,7 +3,7 @@ package vue;
 import javax.swing.JButton;
 
 /**
- * Extension de JButton pour afficher un bouton personnalisé
+ * Extension de JButton pour afficher un bouton personnalise
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -37,6 +37,11 @@ import javax.swing.JButton;
 public class PersoButton extends JButton{
 	private static final long serialVersionUID = 6534684555513953601L;
 	
+	/**
+	 * Constructeur d'un JButton personnalise
+	 * @param str : le texte du bouton
+	 * @param style : le style a appliquer (1: vert, 2: blanc)
+	 */
 	public PersoButton(String str, int style){
 		super(str);
 		switch(style){

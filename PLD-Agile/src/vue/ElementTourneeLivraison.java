@@ -8,8 +8,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,12 +35,10 @@ import modele.Livraison;
 import modele.LivraisonPlageHoraire;
 
 public class ElementTourneeLivraison extends ElementTournee{
+	private static final long serialVersionUID = 1475692407722873597L;
 
 	private Livraison livraison;
-	
-	private boolean clicDroitAutorise;
 
-	// TODO : A supprimer?
 	private Calendar date;
 	private int position;
 
@@ -56,7 +52,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		position = p;
 		this.livraison = livraison;
-		clicDroitAutorise = false;
 
 		initialiserLivraison();
 
@@ -235,7 +230,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		JFormattedTextField duree = ((JSpinner.NumberEditor) dureeModification.getEditor()).getTextField();
 		((NumberFormatter) duree.getFormatter()).setAllowsInvalid(false);
 
-		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE);
+		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE_CREATION);
 		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 
 		choixIntersec.add(texteChoixIntersec, BorderLayout.WEST);
@@ -319,9 +314,5 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 	public int getPosition() {
 		return position;
-	}
-	
-	public void autoriserClicDroit() {
-		clicDroitAutorise = true;
 	}
 }

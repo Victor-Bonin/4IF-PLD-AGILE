@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -106,9 +105,9 @@ public class VueTournee extends JPanel{
 	 * @param dem DemandeLivraison qui doit être représentée
 	 */
 	
-	// TODO : Enelever le paramètre? on ne l'utilise pas!
-	public void initTournee(DemandeLivraison dem) {
-		demLivraison = dem;
+	// TODO : Enlever le paramètre? on ne l'utilise pas!
+	public void initTournee() {
+		demLivraison = plan.getDemandeLivraison();
 		
 		elementsTournee.clear();
 		elementEnCreation = null;
@@ -123,10 +122,7 @@ public class VueTournee extends JPanel{
 		
 		int i = 0;
 		elementsTournee.add(entrepot);
-		
-		//entrepot.addMouseMotionListener(ecouteurDragEntrepot);
-		//entrepot.addMouseListener(ecouteurDragEntrepot);
-		
+
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
 		    ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, i+1, i);
@@ -154,9 +150,6 @@ public class VueTournee extends JPanel{
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
 		pan.add(panelCreation);
-		//elementEnCreation.setMaximumSize(elementEnCreation.getPreferredSize());
-		//elementEnCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//pan.add(new JLabel());
 		pan.revalidate();
 		pan.repaint();
 	}
@@ -338,16 +331,5 @@ public class VueTournee extends JPanel{
 	public void supprimerElementDetaille() {
 		this.remove(elementDetaille);	
 	}
-	
-	
-	public void autoriserClicDroit() {
-		for(ElementTournee element : elementsTournee) {
-			if(element instanceof ElementTourneeLivraison)
-			{
-				((ElementTourneeLivraison) element).autoriserClicDroit();
-			}
-		}
-	}
-	
 
 }

@@ -6,6 +6,7 @@ import controleur.Controleur;
 
 public class Agile {
  	/**
+ 	 * Point d'entree du programme
 	 * @param args
 	 */
 	public static void main(String[] args) {

@@ -41,7 +41,7 @@ public class Tournee extends DemandeLivraison{
 		String nomRue = "";
 		float longueurTroncon;
 		String longueurRue = "";
-		String feuilleDeRoute = "<b> Bonjour ! Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"</b>";
+		String feuilleDeRoute = "<h2> Bonjour ! <br/>Début de la tournée à "+ heureDepart.get(Calendar.HOUR_OF_DAY)+"h"+ heureDepart.get(Calendar.MINUTE) +"min<br/>Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"min</h2>";
 		int nbTronconsConseq;
 		// Liste des livraisons
 		List<Livraison> livraisons = this.getLivraisons();
@@ -70,23 +70,23 @@ public class Tournee extends DemandeLivraison{
 				if (nomRue.equals("")) {
 					nomRue = "Rue 'Inconnue'";
 				}
-				feuilleDeRoute += "<br><br>Prenez la rue "+ nomRue +" pendant "+ longueurRue +"m";
+				feuilleDeRoute += "Prenez la rue "+ nomRue +" pendant "+ longueurRue +"m<br/>";
 			}
 			if (i < livraisons.size()){
 				if (livraisons.get(i) instanceof LivraisonPlageHoraire) {
-					feuilleDeRoute += "<br><br><b> Livraison n° "+ (i+1) 
-							+" :  Heure d'arrivée estimée  à "+ (((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.MINUTE)
-							+"<br> Vous pouvez livrer à partir de : "+ (((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.MINUTE)
-							+"<br>Attente estimée : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getAttente()/60))
-							+"min<br>Retard maximum : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getRetardPossible()/60))
-							+"min<br> Durée : "+ (livraisons.get(i).getDuree()/60) +" min </b>";
-				}
+					feuilleDeRoute += "<br/><h3> Livraison n° "+ (i+1) 
+							+" :  Arrivée à "+ (((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getArriveeEstimee().get(Calendar.MINUTE)
+							+"min</h3><b> Vous pouvez livrer à partir de : "+ (((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.HOUR_OF_DAY)) +"h "+ ((LivraisonPlageHoraire) livraisons.get(i)).getDebut().get(Calendar.MINUTE)
+							+"min<br/>Attente estimée : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getAttente()/60))
+							+"min<br/>Retard maximum : "+ (Math.round(((LivraisonPlageHoraire) livraisons.get(i)).getRetardPossible()/60))
+							+"min<br/> Durée : "+ (livraisons.get(i).getDuree()/60) +" min <br/></b>";
+				} 
 				else {
-					feuilleDeRoute += "<br><br><b> Livraison n° "+ (i+1) +" : Arrivée à "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +", Durée : "+ (livraisons.get(i).getDuree()/60) +" min  </b>";
+					feuilleDeRoute += "<br/><h3> Livraison n° "+ (i+1) +" : Arrivée à "+ livraisons.get(i).getHeurePassage().get(Calendar.HOUR_OF_DAY) +"h "+ livraisons.get(i).getHeurePassage().get(Calendar.MINUTE) +" min, Durée : "+ (livraisons.get(i).getDuree()/60) +" min  </h3>";
 				}
 			}
 		}
-		feuilleDeRoute += "<br><br><b> Vous êtes arrivé !</b>";
+		feuilleDeRoute += "<br/><br/><h4> Vous êtes arrivé !</h4>";
 		creerFeuilleDeRoute (feuilleDeRoute);
 	}
 

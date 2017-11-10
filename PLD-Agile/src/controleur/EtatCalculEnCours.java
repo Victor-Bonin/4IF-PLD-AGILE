@@ -5,6 +5,10 @@ import vue.CharteGraphique;
 import vue.Fenetre;
 import vue.Textes;
 
+/**
+ * 
+ * @author 4104
+ */
 public class EtatCalculEnCours extends EtatDefaut {
 
 	@Override

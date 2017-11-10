@@ -35,14 +35,14 @@ public class EtatInit extends EtatDefaut{
 			ListeCommande listeCommande) {
 		try {
 			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
-			DeserialiseurXML.charger(plan);
 			listeCommande.reset();
+			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			controleur.afficherFenetre();
 			controleur.afficherNotif();
 		}
 		catch (ExceptionPlanCo ex){
-			if (ex.getMessage() != "")
+			if (ex.getMessage() != "") 
 				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			else
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);

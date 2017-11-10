@@ -334,7 +334,7 @@ public class VueTournee extends JPanel{
 			if(dragCible instanceof  ElementTourneeLivraison){
 				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), ((ElementTourneeLivraison)dragCible).getPosition());
 			} else {
-				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), 0);
+				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), -1);
 			}
 			revalidate();
 			repaint();

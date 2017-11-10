@@ -62,7 +62,7 @@ import java.lang.Math;
  */
 public class VuePlan extends JPanel{
 	private static final long serialVersionUID = 7580988360699236386L;
-
+ 
 	private Controleur ctrl;
 	
 	private int hauteurBalise = 40;

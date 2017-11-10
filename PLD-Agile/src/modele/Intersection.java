@@ -26,7 +26,7 @@ public class Intersection {
 	 * @param obj Une intersection
 	 * @return true si les adresses sont identiques
 	 */
-	public boolean equals(Object obj) {
+	public boolean egal(Object obj) {
 		if(!(obj instanceof Intersection))
 			return false;
 		return (this.id == ((Intersection)obj).getId());

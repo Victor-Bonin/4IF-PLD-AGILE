@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Ensemble ordonne des chemins empruntes par une tournee
- * @author Victor du Vercors, vos daronnes les roqueforts, qui rockent fort
+ * @author Victor Bonin
  */
 public class Itineraire {
 	private List<Chemin> itineraire;
@@ -29,7 +29,7 @@ public class Itineraire {
 	public boolean equals(Itineraire itineraire) {
 		boolean isEqual = true;
 		for(int i =0; i<this.itineraire.size(); i++){
-			isEqual = isEqual && this.itineraire.get(i).equals(itineraire.getChemins().get(i));
+			isEqual = isEqual && this.itineraire.get(i).egal(itineraire.getChemins().get(i));
 		}
 		
 		return isEqual;

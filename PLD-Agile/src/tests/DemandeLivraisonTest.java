@@ -10,7 +10,7 @@ import modele.ExceptionPlanCo;
 import modele.Intersection;
 import modele.Livraison;
 
-public class demandeLivraisonTest {
+public class DemandeLivraisonTest {
 	DemandeLivraison demandeLivraison = new DemandeLivraison(); 
 
 	@Before

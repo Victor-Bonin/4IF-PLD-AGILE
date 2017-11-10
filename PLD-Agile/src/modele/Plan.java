@@ -117,7 +117,7 @@ public class Plan extends Observable {
 					// On ajoute le plus court chemin entre source et target dans le tableau de plus courts chemins
 					pCourtsChemins[source][target] = new Chemin(livrDepart, livrArrivee);
 					do{
-						pCourtsChemins[source][target].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
+						pCourtsChemins[source][target].ajouterTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
 						trgId = result.prev.get(trgId);
 					}while(trgId != srcId); 
 				}
@@ -204,7 +204,7 @@ public class Plan extends Observable {
 			cout[srcIndex][trgIndex]=Math.round(result.dist.get(trgId));
 			pCourtsChemins[srcIndex][trgIndex] = new Chemin(srcLivraison, trgLivraison);
 			while(trgId != srcId){
-				pCourtsChemins[srcIndex][trgIndex].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
+				pCourtsChemins[srcIndex][trgIndex].ajouterTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
 				trgId = result.prev.get(trgId);
 			}
 		}

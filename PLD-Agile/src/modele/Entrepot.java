@@ -28,7 +28,7 @@ public class Entrepot extends Intersection{
 	* @param obj Une intersection
 	* @return true si les adresses sont les memes.
 	*/
-	public boolean equals(Object obj) {
+	public boolean egal(Object obj) {
 		return (this.getId() == ((Intersection)obj).getId());
 	}
 	

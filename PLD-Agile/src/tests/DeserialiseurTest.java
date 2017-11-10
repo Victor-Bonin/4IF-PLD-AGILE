@@ -25,7 +25,7 @@ import modele.Livraison;
 import modele.Plan;
 import xml.DeserialiseurXML;
 
-public class TestDeserialiseur {
+public class DeserialiseurTest {
 
 	Plan plan;
 	Plan planCharge;

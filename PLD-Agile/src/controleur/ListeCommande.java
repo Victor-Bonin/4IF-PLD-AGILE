@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import modele.ExceptionPlanCo;
 
 /**
+ * <pre>
  * Classe stockant l'historique des commandes effectuees par l'utilisateur, permettant le do / undo / delete d'une commande.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -32,6 +34,7 @@ import modele.ExceptionPlanCo;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104

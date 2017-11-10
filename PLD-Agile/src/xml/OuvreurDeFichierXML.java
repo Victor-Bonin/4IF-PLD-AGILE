@@ -7,7 +7,9 @@ import javax.swing.filechooser.*;
 import modele.ExceptionPlanCo;
 
 /**
+ * <pre>
  * Classe gerant l'ouverture d'une popup de choix de fichier xml dans un explorateur de fichier
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -34,6 +36,7 @@ import modele.ExceptionPlanCo;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

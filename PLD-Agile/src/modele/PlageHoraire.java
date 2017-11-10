@@ -3,7 +3,9 @@ package modele;
 import java.util.Calendar;
 
 /**
+ * <pre>
  * Intervalle de temps dans lequel doit s’effectuer une livraison
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -30,6 +32,7 @@ import java.util.Calendar;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104

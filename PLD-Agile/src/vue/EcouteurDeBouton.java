@@ -2,10 +2,11 @@ package vue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 /**
+ * <pre>
  * Cette classe contient les appels au controleur depuis les boutons
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -32,6 +33,7 @@ import java.awt.event.MouseEvent;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

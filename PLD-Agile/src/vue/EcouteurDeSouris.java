@@ -8,7 +8,9 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.SwingUtilities;
 
 /**
+ * <pre>
  * Cette classe contient les appels au controleur depuis la souris
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -35,6 +37,7 @@ import javax.swing.SwingUtilities;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

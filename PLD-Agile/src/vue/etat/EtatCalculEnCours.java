@@ -6,6 +6,9 @@ import vue.Fenetre;
 import vue.PersoButton;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -32,6 +35,7 @@ import vue.PersoButton;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

@@ -26,6 +26,9 @@ import controleur.Controleur;
 import modele.Entrepot;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -52,6 +55,7 @@ import modele.Entrepot;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

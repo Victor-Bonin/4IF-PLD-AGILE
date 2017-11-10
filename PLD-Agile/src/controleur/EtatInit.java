@@ -8,6 +8,9 @@ import vue.Textes;
 import xml.DeserialiseurXML;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -34,12 +37,14 @@ import xml.DeserialiseurXML;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104
  */
 public class EtatInit extends EtatDefaut{
 
+	/** {@inheritDoc}  */
 	@Override
 	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
@@ -61,12 +66,14 @@ public class EtatInit extends EtatDefaut{
 			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 		}
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
 		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 		ouvrirPlan(controleur, plan, fenetre, listeCommande);		

@@ -9,8 +9,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 /**
+ * <pre>
  * Cette classe correspond à la vue principale affichant le menu latéral de la tournée
  *  et le plan
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -37,6 +39,7 @@ import javax.swing.border.MatteBorder;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

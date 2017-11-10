@@ -4,7 +4,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
+ * <pre>
  * Cette classe contient les appels aux fonctions de synchronisation depuis la souris
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -31,6 +33,7 @@ import java.awt.event.MouseEvent;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

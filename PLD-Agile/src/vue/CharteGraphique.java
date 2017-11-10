@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
+ * <pre>
  * Cette classe contient les constantes liées au style visuel des IHM
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -31,6 +33,7 @@ import java.awt.Font;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

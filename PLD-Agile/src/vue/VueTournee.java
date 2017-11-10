@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -25,9 +24,35 @@ import modele.Plan;
 
 /**
  * Cette classe correspond à la vue des tournées
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
  * 
  * @author 4104
- *
  */
 public class VueTournee extends JPanel{
 	private static final long serialVersionUID = 5007192571949757684L;
@@ -39,7 +64,7 @@ public class VueTournee extends JPanel{
 	
 	private boolean isDragged = false;
 	private ElementTourneeLivraison dragSource;
-	private ElementTourneeLivraison dragCible;
+	private ElementTournee dragCible;
 	
 	private GridBagConstraints c;
 	private JLabel tourneeTitre;
@@ -54,6 +79,7 @@ public class VueTournee extends JPanel{
 	
 	EcouteurDeBouton ecouteurBoutons;
 	EcouteurDeSourisDragnDrop ecouteurDrag;
+	EcouteurDeSourisDragnDropEntrepot ecouteurDragEntrepot;
 	
 	public VueTournee(Controleur ctrl, Plan p){
 		super();
@@ -97,6 +123,7 @@ public class VueTournee extends JPanel{
 		pan.setBackground(CharteGraphique.BG_COLOR);
 		
 		ecouteurDrag =  new EcouteurDeSourisDragnDrop(this);
+		ecouteurDragEntrepot =  new EcouteurDeSourisDragnDropEntrepot(this);
 	}
 	
 	/**
@@ -104,9 +131,9 @@ public class VueTournee extends JPanel{
 	 * @param dem DemandeLivraison qui doit être représentée
 	 */
 	
-	// TODO : Enelever le paramètre? on ne l'utilise pas!
-	public void initTournee(DemandeLivraison dem) {
-		demLivraison = dem;
+	// TODO : Enlever le paramètre? on ne l'utilise pas!
+	public void initTournee() {
+		demLivraison = plan.getDemandeLivraison();
 		
 		elementsTournee.clear();
 		elementEnCreation = null;
@@ -121,10 +148,7 @@ public class VueTournee extends JPanel{
 		
 		int i = 0;
 		elementsTournee.add(entrepot);
-		
-		
-		
-		
+
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
 		    ElementTournee liv = new ElementTourneeLivraison(ctrl, livraison, i+1, i);
@@ -152,9 +176,6 @@ public class VueTournee extends JPanel{
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
 		pan.add(panelCreation);
-		//elementEnCreation.setMaximumSize(elementEnCreation.getPreferredSize());
-		//elementEnCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//pan.add(new JLabel());
 		pan.revalidate();
 		pan.repaint();
 	}
@@ -239,18 +260,22 @@ public class VueTournee extends JPanel{
 	    element.setMaximumSize(element.getPreferredSize());
 	    element.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    elementsTournee.add(element);
-	    element.addMouseMotionListener(ecouteurDrag);
-	    element.addMouseListener(ecouteurDrag);
+	    //element.addMouseMotionListener(ecouteurDrag);
+	    //element.addMouseListener(ecouteurDrag);
 	}
 	
+	/*
 	public void masquerBoutonsSuppression() {
 		for(ElementTournee element : elementsTournee) {
 			if(element instanceof ElementTourneeLivraison)
 			{
 				((ElementTourneeLivraison) element).masquerBoutonSupprimer();
+				((ElementTourneeLivraison) element).removeMouseListener(ecouteurDrag);
+				((ElementTourneeLivraison) element).removeMouseMotionListener(ecouteurDrag);
 			}
 		}
 	}
+	*/
 	
 	public void afficherBoutonsSuppression() {
 		for(ElementTournee element : elementsTournee) {
@@ -261,13 +286,26 @@ public class VueTournee extends JPanel{
 		}
 	}
 	
+	public void ajouterDragAndDropListener() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).addMouseMotionListener(ecouteurDrag);
+				((ElementTourneeLivraison) element).addMouseListener(ecouteurDrag);
+			} else if (element instanceof ElementTourneeEntrepot){
+				((ElementTourneeEntrepot) element).addMouseMotionListener(ecouteurDragEntrepot);
+				((ElementTourneeEntrepot) element).addMouseListener(ecouteurDragEntrepot);
+			}
+		}
+	}
+	
 	public void dragCommencer(ElementTourneeLivraison elemt) {
 		isDragged = true;
 		dragSource = elemt;
 		//elemt.setBackground(CharteGraphique.LIVRAISON_SELECTIONNEE);
 	}
 	
-	public void dragIn(ElementTourneeLivraison elemt) {
+	public void dragIn(ElementTournee elemt) {
 		if(isDragged == true){
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 0, 10),
@@ -280,7 +318,7 @@ public class VueTournee extends JPanel{
 		}
 	}
 	
-	public void dragOut(ElementTourneeLivraison elemt) {
+	public void dragOut(ElementTournee elemt) {
 		if(isDragged == true){
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 5, 10),
@@ -303,7 +341,11 @@ public class VueTournee extends JPanel{
 						)
 				));
 		if(dragSource != dragCible && dragCible != null) {
-			ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), dragCible.getPosition());
+			if(dragCible instanceof  ElementTourneeLivraison){
+				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), ((ElementTourneeLivraison)dragCible).getPosition());
+			} else {
+				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), -1);
+			}
 			revalidate();
 			repaint();
 		}
@@ -314,15 +356,6 @@ public class VueTournee extends JPanel{
 
 	public void supprimerElementDetaille() {
 		this.remove(elementDetaille);	
-	}
-	
-	public void autoriserClicDroit() {
-		for(ElementTournee element : elementsTournee) {
-			if(element instanceof ElementTourneeLivraison)
-			{
-				((ElementTourneeLivraison) element).autoriserClicDroit();
-			}
-		}
 	}
 
 }

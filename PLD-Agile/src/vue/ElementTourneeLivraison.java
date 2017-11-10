@@ -3,13 +3,14 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,13 +37,42 @@ import modele.Intersection;
 import modele.Livraison;
 import modele.LivraisonPlageHoraire;
 
+/**
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
+ * 
+ * @author 4104
+ */
 public class ElementTourneeLivraison extends ElementTournee{
+	private static final long serialVersionUID = 1475692407722873597L;
 
 	private Livraison livraison;
-	
-	private boolean clicDroitAutorise;
 
-	// TODO : A supprimer?
 	private Calendar date;
 	private int position;
 
@@ -56,7 +86,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		position = p;
 		this.livraison = livraison;
-		clicDroitAutorise = false;
 
 		initialiserLivraison();
 
@@ -134,6 +163,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			}
 		});
 		
+		/*
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
 				if (clicDroitAutorise && ev.isPopupTrigger()) {
@@ -147,11 +177,21 @@ public class ElementTourneeLivraison extends ElementTournee{
 				}
 			}
 		});
+		*/
 				
 		if(livraison instanceof LivraisonPlageHoraire) {
 			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();
 			if(retard <= 0) {
-				JPanel indicationPlageTendue = new JPanel();
+				System.out.println("tendue");
+				JPanel indicationPlageTendue = new JPanel() {
+					@Override
+				    protected void paintComponent(Graphics g) {
+						Graphics2D g2d = (Graphics2D)g;
+						g2d.setColor(CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+						Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+						g2d.fill(circle);
+				    }
+				};
 				GridBagConstraints c = new GridBagConstraints();
 				c.anchor = GridBagConstraints.NORTHWEST;
 				c.gridx = 0;
@@ -233,7 +273,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		JFormattedTextField duree = ((JSpinner.NumberEditor) dureeModification.getEditor()).getTextField();
 		((NumberFormatter) duree.getFormatter()).setAllowsInvalid(false);
 
-		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE);
+		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE_CREATION);
 		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 
 		choixIntersec.add(texteChoixIntersec, BorderLayout.WEST);
@@ -282,7 +322,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 		} catch (IOException e) {
-			System.out.println("Une image est manquante");
 		}
 
 		imageLabel.setIcon(imageIconNormal);
@@ -317,9 +356,5 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 	public int getPosition() {
 		return position;
-	}
-	
-	public void autoriserClicDroit() {
-		clicDroitAutorise = true;
 	}
 }

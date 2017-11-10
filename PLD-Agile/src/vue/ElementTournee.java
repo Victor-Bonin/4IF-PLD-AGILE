@@ -1,39 +1,20 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Set;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.text.NumberFormatter;
 
 import controleur.Controleur;
 import modele.Entrepot;
@@ -43,9 +24,35 @@ import modele.LivraisonPlageHoraire;
 
 /**
  * Extension de JPanel affichant une tournee et ses informations primaires
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
  * 
  * @author 4104
- *
  */
 public class ElementTournee extends JPanel{
 	private static final long serialVersionUID = 6534684555513953601L;
@@ -145,7 +152,6 @@ public class ElementTournee extends JPanel{
 	
 	
 	protected String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
-		//TODO : Afficher le nom des rues qui y passent avec
 		String s = "";
 		if(intersec instanceof Entrepot) {
 			s= Textes.TOURNEE_ENTREPOT ;
@@ -196,6 +202,10 @@ public class ElementTournee extends JPanel{
 			details.setVisible(true);
 		}
 		areDetailsVisible = !areDetailsVisible;
+	}
+	
+	public void showMenu(Component c, int x, int y) {
+		menu.show(c, x, y);
 	}
 	
 }

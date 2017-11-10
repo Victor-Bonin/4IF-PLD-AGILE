@@ -3,14 +3,9 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,15 +19,44 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 import controleur.Controleur;
 import modele.Entrepot;
 
+/**
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
+ * 
+ * @author 4104
+ */
 public class ElementTourneeEntrepot extends ElementTournee{
-	
+
+	private static final long serialVersionUID = 567315132366254821L;
 	private JLabel heureArriveeLabel;
 	private JLabel heureDepartLabel;
 	
@@ -63,8 +87,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 	    	}
 	    	texte += entrepot.getHeureArrivee().get(Calendar.MINUTE);
 	    	if((entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())>1000*60*60*24) {
-	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j aprÃ¨s";
-	    		System.out.println(entrepot.getHeureArrivee().get(Calendar.HOUR_OF_DAY) + "  " +entrepot.getHeureDepart().get(Calendar.HOUR_OF_DAY));
+	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j après";
 	    	}
 	    	
 	    	heureArriveeLabel.setText(texte);
@@ -99,7 +122,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 			imageLabel.setIcon(imageIconNormal);
 		} catch (IOException e) {
-	    		System.out.println("Une image est manquante");
 	    }
 
 		infos.add(heureArriveeLabel, BorderLayout.WEST );
@@ -114,7 +136,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				ctrl.creerLivraisonApres(-1);
 			}
 		});
-		
+		/*
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
 				if (ev.isPopupTrigger()) {
@@ -128,5 +150,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				}
 			}
 		});
+		*/
 	}	
 }

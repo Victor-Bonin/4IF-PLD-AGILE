@@ -10,6 +10,38 @@ import modele.ExceptionPlanCo;
 import modele.Intersection;
 import modele.Livraison;
 
+/**
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
+ * 
+ * @author 4104
+ */
+
 public class DemandeLivraisonTest {
 	DemandeLivraison demandeLivraison = new DemandeLivraison(); 
 
@@ -55,7 +87,7 @@ public class DemandeLivraisonTest {
 		catch (ExceptionPlanCo e) {
 			fail ("Setup");
 		}
-		
+
 		try {	
 			assertEquals(2, demandeLivraison.getLivraisons().size());	
 			Livraison l3 = new Livraison(new Intersection(3, 3, 300L), 0);
@@ -66,7 +98,7 @@ public class DemandeLivraisonTest {
 		catch (ExceptionPlanCo e) {
 			fail ("Erreur ajoutePointLivraisonOrdoneTest ExceptionPlanCo cas normal");
 		}
-		
+
 		try {	
 			Livraison l4 = new Livraison(new Intersection(4, 4, 400L), 0);
 			demandeLivraison.ajoutePointLivraison(l4, 10);
@@ -77,7 +109,7 @@ public class DemandeLivraisonTest {
 			assertEquals("Dev ONLY : PdL out of bounds ajt 0xce", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void supprimerPointLivraisonTest() {
 		Livraison l = new Livraison(new Intersection(1, 1, 100L), 0);

@@ -41,13 +41,13 @@ public interface Commande {
 
 	/**
 	 * Execute la commande this
-	 * @throws ExceptionPlanCo 
+	 * @throws ExceptionPlanCo Une execption PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void doCde() throws ExceptionPlanCo;
 	
 	/**
 	 * Execute la commande inverse a this
-	 * @throws ExceptionPlanCo 
+	 * @throws ExceptionPlanCo Une execption PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void undoCde() throws ExceptionPlanCo;
 }

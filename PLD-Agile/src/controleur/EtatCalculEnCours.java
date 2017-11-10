@@ -37,7 +37,7 @@ import vue.Textes;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- *  
+ * @see controleur.EtatDefaut
  * @author 4104
  */
 public class EtatCalculEnCours extends EtatDefaut {

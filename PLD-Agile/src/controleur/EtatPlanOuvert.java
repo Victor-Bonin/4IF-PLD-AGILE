@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- *  
+ * @see controleur.EtatInit
  * @author 4104
  */
 

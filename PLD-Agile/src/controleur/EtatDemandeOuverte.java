@@ -36,7 +36,7 @@ import vue.Textes;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- *  
+ * @see controleur.EtatPlanOuvert
  * @author 4104
  */
 public class EtatDemandeOuverte extends EtatPlanOuvert{

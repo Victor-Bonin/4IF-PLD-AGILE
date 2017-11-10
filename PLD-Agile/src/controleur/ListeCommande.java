@@ -51,8 +51,8 @@ public class ListeCommande{
 
 	/**
 	 * Ajout de la commande cmd a la liste this
-	 * @param cmd
-	 * @throws ExceptionPlanCo 
+	 * @param cmd commande a ajouter a la liste
+	 * @throws ExceptionPlanCo Une execption PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajoute(Commande cmd) throws ExceptionPlanCo{
 		int i = indiceCrt+1;
@@ -66,7 +66,7 @@ public class ListeCommande{
 
 	/**
 	 * Annule temporairement la derniere commande ajoutee (cette commande pourra etre remise dans la liste avec redo)
-	 * @throws ExceptionPlanCo 
+	 * @throws ExceptionPlanCo Une execption PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void undo() throws ExceptionPlanCo{
 		if (indiceCrt >= 0){
@@ -79,7 +79,7 @@ public class ListeCommande{
 	/**
 	 * Supprime definitivement la derniere commande ajoutee (cette commande ne pourra pas etre remise dans la liste 
 	 * avec redo)
-	 * @throws ExceptionPlanCo 
+	 * @throws ExceptionPlanCo Une execption PlanCo qui est levee si une erreur s'est produite 
 	 */
 	public void annule() throws ExceptionPlanCo{
 		if (indiceCrt >= 0){
@@ -92,7 +92,7 @@ public class ListeCommande{
 
 	/**
 	 * Remet dans la liste la derniere commande annulee avec undo
-	 * @throws ExceptionPlanCo 
+	 * @throws ExceptionPlanCo Une execption PlanCo qui est levee si une erreur s'est produite 
 	 */
 	public void redo() throws ExceptionPlanCo{
 		if (indiceCrt < liste.size()-1){
@@ -112,7 +112,7 @@ public class ListeCommande{
 	
 	/**
 	 * Retourne la liste des commandes 
-	 * @return une liste des commandes enregistree sous forme d'une LinkedList<Commande>
+	 * @return une liste des commandes enregistree sous forme d'une LinkedList of Commandes
 	 */
 	public LinkedList<Commande> getListeCommandes() {
 		return liste;

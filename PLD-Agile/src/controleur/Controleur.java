@@ -125,8 +125,8 @@ public class Controleur {
 	 * @param livraison la livraison a supprimer
 	 * @param position index de la livraison a supprimer. Permet de la rajouter ensuite !
 	 */
-	public void supprimerLivraison(Livraison l, int position) {
-		etatCourant.supprimerLivraison(fenetre, plan, l, listeCommande, position);
+	public void supprimerLivraison(Livraison livraison, int position) {
+		etatCourant.supprimerLivraison(fenetre, plan, livraison, listeCommande, position);
 	}
 
 	/** Methode appelee apres un clic sur le bouton "Calculer Itineraire" */
@@ -161,7 +161,7 @@ public class Controleur {
 	}
 
 	/**
-	 * Methode appelee apres un clic droit -> Ajouter apres sur l'un des elements de
+	 * Methode appelee apres un clic droit / Ajouter apres sur l'un des elements de
 	 * la tournee
 	 * @param position position cible apres laquelle creer la livraison
 	 */
@@ -202,7 +202,7 @@ public class Controleur {
 	/**
 	 * Recupere les noms des troncons adjacents a une intersection
 	 * @param inter l'intersection
-	 * @return les troncons dans un objet Set<String>
+	 * @return les troncons dans un objet Set of Strings
 	 */
 	public Set<String> nomsTronconsIntersection(Intersection inter) {
 		Set<String> liste;

@@ -97,13 +97,13 @@ public interface Etat {
 	void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre);
 	/**
 	 * Annule la derniere action executee
-	 * @param listeCmd liste des commandes executee, utile pour le pattern commande permettant les annulations
+	 * @param listeCommande liste des commandes executee, utile pour le pattern commande permettant les annulations
 	 * @param fenetre la fenetre de notre instance de PlanCo
 	 */
 	void undo(ListeCommande listeCommande, Fenetre fenetre);
 	/**
 	 * Re-execute la derniere action annulee
-	 * @param listeCmd liste des commandes executee, utile pour le pattern commande permettant les annulations
+	 * @param listeCommande liste des commandes executee, utile pour le pattern commande permettant les annulations
 	 * @param fenetre la fenetre de notre instance de PlanCo
 	 */
 	void redo(ListeCommande listeCommande, Fenetre fenetre);

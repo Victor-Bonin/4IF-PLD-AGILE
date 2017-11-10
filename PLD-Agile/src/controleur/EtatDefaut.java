@@ -36,7 +36,7 @@ import vue.Fenetre;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- *  
+ * @see controleur.Etat
  * @author 4104
  */
 public abstract class EtatDefaut implements Etat{

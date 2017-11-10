@@ -39,7 +39,7 @@ public class VueTournee extends JPanel{
 	
 	private boolean isDragged = false;
 	private ElementTourneeLivraison dragSource;
-	private ElementTourneeLivraison dragCible;
+	private ElementTournee dragCible;
 	
 	private GridBagConstraints c;
 	private JLabel tourneeTitre;
@@ -54,6 +54,7 @@ public class VueTournee extends JPanel{
 	
 	EcouteurDeBouton ecouteurBoutons;
 	EcouteurDeSourisDragnDrop ecouteurDrag;
+	EcouteurDeSourisDragnDropEntrepot ecouteurDragEntrepot;
 	
 	public VueTournee(Controleur ctrl, Plan p){
 		super();
@@ -97,6 +98,7 @@ public class VueTournee extends JPanel{
 		pan.setBackground(CharteGraphique.BG_COLOR);
 		
 		ecouteurDrag =  new EcouteurDeSourisDragnDrop(this);
+		ecouteurDragEntrepot =  new EcouteurDeSourisDragnDropEntrepot(this);
 	}
 	
 	/**
@@ -122,8 +124,8 @@ public class VueTournee extends JPanel{
 		int i = 0;
 		elementsTournee.add(entrepot);
 		
-		
-		
+		entrepot.addMouseMotionListener(ecouteurDragEntrepot);
+		entrepot.addMouseListener(ecouteurDragEntrepot);
 		
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
@@ -267,7 +269,7 @@ public class VueTournee extends JPanel{
 		//elemt.setBackground(CharteGraphique.LIVRAISON_SELECTIONNEE);
 	}
 	
-	public void dragIn(ElementTourneeLivraison elemt) {
+	public void dragIn(ElementTournee elemt) {
 		if(isDragged == true){
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 0, 10),
@@ -280,7 +282,7 @@ public class VueTournee extends JPanel{
 		}
 	}
 	
-	public void dragOut(ElementTourneeLivraison elemt) {
+	public void dragOut(ElementTournee elemt) {
 		if(isDragged == true){
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 5, 10),
@@ -303,7 +305,11 @@ public class VueTournee extends JPanel{
 						)
 				));
 		if(dragSource != dragCible && dragCible != null) {
-			ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), dragCible.getPosition());
+			if(dragCible instanceof  ElementTourneeLivraison){
+				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), ((ElementTourneeLivraison)dragCible).getPosition());
+			} else {
+				ctrl.permuterLivraison(dragSource.getLivraison(), dragSource.getPosition(), 0);
+			}
 			revalidate();
 			repaint();
 		}

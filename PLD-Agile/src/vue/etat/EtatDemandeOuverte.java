@@ -37,7 +37,7 @@ public class EtatDemandeOuverte extends EtatDefaut {
 
 		fenetre.ajouterEcouteursSynchro();
 		vuePlan.activerBouton(true);
-		
+		fenetre.requestFocus();
 	}
 
 }

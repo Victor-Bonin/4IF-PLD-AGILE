@@ -25,7 +25,10 @@ public class CommandePermuter implements Commande {
 		plan = pln;
 		livraison = lvrsn;
 		this.anciennePosition = anciennePosition;
-		this.nouvellePosition = nouvellePosition;
+		if(nouvellePosition <= anciennePosition)
+			this.nouvellePosition = nouvellePosition + 1;
+		else
+			this.nouvellePosition = nouvellePosition;
 	}
 	
 	@Override

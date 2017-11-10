@@ -42,7 +42,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 	
 	private boolean clicDroitAutorise;
 
-	// TODO : A supprimer?
 	private Calendar date;
 	private int position;
 
@@ -282,7 +281,6 @@ public class ElementTourneeLivraison extends ElementTournee{
 			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 		} catch (IOException e) {
-			System.out.println("Une image est manquante");
 		}
 
 		imageLabel.setIcon(imageIconNormal);

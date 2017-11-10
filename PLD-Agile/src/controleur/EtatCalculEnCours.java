@@ -6,6 +6,9 @@ import vue.Fenetre;
 import vue.Textes;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -15,11 +18,11 @@ import vue.Textes;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -32,24 +35,28 @@ import vue.Textes;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
- *  
+ * @see controleur.EtatDefaut
  * @author 4104
  */
 public class EtatCalculEnCours extends EtatDefaut {
 
+	/** {@inheritDoc}  */
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
 		AlgorithmRunnable runnable = new AlgorithmRunnable(plan, controleur, fenetre);
 		Thread t = new Thread(runnable);
 		t.start();
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
 		fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COULEUR);	
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
 		fenetre.setEtatCourant(fenetre.etatCalculEnCours);

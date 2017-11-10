@@ -24,9 +24,11 @@ import controleur.Controleur;
 import modele.Entrepot;
 
 /**
+ * <pre>
  * Extension de ElementTournee affichant un element d'une tournee de type Entrepot
  * @see modele.Entrepot
  * @see ElementTournee
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -36,11 +38,11 @@ import modele.Entrepot;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -53,6 +55,7 @@ import modele.Entrepot;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

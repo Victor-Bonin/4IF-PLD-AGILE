@@ -19,7 +19,9 @@ import modele.ExceptionPlanCo;
 import modele.Plan;
 
 /**
+ * <pre>
  * Classe permattant de faire le lien entre les fichiers XML et les objets Java. Elle extrait du XML les informations permettant d'instancier l'objet Plan.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -29,11 +31,11 @@ import modele.Plan;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -46,6 +48,7 @@ import modele.Plan;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

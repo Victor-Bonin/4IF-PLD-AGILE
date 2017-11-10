@@ -13,7 +13,9 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
+ * <pre>
  * Ensemble ordonne de livraisons avec un point de depart et d’arrivee ainsi qu’un itineraire
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -23,11 +25,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -40,6 +42,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104
@@ -81,7 +84,6 @@ public class Tournee extends DemandeLivraison{
 
 				nomRue = troncons.get(j).GetNomRue();
 				longueurTroncon = troncons.get(j).getLongueur();
-				long fin = troncons.get(j).getFin().getId();
 				nbTronconsConseq = 0;
 				if (j < troncons.size()-1) {
 					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).GetNomRue())){

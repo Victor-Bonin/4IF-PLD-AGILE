@@ -17,11 +17,11 @@ import modele.Plan;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -48,18 +48,19 @@ public class CommandePermuter implements Commande {
 	
 	/**
 	 * Cree la commande qui permet de changer la position d'une livraison dans la demande de livraison
-	 * @param p
-	 * @param l
-	 * @param positionDansListe
+	 * @param plan plan contenant la livraison
+	 * @param livraison livraison dont on veut changer la position
+	 * @param anciennePosition index de la livraison avant le changement de plance
+	 * @param predecesseurCible index de l'element survole, donc le predecesseur : -1 pour l'entrepot
 	 */
-	public CommandePermuter(Plan pln, Livraison lvrsn, int anciennePosition, int nouvellePosition) {
-		plan = pln;
-		livraison = lvrsn;
+	public CommandePermuter(Plan plan, Livraison livraison, int anciennePosition, int predecesseurCible) {
+		this.plan = plan;
+		this.livraison = livraison;
 		this.anciennePosition = anciennePosition;
-		if(nouvellePosition <= anciennePosition)
-			this.nouvellePosition = nouvellePosition + 1;
+		if(predecesseurCible <= anciennePosition)
+			this.nouvellePosition = predecesseurCible + 1;
 		else
-			this.nouvellePosition = nouvellePosition;
+			this.nouvellePosition = predecesseurCible;
 	}
 
 	/** {@inheritDoc}  */

@@ -17,11 +17,11 @@ import modele.Plan;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -46,13 +46,14 @@ public class CommandeSupprimer implements Commande {
 	private int position;
 	
 	/**
-	 * Cree la commande qui supprime la livraison l du plan p
-	 * @param p
-	 * @param l
+	 * Cree la commande qui supprime une livraison du plan
+	 * @param plan plan contenant la livraison a supprimer
+	 * @param livraison la livraison a supprimer
+	 * @param positionDansListe index de la livraison a supprimer. Permet de la rajouter ensuite !
 	 */
-	public CommandeSupprimer(Plan p, Livraison l, int positionDansListe) {
-		plan = p;
-		livraison = l;
+	public CommandeSupprimer(Plan plan, Livraison livraison, int positionDansListe) {
+		this.plan = plan;
+		this.livraison = livraison;
 		position = positionDansListe;
 	}
 

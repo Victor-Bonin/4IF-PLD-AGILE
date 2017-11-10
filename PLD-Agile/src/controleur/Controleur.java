@@ -21,11 +21,11 @@ import vue.Fenetre;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -40,7 +40,7 @@ import vue.Fenetre;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- *  
+ * 
  * @author 4104
  */
 public class Controleur {
@@ -50,7 +50,7 @@ public class Controleur {
 	private Etat etatCourant;
 	private Fenetre fenetre;
 
-	//Instances associees a chaque etat possible du controleur
+	// Instances associees a chaque etat possible du controleur
 	protected final EtatInit etatInit = new EtatInit();
 	protected final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
 	protected final EtatDemandeOuverte etatDemandeOuverte = new EtatDemandeOuverte();
@@ -78,131 +78,123 @@ public class Controleur {
 	}
 
 	/**
-	 * Methode appelee apres un clic sur le bouton "Importer un plan"
-	 * ou "Changer de plan"
+	 * Methode appelee apres un clic sur le bouton "Importer un plan" ou "Changer de
+	 * plan"
 	 */
 	public void ouvrirPlan() {
 		etatCourant.ouvrirPlan(this, plan, fenetre, listeCommande);
 	}
 
 	/**
-	 * Methode appelee apres un clic sur le bouton "Importer une demande de livraison"
-	 * ou "Importer une nouvelle demande de livraison"
+	 * Methode appelee apres un clic sur le bouton "Importer une demande de
+	 * livraison" ou "Importer une nouvelle demande de livraison"
 	 */
 	public void ouvrirLivraison() {
 		etatCourant.ouvrirLivraison(this, plan, fenetre, listeCommande);
 	}
 
-
 	/**
-	 * Methode appelee apres un clic sur le bouton "Optimiser l'ordre des livraisons"
+	 * Methode appelee apres un clic sur le bouton "Optimiser l'ordre des
+	 * livraisons"
 	 */
 	public void calculerTournee() {
 		etatCourant.calculerTournee(this, plan, fenetre);
 	}
 
 	/**
-	 * Methode appelee apres cree avoir un point de livraison via la carte ou le bouton "+"
+	 * Methode appelee apres cree avoir un point de livraison via la carte ou le
+	 * bouton "+"
+	 * @param livraison livraison a ajouter
+	 * @param position sa position voulue apres l'ajout
 	 */
-	public void ajouterLivraison(Livraison l, int position) {
-		etatCourant.ajouterLivraison(fenetre, plan, l, listeCommande, position);
+	public void ajouterLivraison(Livraison livraison, int position) {
+		etatCourant.ajouterLivraison(fenetre, plan, livraison, listeCommande, position);
 	}
 
 	/**
 	 * Methode appelee apres avoir permuter un point de livraison avec un autre
+	 * @param livraison livraison dont on veut changer la position
+	 * @param anciennePosition index de la livraison avant le changement de plance
+	 * @param predecesseurCible index de l'element survole, donc le predecesseur : -1 pour l'entrepot
 	 */
-	public void permuterLivraison(Livraison livraison, int anciennePos, int nouvellePos) {
-		etatCourant.deplacerLivraison(fenetre, plan, livraison, listeCommande, anciennePos, nouvellePos);
+	public void permuterLivraison(Livraison livraison, int anciennePosition, int predecesseurCible) {
+		etatCourant.deplacerLivraison(fenetre, plan, livraison, listeCommande, anciennePosition, predecesseurCible);
 	}
 
-	/**
-	 * Methode appelee apres avoir supprimer un point de livraison
+	/** Methode appelee apres avoir supprimer un point de livraison 
+	 * @param livraison la livraison a supprimer
+	 * @param position index de la livraison a supprimer. Permet de la rajouter ensuite !
 	 */
 	public void supprimerLivraison(Livraison l, int position) {
 		etatCourant.supprimerLivraison(fenetre, plan, l, listeCommande, position);
 	}
 
-	/**
-	 * Methode appelee apres un clic sur le bouton "Calculer Itineraire"
-	 */
+	/** Methode appelee apres un clic sur le bouton "Calculer Itineraire" */
 	public void calculerItineraire() {
 		etatCourant.calculerItineraire(this, plan, fenetre);
 	}
 
-	/**
-	 * Methode appelee apres un clic sur le bouton "Exporter feuille de route"
-	 */
+	/** Methode appelee apres un clic sur le bouton "Exporter feuille de route" */
 	public void exporterFeuilleDeRoute() {
 		this.tournee = plan.getTournee();
 		etatCourant.exporterFeuilleDeRoute(fenetre, tournee);
 	}
 
-	/**
-	 * Methode appelee apres un clic sur le bouton "Undo" ou apres presse Ctrl+Z
-	 */
+	/** Methode appelee apres un clic sur le bouton "Undo" ou apres presse Ctrl+Z */
 	public void undo() {
 		etatCourant.undo(listeCommande, fenetre);
 	}
 
-	/**
-	 * Methode appelee apres un clic sur le bouton "Redo" ou apres presse Ctrl+Y
-	 */
+	/** Methode appelee apres un clic sur le bouton "Redo" ou apres presse Ctrl+Y */
 	public void redo() {
 		etatCourant.redo(listeCommande, fenetre);
 	}
-	
-	/**
-	 * Methode changeant l'etat de la fenetre
-	 */
+
+	/** Methode changeant l'etat de la fenetre */
 	public void afficherFenetre() {
 		etatCourant.afficherFenetre(fenetre);
 	}
-	
-	/**
-	 * Methode permettant de modifier le contenu de la zone de notification
-	 */
+
+	/** Methode permettant de modifier le contenu de la zone de notification*/
 	public void afficherNotif() {
 		etatCourant.afficherNotif(fenetre);
 	}
-	
+
 	/**
-	 * Methode appelee apres un clic droit -> Ajouter après sur l'un des éléments de la tournée
+	 * Methode appelee apres un clic droit -> Ajouter apres sur l'un des elements de
+	 * la tournee
+	 * @param position position cible apres laquelle creer la livraison
 	 */
 	public void creerLivraisonApres(int position) {
 		etatCourant.creerLivraisonApres(fenetre, position);
 	}
-	
-	/**
-	 * Methode appelee apres un clic sur le bouton + ou apres presse Ctrl+N
-	 */
+
+	/** Methode appelee apres un clic sur le bouton + ou apres presse Ctrl+N */
 	public void creerLivraison() {
 		etatCourant.creerLivraison(fenetre);
 	}
-	
+
 	/**
-	 * Methode permettant de trouver l'inersection la plus proche de x et y en paramètres
+	 * Methode permettant de trouver l'inersection la plus proche de x et y en
+	 * parametres
+	 * @param x position x du clic
+	 * @param y position y du clic
 	 */
 	public void obtenirPlusProcheIntersection(double x, double y) {
 		etatCourant.obtenirPlusProcheIntersection(fenetre, plan, x, y);
 	}
-	
-	/**
-	 * Methode permettant de commencer à choisir une intersection sur vuePlan
-	 */
+
+	/** Methode permettant de commencer a choisir une intersection sur vuePlan */
 	public void commencerChoixIntersection() {
 		etatCourant.commencerChoixIntersection(fenetre);
 	}
-	
-	/**
-	 * Methode permettant de prendre en compte un appui sur la touche entrer
-	 */
+
+	/** Methode permettant de prendre en compte un appui sur la touche entrer */
 	public void appuiEntree() {
 		etatCourant.appuiEntree(this, plan, fenetre, listeCommande);
 	}
-	
-	/**
-	 * Methode annulant la creation d'une nouvelle livraison
-	 */
+
+	/** Methode annulant la creation d'une nouvelle livraison */
 	public void annulerCreation() {
 		etatCourant.annulerCreation(fenetre);
 	}
@@ -212,14 +204,17 @@ public class Controleur {
 	 * @param inter l'intersection
 	 * @return les troncons dans un objet Set<String>
 	 */
-	public Set<String> nomsTronconsIntersection(Intersection inter){
+	public Set<String> nomsTronconsIntersection(Intersection inter) {
 		Set<String> liste;
 		liste = plan.nomsTronconVoisin(inter.getId());
 		return liste;
 	}
-	
+
+	/**
+	 * En cas d'erreur, nettoye le debut de livraison qui a pu etre enregistre
+	 */
 	public void nettoyerNouvelleLivraison() {
 		fenetre.nettoyerNouvelleLivraison();
 	}
-	
+
 }

@@ -17,11 +17,11 @@ import modele.ExceptionPlanCo;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -43,24 +43,25 @@ public class ListeCommande{
 	private LinkedList<Commande> liste;
 	private int indiceCrt;
 
+	/** Constructeur */
 	public ListeCommande(){
 		indiceCrt = -1;
 		liste = new LinkedList<Commande>();
 	}
 
 	/**
-	 * Ajout de la commande c a la liste this
-	 * @param c
+	 * Ajout de la commande cmd a la liste this
+	 * @param cmd
 	 * @throws ExceptionPlanCo 
 	 */
-	public void ajoute(Commande c) throws ExceptionPlanCo{
+	public void ajoute(Commande cmd) throws ExceptionPlanCo{
 		int i = indiceCrt+1;
 		while(i<liste.size()){
 			liste.remove(i);
 		}
 		indiceCrt++;
-		liste.add(indiceCrt, c);
-		c.doCde();
+		liste.add(indiceCrt, cmd);
+		cmd.doCde();
 	}
 
 	/**
@@ -76,7 +77,8 @@ public class ListeCommande{
 	}
 
 	/**
-	 * Supprime definitivement la derniere commande ajoutee (cette commande ne pourra pas etre remise dans la liste avec redo)
+	 * Supprime definitivement la derniere commande ajoutee (cette commande ne pourra pas etre remise dans la liste 
+	 * avec redo)
 	 * @throws ExceptionPlanCo 
 	 */
 	public void annule() throws ExceptionPlanCo{
@@ -108,6 +110,10 @@ public class ListeCommande{
 		liste.clear();  
 	}
 	
+	/**
+	 * Retourne la liste des commandes 
+	 * @return une liste des commandes enregistree sous forme d'une LinkedList<Commande>
+	 */
 	public LinkedList<Commande> getListeCommandes() {
 		return liste;
 	}

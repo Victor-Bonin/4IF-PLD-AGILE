@@ -18,11 +18,11 @@ import vue.Textes;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -49,7 +49,6 @@ public class AlgorithmRunnable implements Runnable {
 	 * Constructeur.
 	 * 
 	 * @param plan plan sur lequel on execute les algorithmes
-	 * @param etat etat actuel dans lequel l'application se trouve
 	 * @param ctrl le controleur de l'application
 	 * @param fenetre fenetre de l'instance principale de l'application
 	 */

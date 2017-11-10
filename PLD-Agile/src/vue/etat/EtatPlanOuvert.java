@@ -6,7 +6,7 @@ import vue.Fenetre;
 
 /**
  * <pre>
- * 
+ * Etat de la vue apres qu'un plan ait ete ouvert
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -41,6 +41,7 @@ import vue.Fenetre;
  */
 public class EtatPlanOuvert extends EtatDefaut{
 
+	/** {@inheritDoc}  */
 	@Override
 	public void setFooter(JPanel footer, Fenetre fenetre) {
 		footer.remove(fenetre.getExportButton());
@@ -48,6 +49,7 @@ public class EtatPlanOuvert extends EtatDefaut{
 		footer.add(fenetre.getImportDemandeLivraisonButton());
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		fenetre.setContent();

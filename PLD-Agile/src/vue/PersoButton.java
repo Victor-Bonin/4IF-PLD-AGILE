@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 /**
  * <pre>
- * Extension de JButton pour afficher un bouton personnalisé
+ * Extension de JButton pour afficher un bouton personnalise
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -40,17 +40,22 @@ import javax.swing.JButton;
 public class PersoButton extends JButton{
 	private static final long serialVersionUID = 6534684555513953601L;
 	
+	/**
+	 * Constructeur d'un JButton personnalise
+	 * @param str : le texte du bouton
+	 * @param style : le style a appliquer (1: vert, 2: blanc)
+	 */
 	public PersoButton(String str, int style){
 		super(str);
 		switch(style){
 		case 1:
-			setBackground(CharteGraphique.BUTTON_GREEN_BG);
+			setBackground(CharteGraphique.BOUTON_VERT_BG);
 			break;
 		case 2:
-			setBackground(CharteGraphique.BUTTON_WHITE_BG);
+			setBackground(CharteGraphique.BOUTON_BLANC_BG);
 			break;
 		}
 		setFocusPainted(false);
-		setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
 	}	
 }

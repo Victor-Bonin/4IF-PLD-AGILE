@@ -53,7 +53,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);	
+		fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COULEUR);	
 	}
 
 	/** {@inheritDoc}  */

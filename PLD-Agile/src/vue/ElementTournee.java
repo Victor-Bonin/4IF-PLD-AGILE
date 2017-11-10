@@ -24,7 +24,7 @@ import modele.LivraisonPlageHoraire;
 
 /**
  * <pre>
- * Extension de JPanel affichant une tournee et ses informations primaires
+ * Extension de JPanel affichant un element d'une tournee et ses informations primaires
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -69,53 +69,56 @@ public class ElementTournee extends JPanel{
 	protected JPanel infos;
 	protected JPanel details;
 	
-	protected ImageIcon imageIconNormal;
-	protected ImageIcon imageIconSurvol;
+	protected ImageIcon imageIconeNormal;
+	protected ImageIcon imageIconeSurvol;
 	
 	protected EcouteurDeBoutonsElementTournee ecouteurBoutons;
 	
-	protected boolean areDetailsVisible = false;
-	
-	// TODO : mettre tous les JLabel en attribut
+	protected boolean detailsVisibles = false;
 
-	
+	/**
+	 * Contructeur d'un ElementTournee vide
+	 * @param ctrl : le controleur associe a la vue
+	 */
 	public ElementTournee(Controleur ctrl) {
 		super();
 		
 		this.controleur = ctrl;
 		
 		setOpaque(true);
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		
 		setBorder(new CompoundBorder(
 				new EmptyBorder(10, 10, 5, 10),
 				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 						new EmptyBorder(10, 10, 10, 10)
 						)
 				));
 		
+		// Creations des différents JPanels communs à ElementTourneeLivraison et ElementTourneeEntrepot
 		nomPanel = new JPanel();
 		nomPanel.setLayout(new BorderLayout());
-		nomPanel.setBackground(CharteGraphique.BG_COLOR);
+		nomPanel.setBackground(CharteGraphique.BG_COULEUR);
 		nomLabel = new JLabel();
-		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
+		nomLabel.setFont(CharteGraphique.TEXTE_GRAND_POLICE);
 		nomPanel.add(nomLabel, BorderLayout.WEST);
 		
 		idLabel = new JLabel();
-		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
+		idLabel.setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
+		idLabel.setForeground(CharteGraphique.TEXT_SECONDAIRE_COULEUR);
 		
 		imageLabel = new JLabel();
 		
 		infos = new JPanel();
 		infos.setLayout(new BorderLayout());
-		infos.setBackground(CharteGraphique.BG_COLOR);
+		infos.setBackground(CharteGraphique.BG_COULEUR);
 		
 		details = new JPanel();
-		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setBackground(CharteGraphique.BG_COULEUR);
 		details.setLayout(new BorderLayout());
 
+		// Mise en place des elements
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -147,13 +150,14 @@ public class ElementTournee extends JPanel{
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
-		
-		
 	}
 	
-	
-	
-	
+	/**
+	 * Creation d'une chaine de caracteres en html decrivant une intersection
+	 * @param intersec : l'intersection a decrire
+	 * @param listeNomsRues : la liste des rues passant par cette intersection
+	 * @return une chaine de caractere decrivant l'intersection
+	 */
 	protected String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
 		String s = "";
 		if(intersec instanceof Entrepot) {
@@ -188,25 +192,39 @@ public class ElementTournee extends JPanel{
 		return s;
 	}
 	
+	/**
+	 * Mise en surbrillance de l'icone de l'element
+	 */
 	public void survolElement(){
-		imageLabel.setIcon(imageIconSurvol);
+		imageLabel.setIcon(imageIconeSurvol);
 	}
 	
+	/**
+	 * Remise de l'icone de l'element a son status normal
+	 */
 	public void antiSurvolElement(){
-		imageLabel.setIcon(imageIconNormal);
+		imageLabel.setIcon(imageIconeNormal);
 	}
 	
-	
-	
+	/**
+	 * Affichage du JPanel contenant les details de l'element 
+	 */
 	public void afficherDetails() {
-		if(areDetailsVisible){
+		if(detailsVisibles){
 			details.setVisible(false);
 		} else {
 			details.setVisible(true);
 		}
-		areDetailsVisible = !areDetailsVisible;
+		detailsVisibles = !detailsVisibles;
 	}
 	
+	/**
+	 * Affichage du menu contextuel d'un element
+	 * @param c : l'element possedant le menu
+	 * @param x : la valeur de x ou afficher le menu par rapport a celui-ci
+	 * @param y : la valeur de y ou afficher le menu par rapport a celui-ci
+	 * @see javax.swing.JPopupMenu#show(Component, int, int)
+	 */
 	public void showMenu(Component c, int x, int y) {
 		menu.show(c, x, y);
 	}

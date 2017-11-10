@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * <pre>
- * Cette classe contient les appels au controleur depuis la souris
+ * Cette classe contient les appels au controleur depuis la souris sur VuePlan
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -43,33 +43,47 @@ import javax.swing.SwingUtilities;
  * @author 4104
  */
 public class EcouteurDeSouris extends MouseAdapter implements MouseWheelListener{
-	private controleur.Controleur ctrl;
 	private VuePlan vue;
 	private int posX;
 	private int posY;
 	
-	public EcouteurDeSouris(controleur.Controleur c, VuePlan v){
-		ctrl = c;
+	/**
+	 * Constructeur d'une instance d'un ecouteur de souris
+	 * @param v : la vue du plan associee
+	 */
+	public EcouteurDeSouris(VuePlan v){
 		vue = v;
 	}
 	
+	/**
+	 * Cree un zoom sur la vue plan a l'action sur la molette
+	 * @see java.awt.event.MouseWheelListener#mouseWheelMoved(MouseWheelEvent)
+	 */
 	public void mouseWheelMoved(MouseWheelEvent e){
 		int cran = e.getWheelRotation();
         if (cran < 0) {
-        	// Scroll haut
+        	// Scroll vers le haut
         	this.vue.zoom();
         } else if (cran > 0) {
-        	// Scroll bas
+        	// Scroll vers le bas
         	this.vue.dezoom();
         } 
 	}
 	
+	/**
+	 * Ecoute le clic sur la souris pour connaitre l'origine du cliquer-glisser
+	 * @see java.awt.event.MouseAdapter#mousePressed(MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		posX = e.getX();
 		posY = e.getY();
 	}
 	
+	/**
+	 * Actualise la vue plan au cliquer-glisser de la souris
+	 * @see java.awt.event.MouseAdapter#mouseDragged(MouseEvent)
+	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(SwingUtilities.isLeftMouseButton(e)){

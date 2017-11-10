@@ -10,7 +10,7 @@ import vue.VueTournee;
 
 /**
  * <pre>
- * 
+ * Etat de la vue apres qu'une demande de livraison ait ete chargee
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -45,6 +45,7 @@ import vue.VueTournee;
  */
 public class EtatDemandeOuverte extends EtatDefaut {
 
+	/** {@inheritDoc}  */
 	@Override
 	public void setFooter(JPanel footer, Fenetre fenetre) {
 		footer.remove(fenetre.getImportDemandeLivraisonButton());
@@ -54,6 +55,7 @@ public class EtatDemandeOuverte extends EtatDefaut {
 		calculTourneeButton.setEnabled(true);
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		VueTournee vueTournee = fenetre.getVueTournee();
@@ -64,12 +66,12 @@ public class EtatDemandeOuverte extends EtatDefaut {
 			vuePlan.nettoyerIcones();
 		}else {
 			vueTournee.initTournee();
-			vuePlan.afficherIcones(plan.getDemandeLivraison());
+			vuePlan.afficherIcones();
 		}
 		vuePlan.activerAnnulationBouton(false);
 
 		fenetre.ajouterEcouteursSynchro();
-		vuePlan.activerBouton(true);
+		vuePlan.activerBoutonImportDemande(true);
 		fenetre.requestFocus();
 	}
 

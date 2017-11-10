@@ -88,7 +88,7 @@ public class VueTournee extends JPanel{
 		
 		elementsTournee = new ArrayList<ElementTournee>();
 		
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		setLayout(new GridBagLayout());
 		
 		c = new GridBagConstraints();
@@ -102,7 +102,7 @@ public class VueTournee extends JPanel{
 	    c.gridy = 0;
 		
 		tourneeTitre = new JLabel(Textes.TITRE_TOURNEE);
-	    tourneeTitre.setFont(CharteGraphique.TEXT_BIGGER_FONT);
+	    tourneeTitre.setFont(CharteGraphique.TEXTE_PLUS_GRAND_POLICE);
 		add(tourneeTitre, c);
 		tourneeTitre.setBorder(new EmptyBorder(20, 20, 0, 145));
 		
@@ -110,7 +110,7 @@ public class VueTournee extends JPanel{
 		c.weighty = 1;
 		c.gridy = 1;
 		pan = new JPanel();
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		JScrollPane scrollPane = new JScrollPane(pan);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		add(scrollPane,c);
@@ -120,7 +120,7 @@ public class VueTournee extends JPanel{
 		scrollPane.setHorizontalScrollBarPolicy(
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 
-		pan.setBackground(CharteGraphique.BG_COLOR);
+		pan.setBackground(CharteGraphique.BG_COULEUR);
 		
 		ecouteurDrag =  new EcouteurDeSourisDragnDrop(this);
 		ecouteurDragEntrepot =  new EcouteurDeSourisDragnDropEntrepot(this);
@@ -158,7 +158,7 @@ public class VueTournee extends JPanel{
 		
 		panelAjout = new JPanel();
 		panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelAjout.setBackground(CharteGraphique.BG_COLOR);
+		panelAjout.setBackground(CharteGraphique.BG_COULEUR);
 		panelAjout.setLayout(new BorderLayout());
 		pan.add(panelAjout);
 		
@@ -170,7 +170,7 @@ public class VueTournee extends JPanel{
 		
 		panelCreation = new JPanel();
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelCreation.setBackground(CharteGraphique.BG_COLOR);
+		panelCreation.setBackground(CharteGraphique.BG_COULEUR);
 		panelCreation.setLayout(new BorderLayout());
 		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
 		pan.remove(panelAjout);
@@ -185,7 +185,7 @@ public class VueTournee extends JPanel{
 		this.annulerCreation();
 		panelCreation = new JPanel();
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelCreation.setBackground(CharteGraphique.BG_COLOR);
+		panelCreation.setBackground(CharteGraphique.BG_COULEUR);
 		panelCreation.setLayout(new BorderLayout());
 		
 		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,place+1);
@@ -237,13 +237,13 @@ public class VueTournee extends JPanel{
 	public void ajouterBoutonPlus() {
 		// Bouton d'ajout de livraison
 		ajouterLivraison = new JButton("+");
-		ajouterLivraison.setBackground(CharteGraphique.BG_COLOR);
-		ajouterLivraison.setFont(CharteGraphique.TITLE_FONT);
-		ajouterLivraison.setForeground(CharteGraphique.NOTIFICATION_COLOR);
+		ajouterLivraison.setBackground(CharteGraphique.BG_COULEUR);
+		ajouterLivraison.setFont(CharteGraphique.TITRE_POLICE);
+		ajouterLivraison.setForeground(CharteGraphique.NOTIFICATION_COULEUR);
 		ajouterLivraison.setBorder(new CompoundBorder(
 				new EmptyBorder(0, 10, 0, 10),
 				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 						new EmptyBorder(5, 0, 5, 0)
 						)
 				));
@@ -310,7 +310,7 @@ public class VueTournee extends JPanel{
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 0, 10),
 					new CompoundBorder(
-							new MatteBorder(0,0,5,0, CharteGraphique.SEPARATOR_COLOR),
+							new MatteBorder(0,0,5,0, CharteGraphique.SEPARATEUR_COULEUR),
 							new EmptyBorder(10, 10, 10, 10)
 							)
 					));
@@ -323,7 +323,7 @@ public class VueTournee extends JPanel{
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 5, 10),
 					new CompoundBorder(
-							new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+							new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 							new EmptyBorder(10, 10, 10, 10)
 							)
 					));
@@ -336,7 +336,7 @@ public class VueTournee extends JPanel{
 		dragSource.setBorder(new CompoundBorder(
 				new EmptyBorder(10, 10, 5, 10),
 				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 						new EmptyBorder(10, 10, 10, 10)
 						)
 				));

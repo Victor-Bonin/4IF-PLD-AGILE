@@ -39,13 +39,17 @@ public class EcouteurDeClavier implements KeyListener{
 	private controleur.Controleur ctrl;
 	
 	/**
-	 * Constructeur d'une instance d'un écouteur
+	 * Constructeur d'une instance d'un écouteur de clavier
 	 * @param c le controleur sur lequel on appelera les actions
 	 */
 	public EcouteurDeClavier(controleur.Controleur c){
 		ctrl = c;
 	}
 	
+	/**
+	 * Appelle les methodes du controleur a chaque action sur un bouton
+	 * @see java.awt.event.KeyListener#keyPressed(KeyEvent)
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keycode = e.getKeyCode();

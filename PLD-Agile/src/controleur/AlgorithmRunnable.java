@@ -66,7 +66,7 @@ public class AlgorithmRunnable implements Runnable {
 			controleur.setEtatCourant(controleur.etatCalcule);
 			controleur.afficherNotif();
 		} catch (Exception e) {
-			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);	
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);	
 			controleur.setEtatCourant(controleur.etatDemandeOuverte);
 		} finally {
 			controleur.afficherFenetre();

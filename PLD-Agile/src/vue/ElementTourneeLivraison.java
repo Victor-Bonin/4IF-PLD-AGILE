@@ -187,7 +187,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 					@Override
 				    protected void paintComponent(Graphics g) {
 						Graphics2D g2d = (Graphics2D)g;
-						g2d.setColor(CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+						g2d.setColor(CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 						Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, g.getClipBounds().width, g.getClipBounds().height);
 						g2d.fill(circle);
 				    }
@@ -219,7 +219,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		JButton boutonAnnuler = new JButton();
 		boutonAnnuler.setFocusPainted(false);
-		boutonAnnuler.setBackground(CharteGraphique.BG_COLOR);
+		boutonAnnuler.setBackground(CharteGraphique.BG_COULEUR);
 		boutonAnnuler.setBorder(null);
 		try {
 			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_ANNULER));
@@ -244,12 +244,12 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		JPanel choixIntersec = new JPanel();
 		choixIntersec.setLayout(new BorderLayout());
-		choixIntersec.setBackground(CharteGraphique.BG_COLOR);
+		choixIntersec.setBackground(CharteGraphique.BG_COULEUR);
 		JLabel texteChoixIntersec = new JLabel(Textes.TOURNEE_INTERSECTION);
 		JButton boutonChoixIntersec = new JButton();
-		texteChoixIntersec.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		texteChoixIntersec.setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
 		boutonChoixIntersec.setFocusPainted(false);
-		boutonChoixIntersec.setBackground(CharteGraphique.BG_COLOR);
+		boutonChoixIntersec.setBackground(CharteGraphique.BG_COULEUR);
 		try {
 			BufferedImage bouton = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_BOUTON));
 			Image scaledBouton = bouton.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
@@ -263,7 +263,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		JPanel choixDuree = new JPanel();
 		choixDuree.setLayout(new BorderLayout());
 		choixDuree.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-		choixDuree.setBackground(CharteGraphique.BG_COLOR);
+		choixDuree.setBackground(CharteGraphique.BG_COULEUR);
 		SpinnerModel modele =
 				new SpinnerNumberModel(0, //initial value
 						0, //min
@@ -274,7 +274,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		((NumberFormatter) duree.getFormatter()).setAllowsInvalid(false);
 
 		JLabel texteModifDuree = new JLabel(Textes.TOURNEE_DUREE_CREATION);
-		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		texteModifDuree.setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
 
 		choixIntersec.add(texteChoixIntersec, BorderLayout.WEST);
 		choixIntersec.add(boutonChoixIntersec, BorderLayout.EAST);
@@ -301,30 +301,30 @@ public class ElementTourneeLivraison extends ElementTournee{
 
 		dureeLivraisonLabel = new JLabel();
 
-		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
-		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
-		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+		nomLabel.setFont(CharteGraphique.TEXTE_GRAND_POLICE);
+		idLabel.setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
+		idLabel.setForeground(CharteGraphique.TEXT_SECONDAIRE_COULEUR);
+		dureeLivraisonLabel.setFont(CharteGraphique.TEXTE_PETIT_POLICE);
 
 		heureLabel = new JLabel();
-		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+		heureLabel.setFont(CharteGraphique.TEXTE_PETIT_POLICE);
 
 		boutonAction = new JButton();
 		boutonAction.setFocusPainted(false);
-		boutonAction.setBackground(CharteGraphique.BG_COLOR);
+		boutonAction.setBackground(CharteGraphique.BG_COULEUR);
 		boutonAction.setBorder(null);
 
 		try {
 			BufferedImage imgNorm = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
 			Image scaledImageNormal = imgNorm.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			imageIconNormal = new ImageIcon(scaledImageNormal);
+			imageIconeNormal = new ImageIcon(scaledImageNormal);
 			BufferedImage imgSurvol = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON_SURVOL));
 			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			imageIconSurvol = new ImageIcon(scaledImageSurvol);
+			imageIconeSurvol = new ImageIcon(scaledImageSurvol);
 		} catch (IOException e) {
 		}
 
-		imageLabel.setIcon(imageIconNormal);
+		imageLabel.setIcon(imageIconeNormal);
 
 		infos.add(dureeLivraisonLabel, BorderLayout.PAGE_START );
 		infos.add(heureLabel, BorderLayout.WEST );

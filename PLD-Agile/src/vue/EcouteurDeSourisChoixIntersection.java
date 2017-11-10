@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 /**
- * Cette classe contient les appels au controleur depuis la souris
+ * Cette classe contient les appels au controleur depuis la souris au choix d'une intersection
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -40,11 +40,20 @@ public class EcouteurDeSourisChoixIntersection extends MouseAdapter implements M
 	private controleur.Controleur ctrl;
 	private VuePlan vue;
 	
+	/**
+	 * Constructeur d'une instance d'un écouteur de souris
+	 * @param c : le controleur sur lequel on appelera les actions
+	 * @param v : la vue du plan associee
+	 */
 	public EcouteurDeSourisChoixIntersection(controleur.Controleur c, VuePlan v){
 		ctrl = c;
 		vue = v;
 	}
 	
+	/**
+	 * Au clic, recupere l'intersection la plus proche
+	 * @see java.awt.event.MouseAdapter#mousePressed(MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		int posX = vue.positionXPlan(e.getX());
@@ -53,6 +62,10 @@ public class EcouteurDeSourisChoixIntersection extends MouseAdapter implements M
 		vue.terminerChoixIntersection();
 	}
 	
+	/**
+	 * Affiche une icone de livraison a cote de la souris lors de l'ajout
+	 * @see java.awt.event.MouseAdapter#mouseMoved(MouseEvent)
+	 */
 	public void mouseMoved(MouseEvent e) {
 		vue.actualiserIconeSouris(e.getX(), e.getY());
 	}

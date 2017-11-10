@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Cette classe contient les appels au controleur depuis les boutons
+ * Cette classe contient les appels au controleur depuis les actions sur un ElementTournee
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -41,13 +41,18 @@ public class EcouteurDeBoutonsElementTournee implements ActionListener{
 	
 	/**
 	 * Constructeur d'une instance d'un écouteur
-	 * @param c le controleur sur lequel on appelera les actions
+	 * @param c : le controleur sur lequel on appelera les actions
+	 * @param el : l'element de la tournee associe a l'ecouteur
 	 */
 	public EcouteurDeBoutonsElementTournee(controleur.Controleur c, ElementTourneeLivraison el){
 		ctrl = c;
 		elemTournee = el;
 	}
-
+	
+	/**
+	 * Appelle les methodes du controleur a chaque action sur un bouton
+	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		switch(event.getActionCommand()){

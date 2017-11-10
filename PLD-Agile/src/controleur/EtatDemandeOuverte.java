@@ -48,7 +48,7 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);
+		fenetre.changeNotification(Textes.NOTIF_MUST_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COULEUR);
 	}
 	
 	@Override

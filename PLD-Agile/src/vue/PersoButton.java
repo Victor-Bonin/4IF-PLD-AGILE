@@ -41,13 +41,13 @@ public class PersoButton extends JButton{
 		super(str);
 		switch(style){
 		case 1:
-			setBackground(CharteGraphique.BUTTON_GREEN_BG);
+			setBackground(CharteGraphique.BOUTON_VERT_BG);
 			break;
 		case 2:
-			setBackground(CharteGraphique.BUTTON_WHITE_BG);
+			setBackground(CharteGraphique.BOUTON_BLANC_BG);
 			break;
 		}
 		setFocusPainted(false);
-		setFont(CharteGraphique.TEXT_SECONDARY_FONT);
+		setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
 	}	
 }

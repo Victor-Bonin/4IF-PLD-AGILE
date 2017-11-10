@@ -147,7 +147,7 @@ public class Fenetre extends JFrame implements Observer {
 	private void initContent(){
 		jpanelCentral = new JPanel();
 		jpanelCentral.setLayout(new GridBagLayout());
-		jpanelCentral.setBackground(CharteGraphique.BG_COLOR);
+		jpanelCentral.setBackground(CharteGraphique.BG_COULEUR);
 		
 		jpanelCentral.add(importPlanButton);
 		
@@ -156,14 +156,14 @@ public class Fenetre extends JFrame implements Observer {
 
 	private void initHeader(){
 		header = new VueHeader();
-		header.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
+		header.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COULEUR);
 		
 		getContentPane().add(header, BorderLayout.NORTH);
 	}
 	
 	private void initFooter(){
 		footer = new JPanel();
-		footer.setBackground(CharteGraphique.BG_COLOR);
+		footer.setBackground(CharteGraphique.BG_COULEUR);
 	}
 	
 	

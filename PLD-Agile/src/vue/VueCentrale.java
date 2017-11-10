@@ -52,7 +52,7 @@ public class VueCentrale extends JPanel{
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		setBackground(CharteGraphique.BUTTON_GREEN_BG);
+		setBackground(CharteGraphique.BOUTON_VERT_BG);
 		setOpaque(true);
 		panneauGauche = vueTournee; 
 		panneauCentre = vuePlan;
@@ -70,9 +70,9 @@ public class VueCentrale extends JPanel{
 		add(panneauCentre, gbc);
 		
 		//Design 
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		setBorder(new CompoundBorder(
 				new EmptyBorder(0, 50, 0, 50),
-				new MatteBorder(1,1,1,1, CharteGraphique.SEPARATOR_DARK_COLOR)));
+				new MatteBorder(1,1,1,1, CharteGraphique.SEPARATEUR_SOMBRE_COULEUR)));
 	}
 }

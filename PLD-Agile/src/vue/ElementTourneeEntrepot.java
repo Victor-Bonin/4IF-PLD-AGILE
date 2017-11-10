@@ -64,10 +64,10 @@ public class ElementTourneeEntrepot extends ElementTournee{
 		super(ctrl);
 
 		nomLabel.setText(Textes.TOURNEE_ENTREPOT + " - ");
-		nomLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
+		nomLabel.setForeground(CharteGraphique.TEXTE_ENTREPOT_COULEUR);
 		
 		idLabel.setText(String.valueOf(entrepot.getId()));
-		idLabel.setForeground(CharteGraphique.TEXT_ID_HANGAR_COLOR);
+		idLabel.setForeground(CharteGraphique.TEXTE_ID_ENTREPOT_COULEUR);
 		
 		heureDepartLabel = new JLabel();
 		String texte = entrepot.getHeureDepart().get(Calendar.HOUR_OF_DAY) + "h";
@@ -76,8 +76,8 @@ public class ElementTourneeEntrepot extends ElementTournee{
     	}
     	texte += entrepot.getHeureDepart().get(Calendar.MINUTE) ;
     	heureDepartLabel.setText(texte);
-    	heureDepartLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-    	heureDepartLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+    	heureDepartLabel.setForeground(CharteGraphique.TEXTE_ENTREPOT_COULEUR);
+    	heureDepartLabel.setFont(CharteGraphique.TEXTE_PETIT_POLICE);
     	
     	heureArriveeLabel = new JLabel();
     	if (entrepot.getHeureArrivee() != null) {
@@ -91,8 +91,8 @@ public class ElementTourneeEntrepot extends ElementTournee{
 	    	}
 	    	
 	    	heureArriveeLabel.setText(texte);
-	    	heureArriveeLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
-	    	heureArriveeLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
+	    	heureArriveeLabel.setFont(CharteGraphique.TEXTE_PETIT_POLICE);
+	    	heureArriveeLabel.setForeground(CharteGraphique.TEXTE_ENTREPOT_COULEUR);
     	}
 
 		Set<String> listeTronconsIntersection = ctrl.nomsTronconsIntersection(entrepot);
@@ -116,11 +116,11 @@ public class ElementTourneeEntrepot extends ElementTournee{
 		try {
 			BufferedImage imgNorm = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Image scaledImageNormal = imgNorm.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			imageIconNormal = new ImageIcon(scaledImageNormal);
+			imageIconeNormal = new ImageIcon(scaledImageNormal);
 			BufferedImage imgSurvol = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR_SURVOL));
 			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			imageIconSurvol = new ImageIcon(scaledImageSurvol);
-			imageLabel.setIcon(imageIconNormal);
+			imageIconeSurvol = new ImageIcon(scaledImageSurvol);
+			imageLabel.setIcon(imageIconeNormal);
 		} catch (IOException e) {
 	    }
 

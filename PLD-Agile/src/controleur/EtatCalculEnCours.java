@@ -47,7 +47,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 	
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COLOR);	
+		fenetre.changeNotification(Textes.NOTIF_CALCUL_TOURNEE, CharteGraphique.NOTIFICATION_COULEUR);	
 	}
 	
 	@Override

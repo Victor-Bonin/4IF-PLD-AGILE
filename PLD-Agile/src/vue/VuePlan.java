@@ -129,7 +129,7 @@ public class VuePlan extends JPanel{
 		iconeNouvelleLivraison = new JLabel(imageIconL);
 		
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		ecouteurSouris = new EcouteurDeSouris(ctrl, this);
+		ecouteurSouris = new EcouteurDeSouris(this);
 
 		addMouseWheelListener(ecouteurSouris);
 		addMouseListener(ecouteurSouris);
@@ -230,7 +230,7 @@ public class VuePlan extends JPanel{
 
 		//Dessiner les tronçons de la tournée
 		if(plan.getTournee()!=null){
-			g2d.setColor(CharteGraphique.GRAPH_TRONCON_WAY);
+			g2d.setColor(CharteGraphique.GRAPH_TRONCON_CHEMIN);
 			for(int i=0; i<plan.getTournee().getItineraire().getChemins().size(); i++) {
 				for(int j=0; j<plan.getTournee().getItineraire().getChemins().get(i).getTroncons().size();j++){
 					Troncon troncon = plan.getTournee().getItineraire().getChemins().get(i).getTroncons().get(j);
@@ -292,8 +292,8 @@ public class VuePlan extends JPanel{
 		
 		
 		// Ecrire les numéros de la tournée
-		g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);
-		g2d.setFont(CharteGraphique.TEXT_BIG_FAT_FONT);
+		g2d.setColor(CharteGraphique.GRAPH_TEXTE_COULEUR);
+		g2d.setFont(CharteGraphique.TEXTE_GRAND_GRAS_POLICE);
 		if(plan.getTournee()!=null){
 			for(int i=0; i<plan.getTournee().getLivraisons().size(); i++) {
 				Livraison livraison = plan.getTournee().getLivraisons().get(i);
@@ -304,8 +304,8 @@ public class VuePlan extends JPanel{
 		}
 		
 		// Ecrire les numéros de la demande de livraison
-		g2d.setColor(CharteGraphique.GRAPH_TEXT_COLOR);
-		g2d.setFont(CharteGraphique.TEXT_BIG_FAT_FONT);
+		g2d.setColor(CharteGraphique.GRAPH_TEXTE_COULEUR);
+		g2d.setFont(CharteGraphique.TEXTE_GRAND_GRAS_POLICE);
 		if(plan.getTournee()==null){
 			for(int i=0; i<plan.getDemandeLivraison().getLivraisons().size(); i++) {
 				Livraison livraison = plan.getDemandeLivraison().getLivraisons().get(i);
@@ -517,13 +517,13 @@ public class VuePlan extends JPanel{
 		undoButton.setMargin(new Insets(10,20,10,20));
 		undoButton.setBounds(0, 0, (int)undoButton.getPreferredSize().getWidth(), (int)undoButton.getPreferredSize().getHeight());
 		undoButton.addActionListener(ecouteurBoutons);
-		undoButton.setActionCommand("undo_action");
+		undoButton.setActionCommand("defaire_action");
 		
 		redoButton = new PersoButton("", 2);
 		redoButton.setMargin(new Insets(10,20,10,20));
 		redoButton.setBounds((int)undoButton.getPreferredSize().getWidth(), 0, (int)redoButton.getPreferredSize().getWidth(), (int)redoButton.getPreferredSize().getHeight());
 		redoButton.addActionListener(ecouteurBoutons);
-		redoButton.setActionCommand("redo_action");
+		redoButton.setActionCommand("refaire_action");
 		
 		try {
 			BufferedImage undoImage = ImageIO.read(new File(CharteGraphique.ICONE_RETOUR_ARRIERE));

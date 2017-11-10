@@ -72,9 +72,9 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void ajouterLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {
 		try {
 			listeCmd.ajoute(new CommandeAjouter(p, l, position));
-			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_AJOUTEE, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_AJOUTEE, CharteGraphique.NOTIFICATION_COULEUR);
 		}catch (ExceptionPlanCo ex){
-			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 			// TODO : traiter l'exception
 		}finally {
 			fenetre.setEtatCourant(fenetre.etatModifie);
@@ -89,7 +89,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 			fenetre.setEtatCourant(fenetre.etatModifie);
 			fenetre.goToVue();
 		} catch(ExceptionPlanCo ex){
-			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 	}
 
@@ -97,9 +97,9 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void supprimerLivraison(Fenetre fenetre, Plan p, Livraison l, ListeCommande listeCmd, int position) {
 		try {
 			listeCmd.ajoute(new CommandeSupprimer(p, l, position));
-			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_SUPPRIMEE, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_SUPPRIMEE, CharteGraphique.NOTIFICATION_COULEUR);
 		}catch (ExceptionPlanCo ex){
-			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}finally {
 			fenetre.setEtatCourant(fenetre.etatModifie);
 			fenetre.goToVue();
@@ -110,7 +110,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void undo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
 			listeCommande.undo();
-			fenetre.changeNotification(Textes.NOTIF_UNDO, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_UNDO, CharteGraphique.NOTIFICATION_COULEUR);
 			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
 			// TODO Gérer exception
@@ -121,7 +121,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 	public void redo(ListeCommande listeCommande, Fenetre fenetre) {
 		try {
 			listeCommande.redo();
-			fenetre.changeNotification(Textes.NOTIF_REDO, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_REDO, CharteGraphique.NOTIFICATION_COULEUR);
 			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
 			// TODO Gérer exception
@@ -133,18 +133,18 @@ public class EtatCalcule extends EtatPlanOuvert {
 		try {
 			fenetre.annulerCreation();
 			tournee.exportFeuilleDeRoute();
-			fenetre.changeNotification(Textes.NOTIF_FDR_EXPORTEE, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_FDR_EXPORTEE, CharteGraphique.NOTIFICATION_COULEUR);
 
 		} catch (IOException e) {
-			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		} catch (ExceptionPlanCo e) {
-			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 	}
 
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_TOURNEE_CALCULE, CharteGraphique.NOTIFICATION_COLOR);
+		fenetre.changeNotification(Textes.NOTIF_TOURNEE_CALCULE, CharteGraphique.NOTIFICATION_COULEUR);
 	}
 
 	@Override

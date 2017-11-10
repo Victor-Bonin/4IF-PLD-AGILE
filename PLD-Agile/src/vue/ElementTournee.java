@@ -66,14 +66,12 @@ public class ElementTournee extends JPanel{
 	protected JPanel infos;
 	protected JPanel details;
 	
-	protected ImageIcon imageIconNormal;
-	protected ImageIcon imageIconSurvol;
+	protected ImageIcon imageIconeNormal;
+	protected ImageIcon imageIconeSurvol;
 	
 	protected EcouteurDeBoutonsElementTournee ecouteurBoutons;
 	
-	protected boolean areDetailsVisible = false;
-	
-	// TODO : mettre tous les JLabel en attribut
+	protected boolean detailsVisibles = false;
 
 	
 	public ElementTournee(Controleur ctrl) {
@@ -82,35 +80,35 @@ public class ElementTournee extends JPanel{
 		this.controleur = ctrl;
 		
 		setOpaque(true);
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		
 		setBorder(new CompoundBorder(
 				new EmptyBorder(10, 10, 5, 10),
 				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 						new EmptyBorder(10, 10, 10, 10)
 						)
 				));
 		
 		nomPanel = new JPanel();
 		nomPanel.setLayout(new BorderLayout());
-		nomPanel.setBackground(CharteGraphique.BG_COLOR);
+		nomPanel.setBackground(CharteGraphique.BG_COULEUR);
 		nomLabel = new JLabel();
-		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
+		nomLabel.setFont(CharteGraphique.TEXTE_GRAND_POLICE);
 		nomPanel.add(nomLabel, BorderLayout.WEST);
 		
 		idLabel = new JLabel();
-		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
+		idLabel.setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
+		idLabel.setForeground(CharteGraphique.TEXT_SECONDAIRE_COULEUR);
 		
 		imageLabel = new JLabel();
 		
 		infos = new JPanel();
 		infos.setLayout(new BorderLayout());
-		infos.setBackground(CharteGraphique.BG_COLOR);
+		infos.setBackground(CharteGraphique.BG_COULEUR);
 		
 		details = new JPanel();
-		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setBackground(CharteGraphique.BG_COULEUR);
 		details.setLayout(new BorderLayout());
 
 		setLayout(new GridBagLayout());
@@ -186,22 +184,22 @@ public class ElementTournee extends JPanel{
 	}
 	
 	public void survolElement(){
-		imageLabel.setIcon(imageIconSurvol);
+		imageLabel.setIcon(imageIconeSurvol);
 	}
 	
 	public void antiSurvolElement(){
-		imageLabel.setIcon(imageIconNormal);
+		imageLabel.setIcon(imageIconeNormal);
 	}
 	
 	
 	
 	public void afficherDetails() {
-		if(areDetailsVisible){
+		if(detailsVisibles){
 			details.setVisible(false);
 		} else {
 			details.setVisible(true);
 		}
-		areDetailsVisible = !areDetailsVisible;
+		detailsVisibles = !detailsVisibles;
 	}
 	
 	public void showMenu(Component c, int x, int y) {

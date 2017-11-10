@@ -16,12 +16,12 @@ public class CommandeAjouter implements Commande {
 	
 	/**
 	 * Cree la commande qui ajoute la livraison l au plan p
-	 * @param p Plan	
-	 * @param l Livraison
+	 * @param pln Plan	
+	 * @param lvrsn Livraison
 	 */
-	public CommandeAjouter(Plan p, Livraison l, int positionDansListe) {
-		plan = p;
-		livraison = l;
+	public CommandeAjouter(Plan pln, Livraison lvrsn, int positionDansListe) {
+		plan = plan;
+		livraison = lvrsn;
 		position = positionDansListe;
 	}
 	

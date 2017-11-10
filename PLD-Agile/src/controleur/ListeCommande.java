@@ -97,4 +97,8 @@ public class ListeCommande{
 		indiceCrt = -1;
 		liste.clear();  
 	}
+	
+	public LinkedList<Commande> getListeCommandes() {
+		return liste;
+	}
 }

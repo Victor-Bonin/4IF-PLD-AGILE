@@ -20,7 +20,7 @@ public class CommandeAjouter implements Commande {
 	 * @param lvrsn Livraison
 	 */
 	public CommandeAjouter(Plan pln, Livraison lvrsn, int positionDansListe) {
-		plan = plan;
+		plan = pln;
 		livraison = lvrsn;
 		position = positionDansListe;
 	}

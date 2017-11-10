@@ -103,6 +103,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 	@Override
 	public void exporterFeuilleDeRoute(Fenetre fenetre, Tournee tournee) {
 		try {
+			fenetre.annulerCreation();
 			tournee.exportFeuilleDeRoute();
 			fenetre.changeNotification(Textes.NOTIF_FDR_EXPORTEE, CharteGraphique.NOTIFICATION_COLOR);
 

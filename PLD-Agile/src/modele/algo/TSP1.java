@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 /**
  * <pre>
- * 
+ * Un TSP utilisant une heuristique simpliste : un bound a 0 et un iterateur sequentiel
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -37,15 +37,18 @@ import java.util.Iterator;
  * 
  * 
  * @author 4104
- * @deprecated
+ * @deprecated un TSP avec une meilleure heuristique est disponible
+ * @see TSP4
  */
 public class TSP1 extends TemplateTSP {
 
+	/** {@inheritDoc}  */
 	@Override
 	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
 		return new IteratorSeq(nonVus, sommetCrt);
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	protected int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
 		return 0;

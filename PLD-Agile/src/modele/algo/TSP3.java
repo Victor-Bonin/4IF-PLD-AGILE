@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 /**
  * <pre>
- * 
+ * Un TSP avec une heuristique d'approximation du cout minimal restant et un iterateur de couts croisseurs
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -37,10 +37,12 @@ import java.util.Iterator;
  * 
  * 
  * @author 4104
- * @deprecated
+ * @deprecated un TSP avec une meilleure heuristique est disponible
+ * @see TSP4
  */
 public class TSP3 extends TSP2 {
 
+	/** {@inheritDoc}  */
 	@Override
 	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
 		return new IteratorDistSimple(nonVus, sommetCrt, cout);

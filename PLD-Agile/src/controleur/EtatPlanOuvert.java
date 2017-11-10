@@ -21,6 +21,10 @@ Classe représentant l'état de l'app après l'ouverture d'un plan.
  */
 package controleur;
 
+import java.io.IOException;
+
+import org.xml.sax.SAXException;
+
 import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.CharteGraphique;
@@ -31,9 +35,7 @@ import xml.DeserialiseurXML;
 public class EtatPlanOuvert extends EtatInit {
 
 	@Override
-	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, 
-			ListeCommande listeCommande) {
-
+	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 			try{
 				fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
 				DeserialiseurXML.chargerDemandeLivraison(plan);
@@ -54,6 +56,9 @@ public class EtatPlanOuvert extends EtatInit {
 					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 				}else
 					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			} catch(SAXException | IOException ex) {
+				//controleur.setEtatCourant(etat);
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			}
 			catch(Exception ex) {
 				listeCommande.reset();

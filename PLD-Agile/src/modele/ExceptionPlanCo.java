@@ -23,6 +23,9 @@ public class ExceptionPlanCo extends Exception {
 	public static String DOCUMENT_NON_CONFORME = "Document non conforme";
 	public static String ANNULATION_SAUVEGARDE_FEUILLE_DE_ROUTE = "Annulation de la sauvegarde";
 	public static String PROBLEME_SAUVEGARDE_FEUILLE_DE_ROUTE = "Probleme lors de la sauvegarde du fichier";
+	public static String LONGUEUR_NEGATIVE = "Longueur d'un troncon négative";
+	public static String DUREE_NEGATIVE = "Durée d'une livraison négative";
+	public static String PLAGE_HORAIRE_INCORRECTE = "Une plage horaire est incorrecte";
 	
 	/**
 	 * Exception personnalisee pour le modele de PlanCo

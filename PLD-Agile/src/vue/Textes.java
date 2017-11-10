@@ -74,6 +74,7 @@ public interface Textes {
 	public static final String TOURNEE_LIVRAISON_NOUVELLE = "Nouvelle livraison ";
 	public static final String TOURNEE_ENTREPOT = "Entrepot ";
 	public static final String TOURNEE_DUREE = "Durée ";
+	public static final String TOURNEE_DUREE_CREATION = "Durée en min :";
 	public static final String TOURNEE_INTERSECTION = "Intersection de : ";
 	public static final String TOURNEE_PLAGE = "Plage horaire : ";
 	public static final String TOURNEE_PASSAGE = "Passage estimé : ";

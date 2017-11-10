@@ -2,9 +2,7 @@ package vue.etat;
 
 import javax.swing.JPanel;
 
-import modele.DemandeLivraison;
 import modele.Plan;
-import vue.EcouteurDeSourisDeSynchronisation;
 import vue.Fenetre;
 import vue.PersoButton;
 import vue.VuePlan;
@@ -65,7 +63,7 @@ public class EtatDemandeOuverte extends EtatDefaut {
 		if(plan.getDemandeLivraison().getLivraisons().isEmpty() && plan.getDemandeLivraison().getEntrepot()==null) {
 			vuePlan.nettoyerIcones();
 		}else {
-			vueTournee.initTournee(plan.getDemandeLivraison());
+			vueTournee.initTournee();
 			vuePlan.afficherIcones(plan.getDemandeLivraison());
 		}
 		vuePlan.activerAnnulationBouton(false);

@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +59,8 @@ import modele.Entrepot;
  * @author 4104
  */
 public class ElementTourneeEntrepot extends ElementTournee{
-	
+
+	private static final long serialVersionUID = 567315132366254821L;
 	private JLabel heureArriveeLabel;
 	private JLabel heureDepartLabel;
 	
@@ -141,7 +140,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				ctrl.creerLivraisonApres(-1);
 			}
 		});
-		
+		/*
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
 				if (ev.isPopupTrigger()) {
@@ -155,5 +154,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				}
 			}
 		});
+		*/
 	}	
 }

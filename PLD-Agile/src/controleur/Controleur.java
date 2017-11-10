@@ -1,24 +1,3 @@
-/**
- * This file has been created by vbonin, on 11 oct. 2017
- * Authors : 
- * romain.goutte-fangeas@insa-lyon.fr
- * lucas.ouaniche-herbin@insa-lyon.fr
- * lucas.marie@insa-lyon.fr
- * clara.pourcel@insa-lyon.fr
- * pierrick.chauvet@insa-lyon.fr
- * bastien.guiraudou@insa-lyon.fr
- * victor.bonin@insa-lyon.fr
-
-_____   _   _____   __   _   _     _   _____   __   _   _   _   _____  
-|  _  \ | | | ____| |  \ | | | |   / / | ____| |  \ | | | | | | | ____| 
-| |_| | | | | |__   |   \| | | |  / /  | |__   |   \| | | | | | | |__   
-|  _  { | | |  __|  | |\   | | | / /   |  __|  | |\   | | | | | |  __|  
-| |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
-|_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
-
-
-@author 4104
- */
 package controleur;
 
 import java.util.Set;
@@ -29,6 +8,10 @@ import modele.Plan;
 import modele.Tournee;
 import vue.Fenetre;
 
+/**
+ * Controleur
+ * @author 4104
+ */
 public class Controleur {
 	private Plan plan;
 	private Tournee tournee;
@@ -179,18 +162,33 @@ public class Controleur {
 		etatCourant.commencerChoixIntersection(fenetre);
 	}
 	
+	/**
+	 * Methode permettant de prendre en compte un appui sur la touche entrer
+	 */
 	public void appuiEntree() {
 		etatCourant.appuiEntree(this, plan, fenetre, listeCommande);
 	}
 	
+	/**
+	 * Methode annulant la creation d'une nouvelle livraison
+	 */
 	public void annulerCreation() {
 		etatCourant.annulerCreation(fenetre);
 	}
 
+	/**
+	 * Recupere les noms des troncons adjacents a une intersection
+	 * @param inter l'intersection
+	 * @return les troncons dans un objet Set<String>
+	 */
 	public Set<String> nomsTronconsIntersection(Intersection inter){
 		Set<String> liste;
 		liste = plan.nomsTronconVoisin(inter.getId());
 		return liste;
+	}
+	
+	public void nettoyerNouvelleLivraison() {
+		fenetre.nettoyerNouvelleLivraison();
 	}
 	
 }

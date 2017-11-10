@@ -13,8 +13,21 @@ public class EcouteurDeSourisDragnDropEntrepot extends MouseAdapter {
 	}
 	
 	@Override
+	public void mousePressed(MouseEvent e) {
+		if (e.isPopupTrigger()) {
+			((ElementTourneeEntrepot)e.getSource()).showMenu(e.getComponent(), e.getX(), e.getY());
+		}
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (e.isPopupTrigger()) {
+			((ElementTourneeEntrepot)e.getSource()).showMenu(e.getComponent(), e.getX(), e.getY());
+		}
+	}
+	
+	@Override
 	public void mouseEntered(MouseEvent e) {
-		System.out.println("entered");
 		vueTournee.dragIn((ElementTourneeEntrepot)e.getSource());
 		vueTournee.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}

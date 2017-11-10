@@ -114,7 +114,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				ctrl.creerLivraisonApres(-1);
 			}
 		});
-		
+		/*
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
 				if (ev.isPopupTrigger()) {
@@ -128,5 +128,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				}
 			}
 		});
+		*/
 	}	
 }

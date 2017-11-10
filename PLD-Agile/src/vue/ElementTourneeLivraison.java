@@ -134,6 +134,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 			}
 		});
 		
+		/*
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
 				if (clicDroitAutorise && ev.isPopupTrigger()) {
@@ -147,6 +148,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 				}
 			}
 		});
+		*/
 				
 		if(livraison instanceof LivraisonPlageHoraire) {
 			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();

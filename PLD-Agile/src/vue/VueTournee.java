@@ -124,8 +124,8 @@ public class VueTournee extends JPanel{
 		int i = 0;
 		elementsTournee.add(entrepot);
 		
-		entrepot.addMouseMotionListener(ecouteurDragEntrepot);
-		entrepot.addMouseListener(ecouteurDragEntrepot);
+		//entrepot.addMouseMotionListener(ecouteurDragEntrepot);
+		//entrepot.addMouseListener(ecouteurDragEntrepot);
 		
 		for(Livraison livraison : plan.getDemandeLivraison().getLivraisons()) {
 			
@@ -241,24 +241,41 @@ public class VueTournee extends JPanel{
 	    element.setMaximumSize(element.getPreferredSize());
 	    element.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    elementsTournee.add(element);
-	    element.addMouseMotionListener(ecouteurDrag);
-	    element.addMouseListener(ecouteurDrag);
+	    //element.addMouseMotionListener(ecouteurDrag);
+	    //element.addMouseListener(ecouteurDrag);
 	}
 	
+	/*
 	public void masquerBoutonsSuppression() {
 		for(ElementTournee element : elementsTournee) {
 			if(element instanceof ElementTourneeLivraison)
 			{
 				((ElementTourneeLivraison) element).masquerBoutonSupprimer();
+				((ElementTourneeLivraison) element).removeMouseListener(ecouteurDrag);
+				((ElementTourneeLivraison) element).removeMouseMotionListener(ecouteurDrag);
 			}
 		}
 	}
+	*/
 	
 	public void afficherBoutonsSuppression() {
 		for(ElementTournee element : elementsTournee) {
 			if(element instanceof ElementTourneeLivraison)
 			{
 				((ElementTourneeLivraison) element).afficherBoutonSupprimer();
+			}
+		}
+	}
+	
+	public void ajouterDragAndDropListener() {
+		for(ElementTournee element : elementsTournee) {
+			if(element instanceof ElementTourneeLivraison)
+			{
+				((ElementTourneeLivraison) element).addMouseMotionListener(ecouteurDrag);
+				((ElementTourneeLivraison) element).addMouseListener(ecouteurDrag);
+			} else if (element instanceof ElementTourneeEntrepot){
+				((ElementTourneeEntrepot) element).addMouseMotionListener(ecouteurDragEntrepot);
+				((ElementTourneeEntrepot) element).addMouseListener(ecouteurDragEntrepot);
 			}
 		}
 	}
@@ -322,6 +339,7 @@ public class VueTournee extends JPanel{
 		this.remove(elementDetaille);	
 	}
 	
+	
 	public void autoriserClicDroit() {
 		for(ElementTournee element : elementsTournee) {
 			if(element instanceof ElementTourneeLivraison)
@@ -330,5 +348,6 @@ public class VueTournee extends JPanel{
 			}
 		}
 	}
+	
 
 }

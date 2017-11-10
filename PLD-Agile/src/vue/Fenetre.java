@@ -285,6 +285,7 @@ public class Fenetre extends JFrame implements Observer {
 		vueTournee.initTournee(plan.getDemandeLivraison());
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
+		vueTournee.ajouterDragAndDropListener();
 
 		vuePlan.annulerCreation();
 		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
@@ -311,6 +312,7 @@ public class Fenetre extends JFrame implements Observer {
 		vueTournee.initTournee(plan.getDemandeLivraison());
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
+		vueTournee.ajouterDragAndDropListener();
 		vuePlan.afficherIcones(plan.getDemandeLivraison());
 		
 		revalidate();

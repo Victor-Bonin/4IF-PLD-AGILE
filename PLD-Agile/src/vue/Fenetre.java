@@ -94,7 +94,6 @@ public class Fenetre extends JFrame implements Observer {
 	public final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
 	public final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
 	public final EtatCalcule etatCalcule = new EtatCalcule();
-	public final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
 	public final EtatModifie etatModifie = new EtatModifie();
 	
 	/**

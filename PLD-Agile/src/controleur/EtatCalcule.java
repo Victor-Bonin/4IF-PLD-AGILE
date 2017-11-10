@@ -70,8 +70,6 @@ public class EtatCalcule extends EtatPlanOuvert {
 	/** {@inheritDoc}  */
 	@Override
 	public void creerLivraisonApres(Fenetre fenetre, int position) {
-		//fenetre.setEtatCourant(fenetre.etatAjoutLivraison);
-		//fenetre.goToVue();
 		fenetre.getVueTournee().creerLivraisonApres(position);
 	} 
 

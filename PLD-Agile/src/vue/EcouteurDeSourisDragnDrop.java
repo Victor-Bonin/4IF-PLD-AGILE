@@ -71,7 +71,7 @@ public class EcouteurDeSourisDragnDrop extends MouseAdapter {
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		vueTournee.dragIn((ElementTourneeLivraison)e.getSource());
+		vueTournee.dragSurElement((ElementTourneeLivraison)e.getSource());
 		vueTournee.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 	
@@ -81,7 +81,7 @@ public class EcouteurDeSourisDragnDrop extends MouseAdapter {
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-		vueTournee.dragOut((ElementTourneeLivraison)e.getSource());
+		vueTournee.dragEnDehorsElement((ElementTourneeLivraison)e.getSource());
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class EcouteurDeSourisDragnDrop extends MouseAdapter {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		ElementTourneeLivraison elemt = ((ElementTourneeLivraison)e.getSource());
-		vueTournee.stopDrag(elemt);
+		vueTournee.stopDrag();
 		if (e.isPopupTrigger()) {
 			elemt.showMenu(e.getComponent(), e.getX(), e.getY());
 		}

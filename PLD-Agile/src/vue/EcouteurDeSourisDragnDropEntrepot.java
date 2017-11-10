@@ -69,7 +69,7 @@ public class EcouteurDeSourisDragnDropEntrepot extends MouseAdapter {
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		vueTournee.dragIn((ElementTourneeEntrepot)e.getSource());
+		vueTournee.dragSurElement((ElementTourneeEntrepot)e.getSource());
 		vueTournee.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 	
@@ -79,7 +79,7 @@ public class EcouteurDeSourisDragnDropEntrepot extends MouseAdapter {
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-		vueTournee.dragOut((ElementTourneeEntrepot)e.getSource());
+		vueTournee.dragEnDehorsElement((ElementTourneeEntrepot)e.getSource());
 	}
 	
 	/**

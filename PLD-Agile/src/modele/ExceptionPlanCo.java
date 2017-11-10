@@ -1,6 +1,9 @@
 package modele;
 
 /**
+ * <pre>
+ * Represente les exceptions du modele.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -10,11 +13,11 @@ package modele;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -27,7 +30,7 @@ package modele;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */
@@ -56,8 +59,9 @@ public class ExceptionPlanCo extends Exception {
 	public static String PLAGE_HORAIRE_INCORRECTE = "Une plage horaire est incorrecte";
 	
 	/**
-	 * Exception personnalisee pour le modele de PlanCo
-	 * @param message
+	 * Constructeur de l'exception personnalie. 
+	 * Elle a juste besoin d'un message.
+	 * @param message String
 	 */
 	public ExceptionPlanCo(String message) {
 		super(message);

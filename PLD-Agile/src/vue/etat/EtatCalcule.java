@@ -8,6 +8,9 @@ import vue.VuePlan;
 import vue.VueTournee;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -17,11 +20,11 @@ import vue.VueTournee;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -34,6 +37,7 @@ import vue.VueTournee;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104
@@ -67,5 +71,6 @@ public class EtatCalcule extends EtatDefaut {
 		vueTournee.ajouterBoutonPlus();
 		vuePlan.activerAnnulationBouton(false);
 		fenetre.ajouterEcouteursSynchro();
+		fenetre.requestFocus();
 	}
 }

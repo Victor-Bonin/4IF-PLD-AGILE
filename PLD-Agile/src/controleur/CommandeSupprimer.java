@@ -5,34 +5,36 @@ import modele.Livraison;
 import modele.Plan;
 
 /**
+ * <pre>
  * Commande de suppression d'un point de livraison de la demande de livraison.
- * <br/><br/>
- * Authors : 									<br/>
- * romain.goutte-fangeas@insa-lyon.fr			<br/>
- *               ____							<br/>
- *           __--    --_						<br/>
- *          /   -        -						<br/>
- *         / /-- ------\  \						<br/>
- *        / /           \  |					<br/>
- *        | |           ?  |					<br/>
- *        | ? _--   -== \ /?					<br/>
- *         \| 'o > < o>  |||					<br/>
- *         \\    / \      )|					<br/>
- *          \\   .| )    |_/					<br/>
- *           |  :_____: :|						<br/>
- *            \  <==="  /|						<br/>
- *             \      .: /|\					<br/>
- *             )\_   .: / |:"--___				<br/>
- *         __-:|\ """ _-  |:::::::				<br/>
- *       _-::::\ "-_.-   /::::::::				<br/>
- *    _--:::::::| .|"-_  |::::::::				<br/>
- *  -"::::::::::\  | { -_|::::::::				<br/>
- * lucas.ouaniche-herbin@insa-lyon.fr			<br/>
- * lucas.marie@insa-lyon.fr						<br/>
- * clara.pourcel@insa-lyon.fr					<br/>
- * pierrick.chauvet@insa-lyon.fr				<br/>
- * bastien.guiraudou@insa-lyon.fr				<br/>
- * victor.bonin@insa-lyon.fr					<br/>
+ * 
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o . . o.  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  '==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104
@@ -44,22 +46,25 @@ public class CommandeSupprimer implements Commande {
 	private int position;
 	
 	/**
-	 * Cree la commande qui supprime la livraison l du plan p
-	 * @param p
-	 * @param l
+	 * Cree la commande qui supprime une livraison du plan
+	 * @param plan plan contenant la livraison a supprimer
+	 * @param livraison la livraison a supprimer
+	 * @param positionDansListe index de la livraison a supprimer. Permet de la rajouter ensuite !
 	 */
-	public CommandeSupprimer(Plan p, Livraison l, int positionDansListe) {
-		plan = p;
-		livraison = l;
+	public CommandeSupprimer(Plan plan, Livraison livraison, int positionDansListe) {
+		this.plan = plan;
+		this.livraison = livraison;
 		position = positionDansListe;
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void doCde() throws ExceptionPlanCo {
 		plan.supprimerPointLivraison(livraison);		
 		plan.calculerItinerairesSeuls();
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void undoCde() throws ExceptionPlanCo {
 		plan.ajouterPointLivraison(livraison, position);

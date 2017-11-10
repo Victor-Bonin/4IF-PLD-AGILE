@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
+ * <pre>
+ * Un TSP avec une heuristique d'approximation du cout minimal restant et un iterateur sequentiel
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -13,11 +16,11 @@ import java.util.Iterator;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -30,18 +33,21 @@ import java.util.Iterator;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  * 
  * @author 4104
- * @deprecated
+ * @deprecated un TSP avec une meilleure heuristique est disponible
+ * @see TSP4
  */
 public class TSP2 extends TemplateTSP {
 
+	/** {@inheritDoc}  */
 	@Override
 	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
 		return new IteratorSeq(nonVus, sommetCrt);
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	protected int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int heureActuelle, int[][] cout, int[] duree, int[][] horaires) {
 		int r = duree[sommetCourant];

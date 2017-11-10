@@ -6,6 +6,9 @@ import vue.Fenetre;
 import vue.PersoButton;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -15,11 +18,11 @@ import vue.PersoButton;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -32,6 +35,7 @@ import vue.PersoButton;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104
@@ -50,6 +54,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		fenetre.getVuePlan().activerBouton(false);
+		fenetre.requestFocus();
 	}
 
 }

@@ -3,6 +3,9 @@ package modele.algo;
 import java.util.HashMap;
 
 /**
+ * <pre>
+ * Represente une solution d'un Dijkstra : des predecesseurs et des couts
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -12,11 +15,11 @@ import java.util.HashMap;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -29,11 +32,13 @@ import java.util.HashMap;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */
 public class DjkSolution {
+	/** Hashmap des distances pour aller jusqu'au noeud dont l'id est l'index */
 	public HashMap<Long, Float> dist;
+	/** Hashmap du predecesseur du noeud dont l'id est l'index */
 	public HashMap<Long, Long> prev;
 }

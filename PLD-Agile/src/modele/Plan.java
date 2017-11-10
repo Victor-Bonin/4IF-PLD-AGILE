@@ -13,9 +13,12 @@ import modele.algo.DjkSolution;
 import modele.algo.TSP;
 import modele.algo.TSP4;
 import modele.evenement.EvenementInsertion;
+import modele.evenement.EvenementSuppression;
 
 /**
+ * <pre>
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -25,11 +28,11 @@ import modele.evenement.EvenementInsertion;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -42,17 +45,21 @@ import modele.evenement.EvenementInsertion;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */
 public class Plan extends Observable {
+
 	private final float VITESSE = 15 *(1000f/3600); // 15km/h en m/s
 	private final int LIMITE_TSP = 15000;
 	private HashMap<Long, Intersection> intersections;
 	private List<Troncon> troncons;
 	private DemandeLivraison demandeLivraison;
 
+	/**
+	 * Constructeur du Plan, initialise le plan.
+	 */
 	public Plan() {
 		intersections = new HashMap<Long, Intersection>();
 		troncons = new ArrayList<Troncon>();
@@ -74,15 +81,14 @@ public class Plan extends Observable {
 	 * Ajoute un troncon au plan, si le plan possede deja les deux intersections du troncon, rejete l'ajout sinon
 	 * @param depart Adresse de l'intersection de depart
 	 * @param arrivee Adresse de l'intersection d'arrivee
- 	 * @param longueur Longueur du troncon
+	 * @param longueur Longueur du troncon
 	 * @param nomRue Nom du troncon
-	 * @throws Exception
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws ExceptionPlanCo {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
-		if(debut != null && fin != null)
-		{
+		if(debut != null && fin != null) {
 			Troncon troncon = new Troncon(debut, fin, nomRue, longueur);
 			troncons.add(troncon);
 		}
@@ -90,38 +96,39 @@ public class Plan extends Observable {
 			throw new ExceptionPlanCo(ExceptionPlanCo.INTERSECTION_ABSENTE);
 		}
 	}
-		
+
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
+	 * @throws ExceptionPlanCo Une exception PlanCo est levee si une erreur s'est produite
 	 */
 	public void calculTournee() throws ExceptionPlanCo {
-		
+
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
 		int nbLivraisons = livraisons.size();
-		
+
 		TSP tsp = new TSP4();
-		
+
 		// Remplissage de la liste des intersections avec tous les troncons
 
 		//Data for Dijkstra
 		HashMap<Long, List<Troncon>> adjMap = new HashMap<Long, List<Troncon>>();
 		Troncon t;
 		long idDebut;
-		for(int i=0; i<troncons.size(); i++){
+		for(int i=0; i<troncons.size(); i++) {
 			t = troncons.get(i);
 			idDebut = t.getDebut().getId();
-			if(!adjMap.containsKey(idDebut)){
+			if(!adjMap.containsKey(idDebut)) {
 				adjMap.put(idDebut,new ArrayList<Troncon>());
 			}
 			adjMap.get(t.getDebut().getId()).add(t);
 		}
 
-//		long debutDelay;
-//		long finDelay;
-//		debutDelay = System.currentTimeMillis();
-//		
+		//		long debutDelay;
+		//		long finDelay;
+		//		debutDelay = System.currentTimeMillis();
+		//		
 		//Dijktra
 		int[][] cout = new int[nbLivraisons][nbLivraisons];
 		Chemin[][] pCourtsChemins = new Chemin[nbLivraisons][nbLivraisons];
@@ -139,7 +146,7 @@ public class Plan extends Observable {
 			while(it2.hasNext()) {
 				Intersection livrArrivee = it2.next();
 				trgId = livrArrivee.getId();
-				if(srcId != trgId){
+				if(srcId != trgId) {
 					cout[source][target]=Math.round(result.dist.get(trgId));
 					// On ajoute le plus court chemin entre source et target dans le tableau de plus courts chemins
 					pCourtsChemins[source][target] = new Chemin(livrDepart, livrArrivee);
@@ -152,22 +159,22 @@ public class Plan extends Observable {
 			}
 			source++;
 		}
-		
-//		finDelay = System.currentTimeMillis();
-//		System.out.println("Temps de Dijkstra: " + (finDelay - debutDelay) + "ms");
-	
-	
+
+		//		finDelay = System.currentTimeMillis();
+		//		System.out.println("Temps de Dijkstra: " + (finDelay - debutDelay) + "ms");
+
+
 		//Data for the TSP
 		int[] duree = new int[nbLivraisons];
-		for(int i=1; i<nbLivraisons; i++){
+		for(int i=1; i<nbLivraisons; i++) {
 			duree[i] = ((Livraison)livraisons.get(i)).getDuree();
 		}
-		
+
 		int[][] horairesInt = new int[nbLivraisons][2]; 
 		horairesInt[0][0] =  Livraison.getSecondsInDay(entrepot.getHeureDepart());
 		horairesInt[0][1] =  Livraison.getSecondsInDay(entrepot.getHeureArrivee());
-		for(int i=1; i<nbLivraisons; i++){
-			if(livraisons.get(i) instanceof LivraisonPlageHoraire){
+		for(int i=1; i<nbLivraisons; i++) {
+			if(livraisons.get(i) instanceof LivraisonPlageHoraire) {
 				horairesInt[i][0] =  Livraison.getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getDebut());
 				horairesInt[i][1] =  Livraison.getSecondsInDay(((LivraisonPlageHoraire)livraisons.get(i)).getFin());
 			}else{
@@ -175,28 +182,28 @@ public class Plan extends Observable {
 				horairesInt[i][1] = -1;
 			}
 		}
-		
-//		debutDelay = System.currentTimeMillis();
+
+		//		debutDelay = System.currentTimeMillis();
 		//TSP
 		Integer[] meilleureSolution = tsp.chercheSolution(LIMITE_TSP, nbLivraisons, cout, duree, horairesInt);
-//		finDelay = System.currentTimeMillis();
-//		System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
+		//		finDelay = System.currentTimeMillis();
+		//		System.out.println("Temps de TSP : " + (finDelay - debutDelay) + "ms");
 
 		if(meilleureSolution==null)
 			throw new ExceptionPlanCo(ExceptionPlanCo.SOLUTION_VIDE);
 		if(meilleureSolution[0]==null)
 			throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
-	
+
 		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, meilleureSolution);
 	}
-	
+
 	public void calculerItinerairesSeuls() throws ExceptionPlanCo {
 		List<Intersection> livraisons = new ArrayList<Intersection>(demandeLivraison.getLivraisons());
 		Entrepot entrepot = demandeLivraison.getEntrepot();
 		livraisons.add(0,entrepot);
-		
+
 		int nbLivraisons = livraisons.size();
-		
+
 		Integer[] solutionChoisie = new Integer[nbLivraisons];
 		for(int i=0;i<livraisons.size();i++)
 			solutionChoisie[i] = i;
@@ -205,10 +212,10 @@ public class Plan extends Observable {
 		HashMap<Long, List<Troncon>> adjMap = new HashMap<Long, List<Troncon>>();
 		Troncon t;
 		long idDebut;
-		for(int i=0; i<troncons.size(); i++){
+		for(int i=0; i<troncons.size(); i++) {
 			t = troncons.get(i);
 			idDebut = t.getDebut().getId();
-			if(!adjMap.containsKey(idDebut)){
+			if(!adjMap.containsKey(idDebut)) {
 				adjMap.put(idDebut,new ArrayList<Troncon>());
 			}
 			adjMap.get(t.getDebut().getId()).add(t);
@@ -224,21 +231,21 @@ public class Plan extends Observable {
 			Intersection trgLivraison = livraisons.get(trgIndex);
 			long srcId = srcLivraison.getId();
 			long trgId = trgLivraison.getId();
-			
+
 			result = dijkstra(adjMap, srcId, livraisons.get(trgIndex).getId());
 			if(!result.dist.containsKey(trgId))
 				throw new ExceptionPlanCo(ExceptionPlanCo.AUCUNE_SOLUTION);
 			cout[srcIndex][trgIndex]=Math.round(result.dist.get(trgId));
 			pCourtsChemins[srcIndex][trgIndex] = new Chemin(srcLivraison, trgLivraison);
-			while(trgId != srcId){
+			while(trgId != srcId) {
 				pCourtsChemins[srcIndex][trgIndex].addTroncon(0, troncons.get(troncons.indexOf(new Troncon( intersections.get(result.prev.get(trgId)) , intersections.get(trgId) ))));
 				trgId = result.prev.get(trgId);
 			}
 		}
-		
+
 		setItinerairesEtHeures(pCourtsChemins, cout, livraisons, solutionChoisie);
 	}
-	
+
 	/**
 	 * 
 	 * @param pCourtsChemins
@@ -252,10 +259,10 @@ public class Plan extends Observable {
 		Entrepot entrepot = (Entrepot)livraisons.get(0);
 
 		List<Livraison> livs = new ArrayList<Livraison>(nbLivraisons-1);
-		for (int i = 1; i < nbLivraisons; i++ ){
+		for (int i = 1; i < nbLivraisons; i++) {
 			livs.add((Livraison)livraisons.get(ordreTournee[i]));
 		}
-		
+
 		if(livs.isEmpty()) {
 			entrepot.setHeureArrivee((Calendar)entrepot.getHeureArrivee().clone());
 		}else {
@@ -263,23 +270,23 @@ public class Plan extends Observable {
 			int heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
 			Livraison livPremiere = livs.get(0);
 			livPremiere.setHeurePassage((Calendar)heureDePassage.clone());
-			if(livPremiere instanceof LivraisonPlageHoraire){
+			if(livPremiere instanceof LivraisonPlageHoraire) {
 				int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(0)).getDebut()) - heureDePassageInt);
 				((LivraisonPlageHoraire)livPremiere).setAttente(attente);
 				livPremiere.getHeurePassage().add(Calendar.SECOND,Math.max(couts[0][ordreTournee[1]],attente));
 			}else {
 				livPremiere.getHeurePassage().add(Calendar.SECOND,couts[0][ordreTournee[1]]);
 			}
-			
-			for(int i = 1; i<nbLivraisons-1; i++){
+
+			for(int i = 1; i<nbLivraisons-1; i++) {
 				Livraison livI = livs.get(i);
-				
+
 				heureDePassage = (Calendar)livs.get(i-1).getHeurePassage().clone();
 				heureDePassage.add(Calendar.SECOND, livs.get(i-1).getDuree());
 				heureDePassageInt = Livraison.getSecondsInDay(heureDePassage);
-				
+
 				livI.setHeurePassage((Calendar)heureDePassage.clone());
-				if(livI instanceof LivraisonPlageHoraire){
+				if(livI instanceof LivraisonPlageHoraire) {
 					int attente = Math.max(0, Livraison.getSecondsInDay(((LivraisonPlageHoraire)livs.get(i)).getDebut()) - heureDePassageInt);
 					((LivraisonPlageHoraire)livI).setAttente(attente);
 					livI.getHeurePassage().add(Calendar.SECOND,Math.max(couts[ordreTournee[i]][ordreTournee[i+1]],attente));
@@ -287,21 +294,21 @@ public class Plan extends Observable {
 					livI.getHeurePassage().add(Calendar.SECOND,couts[ordreTournee[i]][ordreTournee[i+1]]);
 				}
 			}
-			
+
 			entrepot.setHeureArrivee((Calendar)livs.get(nbLivraisons-2).getHeurePassage().clone());
 			entrepot.getHeureArrivee().add(Calendar.SECOND, (couts[ordreTournee[nbLivraisons-1]][0] + livs.get(nbLivraisons-2).getDuree()));
 		}
 
 		demandeLivraison = new Tournee(entrepot, livs, itineraire);
-		
+
 	}
-	
+
 	/**
 	 * Renvoie une solution {dist,previousNode} avec dist la hashmap des distances minimales de source a i et previousNode la hashmap des Nodes precedants i dans le chemin le plus court
 	 */
-	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source, Long target){
+	private DjkSolution dijkstra(HashMap<Long, List<Troncon>> adjMap, long source, Long target) {
 		Long current = source;
-		
+
 		//Distances
 		HashMap<Long, Float> dist = new HashMap<Long, Float>();
 		dist.put(current, (float)0);
@@ -313,35 +320,35 @@ public class Plan extends Observable {
 		HashMap<Long, Long> previousNode = new HashMap<Long, Long>();
 		//List of explored nodes (their distance in "dist" array are the final distances)
 		Set<Long> explored = new HashSet<Long>();
-		
+
 		boolean continueLoop = true;
 		while(!queue.isEmpty() && continueLoop) {
 			Iterator<Long> it = queue.iterator();
 
 			Long candidat = null;
-			
+
 			if(it.hasNext())
 				candidat = it.next();
 			current = candidat;
-			
+
 			while(it.hasNext()) {
 				candidat = it.next();
-				if(dist.get(candidat)<dist.get(current)){
-			    	current = candidat;
-			    }
+				if(dist.get(candidat)<dist.get(current)) {
+					current = candidat;
+				}
 			}
-			
+
 			explored.add(current);
 			queue.remove(current);
-			
+
 			// Pour tous les adjacents du Node current
-			if(adjMap.containsKey(current)){
-				//for(int i=0;i<adjMap.get(current).size();i++){
-				for(Troncon t : adjMap.get(current)){
+			if(adjMap.containsKey(current)) {
+				//for(int i=0;i<adjMap.get(current).size();i++) {
+				for(Troncon t : adjMap.get(current)) {
 					//Troncon t = adjMap.get(current).get(i);
 					Long arrivee = t.getFin().getId();
 					// Si le Node d'arrivee du troncon est inexplore et que sa dist est superieure a celle qui passe par current
-					if(!explored.contains(arrivee)){
+					if(!explored.contains(arrivee)) {
 						if(queue.contains(arrivee)) {
 							if(dist.get(arrivee)>dist.get(current)+(t.getLongueur()/VITESSE)) {
 								dist.put(arrivee, dist.get(current)+(t.getLongueur()/VITESSE));
@@ -355,24 +362,24 @@ public class Plan extends Observable {
 					}
 				}	
 			}
-			
+
 
 			if(target!=null)
 				if(explored.contains(target))
 					continueLoop = false;
-			
+
 		}
 		DjkSolution result = new DjkSolution();
 		result.dist = dist;
 		result.prev = previousNode;
 		return result;
 	}
-	
+
 	/**
 	 * Ajoute un entrepot a la demande de livraison du plan si l'entrepot correspond a une adresse du plan
 	 * @param idIntersection adresse de l'entrepot
 	 * @param heureDepart heure de depart de la tournee
-	 * @throws Exception L'entrepot ne correspond a aucune intersection du plan
+	 * @throws ExceptionPlanCo L'entrepot ne correspond a aucune intersection du plan
 	 */
 	public void setEntrepot(Long idIntersection, Calendar heureDepart) throws ExceptionPlanCo{
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
@@ -388,7 +395,9 @@ public class Plan extends Observable {
 	 * Ajoute un point de livraison à la demande de livraison si elle correspond a une intersection du plan
 	 * @param idIntersection Adresse de la livraison
 	 * @param dureeLivraison Duree de la livraison
-	 * @throws Exception La livraison ne correspond a aucune intersection du plan
+	 * @param debutPlage Debut de la plage horaire
+	 * @param finPlage Fin de la plage horaire
+	 * @throws ExceptionPlanCo La livraison ne correspond a aucune intersection du plan
 	 */
 	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison, Calendar debutPlage, Calendar finPlage) throws ExceptionPlanCo {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
@@ -405,11 +414,24 @@ public class Plan extends Observable {
 			throw new ExceptionPlanCo("Le point de livraison ("+ idIntersection.toString() +") ne correspond à aucune adresse connue.");
 		}
 	}
-	
+
+	/**
+	 * Ajoute un nouveau point de livraison a ceux actuel.
+	 * Si l'ajout rate une ExceptionPlanCo est lance.
+	 * @param livraison le point de livraison a ajouter
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		ajouterPointLivraison(livraison, demandeLivraison.getLivraisons().size());
 	}
-	
+
+	/**
+	 * Ajoute un nouveau point de livraison a ceux actuel a une position demandee
+	 * Si l'ajout rate une ExceptionPlanCo est lance.
+	 * @param livraison le point de livraison a ajouter
+	 * @param index la position a laquelle ajouter le point de livraison
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
 		if (livraison.getDuree() < 0) 
 			throw new ExceptionPlanCo(ExceptionPlanCo.LIVRAISON_DUREE_NEGATIVE);
@@ -426,11 +448,17 @@ public class Plan extends Observable {
 		}
 
 	}
-	
+
+	/**
+	 * Supprime le point de livraison de la demande de livraison.
+	 * Si la suppression rate une ExceptionPlanCo est lance.
+	 * @param livraison le point de livraison a supprimer
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		int index = demandeLivraison.getLivraisons().indexOf(livraison);
 		demandeLivraison.supprimerPointLivraison(livraison);
-		
+
 		try {
 			calculerItinerairesSeuls();
 		}
@@ -439,19 +467,18 @@ public class Plan extends Observable {
 		}
 		finally {
 			setChanged();
-			notifyObservers(new EvenementInsertion(livraison));
+			notifyObservers(new EvenementSuppression(livraison, index));
 		}
 	}
-	
+
 	/**
 	 * Retourne la liste des troncons voisins d'une intersection
 	 * Il n'est pas conseillé d'utiliser cette méthode pour obtenir la liste des 
 	 * troncons voisins de n intersections.
 	 * @param idIntersection id de l'intersection dont il faut les voisins
 	 * @return la liste des voisins de l'intersection désiré
-	 * Edit : cette méthode ne sert à rien.
 	 */
-	public Set<Troncon> listerTronconVoisin(Long idIntersection){
+	public Set<Troncon> listerTronconVoisin(Long idIntersection) {
 		Intersection intersection = intersections.get(idIntersection);
 		Set<Troncon> tronconsVoisins = new HashSet<Troncon>();
 		if(intersection == null)
@@ -461,13 +488,13 @@ public class Plan extends Observable {
 				tronconsVoisins.add(t);
 		return tronconsVoisins;
 	}
-	
+
 	/**
 	 * Retourne la liste des noms des troncons voisins d'une intersection
 	 * @param idIntersection id de l'intersection dont il faut les voisins
 	 * @return la liste des voisins de l'intersection désiré
 	 */
-	public Set<String> nomsTronconVoisin(Long idIntersection){
+	public Set<String> nomsTronconVoisin(Long idIntersection) {
 		Intersection intersection = intersections.get(idIntersection);
 		Set<String> tronconsVoisins = new HashSet<String>();
 		if(intersection == null)
@@ -477,12 +504,13 @@ public class Plan extends Observable {
 				tronconsVoisins.add(t.getNomRue());
 		return tronconsVoisins;
 	}
+
 	/**
 	 * Créer un dico contenant pour chaque intersection 
 	 * la liste des troncons qui partent ou viennent vers elle
 	 * @return un dictionnaire
 	 */
-	public HashMap<Long, List<Troncon>> obtenirVoisinParIntersection(){
+	public HashMap<Long, List<Troncon>> obtenirVoisinParIntersection() {
 		HashMap<Long, List<Troncon>> croisement = new HashMap<Long, List<Troncon>>();
 		Long idDebut, idFin;
 		for(Troncon t : troncons) {
@@ -494,7 +522,7 @@ public class Plan extends Observable {
 				croisement.put(idDebut, new ArrayList<Troncon>());
 				croisement.get(idDebut).add(t);
 			}
-			
+
 			if (croisement.containsKey(t.getFin().getId()))
 				croisement.get(idFin).add(t);
 			else {
@@ -505,11 +533,20 @@ public class Plan extends Observable {
 		return croisement;
 	}
 
-	public HashMap<Long, Intersection> getIntersections(){
+	/**
+	 * Retourne le dictionnaire contenant toutes les intersections, les cles correspondent au id des intersections
+	 * @see Intersection
+	 * @return le dictionnaire contenant toutes les intersections
+	 */
+	public HashMap<Long, Intersection> getIntersections() {
 		return intersections;
 	}
 
-	public List<Troncon> getTroncons(){
+	/**
+	 * Retourne la liste des troncons du plan.
+	 * @return la liste des troncons du plan
+	 */
+	public List<Troncon> getTroncons() {
 		return troncons;
 	}
 
@@ -522,29 +559,46 @@ public class Plan extends Observable {
 		resetDemandeLivraison();
 	}
 
+	/**
+	 * Reinitialise la demande de livraison
+	 */
 	public void resetDemandeLivraison() {
 		demandeLivraison = new DemandeLivraison();
 	}
 
-	public DemandeLivraison getDemandeLivraison(){
+	/**
+	 * Retourne la demande de livraison du plan
+	 * @return la demande de livraison du plan
+	 */
+	public DemandeLivraison getDemandeLivraison() {
 		return demandeLivraison;
 	}
-	
-	public Tournee getTournee(){
+
+	/**
+	 * Retourne la tournee du plan s'il en a une, null sinon.
+	 * @return la tournee du plan si elle existe, null sinon
+	 */
+	public Tournee getTournee() {
 		if (demandeLivraison instanceof Tournee)
 			return (Tournee)demandeLivraison;
 		return null;
 	}
-	
+
+	/**
+	 * Retourne l'intersection la plus proche.
+	 * @param x l'abscisse a partir de laquelle chercher l'intersection la plus proche
+	 * @param y l'ordonee a partir de laquelle checher l'intersection la plus proche
+	 * @return l'intersection la plus proche
+	 */
 	public Intersection obtenirPlusProcheIntersection(double x, double y) {
 		Intersection plusProche = null;
 		double distanceMin = Double.MAX_VALUE;
 		for (Intersection intersec : intersections.values()) {
 			double distance = Math.pow(intersec.getX()-x, 2) + Math.pow(intersec.getY()-y, 2);
-		    if(distance < distanceMin) {
-		    	distanceMin = distance;
-		    	plusProche = intersec;
-		    }
+			if(distance < distanceMin) {
+				distanceMin = distance;
+				plusProche = intersec;
+			}
 		}
 		return plusProche;
 	}

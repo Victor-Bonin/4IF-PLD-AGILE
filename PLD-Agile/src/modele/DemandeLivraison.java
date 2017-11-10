@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Demande de livraison entre un entrepot et des livraisons (non ordonnées)
+ * <pre>
+ * Demande de livraison entre un entrepot et des livraisons, non ordonnees.
+ *
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -14,11 +16,11 @@ import java.util.List;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -31,30 +33,56 @@ import java.util.List;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */
 public class DemandeLivraison {
+
 	private Entrepot entrepot;
 	private List<Livraison> livraisons;
-	
+
+	/**
+	 * Constructeur de demande de livraison.
+	 * Initialise la liste de livraison sans la remplir.
+	 */
 	public DemandeLivraison() {
 		livraisons = new ArrayList<Livraison>();
 	}
-	
-	public Entrepot getEntrepot(){
+
+	/**
+	 * Retourne l'entrepot de la demande de livraison.
+	 * @return l'entrepot
+	 */
+	public Entrepot getEntrepot() {
 		return this.entrepot;
 	}
-	
-	public List<Livraison> getLivraisons(){
+
+	/**
+	 * Retourne la liste de livraison de la demande de livraison.
+	 * @return liste de Livraison
+	 */
+	public List<Livraison> getLivraisons() {
 		return this.livraisons;
 	}
 
+	/**
+	 * Ajoute un point de livraison a la demande de livraison.
+	 * Si l'ajout n'est pas possible lance une ExceptionPlanCo.
+	 * @param lvrsn le point de livraison a ajouter
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void ajoutePointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
 		ajoutePointLivraison(lvrsn, livraisons.size());
 	}
-	
+
+	/**
+	 * Ajoute un point de livraison a la demande de livraison a la position indiquee.
+	 * Si l'ajout n'est pas possible lance une ExceptionPlanCo.
+	 * @param lvrsn le point de livraison a ajouter
+	 * @param index la position dans la liste ou ajouter le point de livraison
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void ajoutePointLivraison(Livraison lvrsn, int index) throws ExceptionPlanCo {
 		if(lvrsn == null)
 			throw new ExceptionPlanCo(ExceptionPlanCo.DEV_ONLY_1);
@@ -70,9 +98,15 @@ public class DemandeLivraison {
 		catch (Exception e) {
 			throw new ExceptionPlanCo(ExceptionPlanCo.ERREUR_AJOUT_LIVRAISON);		
 		}
-		
+
 	}
-	
+
+	/**
+	 * Supprime la livraison passee en parametre de la demande de livraison.
+	 * Si la suppression n'est pas possible lance une ExceptionPlanCo.
+	 * @param lvrsn le point de livraison a supprimer
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 */
 	public void supprimerPointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
 		if(lvrsn == null)
 			throw new ExceptionPlanCo(ExceptionPlanCo.DEV_ONLY_3);
@@ -82,11 +116,19 @@ public class DemandeLivraison {
 			throw new ExceptionPlanCo(ExceptionPlanCo.ERREUR_SUPPRESSION_LIVRAISON);
 	}
 
-	public void setEntrepot(Entrepot entrpt){
+	/**
+	 * Change l'entrepot de la demande de livraison.
+	 * @param entrpt le nouvel entrepot
+	 */
+	public void setEntrepot(Entrepot entrpt) {
 		entrepot = entrpt;
 	}
-	
-	public void setLivraisons(List<Livraison> livs){
+
+	/**
+	 * Change la liste de point de livraison de la demande de livraison.
+	 * @param livs la nouvelle liste de point de livraison
+	 */
+	public void setLivraisons(List<Livraison> livs) {
 		this.livraisons = livs;
 	}
 }

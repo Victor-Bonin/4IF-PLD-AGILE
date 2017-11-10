@@ -83,13 +83,12 @@ public class Plan extends Observable {
 	 * @param arrivee Adresse de l'intersection d'arrivee
 	 * @param longueur Longueur du troncon
 	 * @param nomRue Nom du troncon
-	 * @throws Exception
+	 * @throws ExceptionPlanCo
 	 */
 	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws ExceptionPlanCo {
 		Intersection debut = intersections.getOrDefault(depart, null);
 		Intersection fin = intersections.getOrDefault(arrivee, null);
-		if(debut != null && fin != null)
-		{
+		if(debut != null && fin != null) {
 			Troncon troncon = new Troncon(debut, fin, nomRue, longueur);
 			troncons.add(troncon);
 		}
@@ -379,7 +378,7 @@ public class Plan extends Observable {
 	 * Ajoute un entrepot a la demande de livraison du plan si l'entrepot correspond a une adresse du plan
 	 * @param idIntersection adresse de l'entrepot
 	 * @param heureDepart heure de depart de la tournee
-	 * @throws Exception L'entrepot ne correspond a aucune intersection du plan
+	 * @throws ExceptionPlanCo L'entrepot ne correspond a aucune intersection du plan
 	 */
 	public void setEntrepot(Long idIntersection, Calendar heureDepart) throws ExceptionPlanCo{
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);
@@ -395,7 +394,7 @@ public class Plan extends Observable {
 	 * Ajoute un point de livraison à la demande de livraison si elle correspond a une intersection du plan
 	 * @param idIntersection Adresse de la livraison
 	 * @param dureeLivraison Duree de la livraison
-	 * @throws Exception La livraison ne correspond a aucune intersection du plan
+	 * @throws ExceptionPlanCo La livraison ne correspond a aucune intersection du plan
 	 */
 	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison, Calendar debutPlage, Calendar finPlage) throws ExceptionPlanCo {
 		Intersection intersection = intersections.getOrDefault(idIntersection, null);

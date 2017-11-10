@@ -31,10 +31,6 @@ package modele;
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
  * </pre>
-<<<<<<< HEAD
-=======
- * 
->>>>>>> 0453c70c62a9fa1c6904bfc8f91458e45729bd83
  *  
  * @author 4104
  */

@@ -54,6 +54,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		fenetre.getVuePlan().activerBouton(false);
+		fenetre.requestFocus();
 	}
 
 }

@@ -48,5 +48,6 @@ public class EtatModifie extends EtatDefaut {
 
 		VueTournee vueTournee = fenetre.getVueTournee();
 		fenetre.ajouterEcouteursSynchro();
+		fenetre.requestFocus();
 	}
 }

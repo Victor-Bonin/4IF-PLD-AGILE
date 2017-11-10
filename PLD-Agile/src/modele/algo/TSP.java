@@ -32,7 +32,6 @@ package modele.algo;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- * 
  * @author 4104
  */
 public interface TSP {

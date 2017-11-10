@@ -35,7 +35,6 @@ import java.util.Iterator;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- * 
  * @author 4104
  * @deprecated il existe un iterateur plus performant que celui-ci
  * @see IterateurHoraires

@@ -36,7 +36,6 @@ import java.util.Iterator;
  * victor.bonin@insa-lyon.fr
  * </pre>
  * 
- * 
  * @author 4104
  */
 public class TSP4 extends TemplateTSP {

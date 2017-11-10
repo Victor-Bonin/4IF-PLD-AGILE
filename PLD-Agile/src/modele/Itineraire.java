@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * <pre>
- * Ensemble ordonne des chemins empruntes par une tournee
+ * Ensemble ordonne des chemins empruntes par une tournee.
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -34,36 +34,55 @@ import java.util.List;
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
  * </pre>
- * 
  *  
  * @author 4104
  */
 public class Itineraire {
+
 	private List<Chemin> itineraire;
-	
+
+	/**
+	 * Constructeur de l'itineraire.
+	 * @param pCourtsChemins la matrice des plus courts chemins
+	 * @param meilleureSolution le tableau contenant le cout des meilleurs solutions
+	 */
 	public Itineraire(Chemin[][] pCourtsChemins, Integer[] meilleureSolution) {
 		itineraire = new ArrayList<Chemin>();
-		for (int i = 0; i < meilleureSolution.length-1; i++){
+		for (int i = 0; i < meilleureSolution.length-1; i++) {
 			itineraire.add(pCourtsChemins[meilleureSolution[i]][meilleureSolution[i+1]]);
 		}
 		itineraire.add(pCourtsChemins[meilleureSolution[meilleureSolution.length-1]][meilleureSolution[0]]);
 	}
-	
-	public Itineraire(List<Chemin> itineraire){
+
+	/**
+	 * Construit un itineraire a partir d'une liste de chemin
+	 * @param itineraire la liste de chemin
+	 */
+	public Itineraire(List<Chemin> itineraire) {
 		this.itineraire = new ArrayList<Chemin>(itineraire);
 	}
-	
-	public List<Chemin> getChemins(){
+
+	/**
+	 * Retourne la liste de chemin de l'itineraire.
+	 * @return la liste de chemin de l'itineraire
+	 */
+	public List<Chemin> getChemins() {
 		return itineraire;
 	}
-	
-	public boolean equals(Itineraire itineraire) {
-		boolean isEqual = true;
-		for(int i =0; i<this.itineraire.size(); i++){
-			isEqual = isEqual && this.itineraire.get(i).equals(itineraire.getChemins().get(i));
+
+	/**
+	 * Compare tous les chemins de l'itineraire.
+	 * @param obj l'itineraire a comparer
+	 * @return true si tous les chemins sont égaux à ceux de l'autre itineraire
+	 */
+	public boolean equals(Object obj) {
+		Itineraire itineraire = (Itineraire)obj;
+		boolean estEgal = true;
+		for(int i = 0; i < this.itineraire.size(); i++) {
+			estEgal = estEgal && this.itineraire.get(i).equals(itineraire.getChemins().get(i));
 		}
-		
-		return isEqual;
+
+		return estEgal;
 	}
-	
+
 }

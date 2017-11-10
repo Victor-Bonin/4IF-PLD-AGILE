@@ -36,7 +36,6 @@ import java.util.Iterator;
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
  * </pre>
- * 
  *  
  * @author 4104
  */

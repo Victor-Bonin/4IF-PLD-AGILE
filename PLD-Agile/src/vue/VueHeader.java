@@ -50,6 +50,9 @@ public class VueHeader extends JPanel{
 
 	private JLabel notificationLabel;
 	
+	/**
+	 * Constructeur d'une nouvelle en-tete
+	 */
 	public VueHeader(){
 		setBorder(new EmptyBorder(10, 20, 10, 20));
 		setLayout(new BorderLayout());
@@ -78,6 +81,11 @@ public class VueHeader extends JPanel{
 		add(notificationPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Change la notification située dans l'en-tete afin de renseigner et avertir l'utilisateur
+	 * @param texte : le texte a afficher
+	 * @param color : la couleur du texte a afficher
+	 */
 	public void changeNotification(String texte, Color color){
 		notificationLabel.setForeground(color);
 		notificationLabel.setText(texte);

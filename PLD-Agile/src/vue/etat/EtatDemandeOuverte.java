@@ -64,12 +64,12 @@ public class EtatDemandeOuverte extends EtatDefaut {
 			vuePlan.nettoyerIcones();
 		}else {
 			vueTournee.initTournee();
-			vuePlan.afficherIcones(plan.getDemandeLivraison());
+			vuePlan.afficherIcones();
 		}
 		vuePlan.activerAnnulationBouton(false);
 
 		fenetre.ajouterEcouteursSynchro();
-		vuePlan.activerBouton(true);
+		vuePlan.activerBoutonImportDemande(true);
 		fenetre.requestFocus();
 	}
 

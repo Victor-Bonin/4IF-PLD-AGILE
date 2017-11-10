@@ -65,9 +65,9 @@ public class EtatCalcule extends EtatDefaut {
 			if(vueTournee.getElementsTournee().size()>2){
 				vueTournee.afficherBoutonsSuppression();
 			}
-			vuePlan.afficherIcones(plan.getDemandeLivraison());
+			vuePlan.afficherIcones();
 		}
-		vuePlan.activerBouton(true);
+		vuePlan.activerBoutonImportDemande(true);
 		vueTournee.ajouterBoutonPlus();
 		vuePlan.activerAnnulationBouton(false);
 		fenetre.ajouterEcouteursSynchro();

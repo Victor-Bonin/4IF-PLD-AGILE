@@ -46,10 +46,15 @@ import javax.swing.border.MatteBorder;
  */
 public class VueCentrale extends JPanel{
 	private static final long serialVersionUID = -305055101326859318L;
-
+	
 	private JPanel panneauGauche;
 	private JPanel panneauCentre;
 	
+	/**
+	 * Constructeur d'une nouvelle vue
+	 * @param vuePlan : la VuePlan contenue dans la vue
+	 * @param vueTournee : la VuePlan contenue dans la vue
+	 */
 	public VueCentrale(JPanel vuePlan, JPanel vueTournee){
 
 		setLayout(new GridBagLayout());

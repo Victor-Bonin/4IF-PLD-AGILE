@@ -247,7 +247,7 @@ public class Fenetre extends JFrame implements Observer {
 	/** ajoute une icone par rapport pour placer une nouvelle livraison */
 	//TODO a ameliorer avec un grisage
 	public void ajouterIcone(Intersection intersection) {
-		vuePlan.afficherIcone(intersection);
+		vuePlan.afficherIconeNouvelleLivraison(intersection);
 		vueTournee.setIntersectionEnCreation(intersection);
 	}
 	
@@ -334,7 +334,7 @@ public class Fenetre extends JFrame implements Observer {
 		
 		JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
 	    iconeLivraison.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
-	    vuePlan.afficherIcones(plan.getDemandeLivraison());
+	    vuePlan.afficherIcones();
 		
 	    revalidate();
 		setVisible(true);
@@ -361,7 +361,7 @@ public class Fenetre extends JFrame implements Observer {
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
 		vueTournee.ajouterDragAndDropListener();
-		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		vuePlan.afficherIcones();
 		
 		revalidate();
 		setVisible(true);

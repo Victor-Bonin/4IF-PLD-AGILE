@@ -23,7 +23,7 @@ import modele.Livraison;
 import modele.LivraisonPlageHoraire;
 
 /**
- * Extension de JPanel affichant une tournee et ses informations primaires
+ * Extension de JPanel affichant un element d'une tournee et ses informations primaires
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -73,7 +73,10 @@ public class ElementTournee extends JPanel{
 	
 	protected boolean detailsVisibles = false;
 
-	
+	/**
+	 * Contructeur d'un ElementTournee vide
+	 * @param ctrl : le controleur associe a la vue
+	 */
 	public ElementTournee(Controleur ctrl) {
 		super();
 		
@@ -90,6 +93,7 @@ public class ElementTournee extends JPanel{
 						)
 				));
 		
+		// Creations des différents JPanels communs à ElementTourneeLivraison et ElementTourneeEntrepot
 		nomPanel = new JPanel();
 		nomPanel.setLayout(new BorderLayout());
 		nomPanel.setBackground(CharteGraphique.BG_COULEUR);
@@ -111,6 +115,7 @@ public class ElementTournee extends JPanel{
 		details.setBackground(CharteGraphique.BG_COULEUR);
 		details.setLayout(new BorderLayout());
 
+		// Mise en place des elements
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -142,13 +147,14 @@ public class ElementTournee extends JPanel{
 		c.gridx = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(details, c);
-		
-		
 	}
 	
-	
-	
-	
+	/**
+	 * Creation d'une chaine de caracteres en html decrivant une intersection
+	 * @param intersec : l'intersection a decrire
+	 * @param listeNomsRues : la liste des rues passant par cette intersection
+	 * @return une chaine de caractere decrivant l'intersection
+	 */
 	protected String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
 		String s = "";
 		if(intersec instanceof Entrepot) {
@@ -183,16 +189,23 @@ public class ElementTournee extends JPanel{
 		return s;
 	}
 	
+	/**
+	 * Mise en surbrillance de l'icone de l'element
+	 */
 	public void survolElement(){
 		imageLabel.setIcon(imageIconeSurvol);
 	}
 	
+	/**
+	 * Remise de l'icone de l'element a son status normal
+	 */
 	public void antiSurvolElement(){
 		imageLabel.setIcon(imageIconeNormal);
 	}
 	
-	
-	
+	/**
+	 * Affichage du JPanel contenant les details de l'element 
+	 */
 	public void afficherDetails() {
 		if(detailsVisibles){
 			details.setVisible(false);
@@ -202,6 +215,13 @@ public class ElementTournee extends JPanel{
 		detailsVisibles = !detailsVisibles;
 	}
 	
+	/**
+	 * Affichage du menu contextuel d'un element
+	 * @param c : l'element possedant le menu
+	 * @param x : la valeur de x ou afficher le menu par rapport a celui-ci
+	 * @param y : la valeur de y ou afficher le menu par rapport a celui-ci
+	 * @see javax.swing.JPopupMenu#show(Component, int, int)
+	 */
 	public void showMenu(Component c, int x, int y) {
 		menu.show(c, x, y);
 	}

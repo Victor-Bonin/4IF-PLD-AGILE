@@ -46,7 +46,7 @@ public class EcouteurDeSouris extends MouseAdapter implements MouseWheelListener
 	private int posY;
 	
 	/**
-	 * Constructeur d'une instance d'un écouteur de souris
+	 * Constructeur d'une instance d'un ecouteur de souris
 	 * @param v : la vue du plan associee
 	 */
 	public EcouteurDeSouris(VuePlan v){

@@ -172,7 +172,7 @@ public class VueTournee extends JPanel{
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelCreation.setBackground(CharteGraphique.BG_COULEUR);
 		panelCreation.setLayout(new BorderLayout());
-		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
+		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size());
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
 		pan.add(panelCreation);
@@ -188,7 +188,7 @@ public class VueTournee extends JPanel{
 		panelCreation.setBackground(CharteGraphique.BG_COULEUR);
 		panelCreation.setLayout(new BorderLayout());
 		
-		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,place+1);
+		elementEnCreation = new ElementTourneeLivraison(ctrl, place+1);
 
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);

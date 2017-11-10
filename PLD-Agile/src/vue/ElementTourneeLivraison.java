@@ -38,6 +38,9 @@ import modele.Livraison;
 import modele.LivraisonPlageHoraire;
 
 /**
+ * Extension de ElementTournee affichant un element d'une tournee de type Livraison
+ * @see modele.Livraison
+ * @see ElementTournee
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -81,6 +84,13 @@ public class ElementTourneeLivraison extends ElementTournee{
 	private JLabel heureLabel;
 	private JSpinner dureeModification;
 
+	/**
+	 * Contructeur d'un ElementTourneeLivraison a partir d'une livraison existante
+	 * @param ctrl : le controleur associe a la vue
+	 * @param livraison : la livraison a afficher
+	 * @param nom : le nom de la livraison
+	 * @param p : la place de la livraison dans la liste de livraisons de la tournee
+	 */
 	public ElementTourneeLivraison(Controleur ctrl, Livraison livraison, int nom, int p) {
 		super(ctrl);
 
@@ -93,7 +103,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		idLabel.setText(" " + livraison.getId());
 		dureeLivraisonLabel.setText(Textes.TOURNEE_DUREE + (int)(livraison.getDuree()/60) + " min");
 
-		// JPanel details
+		// Recuperation de l'icone
 		try {
 			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_SUPPRIMER));
 			Image scaledSupprimer = img.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
@@ -103,9 +113,8 @@ public class ElementTourneeLivraison extends ElementTournee{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//details.add(boutonAction, BorderLayout.EAST);
 
-
+		// Recuperation de la liste des troncons passant par l'intersection
 		Set<String> listeTronconsIntersection = ctrl.nomsTronconsIntersection(livraison);
 		JPanel nomsTronconsIntersection = new JPanel();
 		nomsTronconsIntersection.setLayout(new BoxLayout(nomsTronconsIntersection, BoxLayout.PAGE_AXIS));
@@ -118,6 +127,8 @@ public class ElementTourneeLivraison extends ElementTournee{
 			nomsTronconsIntersection.add(labelNomTroncon);
 			labelNomTroncon.setAlignmentX(Component.LEFT_ALIGNMENT);
 		}
+		
+		// Affichage eventuel de la plage horaire
 		String plageHoraire = Textes.TOURNEE_PLAGE;
 		if(livraison instanceof LivraisonPlageHoraire) {
 			LivraisonPlageHoraire livraisonHoraire = (LivraisonPlageHoraire)livraison;
@@ -136,6 +147,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);
 
+		// Creation de la popup de description de la livraison
 		String description = composeToolTipString(livraison, listeTronconsIntersection);
 		setToolTipText("<html>" + description + "</html>");
 
@@ -153,6 +165,7 @@ public class ElementTourneeLivraison extends ElementTournee{
 		boutonAction.addActionListener(ecouteurBoutons);
 		boutonAction.setActionCommand("supprimer-livraison");
 
+		// Creation du menu contextuel pour ajouter apres
 		menu = new JPopupMenu("Popup");
 		JMenuItem item = new JMenuItem("Nouvelle livraison");
 		menu.add(item);
@@ -163,26 +176,10 @@ public class ElementTourneeLivraison extends ElementTournee{
 			}
 		});
 		
-		/*
-		addMouseListener(new MouseAdapter (){
-			public void mousePressed(MouseEvent ev) {
-				if (clicDroitAutorise && ev.isPopupTrigger()) {
-					menu.show(ev.getComponent(), ev.getX(), ev.getY());
-				}
-			}
-
-			public void mouseReleased(MouseEvent ev) {
-				if (clicDroitAutorise && ev.isPopupTrigger()) {
-					menu.show(ev.getComponent(), ev.getX(), ev.getY());
-				}
-			}
-		});
-		*/
-				
+		// Si la plage horaire de la livraison est tendue, on affiche une pastille rouge a cote de l'incone
 		if(livraison instanceof LivraisonPlageHoraire) {
 			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();
 			if(retard <= 0) {
-				System.out.println("tendue");
 				JPanel indicationPlageTendue = new JPanel() {
 					@Override
 				    protected void paintComponent(Graphics g) {
@@ -205,8 +202,12 @@ public class ElementTourneeLivraison extends ElementTournee{
 		}
 	}
 
-	// TODO : enlever nom et remplacer par position!
-	public ElementTourneeLivraison(Controleur ctrl, int nom, int p) {
+	/**
+	 * Contructeur d'un ElementTourneeLivraison destinee a la creation d'une nouvelle livraison
+	 * @param ctrl : controleur associe a la vue
+	 * @param p : place ou inserer la nouvelle livraison dans la liste de livraisons de la tournee
+	 */
+	public ElementTourneeLivraison(Controleur ctrl, int p) {
 		super(ctrl);
 		
 		position = p;
@@ -260,15 +261,16 @@ public class ElementTourneeLivraison extends ElementTournee{
 			e.printStackTrace();
 		}
 
+		// Creation d'un JSpinner pour entrer la duree
 		JPanel choixDuree = new JPanel();
 		choixDuree.setLayout(new BorderLayout());
 		choixDuree.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 		choixDuree.setBackground(CharteGraphique.BG_COULEUR);
 		SpinnerModel modele =
-				new SpinnerNumberModel(0, //initial value
-						0, //min
-						10000, //max
-						1);                //step
+				new SpinnerNumberModel(0, 
+						0, 
+						10000, 
+						1); 
 		dureeModification = new JSpinner(modele);
 		JFormattedTextField duree = ((JSpinner.NumberEditor) dureeModification.getEditor()).getTextField();
 		((NumberFormatter) duree.getFormatter()).setAllowsInvalid(false);
@@ -296,7 +298,10 @@ public class ElementTourneeLivraison extends ElementTournee{
 		boutonAnnuler.setActionCommand("annuler-creation");
 
 	}
-
+	
+	/**
+	 * Initialisation des JComponents de l'element pour une liraison existante et une nouvelle livraison
+	 */
 	private void initialiserLivraison() {
 
 		dureeLivraisonLabel = new JLabel();
@@ -339,16 +344,19 @@ public class ElementTourneeLivraison extends ElementTournee{
 		livraison.setDuree((Integer)dureeModification.getValue()*60);
 	}
 
+	/**
+	 * Modifie l'attibut livraison en lui donnant une intersection et la valeur de la duree inscrite dans le JSpinner
+	 * @param i : intersection a utiliser pour la nouvelle intersection
+	 * @see modele.Livraison#Livraison(Intersection, int)
+	 */
 	public void setIntersection(Intersection i) {
 		boutonAction.setEnabled(true);
 		livraison = new Livraison(i, (Integer)dureeModification.getValue()*60);
 	}
 	
-	public void masquerBoutonSupprimer()
-	{
-		remove(boutonAction);
-	}
-	
+	/**
+	 * Affiche le JButton de suppression de l'element
+	 */
 	public void afficherBoutonSupprimer()
 	{
 		details.add(boutonAction, BorderLayout.EAST);

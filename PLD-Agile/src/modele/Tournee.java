@@ -18,11 +18,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Tournee extends DemandeLivraison{
 	private Itineraire itineraire;
+	private String feuilleDeRoute;
 
 	public Tournee(Entrepot entrepot, List<Livraison> meilleureSolution, Itineraire iti){
 		this.itineraire = iti;
 		super.setEntrepot(entrepot);
 		super.setLivraisons(meilleureSolution);
+		this.feuilleDeRoute = "";
 	}
 
 	public Itineraire getItineraire(){
@@ -40,7 +42,7 @@ public class Tournee extends DemandeLivraison{
 		String nomRue = "";
 		float longueurTroncon;
 		String longueurRue = "";
-		String feuilleDeRoute = "<h2> Bonjour ! <br/>Début de la tournée à "+ heureDepart.get(Calendar.HOUR_OF_DAY)+"h"+ heureDepart.get(Calendar.MINUTE) +"min<br/>Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"min</h2>";
+		feuilleDeRoute = "<h2> Bonjour ! <br/>Début de la tournée à "+ heureDepart.get(Calendar.HOUR_OF_DAY)+"h"+ heureDepart.get(Calendar.MINUTE) +"min<br/>Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"min</h2>";
 		int nbTronconsConseq;
 		// Liste des livraisons
 		List<Livraison> livraisons = this.getLivraisons();
@@ -124,5 +126,9 @@ public class Tournee extends DemandeLivraison{
 				throw new ExceptionPlanCo(ExceptionPlanCo.ANNULATION_SAUVEGARDE_FEUILLE_DE_ROUTE);
 			else
 				throw new ExceptionPlanCo(ExceptionPlanCo.PROBLEME_SAUVEGARDE_FEUILLE_DE_ROUTE);	
+	}
+
+	public String getFeuilleDeRoute() {
+		return feuilleDeRoute;
 	}
 }

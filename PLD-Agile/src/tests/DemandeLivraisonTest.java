@@ -13,9 +13,6 @@ import modele.Livraison;
 public class DemandeLivraisonTest {
 	DemandeLivraison demandeLivraison = new DemandeLivraison(); 
 
-	@Before
-	public void init() {}
-
 	@Test
 	public void ajoutePointLivraisonTest() {
 		Livraison l = new Livraison(new Intersection(1, 1, 100L), 0);

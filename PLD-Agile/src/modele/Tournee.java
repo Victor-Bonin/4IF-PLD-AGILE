@@ -131,23 +131,16 @@ public class Tournee extends DemandeLivraison{
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
-			if (file.getName().endsWith(".html")) {
-				BufferedWriter bw;
-				bw = new BufferedWriter(new FileWriter(file));
-				String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
-				bw.write(contenu);
-				bw.close();
-				Desktop.getDesktop().browse(file.toURI());
-			} else {
+			if (!(file.getName().endsWith(".html"))) {
 				String fileName = (file.getName());
-				java.io.File fichier = new java.io.File(fileName +".html"); 
-				BufferedWriter bw;
-				bw = new BufferedWriter(new FileWriter(fichier));
-				String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
-				bw.write(contenu);
-				bw.close();
-				Desktop.getDesktop().browse(fichier.toURI());
+				file = new java.io.File(fileName +".html"); 
 			}
+			BufferedWriter bw;
+			bw = new BufferedWriter(new FileWriter(file));
+			String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
+			bw.write(contenu);
+			bw.close();
+			Desktop.getDesktop().browse(file.toURI());
 		}
 		else 
 			if (returnVal == JFileChooser.CANCEL_OPTION)

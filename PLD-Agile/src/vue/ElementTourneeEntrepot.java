@@ -3,10 +3,7 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,9 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 import controleur.Controleur;
 import modele.Entrepot;
@@ -63,8 +57,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 	    	}
 	    	texte += entrepot.getHeureArrivee().get(Calendar.MINUTE);
 	    	if((entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())>1000*60*60*24) {
-	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j aprÃ¨s";
-	    		System.out.println(entrepot.getHeureArrivee().get(Calendar.HOUR_OF_DAY) + "  " +entrepot.getHeureDepart().get(Calendar.HOUR_OF_DAY));
+	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j après";
 	    	}
 	    	
 	    	heureArriveeLabel.setText(texte);
@@ -99,7 +92,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 			imageLabel.setIcon(imageIconNormal);
 		} catch (IOException e) {
-	    		System.out.println("Une image est manquante");
 	    }
 
 		infos.add(heureArriveeLabel, BorderLayout.WEST );

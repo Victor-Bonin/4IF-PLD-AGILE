@@ -49,7 +49,7 @@ public class EtatInit extends EtatDefaut{
 	public void ouvrirPlan(Controleur controleur, Plan plan, Fenetre fenetre, 
 			ListeCommande listeCommande) {
 		try {
-			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COULEUR);
 			listeCommande.reset();
 			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
@@ -58,19 +58,19 @@ public class EtatInit extends EtatDefaut{
 		}
 		catch (ExceptionPlanCo ex){
 			if (ex.getMessage() != "") 
-				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 			else
-				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 		catch (Exception ex) {
-			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 	}
 
 	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
+		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COULEUR);
 	}
 
 	/** {@inheritDoc}  */

@@ -6,7 +6,7 @@ import vue.Fenetre;
 
 /**
  * <pre>
- * 
+ * Etat de la vue au lancement de l'application
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -41,6 +41,7 @@ import vue.Fenetre;
  */
 public class EtatInit extends EtatDefaut{
 
+	/** {@inheritDoc}  */
 	@Override
 	public void setFooter(JPanel footer, Fenetre fenetre) {
 		footer.remove(fenetre.getImportDemandeLivraisonButton());

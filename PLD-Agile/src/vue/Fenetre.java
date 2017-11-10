@@ -55,11 +55,17 @@ import vue.etat.*;
  */
 public class Fenetre extends JFrame implements Observer {
 	private static final long serialVersionUID = 4042713508717400450L;
+	/** Constante d'identification de la vue par defaut */
 	public static final int VUE_DEFAUT = 0;
+	/** Constante d'identification de la vue plan charge */
 	public static final int VUE_PLAN = 1;
+	/** Constante d'identification apres livraison chargee */
 	public static final int VUE_LIVRAISON_CHARGEE = 2;
+	/** Constante d'identification de la vue tournee calculee */
 	public static final int VUE_TOURNEE_CALCULEE = 3;
+	/** Constante d'identification de la vue d'ajout d'une livraison a la tournee */
 	public static final int VUE_TOURNEE_AJOUT = 4;
+	/** Constante d'identification de la vue de calcul en cours */
 	public static final int VUE_TOURNEE_CALCUL_EN_COURS = 5;
 
 	private Controleur ctrl;
@@ -88,10 +94,13 @@ public class Fenetre extends JFrame implements Observer {
 	public final EtatPlanOuvert etatPlanOuvert = new EtatPlanOuvert();
 	public final EtatCalculEnCours etatCalculEnCours = new EtatCalculEnCours();
 	public final EtatCalcule etatCalcule = new EtatCalcule();
-	public final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
 	public final EtatModifie etatModifie = new EtatModifie();
 	
-	
+	/**
+	 * Constructeur
+	 * @param ctrl controleur lie a la fenetre
+	 * @param plan plan (vide ou pas) qui sera affiche et modifie par la fenetre
+	 */
 	public Fenetre(Controleur ctrl, Plan plan){
 		super(Textes.NOM_APPLI);
 		this.ctrl = ctrl;
@@ -112,13 +121,14 @@ public class Fenetre extends JFrame implements Observer {
 		
 	}
 	
-	
+	/** initialisation des ecouteurs de la fenetre */
 	private void initListeners(){
 		ecouteurBoutons = new EcouteurDeBouton(ctrl);
 		ecouteurClavier = new EcouteurDeClavier(ctrl);
 		addKeyListener(ecouteurClavier);
 	}
 	
+	/** initialisation des boutons */
 	private void initButtons(){
 		exportButton = new PersoButton(Textes.BUTTON_EXPORT_ROUTE,1);
 		exportButton.addActionListener(ecouteurBoutons);
@@ -137,6 +147,7 @@ public class Fenetre extends JFrame implements Observer {
 		calculTourneeButton.setActionCommand("calcul-tournee");
 	}
 	
+	/** initialiser la parametrisation de la fenetre */
 	private void initFenetre(){
 		setSize(1000,800);
 		//setResizable(true);
@@ -147,29 +158,32 @@ public class Fenetre extends JFrame implements Observer {
 		requestFocus();
 	}
 	
+	/** initialisation des panneaux contenus dans la fenetre */
 	private void initContent(){
 		jpanelCentral = new JPanel();
 		jpanelCentral.setLayout(new GridBagLayout());
-		jpanelCentral.setBackground(CharteGraphique.BG_COLOR);
+		jpanelCentral.setBackground(CharteGraphique.BG_COULEUR);
 		
 		jpanelCentral.add(importPlanButton);
 		
 		getContentPane().add(jpanelCentral, BorderLayout.CENTER);
 	}
 
+	/** initialisation du panneau superieur de la fenetre, dont la notification */
 	private void initHeader(){
 		header = new VueHeader();
-		header.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
+		header.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COULEUR);
 		
 		getContentPane().add(header, BorderLayout.NORTH);
 	}
 	
+	/** initialisation du panneau inferieur */
 	private void initFooter(){
 		footer = new JPanel();
-		footer.setBackground(CharteGraphique.BG_COLOR);
+		footer.setBackground(CharteGraphique.BG_COULEUR);
 	}
 	
-	
+	/** Met a jour le contenu de la fenêtre en fonction de son etat */
 	public void setContent(){
 		vuePlan = new VuePlan(ctrl, plan);
 		vueTournee = new VueTournee(ctrl, plan);
@@ -194,11 +208,6 @@ public class Fenetre extends JFrame implements Observer {
 
 	/**
 	 * Permet de faire basculer la fenêtre vers une vue ou une autre
-	 * @param vue int correspondant a la vue a charger
-	 * @see #VUE_DEFAUT
-	 * @see #VUE_LIVRAISON_CHARGEE
-	 * @see #VUE_PLAN
-	 * @see #VUE_TOURNEE_CALCULEE
 	 */
 	public void goToVue(){
 		if(plan!=null){
@@ -218,6 +227,9 @@ public class Fenetre extends JFrame implements Observer {
 		header.changeNotification(texte, color);
 	}
 	
+	/**
+	 * Initialise les ecouteurs de synchronisation
+	 */
 	public void ajouterEcouteursSynchro (){
 		for (int i = 0; i<vuePlan.getIconesLivraison().size(); i++) {
 			ecouteurSynchro = new EcouteurDeSourisDeSynchronisation(i, vuePlan, vueTournee);
@@ -230,25 +242,20 @@ public class Fenetre extends JFrame implements Observer {
 			vueTournee.getElementsTournee().get(i).addMouseListener(ecouteurSynchro);
 		}
 	}
-	
-	//TODO : a améliorer
+
+	/** ajoute une icone par rapport pour placer une nouvelle livraison */
+	//TODO a ameliorer avec un grisage
 	public void ajouterIcone(Intersection intersection) {
-		vuePlan.afficherIcone(intersection);
+		vuePlan.afficherIconeNouvelleLivraison(intersection);
 		vueTournee.setIntersectionEnCreation(intersection);
 	}
 	
+	/** Entre en mode selection d'une adresse */
 	public void commencerChoixIntersection() {
 		vuePlan.commencerChoixIntersection();
 	}
-	/*
-	//TODO : supprimer? (doit se faire avec le pattern)
-	public void initialiserTournee() {
-		vueTournee.initTournee(plan.getTournee());
-		vuePlan.afficherIcones(plan.getDemandeLivraison());
-		ajouterEcouteursSynchro();
-	}
-	*/
 	
+	/** Sort du mode selection d'adresse */
 	public void annulerCreation() {
 		vueTournee.annulerCreation();
 		vuePlan.annulerCreation();
@@ -288,6 +295,7 @@ public class Fenetre extends JFrame implements Observer {
 	}
 
 
+	/** {@inheritDoc}  */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Plan p = (Plan) arg0;
@@ -309,6 +317,11 @@ public class Fenetre extends JFrame implements Observer {
 		}
 	}
 	
+	/**
+	 * Met a jour l'interface apres un ajout de livraison
+	 * @param p le plan contenant la livraison
+	 * @param livraison la livraison en question
+	 */
 	public void updateAjoutLivraison(Plan p, Livraison livraison) {
 		vueTournee.initTournee();
 		vueTournee.ajouterBoutonPlus();
@@ -320,7 +333,7 @@ public class Fenetre extends JFrame implements Observer {
 		
 		JLabel iconeLivraison = vuePlan.afficherIconeLivraison(livraison);
 	    iconeLivraison.addMouseListener(new EcouteurDeSourisDeSynchronisation(index, vuePlan, vueTournee));
-	    vuePlan.afficherIcones(plan.getDemandeLivraison());
+	    vuePlan.afficherIcones();
 		
 	    revalidate();
 		setVisible(true);
@@ -331,6 +344,12 @@ public class Fenetre extends JFrame implements Observer {
 		vuePlan.repaint();
 	}
 	
+	/**
+	 * Met a jour l'interface apres la suppression de livraison
+	 * @param p le plan contenant la livraison
+	 * @param livraison la livraison en question
+	 * @param index index de cette livraison
+	 */
 	public void updateSuppressionLivraison (Plan p, Livraison livraison, int index) {
 		JLabel iconeLivraison = vuePlan.getIconesLivraison().get(index);
 		iconeLivraison.removeMouseListener(iconeLivraison.getMouseListeners()[0]);
@@ -341,7 +360,7 @@ public class Fenetre extends JFrame implements Observer {
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
 		vueTournee.ajouterDragAndDropListener();
-		vuePlan.afficherIcones(plan.getDemandeLivraison());
+		vuePlan.afficherIcones();
 		
 		revalidate();
 		setVisible(true);
@@ -352,6 +371,7 @@ public class Fenetre extends JFrame implements Observer {
 		vuePlan.repaint();
 	}
 	
+	/** Nettoyage de l'interface apres l'annulation de la creation d'une livraison */
 	public void nettoyerNouvelleLivraison() {
 		vuePlan.annulerCreation();
 	}

@@ -49,6 +49,10 @@ public class EcouteurDeBouton implements ActionListener{
 		ctrl = c;
 	}
 
+	/**
+	 * Appelle les methodes du controleur a chaque action sur un bouton
+	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		switch(event.getActionCommand()){
@@ -68,10 +72,10 @@ public class EcouteurDeBouton implements ActionListener{
 			case "nouvelle-livraison":
 				ctrl.creerLivraison();
 				break;
-			case "undo_action":
+			case "defaire_action":
 				ctrl.undo();
 				break;
-			case "redo_action":
+			case "refaire_action":
 				ctrl.redo();
 				break;
 		}

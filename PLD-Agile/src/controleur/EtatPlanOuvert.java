@@ -52,7 +52,7 @@ public class EtatPlanOuvert extends EtatInit {
 	@Override
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 			try{
-				fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
+				fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COULEUR);
 				DeserialiseurXML.chargerDemandeLivraison(plan);
 				listeCommande.reset();
 				controleur.setEtatCourant(controleur.etatDemandeOuverte);
@@ -68,17 +68,17 @@ public class EtatPlanOuvert extends EtatInit {
 					fenetre.getVuePlan().repaint();
 				}
 				if(ex.getMessage() != "") {
-					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+					fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 				}else
-					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+					fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 			} catch(SAXException | IOException ex) {
 				//controleur.setEtatCourant(etat);
-				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 			}
 			catch(Exception ex) {
 				listeCommande.reset();
 				controleur.setEtatCourant(controleur.etatPlanOuvert);
-				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+				fenetre.changeNotification(Textes.NOTIF_IMPORT_DEMANDE_LIVRAISON_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 			}finally{
 				controleur.afficherFenetre();
 			}
@@ -87,7 +87,7 @@ public class EtatPlanOuvert extends EtatInit {
 	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE, CharteGraphique.NOTIFICATION_COLOR);
+		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE, CharteGraphique.NOTIFICATION_COULEUR);
 	}
 
 	/** {@inheritDoc}  */

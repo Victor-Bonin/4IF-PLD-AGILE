@@ -5,6 +5,7 @@ import java.awt.event.ComponentEvent;
 
 /**
  * <pre>
+ * Cette classe contient les appels a la vue lors de la modification de la taille de la fenetre
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -40,10 +41,19 @@ import java.awt.event.ComponentEvent;
 public class ResizeListener extends ComponentAdapter {
 	private VuePlan vuePlan;
 	
+	/**
+	 * Constructeur d'une instance d'un ecouteur de redimensionnement
+	 * @param vp : vuePlan associee a l'ecouteur
+	 */
 	public ResizeListener(VuePlan vp){
 		vuePlan = vp;
 	}
 	
+	/**
+	 * Actualisation de le vue plan au redimensionnement de la fenetre
+	 * @see java.awt.event.ComponentAdapter#componentResized(ComponentEvent)
+	 */
+	@Override
     public void componentResized(ComponentEvent e) {
     	vuePlan.actualiserIcones();
     }

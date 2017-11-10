@@ -25,7 +25,9 @@ import modele.Entrepot;
 
 /**
  * <pre>
- * 
+ * Extension de ElementTournee affichant un element d'une tournee de type Entrepot
+ * @see modele.Entrepot
+ * @see ElementTournee
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -64,15 +66,22 @@ public class ElementTourneeEntrepot extends ElementTournee{
 	private JLabel heureArriveeLabel;
 	private JLabel heureDepartLabel;
 	
+
+	/**
+	 * Contructeur d'un ElementTourneeEntrepot
+	 * @param ctrl : le controleur associe a la vue
+	 * @param entrepot : l'entrepot a afficher
+	 */
 	public ElementTourneeEntrepot(Controleur ctrl, Entrepot entrepot) {
 		super(ctrl);
 
 		nomLabel.setText(Textes.TOURNEE_ENTREPOT + " - ");
-		nomLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
+		nomLabel.setForeground(CharteGraphique.TEXTE_ENTREPOT_COULEUR);
 		
 		idLabel.setText(String.valueOf(entrepot.getId()));
-		idLabel.setForeground(CharteGraphique.TEXT_ID_HANGAR_COLOR);
+		idLabel.setForeground(CharteGraphique.TEXTE_ID_ENTREPOT_COULEUR);
 		
+		// Mise en forme des heures
 		heureDepartLabel = new JLabel();
 		String texte = entrepot.getHeureDepart().get(Calendar.HOUR_OF_DAY) + "h";
     	if(entrepot.getHeureDepart().get(Calendar.MINUTE)<10) {
@@ -80,8 +89,8 @@ public class ElementTourneeEntrepot extends ElementTournee{
     	}
     	texte += entrepot.getHeureDepart().get(Calendar.MINUTE) ;
     	heureDepartLabel.setText(texte);
-    	heureDepartLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-    	heureDepartLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+    	heureDepartLabel.setForeground(CharteGraphique.TEXTE_ENTREPOT_COULEUR);
+    	heureDepartLabel.setFont(CharteGraphique.TEXTE_PETIT_POLICE);
     	
     	heureArriveeLabel = new JLabel();
     	if (entrepot.getHeureArrivee() != null) {
@@ -95,10 +104,11 @@ public class ElementTourneeEntrepot extends ElementTournee{
 	    	}
 	    	
 	    	heureArriveeLabel.setText(texte);
-	    	heureArriveeLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
-	    	heureArriveeLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
+	    	heureArriveeLabel.setFont(CharteGraphique.TEXTE_PETIT_POLICE);
+	    	heureArriveeLabel.setForeground(CharteGraphique.TEXTE_ENTREPOT_COULEUR);
     	}
-
+    	
+    	// Recuperation de la liste des troncons passant par l'intersection de l'entrepot
 		Set<String> listeTronconsIntersection = ctrl.nomsTronconsIntersection(entrepot);
 		JPanel nomsTronconsIntersection = new JPanel();
 		nomsTronconsIntersection.setLayout(new BoxLayout(nomsTronconsIntersection, BoxLayout.PAGE_AXIS));
@@ -114,23 +124,26 @@ public class ElementTourneeEntrepot extends ElementTournee{
 		details.add(nomsTronconsIntersection, BorderLayout.NORTH);
 		details.setVisible(false);
 		
+		// Creation la popup d'informations
 		String description = composeToolTipString(entrepot, listeTronconsIntersection);
 		setToolTipText("<html>" + description + "</html>");
     	
+		// recuperation l'icone
 		try {
 			BufferedImage imgNorm = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
 			Image scaledImageNormal = imgNorm.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			imageIconNormal = new ImageIcon(scaledImageNormal);
+			imageIconeNormal = new ImageIcon(scaledImageNormal);
 			BufferedImage imgSurvol = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR_SURVOL));
 			Image scaledImageSurvol = imgSurvol.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			imageIconSurvol = new ImageIcon(scaledImageSurvol);
-			imageLabel.setIcon(imageIconNormal);
+			imageIconeSurvol = new ImageIcon(scaledImageSurvol);
+			imageLabel.setIcon(imageIconeNormal);
 		} catch (IOException e) {
 	    }
 
 		infos.add(heureArriveeLabel, BorderLayout.WEST );
 		infos.add(heureDepartLabel, BorderLayout.PAGE_START );
 		
+		// Creation d'un menu contextuel pour ajouter une livraison apres
 		menu = new JPopupMenu("Popup");
 		JMenuItem item = new JMenuItem("Nouvelle livraison");
 		menu.add(item);
@@ -140,20 +153,5 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				ctrl.creerLivraisonApres(-1);
 			}
 		});
-		/*
-		addMouseListener(new MouseAdapter (){
-			public void mousePressed(MouseEvent ev) {
-				if (ev.isPopupTrigger()) {
-					menu.show(ev.getComponent(), ev.getX(), ev.getY());
-				}
-			}
-
-			public void mouseReleased(MouseEvent ev) {
-				if (ev.isPopupTrigger()) {
-					menu.show(ev.getComponent(), ev.getX(), ev.getY());
-				}
-			}
-		});
-		*/
 	}	
 }

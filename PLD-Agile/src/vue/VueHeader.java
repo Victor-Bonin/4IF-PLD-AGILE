@@ -50,34 +50,42 @@ public class VueHeader extends JPanel{
 
 	private JLabel notificationLabel;
 	
+	/**
+	 * Constructeur d'une nouvelle en-tete
+	 */
 	public VueHeader(){
 		setBorder(new EmptyBorder(10, 20, 10, 20));
 		setLayout(new BorderLayout());
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		
 		JPanel notificationPanel = new JPanel();
 		notificationPanel.setLayout(new BorderLayout());
 		notificationPanel.setBorder(new EmptyBorder(10, 20, 10, 0));
-		notificationPanel.setBackground(CharteGraphique.BG_COLOR);
+		notificationPanel.setBackground(CharteGraphique.BG_COULEUR);
 		
 		notificationLabel = new JLabel();
-		notificationLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		notificationLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
+		notificationLabel.setFont(CharteGraphique.TEXT_SECONDAIRE_POLICE);
+		notificationLabel.setForeground(CharteGraphique.TEXT_SECONDAIRE_COULEUR);
 		notificationLabel.setBorder(new CompoundBorder(
-				new MatteBorder(1,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+				new MatteBorder(1,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 				new EmptyBorder(10, 10, 10, 10)
 				));
 		
 		notificationPanel.add(notificationLabel);
 		
 		JLabel titre = new JLabel(Textes.TITRE_APPLI);
-		titre.setForeground(CharteGraphique.TITLE_COLOR);
-		titre.setFont(CharteGraphique.TITLE_FONT);
+		titre.setForeground(CharteGraphique.TITRE_COULEUR);
+		titre.setFont(CharteGraphique.TITRE_POLICE);
 		
 		add(titre, BorderLayout.NORTH);
 		add(notificationPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Change la notification située dans l'en-tete afin de renseigner et avertir l'utilisateur
+	 * @param texte : le texte a afficher
+	 * @param color : la couleur du texte a afficher
+	 */
 	public void changeNotification(String texte, Color color){
 		notificationLabel.setForeground(color);
 		notificationLabel.setText(texte);

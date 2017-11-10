@@ -65,7 +65,7 @@ public class VueTournee extends JPanel{
 	private DemandeLivraison demLivraison;
 	private Plan plan;
 	
-	private boolean isDragged = false;
+	private boolean dragEnCours = false;
 	private ElementTourneeLivraison dragSource;
 	private ElementTournee dragCible;
 	
@@ -84,6 +84,11 @@ public class VueTournee extends JPanel{
 	EcouteurDeSourisDragnDrop ecouteurDrag;
 	EcouteurDeSourisDragnDropEntrepot ecouteurDragEntrepot;
 	
+	/**
+	 * Constructeur d'un JPanel corrspondant a l'affichage de la tournee
+	 * @param ctrl : le controleur associe a la vue
+	 * @param p : l'objet Plan contenant la tournee a afficher
+	 */
 	public VueTournee(Controleur ctrl, Plan p){
 		super();
 		this.ctrl = ctrl;
@@ -91,9 +96,34 @@ public class VueTournee extends JPanel{
 		
 		elementsTournee = new ArrayList<ElementTournee>();
 		
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
 		setLayout(new GridBagLayout());
 		
+		// JPanel contenant le bouton d'ajout
+		panelAjout = new JPanel();
+		panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelAjout.setBackground(CharteGraphique.BG_COULEUR);
+		panelAjout.setLayout(new BorderLayout());
+		
+		// Bouton d'ajout de livraison
+		ajouterLivraison = new JButton("+");
+		ajouterLivraison.setBackground(CharteGraphique.BG_COULEUR);
+		ajouterLivraison.setFont(CharteGraphique.TITRE_POLICE);
+		ajouterLivraison.setForeground(CharteGraphique.NOTIFICATION_COULEUR);
+		ajouterLivraison.setBorder(new CompoundBorder(
+				new EmptyBorder(0, 10, 0, 10),
+				new CompoundBorder(
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
+						new EmptyBorder(5, 0, 5, 0)
+						)
+				));
+		ecouteurBoutons = new EcouteurDeBouton(ctrl);
+		ajouterLivraison.addActionListener(ecouteurBoutons);
+		ajouterLivraison.setActionCommand("nouvelle-livraison");
+		ajouterLivraison.setFocusPainted(false);
+		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);
+		
+		// Placement des JPanels dans le layout
 		c = new GridBagConstraints();
 
 		c.fill = GridBagConstraints.BOTH;
@@ -105,15 +135,18 @@ public class VueTournee extends JPanel{
 	    c.gridy = 0;
 		
 		tourneeTitre = new JLabel(Textes.TITRE_TOURNEE);
-	    tourneeTitre.setFont(CharteGraphique.TEXT_BIGGER_FONT);
+	    tourneeTitre.setFont(CharteGraphique.TEXTE_PLUS_GRAND_POLICE);
 		add(tourneeTitre, c);
 		tourneeTitre.setBorder(new EmptyBorder(20, 20, 0, 145));
 		
 
 		c.weighty = 1;
 		c.gridy = 1;
+		
 		pan = new JPanel();
-		setBackground(CharteGraphique.BG_COLOR);
+		setBackground(CharteGraphique.BG_COULEUR);
+		
+		// Ajout d'une barre de défilement
 		JScrollPane scrollPane = new JScrollPane(pan);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		add(scrollPane,c);
@@ -123,18 +156,15 @@ public class VueTournee extends JPanel{
 		scrollPane.setHorizontalScrollBarPolicy(
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 
-		pan.setBackground(CharteGraphique.BG_COLOR);
+		pan.setBackground(CharteGraphique.BG_COULEUR);
 		
 		ecouteurDrag =  new EcouteurDeSourisDragnDrop(this);
 		ecouteurDragEntrepot =  new EcouteurDeSourisDragnDropEntrepot(this);
 	}
 	
 	/**
-	 * Actualise le panneau des tournées selon la DemandeLivraison donnee en parametre (peut être une tournee)
-	 * @param dem DemandeLivraison qui doit être représentée
+	 * Actualise le panneau des tournees selon la DemandeLivraison donnee en parametre (peut être une tournee)
 	 */
-	
-	// TODO : Enlever le paramètre? on ne l'utilise pas!
 	public void initTournee() {
 		demLivraison = plan.getDemandeLivraison();
 		
@@ -143,6 +173,7 @@ public class VueTournee extends JPanel{
 		
 		pan.removeAll();
 		
+		// Layout vertical
 		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
 		ElementTournee entrepot = new ElementTourneeEntrepot(ctrl, plan.getDemandeLivraison().getEntrepot());
 		entrepot.setMaximumSize(entrepot.getPreferredSize());
@@ -158,24 +189,20 @@ public class VueTournee extends JPanel{
 		    ajoutElementTournee(liv);
 		    i++;
 		}
-		
-		panelAjout = new JPanel();
-		panelAjout.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelAjout.setBackground(CharteGraphique.BG_COLOR);
-		panelAjout.setLayout(new BorderLayout());
-		pan.add(panelAjout);
-		
 		pan.revalidate();
 	}
 	
+	/**
+	 * Affiche un encart de creation d'une nouvelle livraison en fin de tournee
+	 */
 	public void creerLivraison() {
 		this.annulerCreation();
 		
 		panelCreation = new JPanel();
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelCreation.setBackground(CharteGraphique.BG_COLOR);
+		panelCreation.setBackground(CharteGraphique.BG_COULEUR);
 		panelCreation.setLayout(new BorderLayout());
-		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,demLivraison.getLivraisons().size());
+		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size());
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
 		pan.add(panelCreation);
@@ -184,14 +211,18 @@ public class VueTournee extends JPanel{
 	}
 	
 	
+	/**
+	 * Affiche un encart de creation d'une nouvelle livraison juste apres la position donnee dans la tournee
+	 * @param place : la place ou inserer la livraison 
+	 */
 	public void creerLivraisonApres(int place) {
 		this.annulerCreation();
 		panelCreation = new JPanel();
 		panelCreation.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelCreation.setBackground(CharteGraphique.BG_COLOR);
+		panelCreation.setBackground(CharteGraphique.BG_COULEUR);
 		panelCreation.setLayout(new BorderLayout());
 		
-		elementEnCreation = new ElementTourneeLivraison(ctrl, demLivraison.getLivraisons().size()+1,place+1);
+		elementEnCreation = new ElementTourneeLivraison(ctrl, place+1);
 
 		pan.remove(panelAjout);
 		panelCreation.add(elementEnCreation, BorderLayout.PAGE_START);
@@ -204,14 +235,26 @@ public class VueTournee extends JPanel{
 		return elementsTournee;
 	}
 
+	/**
+	 * Indique a un element qu'il est survole par la souris pour le mettre en surbrillance
+	 * @param index : place de l'element dans la liste d'elements de la demande de livraison
+	 */
 	public void survol(int index){
 		elementsTournee.get(index+1).survolElement();
 	}
 	
+	/**
+	 * Indique a un element qu'il n'est plus survole par la souris pour enlever la surbrillance
+	 * @param index : place de l'element dans la liste d'elements de la demande de livraison
+	 */
 	public void antiSurvol(int index){
 		elementsTournee.get(index+1).antiSurvolElement();
 	}
 	
+	/**
+	 * Affiche les details d'un element de la demande de livraison
+	 * @param index : place de l'element dans la liste d'elements de la demande de livraison
+	 */
 	public void afficherDetails(int index){
 		if(elementDetaille != null) {
 			elementDetaille.afficherDetails();
@@ -221,65 +264,52 @@ public class VueTournee extends JPanel{
 		
 	}
 	
-	// TODO : combiner avec la modif?
+	/**
+	 * Donne a la livraison en creation une intersection
+	 * @param i : l'intersection a renseigner
+	 */
 	public void setIntersectionEnCreation(Intersection i){
 		elementEnCreation.setIntersection(i);
 	}
 	
+	/**
+	 * Annule la creation d'une livraison
+	 */
 	public void annulerCreation() {
 		if(panelCreation != null)
 		{
+			// Enlever l'encart de création
 			pan.remove(panelCreation);
+			// Ajouter en fin le bouton d'ajout
 			pan.add(panelAjout);
+			// Supprimer l'élément en cours
 			elementEnCreation = null;
 		}
 		revalidate();
 		repaint();
 	}
 	
+	/**
+	 * Ajoute le bouton d'ajout de livraison en fin de tournee
+	 */
 	public void ajouterBoutonPlus() {
-		// Bouton d'ajout de livraison
-		ajouterLivraison = new JButton("+");
-		ajouterLivraison.setBackground(CharteGraphique.BG_COLOR);
-		ajouterLivraison.setFont(CharteGraphique.TITLE_FONT);
-		ajouterLivraison.setForeground(CharteGraphique.NOTIFICATION_COLOR);
-		ajouterLivraison.setBorder(new CompoundBorder(
-				new EmptyBorder(0, 10, 0, 10),
-				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
-						new EmptyBorder(5, 0, 5, 0)
-						)
-				));
-		ecouteurBoutons = new EcouteurDeBouton(ctrl);
-		ajouterLivraison.addActionListener(ecouteurBoutons);
-		ajouterLivraison.setActionCommand("nouvelle-livraison");
-		ajouterLivraison.setFocusPainted(false);
-		
-		panelAjout.add(ajouterLivraison, BorderLayout.PAGE_START);	
+		pan.add(panelAjout);	
 	}
 	
-	public void ajoutElementTournee(ElementTournee element) {
+	/**
+	 * Ajoute un element a la tournee affichee
+	 * @param element : l'element de la tournee a ajouter
+	 */
+	private void ajoutElementTournee(ElementTournee element) {
 		pan.add(element);
 	    element.setMaximumSize(element.getPreferredSize());
 	    element.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    elementsTournee.add(element);
-	    //element.addMouseMotionListener(ecouteurDrag);
-	    //element.addMouseListener(ecouteurDrag);
 	}
 	
-	/*
-	public void masquerBoutonsSuppression() {
-		for(ElementTournee element : elementsTournee) {
-			if(element instanceof ElementTourneeLivraison)
-			{
-				((ElementTourneeLivraison) element).masquerBoutonSupprimer();
-				((ElementTourneeLivraison) element).removeMouseListener(ecouteurDrag);
-				((ElementTourneeLivraison) element).removeMouseMotionListener(ecouteurDrag);
-			}
-		}
-	}
-	*/
-	
+	/**
+	 * Affiche les boutons de suppression des elements de la tournee
+	 */
 	public void afficherBoutonsSuppression() {
 		for(ElementTournee element : elementsTournee) {
 			if(element instanceof ElementTourneeLivraison)
@@ -289,6 +319,9 @@ public class VueTournee extends JPanel{
 		}
 	}
 	
+	/**
+	 * Ajoute un ecouteur pour le drag and drop a la liste des elements de la tournee
+	 */
 	public void ajouterDragAndDropListener() {
 		for(ElementTournee element : elementsTournee) {
 			if(element instanceof ElementTourneeLivraison)
@@ -302,31 +335,41 @@ public class VueTournee extends JPanel{
 		}
 	}
 	
+	/**
+	 * Enregistre l'élement en cours de drag and drop
+	 * @param elemt : l'element a drag and drop
+	 */
 	public void dragCommencer(ElementTourneeLivraison elemt) {
-		isDragged = true;
+		dragEnCours = true;
 		dragSource = elemt;
-		//elemt.setBackground(CharteGraphique.LIVRAISON_SELECTIONNEE);
 	}
 	
-	public void dragIn(ElementTournee elemt) {
-		if(isDragged == true){
+	/**
+	 * Indique visuellement a l'utilisateur ou il s'apprete a relacher l'element en cours de deplacement
+	 * @param elemt : l'element en train d'etre survole, apres qui placer la livraison en deplacement
+	 */
+	public void dragSurElement(ElementTournee elemt) {
+		if(dragEnCours == true){
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 0, 10),
 					new CompoundBorder(
-							new MatteBorder(0,0,5,0, CharteGraphique.SEPARATOR_COLOR),
+							new MatteBorder(0,0,5,0, CharteGraphique.SEPARATEUR_COULEUR),
 							new EmptyBorder(10, 10, 10, 10)
 							)
 					));
 			dragCible = elemt;
 		}
 	}
-	
-	public void dragOut(ElementTournee elemt) {
-		if(isDragged == true){
+	/**
+	 * Enleve l'indication du deplacement lorsque l'utilisateur ne survole plus un emplacement 
+	 * @param elemt : l'element qui n'est plus survole
+	 */
+	public void dragEnDehorsElement(ElementTournee elemt) {
+		if(dragEnCours == true){
 			elemt.setBorder(new CompoundBorder(
 					new EmptyBorder(10, 10, 5, 10),
 					new CompoundBorder(
-							new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+							new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 							new EmptyBorder(10, 10, 10, 10)
 							)
 					));
@@ -334,12 +377,15 @@ public class VueTournee extends JPanel{
 		}
 	}
 	
-	public void stopDrag(ElementTourneeLivraison elemt) {
-		isDragged = false;
+	/**
+	 * Deplace l'element qui a subi un drag and drop a sa nouvelle place
+	 */
+	public void stopDrag() {
+		dragEnCours = false;
 		dragSource.setBorder(new CompoundBorder(
 				new EmptyBorder(10, 10, 5, 10),
 				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
+						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATEUR_COULEUR),
 						new EmptyBorder(10, 10, 10, 10)
 						)
 				));
@@ -354,11 +400,6 @@ public class VueTournee extends JPanel{
 		}
 		dragCible = null;
 		dragSource = null;
-		//dragSource.setBackground(CharteGraphique.BG_COLOR);
-	}
-
-	public void supprimerElementDetaille() {
-		this.remove(elementDetaille);	
 	}
 
 }

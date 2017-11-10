@@ -47,20 +47,20 @@ public class EtatModifie extends EtatCalcule{
 	@Override
 	public void calculerItineraire(Controleur controleur, Plan plan, Fenetre fenetre) {
 		try {
-			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE, CharteGraphique.NOTIFICATION_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE, CharteGraphique.NOTIFICATION_COULEUR);
 			plan.calculerItinerairesSeuls();
 			controleur.afficherFenetre();
 			controleur.afficherNotif();
 		}
 		catch (Exception ex) {
-			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+			fenetre.changeNotification(Textes.NOTIF_CALCUL_ITINERAIRE_FAILED, CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 	}
 
 	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
-		fenetre.changeNotification(Textes.NOTIF_ITINERAIRE_CALCULE, CharteGraphique.NOTIFICATION_COLOR);
+		fenetre.changeNotification(Textes.NOTIF_ITINERAIRE_CALCULE, CharteGraphique.NOTIFICATION_COULEUR);
 	}
 	
 }

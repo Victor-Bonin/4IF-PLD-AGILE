@@ -5,7 +5,7 @@ import vue.Fenetre;
 
 /**
  * <pre>
- * 
+ * Etat de la vue par defaut
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -40,8 +40,11 @@ import vue.Fenetre;
  */
 public abstract class EtatDefaut implements Etat{
 
+	/** {@inheritDoc}  */
 	@Override
 	public void setFooter(JPanel footer, Fenetre fenetre) {}
+	
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherVue(Fenetre fenetre) {}
 }

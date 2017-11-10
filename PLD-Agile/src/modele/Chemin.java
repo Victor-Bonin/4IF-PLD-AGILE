@@ -40,34 +40,61 @@ public class Chemin {
 	private List<Troncon> troncons;
 	private Intersection depart;
 	private Intersection arrivee;
-	
-	public Chemin(Intersection depart, Intersection arrivee){
+
+	/**
+	 * Constructeur de chemin a partir de deux intersections, une de depart une d'arrivee.
+	 * @param depart l'intersection de depart
+	 * @param arrivee l'intersection d'arrivee
+	 */
+	public Chemin(Intersection depart, Intersection arrivee) {
 		this.depart = depart;
 		this.arrivee = arrivee;
 		this.troncons = new ArrayList<Troncon>();
 	}
-	
-	public void addTroncon (int index, Troncon troncon){
-		this.troncons.add(index, troncon);;
+
+	/**
+	 * Ajoute un troncon au chemin a la position indiquee.
+	 * @param index la position voulue
+	 * @param troncon le troncon ajoute
+	 */
+	public void addTroncon (int index, Troncon troncon) {
+		this.troncons.add(index, troncon);
 	}
-	
-	public List<Troncon> getTroncons(){
+
+	/**
+	 * Retourne la liste des troncons du chemin.
+	 * @return la liste des troncons du chemin
+	 */
+	public List<Troncon> getTroncons() {
 		return troncons;
 	}
-	
+
+	/**
+	 * Retourne le depart du chemin.
+	 * @return le depart du chemin
+	 */
 	public Intersection getDepart() {
 		return depart;
 	}
-	
+
+	/**
+	 * Retourne l'arrivee du chemin.
+	 * @return l'arrivee du chemin
+	 */
 	public Intersection getArrivee() {
 		return arrivee;
 	}
-	
-	public boolean equals(Chemin chemin){
-		boolean isEqual = true;
-		for(int i =0; i<this.troncons.size(); i++){
-			isEqual = isEqual && this.troncons.get(i).equals(chemin.getTroncons().get(i));
+
+	/**
+	 * Retourne true si les chemins sont égaux, false sinon.
+	 * @param chemin Chemin
+	 * @return true si les chemins sont égaux, false sinon
+	 */
+	public boolean equals(Chemin chemin) {
+		boolean estEgal = true;
+		for(int i = 0; i < this.troncons.size(); i++) {
+			estEgal = estEgal && this.troncons.get(i).equals(chemin.getTroncons().get(i));
 		}
-		return isEqual;
+		return estEgal;
 	}
 }

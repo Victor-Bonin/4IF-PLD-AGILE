@@ -3,7 +3,7 @@ package modele;
 import java.util.Calendar;
 
 /**
- * Entrepot
+ * Entrepot, point de depart d'une demande de livraison
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -34,35 +34,49 @@ import java.util.Calendar;
  *  
  * @author 4104
  */
-public class Entrepot extends Intersection{
+public class Entrepot extends Intersection {
+
 	private PlageHoraire horairesDepArr;
-	
+
+	/**
+	 * Constructeur de l'entrepot a partir de l'intersection ou se trouve l'entrepot et l'heure de depart de l'entrepot.
+	 * @param inter l'intersection
+	 * @param hDepart l'heure de depart
+	 */
 	public Entrepot(Intersection inter, Calendar hDepart) {
 		super(inter);
 		horairesDepArr = new PlageHoraire(hDepart, null);
 	}
-	
-	public Calendar getHeureDepart(){
+
+	/**
+	 * Retourne l'heure de depart de l'entrepot.
+	 * @return l'heure de depart de l'entrepot
+	 */
+	public Calendar getHeureDepart() {
 		return this.horairesDepArr.getDebut();
 	}
-	
-	public Calendar getHeureArrivee(){
+
+	/**
+	 * Retourne l'heure d'arrivee a l'entrepot.
+	 * @return l'heure d'arrive a l'entrepot
+	 */
+	public Calendar getHeureArrivee() {
 		return this.horairesDepArr.getFin();
 	}
-	
+
+
 	/**
-	* Verifie si l'objet Entrepot possède la meme adresse que l'intersection
-	* @param obj Une intersection
-	* @return true si les adresses sont les memes.
-	*/
-	public boolean equals(Object obj) {
-		return (this.getId() == ((Intersection)obj).getId());
-	}
-	
+	 * Change l'heure d'arrivee a l'entrepot, l'heure de retour.
+	 * @param heureArrivee la nouvelle heure d'arrivee a l'entrepot
+	 */
 	public void setHeureArrivee(Calendar heureArrivee) {
 		this.horairesDepArr.setFin(heureArrivee);
 	}
 
+	/**
+	 * Retourne la plage horaire de l'entrepot.
+	 * @return la plage horaire de l'entrepot
+	 */
 	public PlageHoraire getHoraires() {
 		return horairesDepArr;
 	}

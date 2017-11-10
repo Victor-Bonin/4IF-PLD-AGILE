@@ -3,6 +3,7 @@ package modele.evenement;
 import modele.Livraison;
 
 /**
+ * Represente un evenement d'insertion, lorsqu'un point de livraison est ajoute
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -36,10 +37,18 @@ import modele.Livraison;
 public class EvenementInsertion {
 	private Livraison livraison;
 	
+	/**
+	 * Constructeur d'EvenementInsertion
+	 * @param livraison la livraison insere
+	 */
 	public EvenementInsertion(Livraison livraison) {
 		this.livraison = livraison;
 	}
 	
+	/**
+	 * Retourne la livraison inseree
+	 * @return la livraison insere
+	 */
 	public Livraison getLivraison() {
 		return livraison;
 	}

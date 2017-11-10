@@ -3,6 +3,9 @@ package modele.evenement;
 import modele.Livraison;
 
 /**
+ * <pre>
+ * 
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -12,11 +15,11 @@ import modele.Livraison;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -29,6 +32,7 @@ import modele.Livraison;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

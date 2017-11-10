@@ -1,7 +1,9 @@
 package vue;
 
 /**
+ * <pre>
  * Cette classe contient les constantes liées au texte affiché dans les IHM
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -11,11 +13,11 @@ package vue;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -28,6 +30,7 @@ package vue;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  * 
  * @author 4104

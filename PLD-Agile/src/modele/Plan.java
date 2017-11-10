@@ -15,7 +15,9 @@ import modele.algo.TSP4;
 import modele.evenement.EvenementInsertion;
 
 /**
+ * <pre>
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -25,11 +27,11 @@ import modele.evenement.EvenementInsertion;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -42,6 +44,7 @@ import modele.evenement.EvenementInsertion;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104
@@ -428,7 +431,6 @@ public class Plan extends Observable {
 	}
 	
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
-		int index = demandeLivraison.getLivraisons().indexOf(livraison);
 		demandeLivraison.supprimerPointLivraison(livraison);
 		
 		try {

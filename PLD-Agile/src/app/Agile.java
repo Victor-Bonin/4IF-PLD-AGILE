@@ -4,7 +4,7 @@ import modele.Plan;
 import controleur.Controleur;
 
 /**
- * <pre>
+ * <pre> 
  * Classe d'execution de l'application
  * 
  * Authors : 
@@ -16,11 +16,11 @@ import controleur.Controleur;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -41,7 +41,7 @@ import controleur.Controleur;
 public class Agile {
  	/**
  	 * Point d'entree du programme
-	 * @param args
+	 * @param args args
 	 */
 	public static void main(String[] args) {
 		Plan plan = new Plan();

@@ -4,6 +4,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
+ * <pre>
+ * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
+ * par distance croissante en considérant les horaires de début
+ * l'attribut les stock dans l'ordre décroissant
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -13,11 +18,11 @@ import java.util.Iterator;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -30,6 +35,7 @@ import java.util.Iterator;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104
@@ -40,14 +46,12 @@ public class IterateurHoraires implements Iterator<Integer> {
 	private int nbCandidats;
 
 	/**
-	 * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
-	 * par distance croissante en considérant les horaires de début
-	 * l'attribut les stock dans l'ordre décroissant
+	 * Constructeur.
 	 * @param nonVus la liste des sommets qui n'ont pas encore ete visites
 	 * @param sommetCrt le dernier sommet visite
 	 * @param heureActuelle heure a laquelle on part du sommetCrt
-	 * @param couts : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
-	 * @param durees : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+	 * @param couts : cout[i][j] = duree pour aller de i a j, avec i dans [0,nbSommets[ et j dans [0,nbSommets[
+	 * @param durees : duree[i] = duree pour visiter le sommet i, avec i dans [0,nbSommets[
 	 * @param horaires : horaires[i][k] = horaire du créneau pour le point i, k=0 pour horaireDébut, k=1 pour horaire fin
 	 */	
 	public IterateurHoraires(Collection<Integer> nonVus, int sommetCrt, int heureActuelle, int[][] couts, int[] durees, int[][] horaires){
@@ -78,17 +82,20 @@ public class IterateurHoraires implements Iterator<Integer> {
 			candidats[maxIndex] = temp;
 		}
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public boolean hasNext() {
 		return nbCandidats > 0;
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public Integer next() {
 		return candidats[--nbCandidats];
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void remove() {}
 

@@ -46,7 +46,11 @@ public class EcouteurDeSourisDragnDrop extends MouseAdapter {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		vueTournee.dragCommencer((ElementTourneeLivraison)e.getSource());
+		ElementTourneeLivraison elemt = ((ElementTourneeLivraison)e.getSource());
+		vueTournee.dragCommencer(elemt);
+		if (e.isPopupTrigger()) {
+			elemt.showMenu(e.getComponent(), e.getX(), e.getY());
+		}
 	}
 	
 	@Override
@@ -62,7 +66,11 @@ public class EcouteurDeSourisDragnDrop extends MouseAdapter {
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		vueTournee.stopDrag((ElementTourneeLivraison)e.getSource());
+		ElementTourneeLivraison elemt = ((ElementTourneeLivraison)e.getSource());
+		vueTournee.stopDrag(elemt);
+		if (e.isPopupTrigger()) {
+			elemt.showMenu(e.getComponent(), e.getX(), e.getY());
+		}
 	}
 		
 }

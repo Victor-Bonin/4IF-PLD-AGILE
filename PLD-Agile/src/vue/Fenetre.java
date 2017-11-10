@@ -2,7 +2,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.Observable;
 import java.util.Observer;
@@ -308,9 +307,10 @@ public class Fenetre extends JFrame implements Observer {
 	}
 	
 	public void updateAjoutLivraison(Plan p, Livraison livraison) {
-		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.initTournee();
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
+		vueTournee.ajouterDragAndDropListener();
 
 		vuePlan.annulerCreation();
 		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
@@ -334,9 +334,10 @@ public class Fenetre extends JFrame implements Observer {
 		vuePlan.remove(iconeLivraison);
 		vuePlan.getIconesLivraison().remove(iconeLivraison);
 		
-		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.initTournee();
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
+		vueTournee.ajouterDragAndDropListener();
 		vuePlan.afficherIcones(plan.getDemandeLivraison());
 		
 		revalidate();

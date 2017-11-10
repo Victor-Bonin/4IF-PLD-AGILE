@@ -56,14 +56,14 @@ public class EtatCalcule extends EtatDefaut {
 		if(plan.getDemandeLivraison().getLivraisons().isEmpty() && plan.getDemandeLivraison().getEntrepot()==null) {
 			vuePlan.nettoyerIcones();
 		}else {
-			vueTournee.initTournee(plan.getDemandeLivraison());
+			vueTournee.initTournee();
+			vueTournee.ajouterDragAndDropListener();
 			if(vueTournee.getElementsTournee().size()>2){
 				vueTournee.afficherBoutonsSuppression();
 			}
 			vuePlan.afficherIcones(plan.getDemandeLivraison());
 		}
 		vuePlan.activerBouton(true);
-		vueTournee.autoriserClicDroit();
 		vueTournee.ajouterBoutonPlus();
 		vuePlan.activerAnnulationBouton(false);
 		fenetre.ajouterEcouteursSynchro();

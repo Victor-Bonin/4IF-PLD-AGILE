@@ -1,6 +1,5 @@
 package vue.etat;
 
-import modele.Plan;
 import vue.Fenetre;
 import vue.VuePlan;
 import vue.VueTournee;
@@ -44,7 +43,6 @@ public class EtatModifie extends EtatDefaut {
 		vuePlan.activerAnnulationBouton(true);
 
 		VueTournee vueTournee = fenetre.getVueTournee();
-		vueTournee.autoriserClicDroit();
 		fenetre.ajouterEcouteursSynchro();
 	}
 }

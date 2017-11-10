@@ -7,7 +7,7 @@ import vue.PersoButton;
 
 /**
  * <pre>
- * 
+ * Etat de la vue en cours de calcul d'itineraire
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -42,6 +42,7 @@ import vue.PersoButton;
  */
 public class EtatCalculEnCours extends EtatDefaut {
 
+	/** {@inheritDoc}  */
 	@Override
 	public void setFooter(JPanel footer, Fenetre fenetre) {
 		footer.remove(fenetre.getImportDemandeLivraisonButton());
@@ -51,6 +52,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 		calculTourneeButton.setEnabled(false);
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		fenetre.getVuePlan().activerBoutonImportDemande(false);

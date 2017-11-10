@@ -9,7 +9,7 @@ import vue.VueTournee;
 
 /**
  * <pre>
- * 
+ * Etat de la vue apres qu'un itineraire ait ete calcule
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -44,6 +44,7 @@ import vue.VueTournee;
  */
 public class EtatCalcule extends EtatDefaut {
 
+	/** {@inheritDoc}  */
 	@Override
 	public void setFooter(JPanel footer, Fenetre fenetre) {
 		footer.remove(fenetre.getImportDemandeLivraisonButton());
@@ -51,6 +52,7 @@ public class EtatCalcule extends EtatDefaut {
 		footer.add(fenetre.getExportButton());
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherVue(Fenetre fenetre) {
 		VueTournee vueTournee = fenetre.getVueTournee();

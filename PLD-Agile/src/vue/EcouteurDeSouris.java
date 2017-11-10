@@ -43,7 +43,6 @@ import javax.swing.SwingUtilities;
  * @author 4104
  */
 public class EcouteurDeSouris extends MouseAdapter implements MouseWheelListener{
-	private controleur.Controleur ctrl;
 	private VuePlan vue;
 	private int posX;
 	private int posY;

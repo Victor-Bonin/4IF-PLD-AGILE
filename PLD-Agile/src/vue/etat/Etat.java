@@ -6,7 +6,7 @@ import vue.Fenetre;
 
 /**
  * <pre>
- * 
+ * Interface des etats de la fenetre
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -40,6 +40,16 @@ import vue.Fenetre;
  * @author 4104
  */
 public interface Etat {
+	/**
+	 * Affiche le pied de page correspondant a l'etat de la vue
+	 * @param footer : le pied de page a actualiser
+	 * @param fenetre : la fenetre contenant le pied de page
+	 */
 	void setFooter(JPanel footer, Fenetre fenetre);
+	
+	/**
+	 * Affiche le la fenetre globale correspondant a l'etat de la vue
+	 * @param fenetre : la fenetre a actualiser
+	 */
 	void afficherVue(Fenetre fenetre);
 }

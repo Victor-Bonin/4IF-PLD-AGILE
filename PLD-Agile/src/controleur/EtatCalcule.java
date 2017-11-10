@@ -81,7 +81,6 @@ public class EtatCalcule extends EtatPlanOuvert {
 			fenetre.changeNotification(Textes.NOTIF_LIVRAISON_AJOUTEE, CharteGraphique.NOTIFICATION_COULEUR);
 		}catch (ExceptionPlanCo ex){
 			fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
-			// TODO : traiter l'exception
 		}finally {
 			fenetre.setEtatCourant(fenetre.etatModifie);
 			fenetre.goToVue();
@@ -122,7 +121,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 			fenetre.changeNotification(Textes.NOTIF_UNDO, CharteGraphique.NOTIFICATION_COULEUR);
 			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
-			// TODO Gérer exception
+			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 	}
 
@@ -134,7 +133,7 @@ public class EtatCalcule extends EtatPlanOuvert {
 			fenetre.changeNotification(Textes.NOTIF_REDO, CharteGraphique.NOTIFICATION_COULEUR);
 			fenetre.goToVue();
 		} catch (ExceptionPlanCo e) {
-			// TODO Gérer exception
+			fenetre.changeNotification(e.getMessage(), CharteGraphique.NOTIFICATION_INTERDIT_COULEUR);
 		}
 	}
 

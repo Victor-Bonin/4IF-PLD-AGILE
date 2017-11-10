@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +23,40 @@ import javax.swing.JPopupMenu;
 import controleur.Controleur;
 import modele.Entrepot;
 
+/**
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
+ * 
+ * @author 4104
+ */
 public class ElementTourneeEntrepot extends ElementTournee{
-	
+
+	private static final long serialVersionUID = 567315132366254821L;
 	private JLabel heureArriveeLabel;
 	private JLabel heureDepartLabel;
 	
@@ -106,7 +136,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				ctrl.creerLivraisonApres(-1);
 			}
 		});
-		
+		/*
 		addMouseListener(new MouseAdapter (){
 			public void mousePressed(MouseEvent ev) {
 				if (ev.isPopupTrigger()) {
@@ -120,5 +150,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 				}
 			}
 		});
+		*/
 	}	
 }

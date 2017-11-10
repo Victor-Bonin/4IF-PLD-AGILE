@@ -2,7 +2,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.Observable;
 import java.util.Observer;
@@ -21,9 +20,35 @@ import vue.etat.*;
 
 /**
  * Extension de JFrame permettant d'afficher et d'interagir avec les éléments de PlanCo
+ * Authors : 
+ * romain.goutte-fangeas@insa-lyon.fr
+ *               ____
+ *           __--    --_
+ *          /   -        -
+ *         / /-- ------\  \
+ *        / /           \  |
+ *        | |           ?  |
+ *        | ? _--   -== \ /?
+ *         \| 'o > < o>  |||
+ *         \\    / \      )|
+ *          \\   .| )    |_/
+ *           |  :_____: :|
+ *            \  <==="  /|
+ *             \      .: /|\
+ *             )\_   .: / |:"--___
+ *         __-:|\ """ _-  |:::::::
+ *       _-::::\ "-_.-   /::::::::
+ *    _--:::::::| .|"-_  |::::::::
+ *  -"::::::::::\  | { -_|::::::::
+ * lucas.ouaniche-herbin@insa-lyon.fr
+ * lucas.marie@insa-lyon.fr
+ * clara.pourcel@insa-lyon.fr
+ * pierrick.chauvet@insa-lyon.fr
+ * bastien.guiraudou@insa-lyon.fr
+ * victor.bonin@insa-lyon.fr
+ * 
  * 
  * @author 4104
- *
  */
 public class Fenetre extends JFrame implements Observer {
 	private static final long serialVersionUID = 4042713508717400450L;
@@ -282,9 +307,10 @@ public class Fenetre extends JFrame implements Observer {
 	}
 	
 	public void updateAjoutLivraison(Plan p, Livraison livraison) {
-		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.initTournee();
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
+		vueTournee.ajouterDragAndDropListener();
 
 		vuePlan.annulerCreation();
 		int index = p.getDemandeLivraison().getLivraisons().indexOf(livraison);
@@ -308,9 +334,10 @@ public class Fenetre extends JFrame implements Observer {
 		vuePlan.remove(iconeLivraison);
 		vuePlan.getIconesLivraison().remove(iconeLivraison);
 		
-		vueTournee.initTournee(plan.getDemandeLivraison());
+		vueTournee.initTournee();
 		vueTournee.ajouterBoutonPlus();
 		vueTournee.afficherBoutonsSuppression();
+		vueTournee.ajouterDragAndDropListener();
 		vuePlan.afficherIcones(plan.getDemandeLivraison());
 		
 		revalidate();

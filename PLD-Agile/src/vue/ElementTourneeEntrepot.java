@@ -56,8 +56,7 @@ public class ElementTourneeEntrepot extends ElementTournee{
 	    	}
 	    	texte += entrepot.getHeureArrivee().get(Calendar.MINUTE);
 	    	if((entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())>1000*60*60*24) {
-	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j aprÃ¨s";
-	    		System.out.println(entrepot.getHeureArrivee().get(Calendar.HOUR_OF_DAY) + "  " +entrepot.getHeureDepart().get(Calendar.HOUR_OF_DAY));
+	    		texte += " - " + (entrepot.getHeureArrivee().getTimeInMillis()-entrepot.getHeureDepart().getTimeInMillis())/(1000*60*60*24) + "j après";
 	    	}
 	    	
 	    	heureArriveeLabel.setText(texte);
@@ -92,7 +91,6 @@ public class ElementTourneeEntrepot extends ElementTournee{
 			imageIconSurvol = new ImageIcon(scaledImageSurvol);
 			imageLabel.setIcon(imageIconNormal);
 		} catch (IOException e) {
-	    		System.out.println("Une image est manquante");
 	    }
 
 		infos.add(heureArriveeLabel, BorderLayout.WEST );

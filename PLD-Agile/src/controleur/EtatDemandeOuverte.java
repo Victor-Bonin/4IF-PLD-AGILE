@@ -30,10 +30,10 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
-		plan.calculTournee();
-		fenetre.goToVue(Fenetre.VUE_TOURNEE_CALCULEE);
-		controleur.setEtatCourant(controleur.etatCalcule);
+		controleur.setEtatCourant(controleur.etatCalculEnCours);
 		controleur.afficherFenetre();
+		controleur.afficherNotif();
+		controleur.calculerTournee();
 	}
 	
 	@Override
@@ -43,6 +43,13 @@ public class EtatDemandeOuverte extends EtatPlanOuvert{
 	
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
-		fenetre.goToVue(Fenetre.VUE_LIVRAISON_CHARGEE);
+		fenetre.setEtatCourant(fenetre.etatDemandeOuverte);
+		fenetre.goToVue();
+	}
+
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		calculerTournee(controleur, plan, fenetre);		
 	}
 }
+

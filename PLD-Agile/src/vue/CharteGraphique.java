@@ -15,6 +15,7 @@ public interface CharteGraphique {
 	public static final Color BG_COLOR = Color.WHITE;
 	public static final Color SEPARATOR_COLOR = new Color(220,220,220);
 	public static final Color SEPARATOR_DARK_COLOR = new Color(150,150,150);
+	public static final Color LIVRAISON_SELECTIONNEE = new Color(244, 255, 255);
 
 	//TEXTS
 	public static final Color TITLE_COLOR = Color.RED;
@@ -33,6 +34,7 @@ public interface CharteGraphique {
 
 	public static final Font TEXT_SMALL_FONT = new Font("Arial", Font.PLAIN, 10);
 	public static final Font TEXT_BIG_FONT = new Font("Arial", Font.PLAIN, 17);
+	public static final Font TEXT_BIG_FAT_FONT = new Font("Arial", Font.BOLD, 17);
 	public static final Font TEXT_BIGGER_FONT = new Font("Arial", Font.PLAIN, 25);
 
 	//BUTTONS
@@ -43,12 +45,23 @@ public interface CharteGraphique {
 	
 	//ICONS
 	public static final String ICONE_LIVRAISON = "ressources/map-marker2.png";
-	public static final String ICONE_HANGAR = "ressources/hangar-marker.png";
+	public static final String ICONE_LIVRAISON_SURVOL = "ressources/map-marker3.png";
+	public static final String ICONE_HANGAR = "ressources/entrepot-marker.png";
+	public static final String ICONE_LIVRAISON_BOUTON = "ressources/map-marker-button.png";
+	public static final String ICONE_HANGAR_SURVOL = "ressources/entrepot-marker2.png";
+	public static final String ICONE_VALIDER = "ressources/valider.png";
+	public static final String ICONE_SUPPRIMER = "ressources/supprimer.png";
+	public static final String ICONE_ANNULER = "ressources/effacer.png";
+	public static final String ICONE_RETOUR_AVANT = "ressources/retour-avant.png";
+	public static final String ICONE_RETOUR_ARRIERE = "ressources/retour-arriere.png";
+
 	
 	//GRAPH
 	public static final Color GRAPH_TRONCON = Color.WHITE;
 	public static final Color GRAPH_TRONCON_WAY = new Color(20,150,20);
 	public static final Color GRAPH_BG =  new Color(210,210,210);
+	public static final Color GRAPH_TEXT_COLOR =  Color.BLACK;
 	
-
+	//LIST
+	public static final Color LIVRAISON_RETARD = new Color(250, 120, 100);
 }

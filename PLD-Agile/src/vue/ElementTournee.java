@@ -1,291 +1,201 @@
 package vue;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Set;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.text.NumberFormatter;
 
+import controleur.Controleur;
 import modele.Entrepot;
+import modele.Intersection;
 import modele.Livraison;
+import modele.LivraisonPlageHoraire;
 
+/**
+ * Extension de JPanel affichant une tournee et ses informations primaires
+ * 
+ * @author 4104
+ *
+ */
 public class ElementTournee extends JPanel{
 	private static final long serialVersionUID = 6534684555513953601L;
-	private int numero;
-	private long id;
-	private Date date;
-	private int duree;
-	private JLabel nomLabel;
-	private JLabel idLabel;
-	private JLabel heureLabel;
-	private JLabel dureeLivraisonLabel;
+	protected JPopupMenu menu;
+		
+	protected Controleur controleur;	
+	protected JPanel nomPanel;
+	protected JLabel nomLabel;
+	protected JLabel idLabel;
+	protected JLabel imageLabel;
+	protected JPanel infos;
+	protected JPanel details;
 	
-	public ElementTournee(Livraison livraison, int numero) {
+	protected ImageIcon imageIconNormal;
+	protected ImageIcon imageIconSurvol;
+	
+	protected EcouteurDeBoutonsElementTournee ecouteurBoutons;
+	
+	protected boolean areDetailsVisible = false;
+	
+	// TODO : mettre tous les JLabel en attribut
+
+	
+	public ElementTournee(Controleur ctrl) {
 		super();
+		
+		this.controleur = ctrl;
 		
 		setOpaque(true);
 		setBackground(CharteGraphique.BG_COLOR);
 		
 		setBorder(new CompoundBorder(
-				new EmptyBorder(10, 10, 0, 10),
+				new EmptyBorder(10, 10, 5, 10),
 				new CompoundBorder(
 						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
 						new EmptyBorder(10, 10, 10, 10)
 						)
 				));
 		
-		nomLabel = new JLabel(Textes.TOURNEE_LIVRAISON + numero + " - ");
+		nomPanel = new JPanel();
+		nomPanel.setLayout(new BorderLayout());
+		nomPanel.setBackground(CharteGraphique.BG_COLOR);
+		nomLabel = new JLabel();
 		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
+		nomPanel.add(nomLabel, BorderLayout.WEST);
 		
-		idLabel = new JLabel(" " + livraison.getId());
+		idLabel = new JLabel();
 		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
 		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
 		
-		dureeLivraisonLabel = new JLabel(Textes.TOURNEE_DUREE + (int)(livraison.getDuree()/60) + " min");
-		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
+		imageLabel = new JLabel();
 		
+		infos = new JPanel();
+		infos.setLayout(new BorderLayout());
+		infos.setBackground(CharteGraphique.BG_COLOR);
+		
+		details = new JPanel();
+		details.setBackground(CharteGraphique.BG_COLOR);
+		details.setLayout(new BorderLayout());
+
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
 	    c.gridy = 0;
 	    c.weighty = 1;
-	    c.gridheight = 3;
+	    c.gridheight = 2;
 	    c.insets = new Insets(0,0,0,10);
-	    
-	    if (livraison.getHeurePassage() != null) {
-		    date = livraison.getHeurePassage().getTime();
-	    	String texte = "Heure de passage estimée : " + date.getHours() + "h";
-	    	if(date.getMinutes()<10) {
-	    		texte += "0";
-	    	}
-	    	texte += date.getMinutes();
-	    	heureLabel = new JLabel(texte);
-			heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
-	    }
-
-		try {
-			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
-			add(imageLabel,c);
-			
-		} catch (IOException e) {
-	    	e.printStackTrace();
-	    }
-		
+	    add(imageLabel,c);
+	   		
 		c.insets = new Insets(0,0,0,0);
 		c.gridheight = 1;
 		c.gridx = 1;
-		add(nomLabel,c);
+		add(nomPanel,c);
 		
+		c.weightx = 1;
 		c.gridx = 2;
 		add(idLabel,c);
 		
 		c.gridwidth = 2;
 		c.gridy = 1;
 		c.gridx = 1;
-		add(dureeLivraisonLabel, c);
+		c.fill = GridBagConstraints.VERTICAL;
+		add(infos, c);
 		
-		if(livraison.getHeurePassage() != null) {
-			c.gridwidth = 2;
-			c.gridy = 2;
-			c.gridx = 1;
-			add(heureLabel, c);
-		}
-	}
-	
-	
-	public ElementTournee(Entrepot entrepot) {
-		super();
-		
-		setOpaque(true);
-		setBackground(CharteGraphique.BG_COLOR);
-		
-		setBorder(new CompoundBorder(
-				new EmptyBorder(10, 10, 0, 10),
-				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
-						new EmptyBorder(10, 10, 10, 10)
-						)
-				));
-		
-		//TODO : Afficher le nom des rues qui y passent avec 
-		//setToolTipText(Textes.TOURNEE_INTERSECTION + "\n" + entrepot.getId());
-		
-		nomLabel = new JLabel(Textes.TOURNEE_ENTREPOT + " - ");
-		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
-		nomLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-		
-		idLabel = new JLabel(String.valueOf(entrepot.getId()));
-		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		idLabel.setForeground(CharteGraphique.TEXT_ID_HANGAR_COLOR);
-		
-		String texte = entrepot.getHeureDepart().getTime().getHours() + "h";
-    	if(entrepot.getHeureDepart().getTime().getMinutes()<10) {
-    		texte += "0";
-    	}
-    	texte += entrepot.getHeureDepart().getTime().getMinutes();
-    	
-    	heureLabel = new JLabel(texte);
-		heureLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
-		heureLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-		
-    	if (entrepot.getHeureArrivee() != null) {
-	    	texte = entrepot.getHeureArrivee().getTime().getHours() + "h";
-	    	if(entrepot.getHeureArrivee().getTime().getMinutes()<10) {
-	    		texte += "0";
-	    	}
-	    	texte += entrepot.getHeureArrivee().getTime().getMinutes();
-	    	
-	    	dureeLivraisonLabel = new JLabel(texte);
-			dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SMALL_FONT);
-			dureeLivraisonLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-    	}
-
-    	
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.NORTHWEST;
-		c.gridx = 0;
-	    c.gridy = 0;
-	    c.weighty = 1;
-	    c.gridheight = 3;
-	    c.insets = new Insets(0,0,0,10);
-
-
-		try {
-			BufferedImage img = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
-			add(imageLabel,c);
-			
-		} catch (IOException e) {
-	    	e.printStackTrace();
-	    }
-		
-		c.insets = new Insets(0,0,0,0);
-		c.gridheight = 1;
-		c.gridx = 1;
-		add(nomLabel,c);
-		
-		c.gridx = 2;
-		add(idLabel,c);
-		
-		c.gridwidth = 2;
-		c.gridy = 1;
-		c.gridx = 1;
-		add(heureLabel, c);
-		
-		if(entrepot.getHeureArrivee() != null) {
-			c.gridwidth = 2;
-			c.gridy = 2;
-			c.gridx = 1;
-			add(dureeLivraisonLabel, c);
-		}
-	}
-	
-	
-	public ElementTournee(int num, long i, Date d, int tpsLiv, boolean isHangar ) {
-		super();
-		
-		setOpaque(true);
-		setBackground(CharteGraphique.BG_COLOR);
-		
-		numero = num;
-		id = i;
-		date = d;
-		duree = tpsLiv;
-		
-		setBorder(new CompoundBorder(
-				new EmptyBorder(10, 10, 0, 10),
-				new CompoundBorder(
-						new MatteBorder(0,0,1,0, CharteGraphique.SEPARATOR_COLOR),
-						new EmptyBorder(10, 10, 10, 10)
-						)
-				));
-		
-		nomLabel = new JLabel("Livraison " + numero + " - ");
-		nomLabel.setFont(CharteGraphique.TEXT_BIG_FONT);
-		
-		idLabel = new JLabel(" " + id);
-		idLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		idLabel.setForeground(CharteGraphique.TEXT_SECONDARY_COLOR);
-		
-		dureeLivraisonLabel = new JLabel("Durée " + duree + " min");
-		dureeLivraisonLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-		
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.NORTHWEST;
-		c.gridx = 0;
-	    c.gridy = 0;
-	    c.weighty = 1;
-	    c.gridheight = 3;
-	    c.insets = new Insets(0,0,0,10);
-	    
-	    if(isHangar) {
-	    	nomLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-	    	heureLabel = new JLabel();
-	    	heureLabel.setForeground(CharteGraphique.TEXT_HANGAR_COLOR);
-	    	idLabel.setForeground(CharteGraphique.TEXT_ID_HANGAR_COLOR);
-	    } else {
-	    	String texte = "Heure de passage estimée : " + date.getHours() + "h";
-	    	if(date.getMinutes()<10) {
-	    		texte += "0";
-	    	}
-	    	texte += date.getMinutes();
-	    	heureLabel = new JLabel(texte);
-			heureLabel.setFont(CharteGraphique.TEXT_SECONDARY_FONT);
-	    }
-
-		try {
-			BufferedImage img;
-			if(isHangar) {
-				img = ImageIO.read(new File(CharteGraphique.ICONE_HANGAR));
-			} else {
-				img = ImageIO.read(new File(CharteGraphique.ICONE_LIVRAISON));
-			}
-			Image scaledImage = img.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(scaledImage);
-			JLabel imageLabel = new JLabel(imageIcon);
-			add(imageLabel,c);
-			
-		} catch (IOException e) {
-	    	e.printStackTrace();
-	    }
-		
-		c.insets = new Insets(0,0,0,0);
-		c.gridheight = 1;
-		c.gridx = 1;
-		add(nomLabel,c);
-		
-		c.gridx = 2;
-		add(idLabel,c);
-		
-		c.gridwidth = 2;
-		c.gridy = 1;
-		c.gridx = 1;
-		add(heureLabel, c);
-		
-		c.gridwidth = 2;
+		c.insets = new Insets(10,0,0,0);
+		c.gridwidth = 4;
 		c.gridy = 2;
-		add(dureeLivraisonLabel, c);
+		c.gridx = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(details, c);
+		
+		
 	}
 	
 	
+	
+	
+	protected String composeToolTipString(Intersection intersec, Set<String> listeNomsRues) {
+		//TODO : Afficher le nom des rues qui y passent avec
+		String s = "";
+		if(intersec instanceof Entrepot) {
+			s= Textes.TOURNEE_ENTREPOT ;
+		}else if(intersec instanceof Livraison) {
+			s= Textes.TOURNEE_LIVRAISON ;
+		}
+		s += intersec.getId() + "<br>"
+				+ Textes.TOURNEE_INTERSECTION;
+		
+		for(String nom : listeNomsRues){
+			if (nom.equals("")){
+				nom = "Rue Inconnue";
+			}
+			s += "<br>" + nom;
+		}
+		
+		if(intersec instanceof LivraisonPlageHoraire) {
+			s+= "<br> " + Textes.TOURNEE_PLAGE;
+			LivraisonPlageHoraire livraison = (LivraisonPlageHoraire)intersec;
+			if(livraison.getDebut()!= null)
+				s+=  livraison.getDebut().get(Calendar.HOUR_OF_DAY) + "h";
+			else
+				s+= ".";
+			s+= " - ";
+			if(livraison.getFin()!= null)
+				s+= livraison.getFin().get(Calendar.HOUR_OF_DAY) + "h";
+			else
+				s+= ".";
+			
+		}
+		return s;
+	}
+	
+	public void survolElement(){
+		imageLabel.setIcon(imageIconSurvol);
+	}
+	
+	public void antiSurvolElement(){
+		imageLabel.setIcon(imageIconNormal);
+	}
+	
+	
+	
+	public void afficherDetails() {
+		if(areDetailsVisible){
+			details.setVisible(false);
+		} else {
+			details.setVisible(true);
+		}
+		areDetailsVisible = !areDetailsVisible;
+	}
 	
 }

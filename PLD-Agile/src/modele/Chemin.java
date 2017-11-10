@@ -27,4 +27,20 @@ public class Chemin {
 	public List<Troncon> getTroncons(){
 		return troncons;
 	}
+	
+	public Intersection getDepart() {
+		return depart;
+	}
+	
+	public Intersection getArrivee() {
+		return arrivee;
+	}
+	
+	public boolean equals(Chemin chemin){
+		boolean isEqual = true;
+		for(int i =0; i<this.troncons.size(); i++){
+			isEqual = isEqual && this.troncons.get(i).equals(chemin.getTroncons().get(i));
+		}
+		return isEqual;
+	}
 }

@@ -1,39 +1,40 @@
-/**
- * This file has been created by vbonin, on 11 oct. 2017
- * Authors : 
- * romain.goutte-fangeas@insa-lyon.fr
- * lucas.ouaniche-herbin@insa-lyon.fr
- * lucas.marie@insa-lyon.fr
- * clara.pourcel@insa-lyon.fr
- * pierrick.chauvet@insa-lyon.fr
- * bastien.guiraudou@insa-lyon.fr
- * victor.bonin@insa-lyon.fr
-
-_____   _   _____   __   _   _     _   _____   __   _   _   _   _____  
-|  _  \ | | | ____| |  \ | | | |   / / | ____| |  \ | | | | | | | ____| 
-| |_| | | | | |__   |   \| | | |  / /  | |__   |   \| | | | | | | |__   
-|  _  { | | |  __|  | |\   | | | / /   |  __|  | |\   | | | | | |  __|  
-| |_| | | | | |___  | | \  | | |/ /    | |___  | | \  | | |_| | | |___  
-|_____/ |_| |_____| |_|  \_| |___/     |_____| |_|  \_| \_____/ |_____| 
-
-Classe représentant la commande de suppression d'un point de livraison.
-Une commande peut être exécutée et annulée.
-@author 4104
- */
 package controleur;
 
+import modele.ExceptionPlanCo;
+import modele.Livraison;
+import modele.Plan;
+
+/**
+ * Commande de suppression d'un point de livraison de la demande de livraison.
+ * @author 4104
+ */
 public class CommandeSupprimer implements Commande {
 
+	private Plan plan;
+	private Livraison livraison;
+	private int position;
+	
+	/**
+	 * Cree la commande qui supprime la livraison l du plan p
+	 * @param p
+	 * @param l
+	 */
+	public CommandeSupprimer(Plan p, Livraison l, int positionDansListe) {
+		plan = p;
+		livraison = l;
+		position = positionDansListe;
+	}
+	
 	@Override
-	public void doCde() {
-		// TODO Auto-generated method stub
-		
+	public void doCde() throws ExceptionPlanCo {
+		plan.supprimerPointLivraison(livraison);		
+		plan.calculerItinerairesSeuls();
 	}
 
 	@Override
-	public void undoCde() {
-		// TODO Auto-generated method stub
-		
+	public void undoCde() throws ExceptionPlanCo {
+		plan.ajouterPointLivraison(livraison, position);
+		plan.calculerItinerairesSeuls();
 	}
 
 }

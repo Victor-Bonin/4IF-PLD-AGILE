@@ -21,15 +21,12 @@ _____   _   _____   __   _   _     _   _____   __   _   _   _   _____
  */
 package controleur;
 
-import org.xml.sax.SAXException;
-
+import modele.ExceptionPlanCo;
 import modele.Plan;
 import vue.Fenetre;
 import vue.CharteGraphique;
 import vue.Textes;
-import xml.AnnulationXML;
 import xml.DeserialiseurXML;
-import xml.ExceptionXML;
 
 public class EtatInit extends EtatDefaut{
 
@@ -38,17 +35,14 @@ public class EtatInit extends EtatDefaut{
 			ListeCommande listeCommande) {
 		try {
 			fenetre.changeNotification(Textes.NOTIF_LOADING, CharteGraphique.NOTIFICATION_COLOR);
-			DeserialiseurXML.charger(plan);
 			listeCommande.reset();
+			DeserialiseurXML.charger(plan);
 			controleur.setEtatCourant(controleur.etatPlanOuvert);
 			controleur.afficherFenetre();
 			controleur.afficherNotif();
 		}
-		catch (AnnulationXML ex){
-			controleur.afficherNotif();
-		}
-		catch (ExceptionXML ex){
-			if (ex.getMessage() != "")
+		catch (ExceptionPlanCo ex){
+			if (ex.getMessage() != "") 
 				fenetre.changeNotification(ex.getMessage(), CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
 			else
 				fenetre.changeNotification(Textes.NOTIF_IMPORT_PLAN_FAILED, CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
@@ -62,4 +56,10 @@ public class EtatInit extends EtatDefaut{
 	public void afficherNotif(Fenetre fenetre) {
 		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT, CharteGraphique.NOTIFICATION_COLOR);
 	}
+
+	@Override
+	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
+		ouvrirPlan(controleur, plan, fenetre, listeCommande);		
+	}
+
 }

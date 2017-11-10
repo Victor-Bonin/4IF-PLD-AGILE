@@ -67,5 +67,6 @@ public class EtatCalcule extends EtatDefaut {
 		vueTournee.ajouterBoutonPlus();
 		vuePlan.activerAnnulationBouton(false);
 		fenetre.ajouterEcouteursSynchro();
+		fenetre.requestFocus();
 	}
 }

@@ -48,6 +48,7 @@ public class EtatPlanOuvert extends EtatDefaut{
 	public void afficherVue(Fenetre fenetre) {
 		fenetre.setContent();
 		fenetre.getVuePlan().activerAnnulationBouton(false);
+		fenetre.requestFocus();
 	}
 
 }

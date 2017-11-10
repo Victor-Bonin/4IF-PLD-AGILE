@@ -13,7 +13,6 @@ import modele.algo.DjkSolution;
 import modele.algo.TSP;
 import modele.algo.TSP4;
 import modele.evenement.EvenementInsertion;
-import modele.evenement.EvenementSuppression;
 
 /**
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
@@ -447,7 +446,7 @@ public class Plan extends Observable {
 			return tronconsVoisins;
 		for (Troncon t : troncons)
 			if (t.getDebut().equals(intersection) || t.getFin().equals(intersection))
-				tronconsVoisins.add(t.GetNomRue());
+				tronconsVoisins.add(t.getNomRue());
 		return tronconsVoisins;
 	}
 	/**

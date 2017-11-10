@@ -4,7 +4,6 @@ import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -52,12 +51,12 @@ public class Tournee extends DemandeLivraison{
 			List<Troncon> troncons = chemins.get(i).getTroncons();
 			for (int j = 0; j < troncons.size(); j = j + 1 + nbTronconsConseq) {
 
-				nomRue = troncons.get(j).GetNomRue();
+				nomRue = troncons.get(j).getNomRue();
 				longueurTroncon = troncons.get(j).getLongueur();
 				long fin = troncons.get(j).getFin().getId();
 				nbTronconsConseq = 0;
 				if (j < troncons.size()-1) {
-					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).GetNomRue())){
+					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).getNomRue())){
 						longueurTroncon += troncons.get(j + nbTronconsConseq + 1).getLongueur();
 						nbTronconsConseq ++;
 						if (j + nbTronconsConseq == troncons.size() -1) {

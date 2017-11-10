@@ -21,13 +21,9 @@ public class Troncon {
 		interDebut = debut;
 		interFin = fin;
 	}
-	
-	public boolean equals(Object obj) {
-		return (this.interDebut.equals(((Troncon)obj).getDebut()) && this.interFin.equals(((Troncon)obj).getFin()));
-	}
-	
+		
 	public boolean equals(Troncon troncon) {
-		return (this.interDebut == troncon.getDebut() && this.interFin == troncon.getFin());
+		return (this.interDebut.equals(troncon.getDebut()) && this.interFin.equals(troncon.getFin()));
 	}
 	
 	public float getLongueur(){
@@ -42,7 +38,7 @@ public class Troncon {
 		return this.interFin;
 	}
 	
-	public String GetNomRue() {
+	public String getNomRue() {
 		return nomRue;
 	}
 }

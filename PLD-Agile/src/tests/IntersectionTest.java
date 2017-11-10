@@ -20,13 +20,13 @@ public class IntersectionTest {
 	@Test
 	public void egalTest() {
 		try {
-			boolean egalite = intersection.egal(intersection);
+			boolean egalite = intersection.equals(intersection);
 			assertTrue(egalite);
 		} catch (Exception e) {
 			fail("Erreur egalTest cas égal");
 		}
 		try {
-			boolean egalite = intersection.egal(intersectionRef);
+			boolean egalite = intersection.equals(intersectionRef);
 			assertFalse(egalite);
 		} catch (Exception e) {
 			fail("Erreur egalTest cas inégal");

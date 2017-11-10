@@ -2,14 +2,10 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
-import org.hamcrest.core.IsNot;
 import org.junit.Before;
 import org.junit.Test;
 
 import modele.Chemin;
-import modele.ExceptionPlanCo;
 import modele.Intersection;
 import modele.Troncon;
 
@@ -44,20 +40,20 @@ public class CheminTest {
 	}
 	
 	@Test
-	public void egalTest() {
+	public void equalsTest() {
 		try {
-			boolean egalite = chemin.egal(chemin);
+			boolean egalite = chemin.equals(chemin);
 			assertTrue(egalite);
 		} catch (Exception e) {
-			fail("Erreur egalTest cas égal");
+			fail("Erreur equalsTest cas égal");
 		}
 		chemin.ajouterTroncon(0, troncon);
 		chemin.ajouterTroncon(1, troncon2);
 		try {
-			boolean egalite = chemin.egal(cheminRef);
+			boolean egalite = chemin.equals(cheminRef);
 			assertFalse(egalite);
 		} catch (Exception e) {
-			fail("Erreur egalTest cas inégal");
+			fail("Erreur equalsTest cas inégal");
 		}
 	}
 }

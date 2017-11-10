@@ -194,11 +194,6 @@ public class Fenetre extends JFrame implements Observer {
 
 	/**
 	 * Permet de faire basculer la fenêtre vers une vue ou une autre
-	 * @param vue int correspondant a la vue a charger
-	 * @see #VUE_DEFAUT
-	 * @see #VUE_LIVRAISON_CHARGEE
-	 * @see #VUE_PLAN
-	 * @see #VUE_TOURNEE_CALCULEE
 	 */
 	public void goToVue(){
 		if(plan!=null){

@@ -131,10 +131,7 @@ public class VueTournee extends JPanel{
 	
 	/**
 	 * Actualise le panneau des tournées selon la DemandeLivraison donnee en parametre (peut être une tournee)
-	 * @param dem DemandeLivraison qui doit être représentée
 	 */
-	
-	// TODO : Enlever le paramètre? on ne l'utilise pas!
 	public void initTournee() {
 		demLivraison = plan.getDemandeLivraison();
 		

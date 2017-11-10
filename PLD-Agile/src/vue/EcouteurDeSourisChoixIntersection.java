@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 /**
-<<<<<<< HEAD
  * <pre>
  * Cette classe contient les appels au controleur depuis la souris au choix d'une intersection
  * 

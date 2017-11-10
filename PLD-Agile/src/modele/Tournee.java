@@ -63,7 +63,7 @@ public class Tournee extends DemandeLivraison{
 		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
 
-	// TODO : recupérer les rues qui composent l'intersection
+	
 	public void exportFeuilleDeRoute() throws IOException, ExceptionPlanCo {
 		Calendar heureDepart = this.getEntrepot().getHeureDepart();
 		Calendar heureArrivee = this.getEntrepot().getHeureArrivee();

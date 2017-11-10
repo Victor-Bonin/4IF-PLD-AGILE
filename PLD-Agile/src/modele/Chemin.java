@@ -47,7 +47,7 @@ public class Chemin {
 		this.troncons = new ArrayList<Troncon>();
 	}
 
-	public void ajouterTroncon (int index, Troncon troncon){
+	public void addTroncon (int index, Troncon troncon){
 		this.troncons.add(index, troncon);;
 	}
 

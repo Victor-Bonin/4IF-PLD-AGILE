@@ -37,35 +37,41 @@ public class Troncon {
 	private String nomRue;
 	private Intersection interDebut;
 	private Intersection interFin;
-	
+
 	public Troncon(Intersection debut, Intersection fin, String rue, float l) {
 		longueur = l;
 		nomRue = rue;
 		interDebut = debut;
 		interFin = fin;
 	}
-	
+
 	public Troncon(Intersection debut, Intersection fin) {
 		interDebut = debut;
 		interFin = fin;
 	}
-		
+
+
+	public boolean equals(Object obj) {
+		return (this.interDebut.equals(((Troncon)obj).getDebut()) && this.interFin.equals(((Troncon)obj).getFin()));
+	}
+
+
 	public boolean equals(Troncon troncon) {
 		return (this.interDebut.equals(troncon.getDebut()) && this.interFin.equals(troncon.getFin()));
 	}
-	
+
 	public float getLongueur(){
 		return this.longueur;
 	}
-	
+
 	public Intersection getDebut(){
 		return this.interDebut;
 	}
-	
+
 	public Intersection getFin(){
 		return this.interFin;
 	}
-	
+
 	public String getNomRue() {
 		return nomRue;
 	}

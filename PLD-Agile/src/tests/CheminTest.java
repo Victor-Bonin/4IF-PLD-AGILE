@@ -32,7 +32,7 @@ public class CheminTest {
 	@Test
 	public void ajouterTronconTest() {
 		try {
-			chemin.ajouterTroncon(INDEX, troncon);
+			chemin.addTroncon(INDEX, troncon);
 			assertEquals(troncon, chemin.getTroncons().get(INDEX));
 		} catch (Exception e) {
 			fail("Erreur ajouterTronconTest cas normal");
@@ -47,8 +47,8 @@ public class CheminTest {
 		} catch (Exception e) {
 			fail("Erreur equalsTest cas égal");
 		}
-		chemin.ajouterTroncon(0, troncon);
-		chemin.ajouterTroncon(1, troncon2);
+		chemin.addTroncon(0, troncon);
+		chemin.addTroncon(1, troncon2);
 		try {
 			boolean egalite = chemin.equals(cheminRef);
 			assertFalse(egalite);

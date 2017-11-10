@@ -40,7 +40,7 @@ public class EtatCalculEnCours extends EtatDefaut {
 
 	@Override
 	public void calculerTournee(Controleur controleur, Plan plan, Fenetre fenetre) {
-		AlgorithmRunnable runnable = new AlgorithmRunnable(plan, this, controleur, fenetre);
+		AlgorithmRunnable runnable = new AlgorithmRunnable(plan, controleur, fenetre);
 		Thread t = new Thread(runnable);
 		t.start();
 	}

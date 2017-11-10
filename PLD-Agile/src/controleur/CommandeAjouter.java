@@ -5,7 +5,9 @@ import modele.Livraison;
 import modele.Plan;
 
 /**
- * Commande qui ajoute une livraison a la demande de livraison actuelle
+ * <pre>
+ * Commande qui ajoute une livraison a la demande de livraison actuelle.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -32,6 +34,7 @@ import modele.Plan;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104
@@ -44,20 +47,22 @@ public class CommandeAjouter implements Commande {
 	
 	/**
 	 * Cree la commande qui ajoute la livraison l au plan p
-	 * @param pln Plan	
-	 * @param lvrsn Livraison
+	 * @param plan : Plan	
+	 * @param livraison : Livraison
 	 */
-	public CommandeAjouter(Plan pln, Livraison lvrsn, int positionDansListe) {
-		plan = plan;
-		livraison = lvrsn;
+	public CommandeAjouter(Plan plan, Livraison livraison, int positionDansListe) {
+		this.plan = plan;
+		this.livraison = livraison;
 		position = positionDansListe;
 	}
 	
+	/** {@inheritDoc}  */
 	@Override
 	public void doCde() throws ExceptionPlanCo {
 		plan.ajouterPointLivraison(livraison, position);
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void undoCde() throws ExceptionPlanCo {
 		plan.supprimerPointLivraison(livraison);

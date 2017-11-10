@@ -1,10 +1,12 @@
 package app;
 
 import modele.Plan;
-
 import controleur.Controleur;
 
 /**
+ * <pre>
+ * Classe d'execution de l'application
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -31,6 +33,7 @@ import controleur.Controleur;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
  *  
  * @author 4104

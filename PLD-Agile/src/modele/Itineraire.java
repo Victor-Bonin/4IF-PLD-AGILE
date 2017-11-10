@@ -41,6 +41,7 @@ public class Itineraire {
 
 	private List<Chemin> itineraire;
 
+
 	/**
 	 * Constructeur de l'itineraire.
 	 * @param pCourtsChemins la matrice des plus courts chemins
@@ -54,6 +55,7 @@ public class Itineraire {
 		itineraire.add(pCourtsChemins[meilleureSolution[meilleureSolution.length-1]][meilleureSolution[0]]);
 	}
 
+
 	/**
 	 * Construit un itineraire a partir d'une liste de chemin
 	 * @param itineraire la liste de chemin
@@ -61,6 +63,7 @@ public class Itineraire {
 	public Itineraire(List<Chemin> itineraire) {
 		this.itineraire = new ArrayList<Chemin>(itineraire);
 	}
+
 
 	/**
 	 * Retourne la liste de chemin de l'itineraire.
@@ -70,19 +73,21 @@ public class Itineraire {
 		return itineraire;
 	}
 
+
 	/**
 	 * Compare tous les chemins de l'itineraire.
 	 * @param obj l'itineraire a comparer
 	 * @return true si tous les chemins sont égaux à ceux de l'autre itineraire
 	 */
-	public boolean equals(Object obj) {
-		Itineraire itineraire = (Itineraire)obj;
-		boolean estEgal = true;
-		for(int i = 0; i < this.itineraire.size(); i++) {
-			estEgal = estEgal && this.itineraire.get(i).equals(itineraire.getChemins().get(i));
+	public boolean equals(Itineraire itineraire) {
+		if (!((this.itineraire.size()) == (itineraire.getChemins().size()))) {
+			return false;
 		}
-
-		return estEgal;
+		for(int i = 0; i<this.itineraire.size(); i++) {
+			if (!this.itineraire.get(i).equals(itineraire.getChemins().get(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
-
 }

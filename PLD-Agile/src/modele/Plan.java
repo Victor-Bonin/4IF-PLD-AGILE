@@ -501,7 +501,7 @@ public class Plan extends Observable {
 			return tronconsVoisins;
 		for (Troncon t : troncons)
 			if (t.getDebut().equals(intersection) || t.getFin().equals(intersection))
-				tronconsVoisins.add(t.GetNomRue());
+				tronconsVoisins.add(t.getNomRue());
 		return tronconsVoisins;
 	}
 

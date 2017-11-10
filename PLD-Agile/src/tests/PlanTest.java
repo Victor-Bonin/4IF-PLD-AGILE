@@ -57,7 +57,7 @@ import xml.DeserialiseurXML;
  * 
  * @author 4104
  */
-public class planTest {
+public class PlanTest {
 	Plan plan;
 	Intersection inter1;
 	Intersection inter2;

@@ -45,11 +45,9 @@ import modele.Livraison;
  * 
  * @author 4104
  */
-public class demandeLivraisonTest {
-	DemandeLivraison demandeLivraison = new DemandeLivraison(); 
 
-	@Before
-	public void init() {}
+public class DemandeLivraisonTest {
+	DemandeLivraison demandeLivraison = new DemandeLivraison(); 
 
 	@Test
 	public void ajoutePointLivraisonTest() {
@@ -93,7 +91,7 @@ public class demandeLivraisonTest {
 		catch (ExceptionPlanCo e) {
 			fail ("Setup");
 		}
-		
+
 		try {	
 			assertEquals(2, demandeLivraison.getLivraisons().size());	
 			Livraison l3 = new Livraison(new Intersection(3, 3, 300L), 0);
@@ -104,7 +102,7 @@ public class demandeLivraisonTest {
 		catch (ExceptionPlanCo e) {
 			fail ("Erreur ajoutePointLivraisonOrdoneTest ExceptionPlanCo cas normal");
 		}
-		
+
 		try {	
 			Livraison l4 = new Livraison(new Intersection(4, 4, 400L), 0);
 			demandeLivraison.ajoutePointLivraison(l4, 10);
@@ -115,7 +113,7 @@ public class demandeLivraisonTest {
 			assertEquals("Dev ONLY : PdL out of bounds ajt 0xce", e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void supprimerPointLivraisonTest() {
 		Livraison l = new Livraison(new Intersection(1, 1, 100L), 0);

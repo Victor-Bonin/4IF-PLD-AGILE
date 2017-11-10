@@ -49,6 +49,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Tournee extends DemandeLivraison {
 
 	private Itineraire itineraire;
+	private String feuilleDeRoute;
 
 	/**
 	 * Constructeur de tournee.
@@ -60,6 +61,7 @@ public class Tournee extends DemandeLivraison {
 		this.itineraire = itineraire;
 		super.setEntrepot(entrepot);
 		super.setLivraisons(meilleureSolution);
+		this.feuilleDeRoute = "";
 	}
 
 	/**
@@ -78,6 +80,7 @@ public class Tournee extends DemandeLivraison {
 		return this.getItineraire().equals(((Tournee)obj).getItineraire());
 	}
 
+
 	/**
 	 * Exporte la feuille de route de la tournee. Si l'export rate des exceptions IOException et ExceptionPlanCo sont lancées.
 	 * @throws IOException Une exception qui est levee si une erreur s'est produite
@@ -89,7 +92,7 @@ public class Tournee extends DemandeLivraison {
 		String nomRue = "";
 		float longueurTroncon;
 		String longueurRue = "";
-		String feuilleDeRoute = "<h2> Bonjour ! <br/>Début de la tournée à "+ heureDepart.get(Calendar.HOUR_OF_DAY)+"h"+ heureDepart.get(Calendar.MINUTE) +"min<br/>Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"min</h2>";
+		feuilleDeRoute = "<h2> Bonjour ! <br/>Début de la tournée à "+ heureDepart.get(Calendar.HOUR_OF_DAY)+"h"+ heureDepart.get(Calendar.MINUTE) +"min<br/>Fin de livraison prévue à "+ heureArrivee.get(Calendar.HOUR_OF_DAY)+"h"+ heureArrivee.get(Calendar.MINUTE) +"min</h2>";
 		int nbTronconsConseq;
 		
 		// Liste des livraisons
@@ -103,11 +106,11 @@ public class Tournee extends DemandeLivraison {
 			List<Troncon> troncons = chemins.get(i).getTroncons();
 			for (int j = 0; j < troncons.size(); j = j + 1 + nbTronconsConseq) {
 
-				nomRue = troncons.get(j).GetNomRue();
+				nomRue = troncons.get(j).getNomRue();
 				longueurTroncon = troncons.get(j).getLongueur();
 				nbTronconsConseq = 0;
 				if (j < troncons.size()-1) {
-					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).GetNomRue())) {
+					while (nomRue.equals( troncons.get(j + nbTronconsConseq + 1).getNomRue())) {
 						longueurTroncon += troncons.get(j + nbTronconsConseq + 1).getLongueur();
 						nbTronconsConseq ++;
 						if (j + nbTronconsConseq == troncons.size() -1) {
@@ -158,28 +161,25 @@ public class Tournee extends DemandeLivraison {
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
-			if (file.getName().endsWith(".html")) {
-				BufferedWriter bw;
-				bw = new BufferedWriter(new FileWriter(file));
-				String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
-				bw.write(contenu);
-				bw.close();
-				Desktop.getDesktop().browse(file.toURI());
-			} else {
+			if (!(file.getName().endsWith(".html"))) {
 				String fileName = (file.getName());
-				java.io.File fichier = new java.io.File(fileName +".html"); 
-				BufferedWriter bw;
-				bw = new BufferedWriter(new FileWriter(fichier));
-				String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
-				bw.write(contenu);
-				bw.close();
-				Desktop.getDesktop().browse(fichier.toURI());
+				file = new java.io.File(fileName +".html"); 
 			}
+			BufferedWriter bw;
+			bw = new BufferedWriter(new FileWriter(file));
+			String contenu = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Feuille de Route</title></head><body><p>"+ feuilleDeRoute +"</p></body></html>";
+			bw.write(contenu);
+			bw.close();
+			Desktop.getDesktop().browse(file.toURI());
 		}
 		else 
 			if (returnVal == JFileChooser.CANCEL_OPTION)
 				throw new ExceptionPlanCo(ExceptionPlanCo.ANNULATION_SAUVEGARDE_FEUILLE_DE_ROUTE);
 			else
 				throw new ExceptionPlanCo(ExceptionPlanCo.PROBLEME_SAUVEGARDE_FEUILLE_DE_ROUTE);	
+	}
+
+	public String getFeuilleDeRoute() {
+		return feuilleDeRoute;
 	}
 }

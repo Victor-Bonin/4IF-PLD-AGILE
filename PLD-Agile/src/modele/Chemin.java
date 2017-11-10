@@ -43,6 +43,7 @@ public class Chemin {
 	private Intersection depart;
 	private Intersection arrivee;
 
+
 	/**
 	 * Constructeur de chemin a partir de deux intersections, une de depart une d'arrivee.
 	 * @param depart l'intersection de depart
@@ -53,6 +54,7 @@ public class Chemin {
 		this.arrivee = arrivee;
 		this.troncons = new ArrayList<Troncon>();
 	}
+
 
 	/**
 	 * Ajoute un troncon au chemin a la position indiquee.
@@ -75,9 +77,11 @@ public class Chemin {
 	 * Retourne le depart du chemin.
 	 * @return le depart du chemin
 	 */
+
 	public Intersection getDepart() {
 		return depart;
 	}
+
 
 	/**
 	 * Retourne l'arrivee du chemin.
@@ -93,10 +97,15 @@ public class Chemin {
 	 * @return true si les chemins sont égaux, false sinon
 	 */
 	public boolean equals(Chemin chemin) {
-		boolean estEgal = true;
-		for(int i = 0; i < this.troncons.size(); i++) {
-			estEgal = estEgal && this.troncons.get(i).equals(chemin.getTroncons().get(i));
+	if (!((this.getTroncons().size()) == (chemin.getTroncons().size()))) {
+		return false;
+	}
+	for(int i =0; i<this.troncons.size(); i++) {
+		if (!this.troncons.get(i).equals(chemin.getTroncons().get(i))) {
+			return false;
 		}
-		return estEgal;
+	}
+	return true;
 	}
 }
+

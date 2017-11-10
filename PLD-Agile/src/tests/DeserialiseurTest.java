@@ -60,7 +60,7 @@ import xml.DeserialiseurXML;
  * 
  * @author 4104
  */
-public class TestDeserialiseur {
+public class DeserialiseurTest {
 
 	Plan plan;
 	Plan planCharge;

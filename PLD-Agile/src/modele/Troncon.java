@@ -41,6 +41,7 @@ public class Troncon {
 	private Intersection interDebut;
 	private Intersection interFin;
 
+
 	/**
 	 * Constructeur de troncon a partir de deux intersections, une de debut, une de fin, le nom de la rue et la longueur du troncon.
 	 * @param debut l'intersection d'origine
@@ -55,6 +56,7 @@ public class Troncon {
 		interFin = fin;
 	}
 
+
 	/**
 	 * Constructeur de troncon a partir de deux intersection, une de début, une de fin. 
 	 * @param debut l'intersection d'origine
@@ -65,6 +67,7 @@ public class Troncon {
 		interFin = fin;
 	}
 
+
 	/**
 	 * Compare les troncons en comparant le début et la fin de chaque troncon.
 	 * @param obj le troncon a comparer
@@ -72,6 +75,11 @@ public class Troncon {
 	 */
 	public boolean equals(Object obj) {
 		return (this.interDebut.equals(((Troncon)obj).getDebut()) && this.interFin.equals(((Troncon)obj).getFin()));
+	}
+
+
+	public boolean equals(Troncon troncon) {
+		return (this.interDebut.equals(troncon.getDebut()) && this.interFin.equals(troncon.getFin()));
 	}
 
 	/**
@@ -82,6 +90,7 @@ public class Troncon {
 		return this.longueur;
 	}
 
+
 	/**
 	 * Retourne le debut du troncon.
 	 * @return l'intersection d'origine du troncon
@@ -89,6 +98,7 @@ public class Troncon {
 	public Intersection getDebut(){
 		return this.interDebut;
 	}
+
 
 	/**
 	 * Retourne l'arrivee du troncon.
@@ -102,7 +112,7 @@ public class Troncon {
 	 * Retourne le nom de la rue.
 	 * @return String
 	 */
-	public String GetNomRue() {
+	public String getNomRue() {
 		return nomRue;
 	}
 }

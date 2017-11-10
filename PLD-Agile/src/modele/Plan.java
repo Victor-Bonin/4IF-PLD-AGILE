@@ -83,7 +83,7 @@ public class Plan extends Observable {
 	 * @param arrivee Adresse de l'intersection d'arrivee
 	 * @param longueur Longueur du troncon
 	 * @param nomRue Nom du troncon
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajouterTroncon(long depart, long arrivee, float longueur, String nomRue) throws ExceptionPlanCo {
 		Intersection debut = intersections.getOrDefault(depart, null);
@@ -99,6 +99,7 @@ public class Plan extends Observable {
 
 	/**
 	 * Calcule l'ordre optimal des livraisons ainsi que l'itinéraire pour effectuer ces livraisons
+	 * @throws ExceptionPlanCo Une exception PlanCo est levee si une erreur s'est produite
 	 */
 	public void calculTournee() throws ExceptionPlanCo {
 
@@ -394,6 +395,8 @@ public class Plan extends Observable {
 	 * Ajoute un point de livraison à la demande de livraison si elle correspond a une intersection du plan
 	 * @param idIntersection Adresse de la livraison
 	 * @param dureeLivraison Duree de la livraison
+	 * @param debutPlage Debut de la plage horaire
+	 * @param finPlage Fin de la plage horaire
 	 * @throws ExceptionPlanCo La livraison ne correspond a aucune intersection du plan
 	 */
 	public void ajouterPointLivraison(Long idIntersection, int dureeLivraison, Calendar debutPlage, Calendar finPlage) throws ExceptionPlanCo {
@@ -416,7 +419,7 @@ public class Plan extends Observable {
 	 * Ajoute un nouveau point de livraison a ceux actuel.
 	 * Si l'ajout rate une ExceptionPlanCo est lance.
 	 * @param livraison le point de livraison a ajouter
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajouterPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		ajouterPointLivraison(livraison, demandeLivraison.getLivraisons().size());
@@ -427,7 +430,7 @@ public class Plan extends Observable {
 	 * Si l'ajout rate une ExceptionPlanCo est lance.
 	 * @param livraison le point de livraison a ajouter
 	 * @param index la position a laquelle ajouter le point de livraison
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajouterPointLivraison(Livraison livraison, int index) throws ExceptionPlanCo {
 		if (livraison.getDuree() < 0) 
@@ -450,7 +453,7 @@ public class Plan extends Observable {
 	 * Supprime le point de livraison de la demande de livraison.
 	 * Si la suppression rate une ExceptionPlanCo est lance.
 	 * @param livraison le point de livraison a supprimer
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void supprimerPointLivraison(Livraison livraison) throws ExceptionPlanCo {
 		int index = demandeLivraison.getLivraisons().indexOf(livraison);

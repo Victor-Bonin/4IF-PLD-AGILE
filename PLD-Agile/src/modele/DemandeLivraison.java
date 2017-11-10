@@ -70,7 +70,7 @@ public class DemandeLivraison {
 	 * Ajoute un point de livraison a la demande de livraison.
 	 * Si l'ajout n'est pas possible lance une ExceptionPlanCo.
 	 * @param lvrsn le point de livraison a ajouter
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajoutePointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
 		ajoutePointLivraison(lvrsn, livraisons.size());
@@ -81,7 +81,7 @@ public class DemandeLivraison {
 	 * Si l'ajout n'est pas possible lance une ExceptionPlanCo.
 	 * @param lvrsn le point de livraison a ajouter
 	 * @param index la position dans la liste ou ajouter le point de livraison
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void ajoutePointLivraison(Livraison lvrsn, int index) throws ExceptionPlanCo {
 		if(lvrsn == null)
@@ -105,7 +105,7 @@ public class DemandeLivraison {
 	 * Supprime la livraison passee en parametre de la demande de livraison.
 	 * Si la suppression n'est pas possible lance une ExceptionPlanCo.
 	 * @param lvrsn le point de livraison a supprimer
-	 * @throws ExceptionPlanCo
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void supprimerPointLivraison(Livraison lvrsn) throws ExceptionPlanCo {
 		if(lvrsn == null)

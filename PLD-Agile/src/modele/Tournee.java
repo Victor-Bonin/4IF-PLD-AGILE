@@ -80,8 +80,8 @@ public class Tournee extends DemandeLivraison {
 
 	/**
 	 * Exporte la feuille de route de la tournee. Si l'export rate des exceptions IOException et ExceptionPlanCo sont lancées.
-	 * @throws IOException
-	 * @throws ExceptionPlanCo
+	 * @throws IOException Une exception qui est levee si une erreur s'est produite
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
 	 */
 	public void exportFeuilleDeRoute() throws IOException, ExceptionPlanCo {
 		Calendar heureDepart = this.getEntrepot().getHeureDepart();
@@ -142,9 +142,9 @@ public class Tournee extends DemandeLivraison {
 
 	/**
 	 * Creer la feuille de route de la tournee. Si la création rate des exceptions ExceptionPlanCo et IOException sont lancées.
-	 * @param feuilleDeRoute String
-	 * @throws ExceptionPlanCo
-	 * @throws IOException
+	 * @param feuilleDeRoute le fichier correspondant a la feuille de route a creer
+	 * @throws ExceptionPlanCo Une exception PlanCo qui est levee si une erreur s'est produite
+	 * @throws IOException Une exception qui est levee si une erreur s'est produite
 	 */
 	public void creerFeuilleDeRoute(String feuilleDeRoute) throws ExceptionPlanCo, IOException {
 

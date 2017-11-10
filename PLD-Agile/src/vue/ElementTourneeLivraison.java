@@ -3,11 +3,14 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -148,7 +151,16 @@ public class ElementTourneeLivraison extends ElementTournee{
 		if(livraison instanceof LivraisonPlageHoraire) {
 			int retard = ((LivraisonPlageHoraire)livraison).getRetardPossible();
 			if(retard <= 0) {
-				JPanel indicationPlageTendue = new JPanel();
+				System.out.println("tendue");
+				JPanel indicationPlageTendue = new JPanel() {
+					@Override
+				    protected void paintComponent(Graphics g) {
+						Graphics2D g2d = (Graphics2D)g;
+						g2d.setColor(CharteGraphique.NOTIFICATION_FORBIDDEN_COLOR);
+						Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+						g2d.fill(circle);
+				    }
+				};
 				GridBagConstraints c = new GridBagConstraints();
 				c.anchor = GridBagConstraints.NORTHWEST;
 				c.gridx = 0;

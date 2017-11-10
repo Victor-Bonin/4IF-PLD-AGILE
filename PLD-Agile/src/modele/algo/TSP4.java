@@ -5,6 +5,9 @@ import java.util.Iterator;
 
 /**
  * <pre>
+ * Un TSP avec une heuristique d'approximation du cout minimal restant et un iterateur croissant
+ * En prenant en compte les heures de passages par rapport aux creneaux.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -14,11 +17,11 @@ import java.util.Iterator;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -37,6 +40,7 @@ import java.util.Iterator;
  */
 public class TSP4 extends TemplateTSP {
 
+	/** {@inheritDoc}  */
 	@Override
 	protected Iterator<Integer> iterator(Integer sommetCrt, ArrayList<Integer> nonVus, int heureActuelle, int[][] couts,
 			int[] durees, int[][] horaires) {

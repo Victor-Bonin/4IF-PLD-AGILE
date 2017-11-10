@@ -10,7 +10,9 @@ import java.io.IOException;
 import org.xml.sax.SAXException;
 
 /**
+ * <pre>
  * Classe représentant l'état de l'app après l'ouverture d'un plan.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -20,11 +22,11 @@ import org.xml.sax.SAXException;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -37,14 +39,16 @@ import org.xml.sax.SAXException;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
+ * </pre>
  * 
- *  
+ * @see controleur.EtatInit
  * @author 4104
  */
 
 
 public class EtatPlanOuvert extends EtatInit {
 
+	/** {@inheritDoc}  */
 	@Override
 	public void ouvrirLivraison(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 			try{
@@ -79,18 +83,21 @@ public class EtatPlanOuvert extends EtatInit {
 				controleur.afficherFenetre();
 			}
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherNotif(Fenetre fenetre) {
 		fenetre.changeNotification(Textes.NOTIF_MUST_IMPORT_DEMANDE, CharteGraphique.NOTIFICATION_COLOR);
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void afficherFenetre(Fenetre fenetre) {
 		fenetre.setEtatCourant(fenetre.etatPlanOuvert);
 		fenetre.goToVue();
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public void appuiEntree(Controleur controleur, Plan plan, Fenetre fenetre, ListeCommande listeCommande) {
 		ouvrirLivraison(controleur, plan, fenetre, listeCommande);		

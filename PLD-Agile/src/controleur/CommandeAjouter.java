@@ -17,11 +17,11 @@ import modele.Plan;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -46,9 +46,10 @@ public class CommandeAjouter implements Commande {
 	private int position;
 	
 	/**
-	 * Cree la commande qui ajoute la livraison l au plan p
-	 * @param plan : Plan	
-	 * @param livraison : Livraison
+	 * Cree la commande qui ajoute une livraison au plan
+	 * @param plan plan auquel on ajoute la livraison
+	 * @param livraison la livraison à ajouter
+	 * @param positionDansListe index de la livraison dans la liste des livraison apres son ajout
 	 */
 	public CommandeAjouter(Plan plan, Livraison livraison, int positionDansListe) {
 		this.plan = plan;

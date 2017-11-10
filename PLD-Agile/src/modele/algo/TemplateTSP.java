@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 /**
  * <pre>
+ * Template du fonctionnement d'un TSP
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -14,11 +16,11 @@ import java.util.Iterator;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -41,11 +43,15 @@ public abstract class TemplateTSP implements TSP {
 	private int coutMeilleureSolution = 0;
 	private Boolean tempsLimiteAtteint;
 //	private int compteur = 0;
-	
+
+	/** {@inheritDoc}  */
+	@Override
 	public Boolean getTempsLimiteAtteint(){
 		return tempsLimiteAtteint;
 	}
-	
+
+	/** {@inheritDoc}  */
+	@Override
 	public Integer[] chercheSolution(int tpsLimite, int nbSommets, int[][] couts, int[] durees, int[][] horaires){
 		tempsLimiteAtteint = false;
 		coutMeilleureSolution = Integer.MAX_VALUE;
@@ -59,13 +65,17 @@ public abstract class TemplateTSP implements TSP {
 //		System.out.println("Total d'apres algo : " + (coutMeilleureSolution/60));
 		return meilleureSolution;
 	}
-	
+
+	/** {@inheritDoc}  */
+	@Override
 	public Integer getMeilleureSolution(int i){
 		if ((meilleureSolution == null) || (i<0) || (i>=meilleureSolution.length))
 			return null;
 		return meilleureSolution[i];
 	}
-	
+
+	/** {@inheritDoc}  */
+	@Override
 	public int getCoutMeilleureSolution(){
 		return coutMeilleureSolution;
 	}

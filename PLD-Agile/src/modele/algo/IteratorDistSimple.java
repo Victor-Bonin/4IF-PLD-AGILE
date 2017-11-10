@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 /**
  * <pre>
+ * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
+ * par distance croissante (next lit de droite à gauche).
  * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
@@ -15,11 +17,11 @@ import java.util.Iterator;
  *        / /           \  |
  *        | |           ?  |
  *        | ? _--   -== \ /?
- *         \| 'o > < o>  |||
+ *         \| 'o . . o.  |||
  *         \\    / \      )|
  *          \\   .| )    |_/
  *           |  :_____: :|
- *            \  <==="  /|
+ *            \  '==="  /|
  *             \      .: /|\
  *             )\_   .: / |:"--___
  *         __-:|\ """ _-  |:::::::
@@ -35,7 +37,8 @@ import java.util.Iterator;
  * </pre>
  * 
  * @author 4104
- * @deprecated
+ * @deprecated il existe un iterateur plus performant que celui-ci
+ * @see IterateurHoraires
  */
 public class IteratorDistSimple implements Iterator<Integer> {
 
@@ -43,10 +46,10 @@ public class IteratorDistSimple implements Iterator<Integer> {
 	private int nbCandidats;
 
 	/**
-	 * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
-	 * par distance croissante (next lit de droite à gauche).
-	 * @param nonVus
-	 * @param sommetCrt
+	 * Constructeur.
+	 * @param nonVus ensemble des sommets nonVus restant
+	 * @param sommetCrt le dernier sommet sur lequel on se trouve
+	 * @param cout : cout[i][j] = duree pour aller de i a j, avec i dans [0,nbSommets[ et j dans [0,nbSommets[
 	 */
 	public IteratorDistSimple(Collection<Integer> nonVus, int sommetCrt, int[][] cout){
 		this.candidats = new Integer[nonVus.size()];
@@ -70,17 +73,20 @@ public class IteratorDistSimple implements Iterator<Integer> {
 			candidats[maxIndex] = temp;
 		}
 	}
-	
+
+	/** {@inheritDoc}  */
 	@Override
 	public boolean hasNext() {
 		return nbCandidats > 0;
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public Integer next() {
 		return candidats[--nbCandidats];
 	}
 
+	/** {@inheritDoc}  */
 	@Override
 	public void remove() {}
 

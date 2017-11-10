@@ -3,7 +3,9 @@ package modele;
 import java.util.Calendar;
 
 /**
+ * <pre>
  * Une etape d’une tournee composee d’une adresse (intersection) et d'une plage horaire
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -30,7 +32,7 @@ import java.util.Calendar;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */

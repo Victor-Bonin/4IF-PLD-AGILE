@@ -1,7 +1,9 @@
 package modele;
 
 /**
+ * <pre>
  * Objet representant un point sur la carte (x, y et id).
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -28,7 +30,7 @@ package modele;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */

@@ -3,7 +3,9 @@ package modele;
 import java.util.Calendar;
 
 /**
+ * <pre>
  * Entrepot, point de depart d'une demande de livraison
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -30,7 +32,7 @@ import java.util.Calendar;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */

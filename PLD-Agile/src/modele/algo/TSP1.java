@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
+ * <pre>
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -30,7 +31,7 @@ import java.util.Iterator;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  * 
  * @author 4104
  * @deprecated

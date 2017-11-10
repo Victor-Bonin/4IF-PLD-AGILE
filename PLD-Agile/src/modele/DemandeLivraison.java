@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <pre>
  * Demande de livraison entre un entrepot et des livraisons, non ordonnees.
+ *
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -31,7 +33,7 @@ import java.util.List;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */

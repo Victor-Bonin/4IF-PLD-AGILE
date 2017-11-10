@@ -1,7 +1,9 @@
 package modele;
 
 /**
+ * <pre>
  * Segment entre deux intersections compose d'un nom et d'une longueur
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -28,7 +30,7 @@ package modele;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */

@@ -16,7 +16,9 @@ import modele.evenement.EvenementInsertion;
 import modele.evenement.EvenementSuppression;
 
 /**
+ * <pre>
  * Objet contenant toutes les intersections et les troncons d'un plan, ainsi qu'une demande de livraison et les méthodes afin de traiter la demande.
+ * 
  * Authors : 
  * romain.goutte-fangeas@insa-lyon.fr
  *               ____
@@ -43,7 +45,7 @@ import modele.evenement.EvenementSuppression;
  * pierrick.chauvet@insa-lyon.fr
  * bastien.guiraudou@insa-lyon.fr
  * victor.bonin@insa-lyon.fr
- * 
+ * </pre>
  *  
  * @author 4104
  */
